@@ -8,6 +8,7 @@ import "assets/font/font.css";
 
 // Constants
 import { Theme } from "core/theme";
+import App from "App";
 
 const container = document.getElementById('root');
 const root = createRoot(container);
@@ -15,5 +16,6 @@ const root = createRoot(container);
 root.render(
     <ThemeProvider theme= { Theme }>
         <CssBaseline />
+        <App />
     </ThemeProvider>
 )
