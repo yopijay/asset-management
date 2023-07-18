@@ -1,20 +1,27 @@
 // Libraires
-import { Stack } from "@mui/material";
+import { Container, Stack } from "@mui/material";
+
+// Components
+import Navbar from "layouts/global/navbar";
+import Sidebar from "layouts/global/sidebar";
 
 // Custom styles
 const container = {
     flexDirection: 'row',
-    justifyContent: 'space-evenly',
+    justifyContent: 'flex-start',
     alignItems: 'stretch',
-    padding: '0 20px',
     height: '100vh',
     overflow: 'hidden'
 }
+
 const Index = () => {
     return (
-        <Stack sx= { container }>
-            
-        </Stack>
+        <Container maxWidth= "xl">
+            <Navbar />
+            <Stack sx= { container } spacing= { 1 }>
+                <Sidebar />
+            </Stack>
+        </Container>
     );
 }
 

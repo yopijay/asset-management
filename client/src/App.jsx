@@ -3,10 +3,10 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 // Core
 import { GlobalPrvdr } from "core/context/Global"; // Provider
-import { AccountPrvdr } from "core/context/Account"; // Provider
+// import { AccountPrvdr } from "core/context/Account"; // Provider
 
-// Layouts
-import Signin from "layouts/authentication/sign-in";
+// // Layouts
+// import Signin from "layouts/authentication/sign-in";
 import Main from "layouts/pages";
 
 const App = () => {
