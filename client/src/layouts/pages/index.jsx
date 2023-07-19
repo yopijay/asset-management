@@ -1,18 +1,54 @@
 // Libraries
-import { Box } from "@mui/material";
+import { Box, Container, Stack } from "@mui/material";
+import { Route, Routes } from "react-router-dom";
+import { Suspense } from "react";
 
-// Screen sizes
-import Mobile from "layouts/pages/screens/mobile";
-import Tablet from "layouts/pages/screens/tablet";
-import Desktop from "layouts/pages/screens/desktop";
+// Core
+import { Components } from "core/constants/Navs"; // Constants
+import Loader from "core/components/loader/Screen"; // Loader
+
+// Components
+import Navbar from "layouts/global/navbar";
+import Sidebar from "layouts/global/sidebar";
+
+// Custom styles
+const container = {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'stretch',
+    height: '100vh',
+    overflow: 'hidden'
+}
+
+const content = {
+    width: '100%',
+    padding: {
+        xs: '80px 0 0 0',
+        sm: '90px 0 0 0',
+        lg: '100px 0 0 30px'
+    },
+    overflowY: 'scroll',
+    transition: 'all 0.2s ease-in-out',
+    '&::-webkit-scrollbar': { display: 'none' }
+}
 
 const Index = () => {
     return (
-        <Box>
-            <Box sx= {{ display: { xs: 'block', sm: 'none', transition: 'all 0.2s ease-in-out' } }}><Mobile /></Box>
-            <Box sx= {{ display: { xs: 'none', sm: 'block', lg: 'none', transition: 'all 0.2s ease-in-out' } }}><Tablet /></Box>
-            <Box sx= {{ display: { xs: 'none', lg: 'block', transition: 'all 0.2s ease-in-out' } }}><Desktop /></Box>
-        </Box>
+        <Container maxWidth= "xl">
+            <Navbar />
+            <Stack sx= { container }>
+                <Sidebar />
+                <Box sx= { content }>
+                    <Routes>
+                        { Components.map((cmpnts) => (cmpnts.components).map((page, index) => (
+                            <Route exact key= { index } path= { page.path } 
+                                element= { <Suspense fallback= { <Loader /> }>{ page.component }</Suspense> } />
+                        ))) }
+                    </Routes>
+                </Box>
+            </Stack>
+        </Container>
+        
     );
 }
 

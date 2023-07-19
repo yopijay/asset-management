@@ -17,10 +17,12 @@ export const title = {
     color: '#A0C49D',
     fontFamily: 'Montserrat Black',
     fontSize: '1.5rem',
-    lineHeight: 1
+    lineHeight: 1,
+    display: { xs: 'none', sm: 'block' }
 }
 
 export const subtitle = {
     color: '#C4D7B2',
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    display: { xs: 'none', sm: 'block' }
 }

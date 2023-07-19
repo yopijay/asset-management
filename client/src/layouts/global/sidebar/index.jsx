@@ -1,19 +1,41 @@
 // Libraries
-import { Box } from "@mui/material";
+import { useContext } from "react";
+import { Stack, SwipeableDrawer } from "@mui/material";
+
+// Core
+import { GlobalCntxt } from "core/context/Global"; // Context
 
 // Components
-import Desktop from "./screens/desktop";
-import Tablet from "./screens/tablet";
-import Mobile from "./screens/mobile";
+import Navs from "./components/Navs";
+import Account from "./components/Account";
+
+// Constants
+import { accountfix, fix, nav, navfix, sidebar, swipable, swipe } from "./index.style"; // Styles
+import Logout from "./components/Logout";
 
 const Index = () => {
+    const { container, drawerToggle, open } = useContext(GlobalCntxt);
 
     return (
-        <Box>
-            <Box sx= {{ display: { xs: 'block', sm: 'none', transition: 'all 0.2s ease-in-out' } }}><Mobile /></Box>
-            <Box sx= {{ display: { xs: 'none', sm: 'block', lg: 'none', transition: 'all 0.2s ease-in-out' } }}><Tablet /></Box>
-            <Box sx= {{ display: { xs: 'none', lg: 'block', transition: 'all 0.2s ease-in-out' } }}><Desktop /></Box>
-        </Box>
+        <Stack sx= { sidebar }>
+            <SwipeableDrawer anchor= "left" variant= "temporary" ModalProps= {{ keepMounted: true }} container= { container }
+                onOpen= { drawerToggle(true) } open= { open.left } onClose={ drawerToggle(false) } sx= { swipe }>
+                <Stack sx= { swipable } spacing= { 2 }>
+                    <Stack sx= { nav } spacing= { 6 }>
+                        <Account />
+                        <Navs />
+                    </Stack>
+                    <Logout />
+                </Stack>
+            </SwipeableDrawer>
+            <Stack sx= { fix } spacing= { 2 }>
+                <Stack sx= { nav } spacing= { 3 }>
+                    <Stack sx= { accountfix }><Account /></Stack>
+                    <Stack sx= { navfix }><Navs /></Stack>
+                </Stack>
+                <Logout />
+            </Stack>
+        </Stack>
     );
 }
 

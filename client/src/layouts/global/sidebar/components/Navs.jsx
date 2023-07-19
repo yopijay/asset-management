@@ -26,7 +26,7 @@ const linkactive = {
 }
 
 const Navs = () => {
-    const { active, setactive } = useContext(GlobalCntxt);
+    const { active, setactive, setopen } = useContext(GlobalCntxt);
     
     return (
         <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 }>
@@ -36,7 +36,7 @@ const Navs = () => {
                     <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch">
                         { (cmpnts.components).map((nav, index) => (
                             <Typography key= { index } component= { Link } to= { nav.path } sx= { active === nav.name ? linkactive : link }
-                                onClick= { () => { setactive(nav.name); localStorage.setItem('nav', nav.name); } }>{ nav.title }</Typography>
+                                onClick= { () => { setopen({ left: false }); setactive(nav.name); localStorage.setItem('nav', nav.name); } }>{ nav.title }</Typography>
                         )) }
                     </Stack>
                 </Stack>
