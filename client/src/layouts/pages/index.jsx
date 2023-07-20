@@ -22,14 +22,8 @@ const container = {
 
 const content = {
     width: '100%',
-    padding: {
-        xs: '80px 0 0 0',
-        sm: '90px 0 0 0',
-        lg: '100px 0 0 30px'
-    },
-    overflowY: 'scroll',
-    transition: 'all 0.2s ease-in-out',
-    '&::-webkit-scrollbar': { display: 'none' }
+    overflow: 'hidden',
+    transition: 'all 0.2s ease-in-out'
 }
 
 const Index = () => {
@@ -41,7 +35,7 @@ const Index = () => {
                 <Box sx= { content }>
                     <Routes>
                         { Components.map((cmpnts) => (cmpnts.components).map((page, index) => (
-                            <Route exact key= { index } path= { page.path } 
+                            <Route exact key= { index } path= { `${page.path}/*` } 
                                 element= { <Suspense fallback= { <Loader /> }>{ page.component }</Suspense> } />
                         ))) }
                     </Routes>

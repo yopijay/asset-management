@@ -1,7 +1,8 @@
 // Libraries
-// import React from "react";
+import React from "react";
 
-// const Dashboard = React.lazy(() => import(''))
+// Maintenance
+const Company = React.lazy(() => import('layouts/pages/maintenance/company'));
 
 export const Components = ([
     { label: 'Overview', components: [
@@ -12,11 +13,11 @@ export const Components = ([
         { path: '/reports', name: 'reports', title: 'Reports', component: 'REPORTS' }
     ] },
     { label: 'Maintenance', components: [
-        { path: '/company', name: 'company', title: 'Company', component: 'COMPANY' },
-        { path: '/department', name: 'department', title: 'Department', component: 'DEPARTMENT' },
-        { path: '/position', name: 'position', title: 'Position', component: 'POSITION' },
-        { path: '/asset-type', name: 'asset-type', title: 'Asset Type', component: 'ASSET TYPES' },
-        { path: '/brands', name: 'brands', title: 'Brands', component: 'BRANDS' },
-        { path: '/racks', name: 'racks', title: 'Racks', component: 'RACKS' }
+        { path: '/maintenance/company', name: 'company', title: 'Company', component: <Company /> },
+        { path: '/maintenance/department', name: 'department', title: 'Department', component: 'DEPARTMENT' },
+        { path: '/maintenance/position', name: 'position', title: 'Position', component: 'POSITION' },
+        { path: '/maintenance/asset-type', name: 'asset-type', title: 'Asset Type', component: 'ASSET TYPES' },
+        { path: '/maintenance/brands', name: 'brands', title: 'Brands', component: 'BRANDS' },
+        { path: '/maintenance/racks', name: 'racks', title: 'Racks', component: 'RACKS' }
     ] }
 ]);
