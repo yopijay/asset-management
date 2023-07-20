@@ -40,6 +40,8 @@ const Index = () => {
                         </Stack>
                     </ListPrvdr>
                  } />
+                 <Route exact path= "/form/:type" element= { 'CREATE' } />
+                 <Route exact path= "/form/:type/:id" element= { 'UPDATE' } />
             </Routes>
         </Stack>
     );
