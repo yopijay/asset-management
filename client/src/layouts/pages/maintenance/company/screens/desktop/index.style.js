@@ -21,7 +21,7 @@ export const history = {
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'stretch',
-    width: '280px',
+    width: '350px',
     padding: '190px 0 20px 0'
 }
 
@@ -39,7 +39,7 @@ export const logs = {
     alignItems: 'stretch',
     backgroundColor: '#FFFFFF',
     borderRadius: '8px',
-    padding: '20px 15px',
+    padding: '15px',
     border: 'solid 1px #F1F6F9',
     overflowY: 'scroll',
     '&::-webkit-scrollbar': { display: 'none' }

@@ -70,5 +70,6 @@ export const btn = {
     color: '#FFFFFF',
     backgroundColor: '#A0C49D',
     transition: 'all 0.2s ease-in-out',
+    cursor: 'pointer',
     '&:hover': { backgroundColor: '#86a583' }
 }

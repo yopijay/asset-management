@@ -35,6 +35,7 @@ export const download = {
     padding: '7px 12px',
     borderRadius: '7px',
     transition: 'all 0.2s ease-in-out',
+    cursor: 'pointer',
     '&:hover': { backgroundColor: '#3f5465' }
 }
 
@@ -44,6 +45,7 @@ export const upload = {
     padding: '7px 12px',
     borderRadius: '7px',
     transition: 'all 0.2s ease-in-out',
+    cursor: 'pointer',
     '&:hover': { backgroundColor: '#3f5465' }
 }
 

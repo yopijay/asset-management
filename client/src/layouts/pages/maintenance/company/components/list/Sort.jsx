@@ -19,10 +19,10 @@ const Sort = () => {
                 <Typography variant= "caption">Order by:</Typography>
                 <Typography variant= "caption" sx= { orderby }>Date created</Typography>
             </Stack>
-            <Typography onClick= { () => setsort(!sort) }>{ sort ? 
+            <Typography sx= {{ cursor: 'pointer' }} onClick= { () => setsort(!sort) }>{ sort ? 
                                         <FontAwesomeIcon icon= { solid('arrow-down-a-z') } color= "#9DB2BF" /> : 
                                         <FontAwesomeIcon icon= { solid('arrow-down-z-a') } color= "#9DB2BF" /> }</Typography>
-            <Typography onClick= { () => setlisting(!listing) }>{ listing ? 
+            <Typography sx= {{ cursor: 'pointer' }} onClick= { () => setlisting(!listing) }>{ listing ? 
                                         <FontAwesomeIcon icon= { solid('list') } color= "#9DB2BF" /> :
                                         <FontAwesomeIcon icon= { solid('grip') } color= "#9DB2BF" /> }</Typography>
         </Stack>
