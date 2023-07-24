@@ -2,19 +2,20 @@
 import { Stack } from "@mui/material";
 import { Route, Routes } from "react-router-dom";
 
-// Constants
-import { container } from "./index.style"; // Styles
-
 // Components
 import List from "./List";
+import Form from "./Form";
+
+// Constants
+import { container } from "./index.style"; // Styles
 
 const Index = () => {
     return (
         <Stack sx= { container }>
             <Routes>
                 <Route exact path= "/" element= { <List /> } />
-                 <Route exact path= "/form/:type" element= { 'CREATE' } />
-                 <Route exact path= "/form/:type/:id" element= { 'UPDATE' } />
+                 <Route exact path= "/form/:type" element= { <Form /> } />
+                 <Route exact path= "/form/:type/:id" element= { <Form /> } />
             </Routes>
         </Stack>
     );
