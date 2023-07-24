@@ -14,6 +14,21 @@ export const search = {
     }
 }
 
+export const btnicon = { 
+    display: {
+        xs: 'block',
+        md: 'none'
+    }, 
+    textDecoration: 'none',
+    cursor: 'pointer',
+    backgroundColor: '#A0C49D',
+    color: '#ffffff',
+    borderRadius: '7px',
+    padding: '7px 15px',
+    transition: 'all 0.2s ease-in-out',
+    '&:hover': { backgroundColor: '#86a583' }
+}
+
 export const btntxt = { 
     display: {
         xs: 'none',
@@ -46,6 +61,17 @@ export const upload = {
     borderRadius: '7px',
     transition: 'all 0.2s ease-in-out',
     cursor: 'pointer',
+    '&:hover': { backgroundColor: '#3f5465' }
+}
+
+export const logs = {
+    backgroundColor: '#526D82',
+    color: '#FFFFFF',
+    padding: '7px 12px',
+    borderRadius: '7px',
+    transition: 'all 0.2s ease-in-out',
+    cursor: 'pointer',
+    display: { xs: 'block', lg: 'none' },
     '&:hover': { backgroundColor: '#3f5465' }
 }
 

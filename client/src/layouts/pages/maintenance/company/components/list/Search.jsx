@@ -5,7 +5,7 @@ import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { Link } from "react-router-dom";
 
 // Constants
-import { btntxt, download, search, upload } from "./list.style"; // Styles
+import { btnicon, btntxt, download, logs, search, upload } from "./list.style"; // Styles
 
 const Search = () => {
     return (
@@ -18,8 +18,10 @@ const Search = () => {
                 </Box>
             </form>
             <Stack direction= "row" justifyContent= "flex-end" alignItems= "center" spacing= { 1 }>
+                <Typography sx= { logs }><FontAwesomeIcon icon= { solid('clock-rotate-left') } /></Typography>
                 <Typography sx= { download }><FontAwesomeIcon icon= { solid('download') } /></Typography>
                 <Typography sx= { upload }><FontAwesomeIcon icon= { solid('upload') } /></Typography>
+                <Typography component= { Link } to= "/maintenance/company/form/new" sx= { btnicon }><FontAwesomeIcon icon= { solid('plus') } /></Typography>
                 <Typography component= { Link } to= "/maintenance/company/form/new" sx= { btntxt }>New Company</Typography>
             </Stack>
         </Stack>
