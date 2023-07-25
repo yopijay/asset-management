@@ -3,8 +3,8 @@ export const card = {
     borderRadius: '7px',
     flexGrow: 1,
     padding: {
-        xs: '0',
-        sm: '15px',
+        xs: '20px',
+        sm: '30px',
         lg: '40px'
     },
     overflowY: 'scroll',

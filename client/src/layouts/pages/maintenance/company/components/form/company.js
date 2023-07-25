@@ -1,4 +1,11 @@
+// Libraries
+import { useContext } from "react";
+
+// Core
+import { FormCntxt } from "core/context/Form"; // Context
+
 const Company = () => {
+    const { control } = useContext(FormCntxt);
 
     return ([
         {
@@ -50,6 +57,17 @@ const Company = () => {
                 fetching: false,
             },
             type: 'textarea'
+        },
+        {
+            grid: { xs: 12 },
+            props: {
+                name: 'status',
+                label: 'Status',
+                disabled: false,
+                fetching: false,
+                control: control
+            },
+            type: 'switch'
         }
     ]);
 }

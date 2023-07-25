@@ -1,6 +1,7 @@
 // Libraries
-import styled from "@emotion/styled"
-import { Stack, Switch, Typography } from "@mui/material"
+import styled from "@emotion/styled";
+import { Stack, Switch, Typography } from "@mui/material";
+import { Controller } from "react-hook-form";
 
 // Custom style
 const IOSSwitch = styled((props) => 
@@ -34,12 +35,15 @@ const IOSSwitch = styled((props) =>
 ));
 
 const Index = props => {
-    const { label, control } = props;
+    const { label, control, name } = props;
 
     return (
-        <Stack direction= "row" justifyContent= "flex-start" alignItems= "center">
-            
+        <Stack direction= "row" justifyContent= "flex-start" alignItems= "center" spacing= { 2 }>
             <Typography variant= "body2" gutterBottom color= "#394867">{ label }</Typography>
+            <Controller control= { control } name= { name }
+                render= { ({ field: { onChange } }) => (
+                    <IOSSwitch />
+                ) } />
         </Stack>
     );
 }

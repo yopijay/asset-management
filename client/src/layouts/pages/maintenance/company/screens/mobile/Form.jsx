@@ -18,7 +18,7 @@ const Form = () => {
             <Stack sx= { content } spacing= { 4 }>
                 <Title />
                 <Fields />
-                <Stack direction= "row" justifyContent= "flex-end" alignItems= "center" spacing= { 1 }>
+                <Stack direction= "row" justifyContent= "space-between" alignItems= "center" spacing= { 1 }>
                     <Typography sx= { cancel } component= { Link } to= "/maintenance/company">Cancel</Typography>
                     <Typography sx= { save }>Save</Typography>
                 </Stack>

@@ -65,5 +65,7 @@ export const cancel = {
     transition: 'all 0.2s ease-in-out',
     borderRadius: '7px',
     backgroundColor: '#DDE6ED',
+    textDecoration: 'none',
+    color: '#394867',
     '&:hover': { backgroundColor: '#cdd6dd' }
 }
