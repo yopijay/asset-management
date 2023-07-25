@@ -10,7 +10,7 @@ export const nav = {
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'stretch',
-    flexGrow: 1,
+    height: '100%',
     overflow: 'hidden'
 }
 
