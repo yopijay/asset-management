@@ -17,14 +17,15 @@ const input = {
 }
 
 const Index = props => {
-    const { label, fetching, disabled, name } = props;
+    const { label, fetching, disabled, name, type, InputProps } = props;
     const { register, errors } = useContext(FormCntxt);
 
     return (
         <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch">
             <Typography variant= "body2" gutterBottom color= "#394867">{ label }</Typography>
             { fetching ? <Skeleton variant= "rounded" height= "35px" /> : 
-                <TextField name= { name } { ...register(name) } variant= "standard" InputProps= {{ disableUnderline: true }} disabled= { disabled } sx= { input } /> }
+                <TextField name= { name } { ...register(name) } variant= "standard" 
+                    InputProps= {{ disableUnderline: true, ...InputProps }} disabled= { disabled } sx= { input } type= { type } /> }
             <Typography variant= "body2" color= "error.dark">{ errors[name]?.message }</Typography>
         </Stack>
     );

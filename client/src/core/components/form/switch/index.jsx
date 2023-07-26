@@ -1,6 +1,6 @@
 // Libraries
 import styled from "@emotion/styled";
-import { Stack, Switch, Typography } from "@mui/material";
+import { Skeleton, Stack, Switch, Typography } from "@mui/material";
 import { useContext } from "react";
 import { Controller } from "react-hook-form";
 
@@ -45,10 +45,11 @@ const Index = props => {
     return (
         <Stack direction= "row" justifyContent= "flex-start" alignItems= "center" spacing= { 2 }>
             <Typography variant= "body2" gutterBottom color= "#394867">{ label }</Typography>
-            <Controller control= { control } name= { name } defaultValue= { getValues()[name] !== null && getValues()[name] !== undefined ? getValues()[name] : true }
-                render= { ({ field: { onChange } }) => ( 
-                    <IOSSwitch checked= { getValues()[name] !== null && getValues()[name] !== undefined ? getValues()[name] : true } disabled= { disabled }
-                        onChange= { e => { setValue(name, !(getValues()[name]) ?? true); onChange(e.target.checked); } } /> ) } />
+            { fetching ? <Skeleton variant= "rounded" height= "26px" width= "42px" sx= {{ borderRadius: '13px' }} /> :
+                <Controller control= { control } name= { name } defaultValue= { getValues()[name] !== null && getValues()[name] !== undefined ? getValues()[name] : true }
+                    render= { ({ field: { onChange } }) => ( 
+                        <IOSSwitch checked= { getValues()[name] !== null && getValues()[name] !== undefined ? getValues()[name] : true } disabled= { disabled }
+                            onChange= { e => { setValue(name, !(getValues()[name]) ?? true); onChange(e.target.checked); } } /> ) } /> }
         </Stack>
     );
 }
