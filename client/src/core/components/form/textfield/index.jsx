@@ -1,5 +1,9 @@
 // Libraries
 import { Skeleton, Stack, TextField, Typography } from "@mui/material";
+import { useContext } from "react";
+
+// Core
+import { FormCntxt } from "core/context/Form"; // Context
 
 // Custom styles
 const input = {
@@ -12,15 +16,15 @@ const input = {
 }
 
 const Index = props => {
-    const { label, fetching, disabled, name, error } = props;
+    const { label, fetching, disabled, name } = props;
+    const { register, errors } = useContext(FormCntxt);
 
     return (
         <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch">
             <Typography variant= "body2" gutterBottom color= "#394867">{ label }</Typography>
             { fetching ? <Skeleton variant= "rounded" height= "35px" /> : 
-                <TextField name= { name } variant= "standard" InputProps= {{ disableUnderline: true }}
-                    disabled= { disabled } sx= { input } /> }
-            <Typography variant= "body2" color= "error.dark">{ error }</Typography>
+                <TextField name= { name } { ...register(name) } variant= "standard" InputProps= {{ disableUnderline: true }} disabled= { disabled } sx= { input } /> }
+            <Typography variant= "body2" color= "error.dark">{ errors[name]?.message }</Typography>
         </Stack>
     );
 }

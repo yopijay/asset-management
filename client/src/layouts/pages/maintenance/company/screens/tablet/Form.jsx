@@ -1,29 +1,41 @@
 // Libraries
-import { Stack, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Stack, ThemeProvider, Typography } from "@mui/material";
+import { Link, useParams } from "react-router-dom";
+import { useContext, useEffect } from "react";
 
 // Core
-import { FormPrvdr } from "core/context/Form"; // Provider
-
-// Components
-import Title from "../../components/form/Title";
-import Fields from "../../components/form/Fields";
+import { FormCntxt } from "core/context/Form"; // Provider
+import { Components } from "core/theme"; // Theme
+import FormBuilder from "core/components/form"; // Form Builder
 
 // Constants
-import { cancel, content, save } from "./index.style"; // Styles
+import { cancel, card, content, input, save, title } from "./index.style"; // Styles
+import { validation } from "../../index.validation"; // Validations
+import Company from "../../company"; // Fields
 
 const Form = () => {
+    const { type } = useParams();
+    const { setValidation, handleSubmit, getValues } = useContext(FormCntxt);
+
+    useEffect(() => { setValidation(validation()); }, [ setValidation ]);
+
     return (
-        <FormPrvdr>
-            <Stack sx= { content } spacing= { 4 }>
-                <Title />
-                <Fields />
-                <Stack direction= "row" justifyContent= "flex-end" alignItems= "center" spacing= { 1 }>
-                    <Typography sx= { cancel } component= { Link } to= "/maintenance/company">Cancel</Typography>
-                    <Typography sx= { save }>Save</Typography>
-                </Stack>
+        <Stack sx= { content } spacing= { 4 }>
+            <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch">
+                <Typography sx= { title }>{ type.charAt(0).toUpperCase() + type.slice(1) } Company</Typography>
+                <Typography variant= "caption" color= "#9BA4B5">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc non neque molestie, 
+                    malesuada quam ut, vulputate massa.</Typography>
             </Stack>
-        </FormPrvdr>
+            <ThemeProvider theme= { Components(input) }>
+                <Stack sx= { card }>
+                    <FormBuilder fields= { Company() } />
+                </Stack>
+            </ThemeProvider>
+            <Stack direction= "row" justifyContent= "flex-end" alignItems= "center" spacing= { 1 }>
+                <Typography sx= { cancel } component= { Link } to= "/maintenance/company">Cancel</Typography>
+                <Typography sx= { save }>Save</Typography>
+            </Stack>
+        </Stack>
     );
 }
 

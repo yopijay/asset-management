@@ -11,29 +11,31 @@ import FormBuilder from "core/components/form"; // Form Builder
 // Constants
 import { cancel, card, content, input, save, title } from "./index.style"; // Styles
 import { validation } from "../../index.validation"; // Validations
-import Company from "../../company"; // Fields
+import Department from "../../department"; // Fields
 
 const Form = () => {
     const { type } = useParams();
-    const { setValidation, handleSubmit, getValues } = useContext(FormCntxt);
+    const { setValidation, handleSubmit } = useContext(FormCntxt);
 
     useEffect(() => { setValidation(validation()); }, [ setValidation ]);
 
     return (
         <Stack sx= { content } spacing= { 4 }>
             <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch">
-                <Typography sx= { title }>{ type.charAt(0).toUpperCase() + type.slice(1) } Company</Typography>
+                <Typography sx= { title }>{ type.charAt(0).toUpperCase() + type.slice(1) } Department</Typography>
                 <Typography variant= "caption" color= "#9BA4B5">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc non neque molestie, 
                     malesuada quam ut, vulputate massa.</Typography>
             </Stack>
             <ThemeProvider theme= { Components(input) }>
                 <Stack sx= { card }>
-                    <FormBuilder fields= { Company() } />
+                    <FormBuilder fields= { Department() } />
                 </Stack>
             </ThemeProvider>
-            <Stack direction= "row" justifyContent= "space-between" alignItems= "center" spacing= { 1 }>
-                <Typography sx= { cancel } component= { Link } to= "/maintenance/company">Cancel</Typography>
-                <Typography sx= { save }>Save</Typography>
+            <Stack direction= "row" justifyContent= "flex-end" alignItems= "center" spacing= { 1 }>
+                <Typography sx= { cancel } component= { Link } to= "/maintenance/department">Cancel</Typography>
+                <Typography sx= { save } onClick= { handleSubmit(data => {
+                    console.log(data);
+                }) }>Save</Typography>
             </Stack>
         </Stack>
     );

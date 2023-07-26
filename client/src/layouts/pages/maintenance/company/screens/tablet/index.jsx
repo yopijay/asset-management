@@ -1,6 +1,9 @@
-// Libraires
+// Libraries
 import { Stack } from "@mui/material";
 import { Route, Routes } from "react-router-dom";
+
+// Core
+import { FormPrvdr } from "core/context/Form"; // Provider
 
 // Components
 import List from "./List";
@@ -14,8 +17,8 @@ const Index = () => {
         <Stack sx= { container }>
             <Routes>
                 <Route exact path= "/" element= { <List /> } />
-                <Route exact path= "/form/:type" element= { <Form /> } />
-                <Route exact path= "/form/:type/:id" element= { <Form /> } />
+                 <Route exact path= "/form/:type" element= { <FormPrvdr><Form /></FormPrvdr> } />
+                 <Route exact path= "/form/:type/:id" element= { <FormPrvdr><Form /></FormPrvdr> } />
             </Routes>
         </Stack>
     );

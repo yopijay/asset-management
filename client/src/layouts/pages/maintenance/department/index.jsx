@@ -1,6 +1,6 @@
 // Libraries
-import { useEffect } from "react";
 import { Box } from "@mui/material";
+import { useEffect } from "react";
 
 // Screens
 import Mobile from "./screens/mobile";
@@ -8,7 +8,7 @@ import Tablet from "./screens/tablet";
 import Desktop from "./screens/desktop";
 
 const Index = () => {
-    useEffect(() => { document.title = 'GAMS | Company' }, []);
+    useEffect(() => { document.title = 'GAMS | Department' }, []);
 
     return (
         <Box>
