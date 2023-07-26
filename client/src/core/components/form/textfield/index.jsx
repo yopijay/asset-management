@@ -12,7 +12,8 @@ const input = {
         xs: '10px 8px 8px 8px',
         md: '6px 10px 5px 10px'
     },
-    borderRadius: '5px'
+    borderRadius: '5px',
+    transition: 'all 0.2s ease-in-out'
 }
 
 const Index = props => {

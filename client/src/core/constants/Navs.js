@@ -4,6 +4,7 @@ import React from "react";
 // Maintenance
 const Company = React.lazy(() => import('layouts/pages/maintenance/company'));
 const Department = React.lazy(() => import('layouts/pages/maintenance/department'));
+const Position = React.lazy(() => import('layouts/pages/maintenance/position'));
 
 export const Components = ([
     { label: 'Overview', components: [
@@ -16,7 +17,7 @@ export const Components = ([
     { label: 'Maintenance', components: [
         { path: '/maintenance/company', name: 'company', title: 'Company', component: <Company /> },
         { path: '/maintenance/department', name: 'department', title: 'Department', component: <Department /> },
-        { path: '/maintenance/position', name: 'position', title: 'Position', component: 'POSITION' },
+        { path: '/maintenance/position', name: 'position', title: 'Position', component: <Position /> },
         { path: '/maintenance/asset-type', name: 'asset-type', title: 'Asset Type', component: 'ASSET TYPES' },
         { path: '/maintenance/brands', name: 'brands', title: 'Brands', component: 'BRANDS' },
         { path: '/maintenance/racks', name: 'racks', title: 'Racks', component: 'RACKS' }

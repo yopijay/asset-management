@@ -18,7 +18,20 @@ const Department = () => {
                 label: '*Company',
                 disabled: false,
                 fetching: false,
-                options: []
+                options: [],
+                onchange: () => {}
+            },
+            type: 'dropdown'
+        },
+        {
+            grid: { xs: 12, md: 6 },
+            props: {
+                name: 'department_id',
+                label: '*Department',
+                disabled: false,
+                fetching: false,
+                options: [],
+                onchange: () => {}
             },
             type: 'dropdown'
         },
@@ -26,22 +39,11 @@ const Department = () => {
             grid: { xs: 12, md: 6 },
             props: {
                 name: 'name',
-                label: '*Department',
+                label: '*Position',
                 disabled: false,
                 fetching: false
             },
             type: 'textfield'
-        },
-        {
-            grid: { xs: 12, md: 6 },
-            props: {
-                name: 'department_head_id',
-                label: '*Department head',
-                disabled: false,
-                fetching: false,
-                options: []
-            },
-            type: 'dropdown'
         },
         {
             grid: { xs: 12 },

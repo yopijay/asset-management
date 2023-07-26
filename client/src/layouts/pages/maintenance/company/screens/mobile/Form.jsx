@@ -15,7 +15,7 @@ import Company from "../../company"; // Fields
 
 const Form = () => {
     const { type } = useParams();
-    const { setValidation, handleSubmit, getValues } = useContext(FormCntxt);
+    const { setValidation } = useContext(FormCntxt);
 
     useEffect(() => { setValidation(validation()); }, [ setValidation ]);
 
@@ -27,9 +27,7 @@ const Form = () => {
                     malesuada quam ut, vulputate massa.</Typography>
             </Stack>
             <ThemeProvider theme= { Components(input) }>
-                <Stack sx= { card }>
-                    <FormBuilder fields= { Company() } />
-                </Stack>
+                <Stack sx= { card }><FormBuilder fields= { Company() } /></Stack>
             </ThemeProvider>
             <Stack direction= "row" justifyContent= "space-between" alignItems= "center" spacing= { 1 }>
                 <Typography sx= { cancel } component= { Link } to= "/maintenance/company">Cancel</Typography>

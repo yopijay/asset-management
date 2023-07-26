@@ -27,9 +27,7 @@ const Form = () => {
                     malesuada quam ut, vulputate massa.</Typography>
             </Stack>
             <ThemeProvider theme= { Components(input) }>
-                <Stack sx= { card }>
-                    <FormBuilder fields= { Company() } />
-                </Stack>
+                <Stack sx= { card }><FormBuilder fields= { Company() } /></Stack>
             </ThemeProvider>
             <Stack direction= "row" justifyContent= "flex-end" alignItems= "center" spacing= { 1 }>
                 <Typography sx= { cancel } component= { Link } to= "/maintenance/company">Cancel</Typography>

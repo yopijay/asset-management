@@ -15,11 +15,21 @@ const select = {
         md: '9px 10px 6px 10px'
     },
     marginBottom: '5px',
-    borderRadius: '5px'
+    borderRadius: '5px',
+    transition: 'all 0.2s ease-in-out'
+}
+
+const lbl = {
+    whiteSpace: 'nowrap', 
+    overflow: 'hidden', 
+    textOverflow: 'ellipsis', 
+    width: '100%',
+    padding: '2px 0',
+    transition: 'all 0.2s ease-in-out'
 }
 
 const Index = props => {
-    const { label, fetching, disabled, name, options } = props;
+    const { label, fetching, disabled, name, options, onchange } = props;
     const { control, errors, setError, getValues } = useContext(FormCntxt);
 
     return (
@@ -34,12 +44,12 @@ const Index = props => {
                                     getOptionLabel= { option => option.name || option.id } noOptionsText= "No results..." getOptionDisabled= { option => option.id === 0 }
                                     isOptionEqualToValue= { (option, value) => option.name === value.name || option.id === value.id }
                                     renderInput= { params => <TextField { ...params } variant= "standard" size= "small" fullWidth /> }
-                                    onChange= { (e, item) => { setError(name, { message: '' }); onChange(item.id); } }
+                                    onChange= { (e, item) => { setError(name, { message: '' }); onChange(item.id); onchange(item); } }
                                     value= { options?.find(data => { return data.id === (getValues()[name] !== undefined ? getValues()[name] : value) }) !== undefined ?
                                                     options?.find(data => { return data.id === (getValues()[name] !== undefined ? getValues()[name] : value) }) : options?.length === 0 ?
                                                         { id: 0, name: '-- SELECT AN ITEM BELOW --' } : options[0] } />
                             ) } /> :
-                        <Typography color= "text.disabled" padding= "2px 0">You must create a { (label.replace('*', '')).toLowerCase() } first!</Typography> }
+                        <Typography color= "text.disabled" sx= { lbl }>You must create a { (label.replace('*', '')).toLowerCase() } first!</Typography> }
                 </Box> }
             <Typography variant= "body2" color= "error.dark">{ errors[name]?.message }</Typography>
         </Stack>

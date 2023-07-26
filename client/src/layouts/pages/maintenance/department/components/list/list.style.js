@@ -17,7 +17,7 @@ export const search = {
 export const btnicon = { 
     display: {
         xs: 'block',
-        md: 'none'
+        lg: 'none'
     }, 
     textDecoration: 'none',
     cursor: 'pointer',
@@ -32,7 +32,7 @@ export const btnicon = {
 export const btntxt = { 
     display: {
         xs: 'none',
-        md: 'block'
+        lg: 'block'
     }, 
     textDecoration: 'none',
     cursor: 'pointer',

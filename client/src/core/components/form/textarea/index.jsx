@@ -14,7 +14,8 @@ const textarea = {
     padding: '10px',
     outline: 'none',
     textTransform: 'uppercase',
-    color: '#353b48'
+    color: '#353b48',
+    transition: 'all 0.2s ease-in-out'
 }
 
 const Index = props => {
