@@ -7,7 +7,8 @@ const Brand = () => {
                 name: 'series_no',
                 label: '*Series no.',
                 disabled: true,
-                fetching: false
+                fetching: false,
+                onchange: () => {}
             },
             type: 'textfield'
         },
@@ -17,7 +18,8 @@ const Brand = () => {
                 name: 'name',
                 label: '*Brand',
                 disabled: false,
-                fetching: false
+                fetching: false,
+                onchange: () => {}
             },
             type: 'textfield'
         },
@@ -27,7 +29,8 @@ const Brand = () => {
                 name: 'description',
                 label: 'Description',
                 disabled: false,
-                fetching: false
+                fetching: false,
+                onchange: () => {}
             },
             type: 'textarea'
         },
@@ -37,7 +40,8 @@ const Brand = () => {
                 name: 'status',
                 label: 'Status',
                 disabled: false,
-                fetching: false
+                fetching: false,
+                onchange: () => {}
             },
             type: 'switch'
         }

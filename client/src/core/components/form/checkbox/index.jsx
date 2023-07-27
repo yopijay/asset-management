@@ -7,7 +7,7 @@ import { Controller } from "react-hook-form";
 import { FormCntxt } from "core/context/Form"; // Context
 
 const Index = props => {
-    const { label, fetching, disabled, name } = props;
+    const { label, fetching, disabled, name, onchange } = props;
     const { control, getValues, setValue } = useContext(FormCntxt);
 
     return (
@@ -17,7 +17,8 @@ const Index = props => {
                 <Controller control= { control } name= { name } defaultValue= { getValues()[name] ?? true }
                     render= { ({ field: { onChange } }) => (
                         <Checkbox sx= {{ color: '#d5d5d5', '&.Mui-checked': { color: '#A0C49D' } }} disabled= { disabled }
-                            checked= { getValues()[name] ?? true } onChange= { e => { setValue(name, getValues()[name] ?? true); onChange(e.target.checked); } } />
+                            checked= { getValues()[name] ?? true } 
+                            onChange= { e => { setValue(name, getValues()[name] ?? true); onChange(e.target.checked); onchange(e); } } />
                     ) } /> }
         </Stack>
     );

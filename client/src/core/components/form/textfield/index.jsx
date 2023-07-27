@@ -17,7 +17,7 @@ const input = {
 }
 
 const Index = props => {
-    const { label, fetching, disabled, name, type, InputProps, value } = props;
+    const { label, fetching, disabled, name, type = 'text', InputProps, value, onchange } = props;
     const { register, errors } = useContext(FormCntxt);
 
     return (
@@ -25,7 +25,8 @@ const Index = props => {
             <Typography variant= "body2" gutterBottom color= "#394867">{ label }</Typography>
             { fetching ? <Skeleton variant= "rounded" height= "35px" /> : 
                 <TextField name= { name } { ...register(name) } variant= "standard" value= { value }
-                    InputProps= {{ disableUnderline: true, ...InputProps }} disabled= { disabled } sx= { input } type= { type } /> }
+                    InputProps= {{ disableUnderline: true, ...InputProps }} disabled= { disabled } sx= { input } type= { type }
+                    onChange= { e => { onchange(e); } } /> }
             <Typography variant= "body2" color= "error.dark">{ errors[name]?.message }</Typography>
         </Stack>
     );

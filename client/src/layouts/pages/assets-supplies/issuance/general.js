@@ -6,7 +6,8 @@ const General = () => {
                 name: 'series_no',
                 label: '*Series no.',
                 disabled: true,
-                fetching: false
+                fetching: false,
+                onchange: () => {}
             },
             type: 'textfield'
         },

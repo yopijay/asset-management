@@ -7,7 +7,8 @@ const Rack = () => {
                 name: 'series_no',
                 label: '*Series no.',
                 disabled: true,
-                fetching: false
+                fetching: false,
+                onchange: () => {}
             },
             type: 'textfield'
         },
@@ -31,7 +32,7 @@ const Rack = () => {
                 label: '*Floor',
                 disabled: false,
                 fetching: false,
-                options: [{ id: 0, name: '-- SELECT AN ITEM BELOW --' }, { id: '1f', name: '1ST FLOOR' }, 
+                options: [{ id: 0, name: '-- SELECT AN ITEM BELOW --' }, { id: '1f', name: '1ST FLOOR' },
                                 { id: '2f', name: '2ND FLOOR' }, { id: '3f', name: '3RD FLOOR' }, { id: '4f', name: '4TH FLOOR' }],
                 onchange: () => {}
             },
@@ -43,7 +44,8 @@ const Rack = () => {
                 name: 'code',
                 label: '*Rack code',
                 disabled: false,
-                fetching: false
+                fetching: false,
+                onchange: () => {}
             },
             type: 'textfield'
         },
@@ -53,7 +55,8 @@ const Rack = () => {
                 name: 'status',
                 label: 'Status',
                 disabled: false,
-                fetching: false
+                fetching: false,
+                onchange: () => {}
             },
             type: 'switch'
         }

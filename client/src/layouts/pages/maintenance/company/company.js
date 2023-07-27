@@ -7,7 +7,8 @@ const Company = () => {
                 name: 'series_no',
                 label: '*Series no.',
                 disabled: true,
-                fetching: false
+                fetching: false,
+                onchange: () => {}
             },
             type: 'textfield'
         },
@@ -17,7 +18,8 @@ const Company = () => {
                 name: 'name',
                 label: '*Name',
                 disabled: false,
-                fetching: false
+                fetching: false,
+                onchange: () => {}
             },
             type: 'textfield'
         },
@@ -27,7 +29,8 @@ const Company = () => {
                 name: 'telephone',
                 label: 'Telephone',
                 disabled: false,
-                fetching: false
+                fetching: false,
+                onchange: () => {}
             },
             type: 'textfield'
         },
@@ -37,7 +40,8 @@ const Company = () => {
                 name: 'description',
                 label: 'Description',
                 disabled: false,
-                fetching: false
+                fetching: false,
+                onchange: () => {}
             },
             type: 'textarea'
         },
@@ -47,7 +51,8 @@ const Company = () => {
                 name: 'address',
                 label: 'Address',
                 disabled: false,
-                fetching: false
+                fetching: false,
+                onchange: () => {}
             },
             type: 'textarea'
         },
@@ -57,7 +62,8 @@ const Company = () => {
                 name: 'status',
                 label: 'Status',
                 disabled: false,
-                fetching: false
+                fetching: false,
+                onchange: () => {}
             },
             type: 'switch'
         }

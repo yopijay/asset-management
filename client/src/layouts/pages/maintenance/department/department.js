@@ -7,7 +7,8 @@ const Department = () => {
                 name: 'series_no',
                 label: '*Series no.',
                 disabled: true,
-                fetching: false
+                fetching: false,
+                onchange: () => {}
             },
             type: 'textfield'
         },
@@ -18,7 +19,8 @@ const Department = () => {
                 label: '*Company',
                 disabled: false,
                 fetching: false,
-                options: []
+                options: [],
+                onchange: () => {}
             },
             type: 'dropdown'
         },
@@ -28,7 +30,8 @@ const Department = () => {
                 name: 'name',
                 label: '*Department',
                 disabled: false,
-                fetching: false
+                fetching: false,
+                onchange: () => {}
             },
             type: 'textfield'
         },
@@ -39,7 +42,8 @@ const Department = () => {
                 label: '*Department head',
                 disabled: false,
                 fetching: false,
-                options: []
+                options: [],
+                onchange: () => {}
             },
             type: 'dropdown'
         },
@@ -49,7 +53,8 @@ const Department = () => {
                 name: 'description',
                 label: 'Description',
                 disabled: false,
-                fetching: false
+                fetching: false,
+                onchange: () => {}
             },
             type: 'textarea'
         },
@@ -59,7 +64,8 @@ const Department = () => {
                 name: 'status',
                 label: 'Status',
                 disabled: false,
-                fetching: false
+                fetching: false,
+                onchange: () => {}
             },
             type: 'switch'
         }

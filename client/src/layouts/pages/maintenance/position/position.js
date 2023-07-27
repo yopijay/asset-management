@@ -7,7 +7,8 @@ const Department = () => {
                 name: 'series_no',
                 label: '*Series no.',
                 disabled: true,
-                fetching: false
+                fetching: false,
+                onchange: () => {}
             },
             type: 'textfield'
         },
@@ -41,7 +42,8 @@ const Department = () => {
                 name: 'name',
                 label: '*Position',
                 disabled: false,
-                fetching: false
+                fetching: false,
+                onchange: () => {}
             },
             type: 'textfield'
         },
@@ -51,7 +53,8 @@ const Department = () => {
                 name: 'description',
                 label: 'Description',
                 disabled: false,
-                fetching: false
+                fetching: false,
+                onchange: () => {}
             },
             type: 'textarea'
         },
@@ -61,7 +64,8 @@ const Department = () => {
                 name: 'status',
                 label: 'Status',
                 disabled: false,
-                fetching: false
+                fetching: false,
+                onchange: () => {}
             },
             type: 'switch'
         }

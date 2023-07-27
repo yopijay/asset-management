@@ -39,7 +39,7 @@ const IOSSwitch =
     ));
 
 const Index = props => {
-    const { label, fetching, disabled, name } = props;
+    const { label, fetching, disabled, name, onchange } = props;
     const { control, getValues, setValue } = useContext(FormCntxt);
 
     return (
@@ -49,7 +49,7 @@ const Index = props => {
                 <Controller control= { control } name= { name } defaultValue= { getValues()[name] !== null && getValues()[name] !== undefined ? getValues()[name] : true }
                     render= { ({ field: { onChange } }) => ( 
                         <IOSSwitch checked= { getValues()[name] !== null && getValues()[name] !== undefined ? getValues()[name] : true } disabled= { disabled }
-                            onChange= { e => { setValue(name, !(getValues()[name]) ?? true); onChange(e.target.checked); } } /> ) } /> }
+                            onChange= { e => { setValue(name, !(getValues()[name]) ?? true); onChange(e.target.checked); onchange(e); } } /> ) } /> }
         </Stack>
     );
 }

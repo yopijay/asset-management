@@ -7,7 +7,8 @@ const Company = () => {
                 name: 'series_no',
                 label: '*Series no.',
                 disabled: true,
-                fetching: false
+                fetching: false,
+                onchange: () => {}
             },
             type: 'textfield'
         },
@@ -18,7 +19,8 @@ const Company = () => {
                 label: '*Category',
                 disabled: true,
                 fetching: false,
-                value: 'assets'
+                value: 'assets',
+                onchange: () => {}
             },
             type: 'textfield'
         },
@@ -52,7 +54,8 @@ const Company = () => {
                 name: 'status',
                 label: 'Status',
                 disabled: false,
-                fetching: false
+                fetching: false,
+                onchange: () => {}
             },
             type: 'switch'
         }

@@ -6,7 +6,8 @@ const Personal = () => {
                 name: 'fname',
                 label: '*First name',
                 disabled: false,
-                fetching: false
+                fetching: false,
+                onchange: () => {}
             },
             type: 'textfield'
         },
@@ -16,7 +17,8 @@ const Personal = () => {
                 name: 'mname',
                 label: 'Middle name',
                 disabled: false,
-                fetching: false
+                fetching: false,
+                onchange: () => {}
             },
             type: 'textfield'
         },
@@ -26,7 +28,8 @@ const Personal = () => {
                 name: 'lname',
                 label: '*Last name',
                 disabled: false,
-                fetching: false
+                fetching: false,
+                onchange: () => {}
             },
             type: 'textfield'
         },
@@ -36,7 +39,8 @@ const Personal = () => {
                 name: 'address',
                 label: 'Address',
                 disabled: false,
-                fetching: false
+                fetching: false,
+                onchange: () => {}
             },
             type: 'textarea'
         },
@@ -46,7 +50,8 @@ const Personal = () => {
                 name: 'status',
                 label: 'Status',
                 disabled: false,
-                fetching: false
+                fetching: false,
+                onchange: () => {}
             },
             type: 'switch'
         }

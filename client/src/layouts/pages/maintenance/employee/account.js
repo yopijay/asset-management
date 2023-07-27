@@ -18,7 +18,8 @@ const Account = () => {
                 label: '*Email',
                 disabled: false,
                 fetching: false,
-                type: 'email'
+                type: 'email',
+                onchange: () => {}
             },
             type: 'textfield'
         },
@@ -35,7 +36,8 @@ const Account = () => {
                         <InputAdornment position= "end" sx= {{ cursor: 'pointer' }} onClick= { () => setspass(!spass) }>
                             { !spass ? <FontAwesomeIcon icon= { solid('eye') } /> : <FontAwesomeIcon icon= { solid('eye-slash') } /> }
                         </InputAdornment> : ''
-                }
+                },
+                onchange: () => {}
             },
             type: 'textfield'
         },
@@ -52,7 +54,8 @@ const Account = () => {
                         <InputAdornment position= "end" sx= {{ cursor: 'pointer' }} onClick= { () => setscpass(!scpass) }>
                             { !scpass ? <FontAwesomeIcon icon= { solid('eye') } /> : <FontAwesomeIcon icon= { solid('eye-slash') } /> }
                         </InputAdornment> : ''
-                }
+                },
+                onchange: () => {}
             },
             type: 'textfield'
         },

@@ -7,7 +7,8 @@ const Employee = () => {
                 name: 'employee_no',
                 label: '*Employee no.',
                 disabled: false,
-                fetching: false
+                fetching: false,
+                onchange: () => {}
             },
             type: 'textfield'
         },
@@ -17,7 +18,8 @@ const Employee = () => {
                 name: 'rfid',
                 label: '*RFID',
                 disabled: false,
-                fetching: false
+                fetching: false,
+                onchange: () => {}
             },
             type: 'textfield'
         },
