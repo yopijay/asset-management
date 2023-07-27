@@ -5,6 +5,7 @@ import React from "react";
 const AssetsBrand = React.lazy(() => import('layouts/pages/assets-supplies/brand'));
 const Classificaiton = React.lazy(() => import('layouts/pages/assets-supplies/classification'));
 const Assets = React.lazy(() => import('layouts/pages/assets-supplies/assets'));
+const Supplies = React.lazy(() => import('layouts/pages/assets-supplies/supplies'));
 
 // Maintenance
 const Company = React.lazy(() => import('layouts/pages/maintenance/company'));
@@ -20,7 +21,7 @@ export const Components = ([
         { path: '/assets-supplies/brand', name: 'assets-supplies-brand', title: 'Brand', component: <AssetsBrand /> },
         { path: '/assets-supplies/classification', name: 'assets-supplies-classification', title: 'Classification', component: <Classificaiton /> },
         { path: '/assets-supplies/assets', name: 'assets', title: 'Assets', component: <Assets /> },
-        { path: '/assets-supplies/supplies', name: 'supplies', title: 'Supplies', component: 'SUPPLIES' },
+        { path: '/assets-supplies/supplies', name: 'supplies', title: 'Supplies', component: <Supplies /> },
         { path: '/assets-supplies/issuance', name: 'issuance', title: 'Issuance', component: 'ISSUANCE' }
     ] },
     { label: 'Warehouse', components: [
