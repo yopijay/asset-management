@@ -54,6 +54,24 @@ export const swipe = {
     }
 }
 
+export const accountswipe = {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    overflow: 'hidden',
+    padding: '15px 10px',
+    borderRadius: '6px'
+}
+
+export const navswipe = {
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'stretch',
+    height: '100%',
+    overflowY: 'scroll',
+    '&::-webkit-scrollbar': { display: 'none' }
+}
+
 export const swipable = {
     flexDireciton: 'column',
     justifyContent: 'space-between',

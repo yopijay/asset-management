@@ -10,7 +10,7 @@ import Navs from "./components/Navs";
 import Account from "./components/Account";
 
 // Constants
-import { accountfix, fix, nav, navfix, sidebar, swipable, swipe } from "./index.style"; // Styles
+import { accountfix, accountswipe, fix, nav, navfix, navswipe, sidebar, swipable, swipe } from "./index.style"; // Styles
 import Logout from "./components/Logout";
 
 const Index = () => {
@@ -22,8 +22,8 @@ const Index = () => {
                 onOpen= { drawerToggle(true) } open= { open.left } onClose={ drawerToggle(false) } sx= { swipe }>
                 <Stack sx= { swipable } spacing= { 2 }>
                     <Stack sx= { nav } spacing= { 6 }>
-                        <Account />
-                        <Navs />
+                    <Stack sx= { accountswipe }><Account /></Stack>
+                        <Stack sx= { navswipe }><Navs /></Stack>
                     </Stack>
                     <Logout />
                 </Stack>
