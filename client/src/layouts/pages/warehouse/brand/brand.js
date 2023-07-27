@@ -1,4 +1,4 @@
-const Company = () => {
+const Brand = () => {
 
     return ([
         {
@@ -44,4 +44,4 @@ const Company = () => {
     ]);
 }
 
-export default Company;
+export default Brand;

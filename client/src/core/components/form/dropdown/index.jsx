@@ -41,7 +41,8 @@ const Index = props => {
                         <Controller control= { control } name= { name }
                             render= {({ field: { onChange, value } }) => (
                                 <Autocomplete options= { options?.sort((a, b) => a.id - b.id) } disabled= { disabled } disableClearable
-                                    getOptionLabel= { option => option.name || option.id } noOptionsText= "No results..." getOptionDisabled= { option => option.id === 0 }
+                                    getOptionLabel= { option => option.name || option.id } noOptionsText= "No results..." 
+                                    getOptionDisabled= { option => option.id === 0 || option.id === '' }
                                     isOptionEqualToValue= { (option, value) => option.name === value.name || option.id === value.id }
                                     renderInput= { params => <TextField { ...params } variant= "standard" size= "small" fullWidth /> }
                                     onChange= { (e, item) => { setError(name, { message: '' }); onChange(item.id); onchange(item); } }

@@ -10,6 +10,7 @@ const Issuance = React.lazy(() => import('layouts/pages/assets-supplies/issuance
 
 // Warehouse
 const WarehouseBrand = React.lazy(() => import('layouts/pages/warehouse/brand'));
+const Racks = React.lazy(() => import('layouts/pages/warehouse/racks'));
 
 // Maintenance
 const Company = React.lazy(() => import('layouts/pages/maintenance/company'));
@@ -30,7 +31,7 @@ export const Components = ([
     ] },
     { label: 'Warehouse', components: [
         { path: '/warehouse/brand', name: 'warehouse-brand', title: 'Brand', component: <WarehouseBrand /> },
-        { path: '/warehouse/racks', name: 'warehouse-racks', title: 'Racks', component: 'RACKS' },
+        { path: '/warehouse/racks', name: 'warehouse-racks', title: 'Racks', component: <Racks /> },
         { path: '/warehouse/products', name: 'warehouse-products', title: 'Products', component: 'PRODUCTS' },
         { path: '/warehouse/physical-count', name: 'warehouse-physical-count', title: 'Physical Count', component: 'PHYSICAL COUNT' }
     ] },
