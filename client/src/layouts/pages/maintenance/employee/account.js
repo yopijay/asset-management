@@ -12,7 +12,7 @@ const Account = () => {
 
     return ([
         {
-            grid: { xs: 12, md: 7 },
+            grid: { xs: 12 },
             props: {
                 name: 'email',
                 label: '*Email',
@@ -24,7 +24,7 @@ const Account = () => {
             type: 'textfield'
         },
         {
-            grid: { xs: 12, md: 7 },
+            grid: { xs: 12 },
             props: {
                 name: 'password',
                 label: '*Password',
@@ -42,7 +42,7 @@ const Account = () => {
             type: 'textfield'
         },
         {
-            grid: { xs: 12, md: 7 },
+            grid: { xs: 12 },
             props: {
                 name: 'confrim_password',
                 label: '*Confirm Password',

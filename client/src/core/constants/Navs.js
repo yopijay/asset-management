@@ -12,6 +12,7 @@ const Issuance = React.lazy(() => import('layouts/pages/assets-supplies/issuance
 const WarehouseBrand = React.lazy(() => import('layouts/pages/warehouse/brand'));
 const Racks = React.lazy(() => import('layouts/pages/warehouse/racks'));
 const Products = React.lazy(() => import('layouts/pages/warehouse/products'));
+const PhysicalCount = React.lazy(() => import('layouts/pages/warehouse/physical-count'));
 
 // Maintenance
 const Company = React.lazy(() => import('layouts/pages/maintenance/company'));
@@ -34,13 +35,15 @@ export const Components = ([
         { path: '/warehouse/brand', name: 'warehouse-brand', title: 'Brand', component: <WarehouseBrand /> },
         { path: '/warehouse/racks', name: 'warehouse-racks', title: 'Racks', component: <Racks /> },
         { path: '/warehouse/products', name: 'warehouse-products', title: 'Products', component: <Products /> },
-        { path: '/warehouse/physical-count', name: 'warehouse-physical-count', title: 'Physical Count', component: 'PHYSICAL COUNT' }
+        { path: '/warehouse/physical-count', name: 'warehouse-physical-count', title: 'Physical Count', component: <PhysicalCount /> }
     ] },
     { label: 'Maintenance', components: [
         { path: '/maintenance/company', name: 'company', title: 'Company', component: <Company /> },
         { path: '/maintenance/department', name: 'department', title: 'Department', component: <Department /> },
         { path: '/maintenance/position', name: 'position', title: 'Position', component: <Position /> },
         { path: '/maintenance/employee', name: 'employee', title: 'Employee', component: <Employee /> },
-        { path: '/maintenance/role-access', name: 'role-access', title: 'Role & Access', component: "ROLE & ACCESS" }
+        { path: '/maintenance/role-access', name: 'role-access', title: 'Role & Access', component: "ROLE & ACCESS" },
+        { path: '/maintenance/module', name: 'module', title: 'Module', component: "MODULE" },
+        { path: '/maintenance/sub-module', name: 'sub-module', title: 'Sub Module', component: "SUB MODULE" }
     ] }
 ]);

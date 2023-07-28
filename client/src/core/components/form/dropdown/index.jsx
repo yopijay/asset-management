@@ -29,7 +29,7 @@ const lbl = {
 }
 
 const Index = props => {
-    const { label, fetching, disabled, name, options, onchange } = props;
+    const { label, fetching, disabled, name, options, onchange, multiple = false } = props;
     const { control, errors, setError, getValues } = useContext(FormCntxt);
 
     return (
@@ -40,7 +40,7 @@ const Index = props => {
                     { options.length > 0 ? 
                         <Controller control= { control } name= { name }
                             render= {({ field: { onChange, value } }) => (
-                                <Autocomplete options= { options?.sort((a, b) => a.id - b.id) } disabled= { disabled } disableClearable
+                                <Autocomplete options= { options?.sort((a, b) => a.id - b.id) } disabled= { disabled } disableClearable multiple= { multiple }
                                     getOptionLabel= { option => option.name || option.id } noOptionsText= "No results..." 
                                     getOptionDisabled= { option => option.id === 0 || option.id === '' }
                                     isOptionEqualToValue= { (option, value) => option.name === value.name || option.id === value.id }

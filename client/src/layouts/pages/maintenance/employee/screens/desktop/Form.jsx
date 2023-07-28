@@ -1,5 +1,5 @@
 // Libraries
-import { Stack, ThemeProvider, Typography } from "@mui/material";
+import { Box, Grid, Stack, ThemeProvider, Typography } from "@mui/material";
 import { Link, useParams } from "react-router-dom";
 import { useContext, useEffect } from "react";
 
@@ -7,6 +7,9 @@ import { useContext, useEffect } from "react";
 import { FormCntxt } from "core/context/Form"; // Provider
 import { Components } from "core/theme"; // Theme
 import FormBuilder from "core/components/form"; // Form Builder
+
+// Components
+import Photo from "../../components/form/Photo";
 
 // Constants
 import { cancel, card, content, input, save, title } from "./index.style"; // Styles
@@ -31,7 +34,12 @@ const Form = () => {
             <Stack sx= { card } spacing= { 5 }>
                 <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 }>
                     <Typography sx= {{ fontWeight: 'bold', color: '#394867' }}>Account Information</Typography>
-                    <FormBuilder fields= { Account() } />
+                    <Box>
+                        <Grid container direction= "row" justifyContent= "flex-start" alignItems= "center" spacing= { 1 }>
+                            <Grid item xs= { 12 } sm= { 5 } md= { 6 }><Photo /></Grid>
+                            <Grid item xs= { 12 } sm= { 7 } md= { 6 }><FormBuilder fields= { Account() } /></Grid>
+                        </Grid>
+                    </Box>
                 </Stack>
                 <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 }>
                     <Typography sx= {{ fontWeight: 'bold', color: '#394867' }}>Employee Information</Typography>

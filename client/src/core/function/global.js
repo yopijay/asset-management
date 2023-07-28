@@ -1,7 +1,5 @@
 // Libraries
 import axios from "axios";
-import { useMutation, useQuery } from "react-query";
-import { toast } from "react-toastify/dist/core";
 
 export const api = ({ url, method, data= null }) => {
     const config = {
@@ -17,4 +15,14 @@ export const api = ({ url, method, data= null }) => {
     }
 
     return axios(config);
+}
+
+export const base64 = (file) => {
+    return new Promise((resolve, reject) => {
+        const filereader = new FileReader();
+        filereader.readAsDataURL(file);
+
+        filereader.onload = () => { resolve(filereader.result); }
+        filereader.onerror = (error) => { reject(error); }
+    });
 }
