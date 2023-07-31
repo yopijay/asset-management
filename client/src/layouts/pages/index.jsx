@@ -1,11 +1,14 @@
 // Libraries
 import { Box, Container, Stack } from "@mui/material";
 import { Route, Routes } from "react-router-dom";
-import { Suspense } from "react";
+import { Suspense, useContext } from "react";
 
 // Core
 import { Components } from "core/constants/Navs"; // Constants
 import Loader from "core/components/loader/Screen"; // Loader
+import { AccountCntxt } from "core/context/Account"; // Context
+import { useGet } from "core/function/global"; // Function
+import { profile } from "core/api"; // API
 
 // Components
 import Navbar from "layouts/global/navbar";
@@ -27,6 +30,10 @@ const content = {
 }
 
 const Index = () => {
+    let _token = localStorage.getItem('token').split('.');
+    const { setData } = useContext(AccountCntxt);
+    const { isFetching } = useGet({ key: ['profile'], request: profile(JSON.parse(atob(_token[1])).id), options: { refetchOnWindowFocus: false }, onSuccess: data => console.log(data) });
+
     return (
         <Container maxWidth= "xl">
             <Navbar />
