@@ -91,3 +91,19 @@ export const items = {
     overflowY: 'scroll',
     '&::-webkit-scrollbar': { display: 'none' }
 }
+
+export const list = {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    padding: '10px 17px',
+    backgroundColor: '#FFFFFF',
+    borderRadius: '8px'
+}
+
+export const listinfo = {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    width: '100%'
+}

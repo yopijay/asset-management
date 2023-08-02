@@ -1,4 +1,17 @@
-const Company = () => {
+// Libraries
+import { useContext } from "react";
+import { useParams } from "react-router-dom";
+
+// Core
+import { series } from "core/api"; // API
+import { FormCntxt } from "core/context/Form"; // Context
+import { formatter, useGet } from "core/function/global"; // Function
+
+const Company = ({ fetching }) => {
+    const { type } = useParams();
+    const { setValue } = useContext(FormCntxt);
+
+    useGet({ key: ['cmp_series'], request: series('tbl_company'), options: {}, onSuccess: data => { if(type === 'new') setValue('series_no', `CMP-${formatter(parseInt(data.length) + 1, 7)}`) } });
 
     return ([
         {
@@ -7,7 +20,7 @@ const Company = () => {
                 name: 'series_no',
                 label: '*Series no.',
                 disabled: true,
-                fetching: false,
+                fetching: fetching,
                 onchange: () => {}
             },
             type: 'textfield'
@@ -18,7 +31,7 @@ const Company = () => {
                 name: 'name',
                 label: '*Name',
                 disabled: false,
-                fetching: false,
+                fetching: fetching,
                 onchange: () => {}
             },
             type: 'textfield'
@@ -29,7 +42,7 @@ const Company = () => {
                 name: 'telephone',
                 label: 'Telephone',
                 disabled: false,
-                fetching: false,
+                fetching: fetching,
                 onchange: () => {}
             },
             type: 'textfield'
@@ -40,7 +53,7 @@ const Company = () => {
                 name: 'description',
                 label: 'Description',
                 disabled: false,
-                fetching: false,
+                fetching: fetching,
                 onchange: () => {}
             },
             type: 'textarea'
@@ -51,7 +64,7 @@ const Company = () => {
                 name: 'address',
                 label: 'Address',
                 disabled: false,
-                fetching: false,
+                fetching: fetching,
                 onchange: () => {}
             },
             type: 'textarea'
@@ -62,7 +75,7 @@ const Company = () => {
                 name: 'status',
                 label: 'Status',
                 disabled: false,
-                fetching: false,
+                fetching: fetching,
                 onchange: () => {}
             },
             type: 'switch'

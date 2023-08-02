@@ -9,9 +9,11 @@ import { ListCntxt } from "core/context/List"; // Context
 
 // Constants
 import { orderby } from "./list.style"; // Styles
+import { FormCntxt } from "core/context/Form";
 
-const Sort = () => {
+const Sort = ({ refetch }) => {
     const { sort, setsort, listing, setlisting } = useContext(ListCntxt);
+    const { getValues, setValue } = useContext(FormCntxt);
 
     return (
         <Stack direction= "row" justifyContent= "flex-end" alignItems= "center" spacing= { 1 }>
@@ -19,12 +21,16 @@ const Sort = () => {
                 <Typography variant= "caption">Order by:</Typography>
                 <Typography variant= "caption" sx= { orderby }>Date created</Typography>
             </Stack>
-            <Typography sx= {{ cursor: 'pointer' }} onClick= { () => setsort(!sort) }>{ sort ? 
-                                        <FontAwesomeIcon icon= { solid('arrow-down-a-z') } color= "#9DB2BF" /> : 
-                                        <FontAwesomeIcon icon= { solid('arrow-down-z-a') } color= "#9DB2BF" /> }</Typography>
-            <Typography sx= {{ cursor: 'pointer' }} onClick= { () => setlisting(!listing) }>{ listing ? 
-                                        <FontAwesomeIcon icon= { solid('list') } color= "#9DB2BF" /> :
-                                        <FontAwesomeIcon icon= { solid('grip') } color= "#9DB2BF" /> }</Typography>
+            { sort === 'desc' ? 
+                <Typography sx= {{ cursor: 'pointer' }} 
+                    onClick= { () => { setsort('asc'); setValue('sort', 'asc'); refetch({ table: 'tbl_company', data: getValues() }); } }>
+                    <FontAwesomeIcon icon= { solid('arrow-down-z-a') } color= "#9DB2BF" /></Typography> :
+                <Typography sx= {{ cursor: 'pointer' }} 
+                    onClick= { () => { setsort('desc'); setValue('sort', 'desc'); refetch({ table: 'tbl_company', data: getValues() }); } }>
+                    <FontAwesomeIcon icon= { solid('arrow-down-a-z') } color= "#9DB2BF" /></Typography> }
+            { listing === 'list' ?
+                <Typography sx= {{ cursor: 'pointer' }} onClick= { () => setlisting('grid') }><FontAwesomeIcon icon= { solid('grip') } color= "#9DB2BF" /></Typography> :
+                <Typography sx= {{ cursor: 'pointer' }} onClick= { () => setlisting('list') }><FontAwesomeIcon icon= { solid('list') } color= "#9DB2BF" /></Typography> }
         </Stack>
     );
 }

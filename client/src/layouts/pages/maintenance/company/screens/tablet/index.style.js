@@ -19,7 +19,7 @@ export const items = {
     overflow: 'hidden'
 }
 
-export const save = {
+export const savebtn = {
     textAlign: 'center',
     width: '150px',
     color: '#FFFFFF',
@@ -31,7 +31,7 @@ export const save = {
     '&:hover': { backgroundColor: '#86a583' }
 }
 
-export const cancel = {
+export const cancelbtn = {
     textAlign: 'center',
     width: '150px',
     padding: '8px 0',
