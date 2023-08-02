@@ -30,24 +30,28 @@ const content = {
 }
 
 const Index = () => {
-    let _token = localStorage.getItem('token').split('.');
+    let _token = sessionStorage.getItem('token').split('.');
     const { setData } = useContext(AccountCntxt);
-    const { isFetching } = useGet({ key: ['profile'], request: profile(JSON.parse(atob(_token[1])).id), options: { refetchOnWindowFocus: false }, onSuccess: data => console.log(data) });
+    const { isFetching } = 
+        useGet({ key: ['profile'], request: profile(JSON.parse(atob(_token[1])).id), options: { refetchOnWindowFocus: false }, onSuccess: data => setData(data[0]) });
 
     return (
         <Container maxWidth= "xl">
-            <Navbar />
-            <Stack sx= { container }>
-                <Sidebar />
-                <Box sx= { content }>
-                    <Routes>
-                        { Components.map((cmpnts) => (cmpnts.components).map((page, index) => (
-                            <Route exact key= { index } path= { `${page.path}/*` } 
-                                element= { <Suspense fallback= { <Loader /> }>{ page.component }</Suspense> } />
-                        ))) }
-                    </Routes>
-                </Box>
-            </Stack>
+            { !isFetching ? 
+                <Box>
+                    <Navbar />
+                    <Stack sx= { container }>
+                        <Sidebar />
+                        <Box sx= { content }>
+                            <Routes>
+                                { Components.map((cmpnts) => (cmpnts.components).map((page, index) => (
+                                    <Route exact key= { index } path= { `${page.path}/*` } 
+                                        element= { <Suspense fallback= { <Loader /> }>{ page.component }</Suspense> } />
+                                ))) }
+                            </Routes>
+                        </Box>
+                    </Stack>
+                </Box> : <Loader /> }
         </Container>
         
     );

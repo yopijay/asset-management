@@ -8,20 +8,23 @@ import { AccountPrvdr } from "core/context/Account"; // Provider
 
 // // Layouts
 import Signin from "layouts/authentication/sign-in";
-import Main from "layouts/pages";
+import Main from "layouts/pages";import { useEffect } from "react";
+;
 
 const App = () => {
     const client = new QueryClient();
-    localStorage.setItem('nav', window.location.pathname === '/' ? 'dashboard' : localStorage.getItem('nav'));
+    localStorage.setItem('nav', window.location.pathname === '/' ? sessionStorage.getItem('token') !== null ? 'dashboard' : 'login' : localStorage.getItem('nav'));
 
+    useEffect(() => { if(localStorage.getItem('nav') !== 'login' && sessionStorage.getItem('token') === null) { window.location.href = '/' } }, []);
     return ( 
         <Router>
             <QueryClientProvider client= { client }>
                 <GlobalPrvdr>
                     <Routes>
-                        <Route path= "*" element= { localStorage.getItem('token') ?
-                            <AccountPrvdr><Main /></AccountPrvdr> :
-                            <Signin /> } />
+                        <Route path= "*" element= { 
+                            sessionStorage.getItem('token') ?
+                                <AccountPrvdr><Main /></AccountPrvdr> :
+                                <Signin /> } />
                     </Routes>
                 </GlobalPrvdr>
             </QueryClientProvider>

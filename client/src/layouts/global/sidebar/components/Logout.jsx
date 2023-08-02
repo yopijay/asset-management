@@ -8,7 +8,7 @@ import { btn } from "../index.style"; // Styles
 
 const Logout = () => {
     return (
-        <Stack sx= { btn }>
+        <Stack sx= { btn } onClick= { () => { sessionStorage.clear(); window.location.href = '/' } }>
             <Typography>Logout</Typography>
             <FontAwesomeIcon icon= { solid('sign-out') } />
         </Stack>

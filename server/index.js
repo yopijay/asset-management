@@ -11,7 +11,7 @@ const port = process.env.PORT || 5000;
 // Middleware
 require("dotenv").config();
 app.use(cookie());
-app.use(cors());
+app.use(cors({ credentials: true }));
 app.use(express.json({ limit: '50mb' }));
 
 // Routes

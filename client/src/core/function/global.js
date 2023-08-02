@@ -11,7 +11,7 @@ export const api = ({ url, method, data= null }) => {
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Credentials': true,
             'Access-Control-Allow-Methods': 'GET, POST',
-            'token': localStorage.getItem('token')
+            'Authorization': `Bearer ${sessionStorage.getItem('token')}`
         },
         data: data
     }

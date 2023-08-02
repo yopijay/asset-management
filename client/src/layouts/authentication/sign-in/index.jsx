@@ -10,6 +10,7 @@ import Form from "./components/Form";
 import OTP from "./components/OTP";
 
 const Index = () => {
+
     return (
         <Container maxWidth= "xs">
             <Stack direction= "column" justifyContent= "space-between" alignItems= "stretch" sx= {{ height: '100vh', padding: '10px 0' }}>

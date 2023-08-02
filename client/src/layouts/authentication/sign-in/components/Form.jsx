@@ -19,7 +19,7 @@ const Form = () => {
     const { mutate: signin } = usePost({ request: authentication, 
         onSuccess: data => { 
             if(data.result === 'error') { (data.error).forEach((err, index) => setError(err.name, { type: index === 0 ? 'focus' : '', message: err.message }, { shouldFocus: index === 0}) ); }
-            else { localStorage.setItem('token', data.token); window.location.href = '/'; }
+            else { sessionStorage.setItem('token', data.token); window.location.href = '/'; }
         } 
     });
 

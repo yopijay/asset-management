@@ -8,10 +8,10 @@ import { GlobalCntxt } from "core/context/Global"; // Context
 // Components
 import Navs from "./components/Navs";
 import Account from "./components/Account";
+import Logout from "./components/Logout";
 
 // Constants
 import { accountfix, accountswipe, fix, nav, navfix, navswipe, sidebar, swipable, swipe } from "./index.style"; // Styles
-import Logout from "./components/Logout";
 
 const Index = () => {
     const { container, drawerToggle, open } = useContext(GlobalCntxt);
