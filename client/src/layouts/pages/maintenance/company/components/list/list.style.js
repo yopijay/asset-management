@@ -94,16 +94,35 @@ export const items = {
 
 export const list = {
     flexDirection: 'row',
-    justifyContent: 'flex-start',
+    justifyContent: 'space-between',
     alignItems: 'center',
     padding: '10px 17px',
     backgroundColor: '#FFFFFF',
-    borderRadius: '8px'
+    borderRadius: '8px',
+    overflow: 'hidden',
+    textDecoration: 'none'
 }
 
-export const listinfo = {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
+export const title = {
+    color: '#27374D',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    width: '100%'
+}
+
+export const subtitle = {
+    color: '#526D82',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    width: '100%'
+}
+
+export const caption = {
+    color: '#9DB2BF',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
     width: '100%'
 }

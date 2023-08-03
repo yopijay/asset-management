@@ -9,7 +9,7 @@ import { formatter, useGet } from "core/function/global"; // Function
 
 const Company = ({ fetching }) => {
     const { type } = useParams();
-    const { setValue } = useContext(FormCntxt);
+    const { setValue, getValues } = useContext(FormCntxt);
 
     useGet({ key: ['cmp_series'], request: series('tbl_company'), options: {}, onSuccess: data => { if(type === 'new') setValue('series_no', `CMP-${formatter(parseInt(data.length) + 1, 7)}`) } });
 
@@ -20,8 +20,7 @@ const Company = ({ fetching }) => {
                 name: 'series_no',
                 label: '*Series no.',
                 disabled: true,
-                fetching: fetching,
-                onchange: () => {}
+                fetching: fetching
             },
             type: 'textfield'
         },
@@ -30,9 +29,8 @@ const Company = ({ fetching }) => {
             props: {
                 name: 'name',
                 label: '*Name',
-                disabled: false,
-                fetching: fetching,
-                onchange: () => {}
+                disabled: type === 'view',
+                fetching: fetching
             },
             type: 'textfield'
         },
@@ -41,9 +39,8 @@ const Company = ({ fetching }) => {
             props: {
                 name: 'telephone',
                 label: 'Telephone',
-                disabled: false,
-                fetching: fetching,
-                onchange: () => {}
+                disabled: type === 'view',
+                fetching: fetching
             },
             type: 'textfield'
         },
@@ -52,9 +49,8 @@ const Company = ({ fetching }) => {
             props: {
                 name: 'description',
                 label: 'Description',
-                disabled: false,
-                fetching: fetching,
-                onchange: () => {}
+                disabled: type === 'view',
+                fetching: fetching
             },
             type: 'textarea'
         },
@@ -63,9 +59,8 @@ const Company = ({ fetching }) => {
             props: {
                 name: 'address',
                 label: 'Address',
-                disabled: false,
-                fetching: fetching,
-                onchange: () => {}
+                disabled: type === 'view',
+                fetching: fetching
             },
             type: 'textarea'
         },
@@ -74,9 +69,9 @@ const Company = ({ fetching }) => {
             props: {
                 name: 'status',
                 label: 'Status',
-                disabled: false,
+                disabled: type === 'view',
                 fetching: fetching,
-                onchange: () => {}
+                onChange:  () => setValue('status', !(getValues().status) ?? true)
             },
             type: 'switch'
         }

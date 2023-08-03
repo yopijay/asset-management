@@ -19,15 +19,14 @@ const textarea = {
 }
 
 const Index = props => {
-    const { label, fetching, disabled, name, onchange } = props;
+    const { label, fetching, disabled, name, ...others } = props;
     const { register, errors } = useContext(FormCntxt);
 
     return (
         <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch">
             <Typography variant= "body2" gutterBottom color= "#394867">{ label }</Typography>
             { fetching ? <Skeleton variant= "rounded" height= "100px" /> : 
-                <TextareaAutosize name= { name } minRows= { 4 } maxRows= { 4 } disabled= { disabled } style= { textarea } { ...register(name) }
-                    onChange= { e => { onchange(e); } } /> }
+                <TextareaAutosize name= { name } minRows= { 4 } maxRows= { 4 } disabled= { disabled } style= { textarea } { ...register(name) } { ...others } /> }
             <Typography variant= "body2" color= "error.dark">{ errors[name]?.message }</Typography>
         </Stack>
     );

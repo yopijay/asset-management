@@ -12,13 +12,13 @@ import { save, specific, update } from "core/api"; // API
 
 // Constants
 import { cancelbtn, card, content, input, savebtn, title } from "./index.style"; // Styles
-import { validation } from "../../index.validation"; // Validations
 import Company from "../../company"; // Fields
+import { validation } from "../../index.validation"; // Validation
 
 const Form = () => {
     const { type, id } = useParams();
     const navigate = useNavigate();
-    const { setValidation, handleSubmit, setValue, setError } = useContext(FormCntxt);
+    const { handleSubmit, setValue, setError, setValidation } = useContext(FormCntxt);
     const { isFetching, refetch } = 
         useGet({ key: ['cmp_specific'], request: specific({ table: 'tbl_company', id: id ?? null }), options: { enabled: type !== 'new', refetchOnWindowFocus: false },
             onSuccess: data => {
@@ -58,15 +58,15 @@ const Form = () => {
             <ThemeProvider theme= { Components(input) }>
                 <Stack sx= { card }><FormBuilder fields= { Company({ fetching: isFetching }) } /></Stack>
             </ThemeProvider>
-            <Stack direction= "row" justifyContent= "flex-end" alignItems= "center" spacing= { 1 }>
+            {<Stack direction= "row" justifyContent= "flex-end" alignItems= "center" spacing= { 1 }>
                 <Typography sx= { cancelbtn } component= { Link } to= "/maintenance/company">Cancel</Typography>
-                <Typography sx= { savebtn } onClick= { handleSubmit(data => {
+                { type !== 'view' ? <Typography sx= { savebtn } onClick= { handleSubmit(data => {
                     data['token'] = (sessionStorage.getItem('token')).split('.')[1];
 
                     if(type === 'new') { saving({ table: 'tbl_company', data: data }); }
                     else { updating({ table: 'tbl_company', data: data }); }
-                }) }>Save</Typography>
-            </Stack>
+                }) }>Save</Typography> : '' }
+            </Stack>}
         </Stack>
     );
 }

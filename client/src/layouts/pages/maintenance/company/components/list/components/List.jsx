@@ -1,22 +1,34 @@
 // Libraries
-import { Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
+import { Link } from "react-router-dom";
 
 // Constants
-import { list, listinfo } from "../list.style"; // Styles
+import { caption, list, subtitle, title } from "../list.style"; // Styles
 
 const List = ({ data }) => {
 
     return (
         <Stack sx= { list }>
-            <Stack sx= { listinfo }>
-                <Typography variant= "body2">{ data.series_no }</Typography>
-                <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" paddingLeft= "15px">
-                    <Typography>{ data.name }</Typography>
-                    <Typography variant= "caption">{ data.telephone }</Typography>
+            <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" sx= {{ flexGrow: 1, overflow: 'hidden' }}>
+                <Typography variant= "caption" sx= { caption }>{ data.series_no }</Typography>
+                <Typography sx= { title }>{ data.name }</Typography>
+                <Typography variant= "body2" sx= { subtitle }>{ data.telephone }</Typography>
+            </Stack>
+            <Stack direction= "row" justifyContent= "flex-start" alignItems= "center" spacing= { 2 } paddingLeft= "10px">
+                { data.status === 1 ? 
+                    <Box sx= {{ width: '10px', height: '10px', backgroundColor: '#A0C49D', borderRadius: '50px' }} /> : 
+                    <Box sx= {{ width: '10px', height: '10px', backgroundColor: '#FF6666', borderRadius: '50px' }} /> }
+                <Stack direction= "row" justifyContent= "flex-start" alignItems= "center" spacing= { 1.5 }>
+                    <Typography color= "#9BA4B5" component= { Link } to= { `/maintenance/company/form/update/${data.id}` }>
+                        <FontAwesomeIcon icon= { solid('pencil') } size= "lg" />
+                    </Typography>
+                    <Typography color= "#9BA4B5" component= { Link } to= { `/maintenance/company/form/view/${data.id}` }>
+                        <FontAwesomeIcon icon= { solid('eye') } size= "lg" />
+                    </Typography>
                 </Stack>
             </Stack>
-            <Typography>{ data.status }</Typography>
-            <Stack padding= "0 10px">buttons</Stack>
         </Stack>
     );
 }
