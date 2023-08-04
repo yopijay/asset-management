@@ -45,12 +45,21 @@ const update = (table, data) => {
     });
 }
 
+const search = (table, data) => {
+    return new Promise(async resolve => {
+        switch(table) {
+            case 'tbl_company': resolve(await new Company().search(data)); break;
+        }
+    });
+}
+
 module.exports = {
     login,
     profile,
     series,
     specific,
     list,
+    search,
     save,
     update
 }

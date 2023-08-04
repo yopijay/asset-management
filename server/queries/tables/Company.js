@@ -16,6 +16,15 @@ class Company {
                         .build()).rows;
     }
 
+    search = async data => {
+        return (await new Builder(`tbl_company AS cmp`)
+                        .select(`cmp.id, cmp.series_no, cmp.name, cmp.telephone, cmp.address, cmp.status, CONCAT(cb.lname, ', ', cb.fname, ' ', cb.mname) AS created_by, cmp.date_created`)
+                        .join({ table: `tbl_employee AS cb`, condition: `cb.user_id = cmp.created_by`, type: `LEFT` })
+                        .condition(`${data.searchtxt !== '' ? `WHERE cmp.series_no LIKE '%${(data.searchtxt).toUpperCase()}%' 
+                                                OR cmp.name LIKE '%${(data.searchtxt).toUpperCase()}%'` : ''} ORDER BY cmp.${data.orderby} ${(data.sort).toUpperCase()}`)
+                        .build()).rows;
+    }
+
     save = async data => {
         let date = Global.date(new Date());
         let user = JSON.parse(atob(data.token));
