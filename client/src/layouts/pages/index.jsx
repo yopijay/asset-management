@@ -44,10 +44,10 @@ const Index = () => {
                         <Sidebar />
                         <Box sx= { content }>
                             <Routes>
-                                { Components.map((cmpnts) => (cmpnts.components).map((page, index) => (
+                                { Components.map((page, index) => (
                                     <Route exact key= { index } path= { `${page.path}/*` } 
                                         element= { <Suspense fallback= { <Loader /> }>{ page.component }</Suspense> } />
-                                ))) }
+                                )) }
                             </Routes>
                         </Box>
                     </Stack>

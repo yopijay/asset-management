@@ -1,40 +1,54 @@
 // Libraries
-import { Autocomplete, Box, Skeleton, Stack, TextField, Typography } from "@mui/material";
+import { Autocomplete, Box, Skeleton, Stack, TextField, ThemeProvider, Typography } from "@mui/material";
 import { useContext } from "react";
 import { Controller } from "react-hook-form";
 
 // Core
 import { FormCntxt } from "core/context/Form"; // Context
-
-// Custom styles
-const select = {
-    width: '100%',
-    border: 'solid 1px #dfe4ea',
-    padding: {
-        xs: '12px 8px 9px 8px',
-        md: '9px 10px 6px 10px'
-    },
-    marginBottom: '5px',
-    borderRadius: '5px',
-    transition: 'all 0.2s ease-in-out'
-}
-
-const lbl = {
-    whiteSpace: 'nowrap', 
-    overflow: 'hidden', 
-    textOverflow: 'ellipsis', 
-    width: '100%',
-    padding: '2px 0',
-    transition: 'all 0.2s ease-in-out'
-}
+import { Components } from "core/theme"; // Theme
 
 const Index = props => {
-    const { label, fetching, disabled, name, options, onchange, multiple = false } = props;
+    const { label, fetching, disabled, name, options, onchange, multiple = false, uppercase } = props;
     const { control, errors, setError, getValues } = useContext(FormCntxt);
+
+    // Custom styles
+    const select = {
+        width: '100%',
+        border: 'solid 1px #dfe4ea',
+        padding: {
+            xs: '12px 8px 9px 8px',
+            md: '9px 10px 6px 10px'
+        },
+        marginBottom: '5px',
+        borderRadius: '5px',
+        transition: 'all 0.2s ease-in-out'
+    }
+    
+    const lbl = {
+        whiteSpace: 'nowrap', 
+        overflow: 'hidden', 
+        textOverflow: 'ellipsis', 
+        width: '100%',
+        padding: '2px 0',
+        transition: 'all 0.2s ease-in-out'
+    }
 
     return (
         <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch">
             <Typography variant= "body2" gutterBottom color= "#394867">{ label }</Typography>
+            <ThemeProvider theme= { Components({
+                MuiInput: {
+                    styleOverrides: {
+                        root: {
+                            '&:before': { borderBottom: 'none' },
+                            '&:after': { borderBottom: 'none' },
+                            '&.Mui-disabled:before': { borderBottom: 'none' },
+                            '&:hover:not(.Mui-disabled):before': { borderBottom: 'none' }
+                        },
+                        input: { textTransform: uppercase ? 'uppercase' : '', fontFamily: 'Montserrat' }
+                    }
+                }
+            }) }>
             { fetching ? <Skeleton variant= "rounded" height= "35px" /> :
                 <Box sx= { select }>
                     { options.length > 0 ? 
@@ -52,6 +66,7 @@ const Index = props => {
                             ) } /> :
                         <Typography color= "text.disabled" sx= { lbl }>You must create a { (label.replace('*', '')).toLowerCase() } first!</Typography> }
                 </Box> }
+            </ThemeProvider>
             <Typography variant= "body2" color= "error.dark">{ errors[name]?.message }</Typography>
         </Stack>
     );

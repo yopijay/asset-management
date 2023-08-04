@@ -5,22 +5,22 @@ import { useContext } from "react";
 // Core
 import { FormCntxt } from "core/context/Form"; // Context
 
-// Custom style
-const textarea = {
-    border: 'solid 1px #ced6e0',
-    borderRadius: '5px',
-    fontFamily: 'Montserrat',
-    fontSize: '105%',
-    padding: '10px',
-    outline: 'none',
-    textTransform: 'uppercase',
-    color: '#353b48',
-    transition: 'all 0.2s ease-in-out'
-}
-
 const Index = props => {
-    const { label, fetching, disabled, name, ...others } = props;
+    const { label, fetching, disabled, name, uppercase, ...others } = props;
     const { register, errors } = useContext(FormCntxt);
+
+    // Custom style
+    const textarea = {
+        border: 'solid 1px #ced6e0',
+        borderRadius: '5px',
+        fontFamily: 'Montserrat',
+        fontSize: '105%',
+        padding: '10px',
+        outline: 'none',
+        textTransform: uppercase ? 'uppercase' : '',
+        color: '#353b48',
+        transition: 'all 0.2s ease-in-out'
+    }
 
     return (
         <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch">
