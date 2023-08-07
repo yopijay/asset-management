@@ -14,15 +14,15 @@ const List = ({ data }) => {
             <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" sx= {{ flexGrow: 1, overflow: 'hidden' }}>
                 <Typography variant= "caption" sx= { caption }>{ data.series_no }</Typography>
                 <Typography sx= { title }>{ data.name }</Typography>
-                <Typography variant= "body2" sx= { subtitle }>Base URL: /{ data.base_url }</Typography>
+                <Typography variant= "body2" sx= { subtitle }>Path: /{ data.base_url }/{ data.path }</Typography>
             </Stack>
             <Stack direction= "row" justifyContent= "flex-start" alignItems= "center" spacing= { 2 } paddingLeft= "10px">
                 { data.status === 1 ? 
                     <Box sx= {{ width: '10px', height: '10px', backgroundColor: '#A0C49D', borderRadius: '50px' }} /> : 
                     <Box sx= {{ width: '10px', height: '10px', backgroundColor: '#FF6666', borderRadius: '50px' }} /> }
                 <Stack direction= "row" justifyContent= "flex-start" alignItems= "center" spacing= { 1.5 }>
-                    <Typography color= "#9BA4B5" component= { Link } to= { `/setup/module/form/update/${data.id}` }><FontAwesomeIcon icon= { solid('pencil') } size= "lg" /></Typography>
-                    <Typography color= "#9BA4B5" component= { Link } to= { `/setup/module/form/view/${data.id}` }><FontAwesomeIcon icon= { solid('eye') } size= "lg" /></Typography>
+                    <Typography color= "#9BA4B5" component= { Link } to= { `/setup/sub-module/form/update/${data.id}` }><FontAwesomeIcon icon= { solid('pencil') } size= "lg" /></Typography>
+                    <Typography color= "#9BA4B5" component= { Link } to= { `/setup/sub-module/form/view/${data.id}` }><FontAwesomeIcon icon= { solid('eye') } size= "lg" /></Typography>
                 </Stack>
             </Stack>
         </Stack>

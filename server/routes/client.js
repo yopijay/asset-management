@@ -17,5 +17,6 @@ router.post('/update/:table', (req, res) => { query.update(req.params.table, req
 router.post('/list/:table', (req, res) => { query.list(req.params.table, req.body).then(response => res.status(200).send(response)).catch(error => res.status(200).send(error)); });
 router.post('/search/:table', (req, res) => { query.search(req.params.table, req.body).then(response => res.status(200).send(response)).catch(error => res.status(200).send(error)); });
 router.post('/logs/:table', (req, res) => { query.logs(req.params.table, req.body).then(response => res.status(200).send(response)).catch(error => res.status(200).send(error)); });
+router.post('/dropdown/:table', (req, res) => { query.dropdown(req.params.table, req.body).then(response => res.status(200).send(response)).catch(error => res.status(200).send(error)); });
 
 module.exports = router;

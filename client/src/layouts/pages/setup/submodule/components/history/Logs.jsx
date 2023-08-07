@@ -9,7 +9,7 @@ import { getdate, useGet } from "core/function/global"; // Function
 import { logs } from "../../screens/desktop/index.style"; // Styles
 
 const Logs = () => {
-    const { data: log, isFetching: fetching } = useGet({ key: ['mdl_logs'], request: history({ table: 'tbl_module', data: {} }), options: { refetchOnWindowFocus: false } }); 
+    const { data: log, isFetching: fetching } = useGet({ key: ['sub_logs'], request: history({ table: 'tbl_sub_module', data: {} }), options: { refetchOnWindowFocus: false } }); 
 
     return (
         <Stack sx= { logs } spacing= { 2 }>

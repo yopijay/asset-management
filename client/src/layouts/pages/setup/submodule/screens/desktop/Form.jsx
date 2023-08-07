@@ -11,15 +11,15 @@ import { save, specific, update } from "core/api"; // API
 
 // Constants
 import { cancelbtn, card, content, savebtn, title } from "./index.style"; // Styles
-import Module from "../../module"; // Fields
+import Submodule from "../../submodule"; // Fields
 import { validation } from "../../index.validation"; // Validation
 
 const Form = () => {
     const { type, id } = useParams();
     const navigate = useNavigate();
-    const { handleSubmit, setValue, setError, setValidation, reset } = useContext(FormCntxt);
+    const { handleSubmit, setValue, setError, setValidation, register, reset } = useContext(FormCntxt);
     const { isFetching, refetch } = 
-        useGet({ key: ['mdl_specific'], request: specific({ table: 'tbl_module', id: id ?? null }), options: { enabled: type !== 'new', refetchOnWindowFocus: false },
+        useGet({ key: ['sub_specific'], request: specific({ table: 'tbl_sub_module', id: id ?? null }), options: { enabled: type !== 'new', refetchOnWindowFocus: false },
             onSuccess: data => {
                 if(Array.isArray(data)) 
                     for(let count = 0; count < Object.keys(data[0]).length; count++) { 
@@ -33,7 +33,7 @@ const Form = () => {
         usePost({ request: save,
             onSuccess: data => {
                 if(data.result === 'error') { (data.error).forEach((err, index) => setError(err.name, { type: index === 0 ? 'focus' : '', message: err.message }, { shouldFocus: index === 0 })); }
-                else { successToast(data.message, 3000, navigate('/setup/module', { replace: true })); }
+                else { successToast(data.message, 3000, navigate('/setup/sub-module', { replace: true })); }
             } 
         });
 
@@ -41,27 +41,30 @@ const Form = () => {
         usePost({ request: update,
             onSuccess: data => {
                 if(data.result === 'error') { (data.error).forEach((err, index) => setError(err.name, { type: index === 0 ? 'focus' : '', message: err.message }, { shouldFocus: index === 0 })); }
-                else { successToast(data.message, 3000, navigate('/setup/module', { replace: true })); }
+                else { successToast(data.message, 3000, navigate('/setup/sub-module', { replace: true })); }
             }
         });
 
-    useEffect(() => { setValidation(validation()); reset(); if(id !== undefined) refetch() }, [ reset, setValidation, id, refetch ]);
+    useEffect(() => { setValidation(validation()); reset(); register('module', ''); if(id !== undefined) refetch() }, [ reset, register, setValidation, id, refetch ]);
 
     return (
         <Stack sx= { content } spacing= { 4 }>
             <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch">
-                <Typography sx= { title }>{ type.charAt(0).toUpperCase() + type.slice(1) } Module</Typography>
+                <Typography sx= { title }>{ type.charAt(0).toUpperCase() + type.slice(1) } Sub module</Typography>
                 <Typography variant= "caption" color= "#9BA4B5">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc non neque molestie, 
                     malesuada quam ut, vulputate massa.</Typography>
             </Stack>
-            <Stack sx= { card }><FormBuilder fields= { Module({ fetching: isFetching }) } /></Stack>
+            <Stack sx= { card }><FormBuilder fields= { Submodule({ fetching: isFetching }) } /></Stack>
             {<Stack direction= "row" justifyContent= "flex-end" alignItems= "center" spacing= { 1 }>
-                <Typography sx= { cancelbtn } component= { Link } to= "/setup/module">Cancel</Typography>
+                <Typography sx= { cancelbtn } component= { Link } to= "/setup/sub-module">Cancel</Typography>
                 { type !== 'view' ? <Typography sx= { savebtn } onClick= { handleSubmit(data => {
                     data['token'] = (sessionStorage.getItem('token')).split('.')[1];
                     
-                    if(type === 'new') { saving({ table: 'tbl_module', data: data }); }
-                    else { updating({ table: 'tbl_module', data: data }); }
+                    if(data.module_id) {
+                        if(type === 'new') { saving({ table: 'tbl_sub_module', data: data }); }
+                        else { updating({ table: 'tbl_sub_module', data: data }); }
+                    }
+                    else { setError('module_id', { message: 'This field is required!' }); }
                 }) }>Save</Typography> : '' }
             </Stack>}
         </Stack>

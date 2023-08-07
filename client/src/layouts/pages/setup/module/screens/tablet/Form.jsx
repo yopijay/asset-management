@@ -18,7 +18,7 @@ import Module from "../../module"; // Fields
 const Form = () => {
     const { type, id } = useParams();
     const navigate = useNavigate();
-    const { setValidation, handleSubmit, setValue, setError } = useContext(FormCntxt);
+    const { setValidation, handleSubmit, setValue, setError , reset} = useContext(FormCntxt);
     const { isFetching, refetch } = 
         useGet({ key: ['mdl_specific'], request: specific({ table: 'tbl_module', id: id ?? null }), options: { enabled: type !== 'new', refetchOnWindowFocus: false },
             onSuccess: data => {
@@ -46,7 +46,7 @@ const Form = () => {
             }
         });
 
-    useEffect(() => { setValidation(validation()); if(id !== undefined) refetch() }, [ setValidation, id, refetch ]);
+    useEffect(() => { setValidation(validation()); reset(); if(id !== undefined) refetch() }, [ reset, setValidation, id, refetch ]);
 
     return (
         <Stack sx= { content } spacing= { 4 }>

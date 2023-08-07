@@ -22,11 +22,12 @@ import React from "react";
 
 // Setup
 const Module = React.lazy(() => import('layouts/pages/setup/module'));
+const SubModule = React.lazy(() => import('layouts/pages/setup/submodule'));
 
 export const Components = ([
     { path: '/', name: 'dashboard', title: 'Dashboard', component: 'DASHBOARD' },
     { path: '/setup/module', name: 'module', title: 'Module', component: <Module /> },
-    { path: '/setup/sub-module', name: 'sub-module', title: 'Sub Module', component: "SUB MODULE" }
+    { path: '/setup/sub-module', name: 'sub-module', title: 'Sub Module', component: <SubModule /> }
     // { label: 'Overview', components: [
     // ] },
     // { label: 'Assets & Supplies', components: [

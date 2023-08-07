@@ -8,8 +8,8 @@ import { FormCntxt } from "core/context/Form"; // Context
 import { Components } from "core/theme"; // Theme
 
 const Index = props => {
-    const { label, fetching, disabled, name, options, onchange, multiple = false, uppercase } = props;
-    const { control, errors, setError, getValues } = useContext(FormCntxt);
+    const { label, fetching, disabled, name, options, multiple = false, uppercase, ...others } = props;
+    const { control, errors, getValues } = useContext(FormCntxt);
 
     // Custom styles
     const select = {
@@ -53,13 +53,13 @@ const Index = props => {
                 <Box sx= { select }>
                     { options.length > 0 ? 
                         <Controller control= { control } name= { name }
-                            render= {({ field: { onChange, value } }) => (
+                            render= {({ field: { value } }) => (
                                 <Autocomplete options= { options?.sort((a, b) => a.id - b.id) } disabled= { disabled } disableClearable multiple= { multiple }
                                     getOptionLabel= { option => option.name || option.id } noOptionsText= "No results..." 
                                     getOptionDisabled= { option => option.id === 0 || option.id === '' }
                                     isOptionEqualToValue= { (option, value) => option.name === value.name || option.id === value.id }
                                     renderInput= { params => <TextField { ...params } variant= "standard" size= "small" fullWidth /> }
-                                    onChange= { (e, item) => { setError(name, { message: '' }); onChange(item.id); onchange(item); } }
+                                    { ...others }
                                     value= { options?.find(data => { return data.id === (getValues()[name] !== undefined ? getValues()[name] : value) }) !== undefined ?
                                                     options?.find(data => { return data.id === (getValues()[name] !== undefined ? getValues()[name] : value) }) : options?.length === 0 ?
                                                         { id: 0, name: '-- SELECT AN ITEM BELOW --' } : options[0] } />
