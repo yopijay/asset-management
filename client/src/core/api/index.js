@@ -12,3 +12,4 @@ export const specific = async ({ table, id }) => { return await api({ url: `${En
 export const save = async ({ table, data }) => { return await api({ url: `${Env[env].url}/save/${table}`, method: 'post', data: data }).then(res => res.data).catch(err => console.log(`Error: ${err}`)); }
 export const update = async ({ table, data }) => { return await api({ url: `${Env[env].url}/update/${table}`, method: 'post', data: data }).then(res => res.data).catch(err => console.log(`Error: ${err}`)); }
 export const look = async ({ table, data }) => { return await api({ url: `${Env[env].url}/search/${table}`, method: 'post', data: data }).then(res => res.data); }
+export const history = async ({ table, data }) => { return await api({ url: `${Env[env].url}/logs/${table}`, method: 'post', data: data }).then(res => res.data).catch(err => console.log(`Error: ${err}`)); }

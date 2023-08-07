@@ -29,6 +29,15 @@ const content = {
     transition: 'all 0.2s ease-in-out'
 }
 
+const loader = {
+    display: 'flex', 
+    flexDirection: 'row', 
+    justifyContent: 'center', 
+    alignItems: 'center', 
+    width: '100%', 
+    height: '100vh'
+}
+
 const Index = () => {
     let _token = sessionStorage.getItem('token').split('.');
     const { setData } = useContext(AccountCntxt);
@@ -46,12 +55,13 @@ const Index = () => {
                             <Routes>
                                 { Components.map((page, index) => (
                                     <Route exact key= { index } path= { `${page.path}/*` } 
-                                        element= { <Suspense fallback= { <Loader /> }>{ page.component }</Suspense> } />
+                                        element= { <Suspense fallback= { <Box sx= { loader }><Loader /></Box> }>{ page.component }</Suspense> } />
                                 )) }
                             </Routes>
                         </Box>
                     </Stack>
-                </Box> : <Loader /> }
+                </Box> : 
+                <Box sx= { loader }><Loader /></Box> }
         </Container>
         
     );

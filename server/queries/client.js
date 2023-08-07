@@ -33,6 +33,14 @@ const list = (table, data) => {
     });
 }
 
+const logs = (table, data) => {
+    return new Promise(async resolve => {
+        switch(table) {
+            case 'tbl_module': resolve(await new Module().logs(data)); break;
+        }
+    });
+}
+
 const save = (table, data) => {
     return new Promise(async resolve => {
         switch(table) {
@@ -66,6 +74,7 @@ module.exports = {
     series,
     specific,
     list,
+    logs,
     search,
     save,
     update

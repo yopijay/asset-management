@@ -6,6 +6,16 @@ class Module {
     series = async () => { return (await new Builder(`tbl_module`).select().build()).rows; }
     specific = async id => { return (await new Builder(`tbl_module`).select().condition(`WHERE id= ${id}`).build()).rows; }
 
+    logs = async data => {
+        return (await new Builder(`tbl_audit_trail AS at`)
+                        .select(`at.id, at.series_no AS at_series, at.table_name, at.item_id, at.field, at.previous, at.current, at.action, at.user_id, at.date,
+                                        mdl.series_no AS mdl_series, mdl.name, mdl.description, mdl.status, mdl.created_by, mdl.updated_by, mdl.deleted_by,
+                                        mdl.imported_by, mdl.date_created, mdl.date_updated, mdl.date_deleted, mdl.date_imported`)
+                        .join({ table: `tbl_module AS mdl`, condition: `at.item_id = mdl.id`, type: `LEFT` })
+                        .condition(`WHERE at.table_name= 'tbl_module' ORDER BY at.date DESC LIMIT 3`)
+                        .build()).rows;
+    }
+
     list = async data => {
         return (await new Builder(`tbl_module AS mdl`)
                         .select(`mdl.id, mdl.series_no, mdl.name, mdl.base_url, mdl.description, mdl.status, CONCAT(cb.lname, ', ', cb.fname, ' ', cb.mname) AS created_by, mdl.date_created`)

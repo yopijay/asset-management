@@ -24,7 +24,7 @@ export const usePost = ({ request, onSuccess, onError }) => { return useMutation
 export const useGet = ({ key, request, options, onSuccess, onError }) => { return useQuery(key, () => request, { onSuccess, onError, ...options }); }
 export const formatter = (num, size) => { return (`000000${num}`).substr((`000000${num}`).length - size); }
 
-export const base64 = (file) => {
+export const base64 = file => {
     return new Promise((resolve, reject) => {
         const filereader = new FileReader();
         filereader.readAsDataURL(file);
@@ -46,4 +46,21 @@ export const successToast = (message, duration = 3000, navigate) => {
         theme: 'colored',
         onClose: () => navigate
     });
+}
+
+export const getdate = date => {
+    const year = date.getFullYear();
+    const month = `${ (date.getMonth() + 1) >= 10 ? '' : '0' }${ date.getMonth() + 1 }`;
+    const day = `${date.getDate() >= 10 ? '' : '0'}${date.getDate() }`;
+    const hr = `${ (date.getHours()) >= 10 ? '' : '0' }${ date.getHours() }`;
+    const min = `${ (date.getMinutes()) >= 10 ? '' : '0' }${date.getMinutes() }`;
+    const sec = `${ (date.getSeconds()) >= 10 ? '' : '0' }${date.getSeconds() }`;
+
+    return {
+        date: `${year}-${month}-${day}T${hr}:${min}:${sec}`,
+        formatted: `${date.toLocaleString('default', { month: 'long' })} ${day}, ${year} ${ (date.getHours() % 12) >= 10 ? '' : '0' }${ date.getHours() % 12 }:${min} ${hr > 12 ? 'PM' : 'AM'}`,
+        time: `${(hr % 12) || 12}:${min}:${sec}`,
+        day: `${year}-${month}-${day}`,
+        label: `${hr > 12 ? 'PM' : 'AM'}`
+    }
 }

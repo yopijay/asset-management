@@ -22,6 +22,7 @@ export const history = {
     justifyContent: 'flex-start',
     alignItems: 'stretch',
     width: '350px',
+    height: '100%',
     padding: '190px 0 20px 0'
 }
 
@@ -87,4 +88,12 @@ export const title = {
     fontFamily: 'Montserrat Black',
     fontSize: '1.4rem',
     color: '#394867',
+}
+
+export const loader = {
+    display: 'flex', 
+    flexDirection: 'row', 
+    justifyContent: 'center', 
+    alignItems: 'center', 
+    width: '100%',
 }

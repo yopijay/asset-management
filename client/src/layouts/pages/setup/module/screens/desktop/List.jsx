@@ -1,5 +1,5 @@
 // Libraries
-import { Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import { useContext, useEffect } from "react";
 
 // Core
@@ -17,7 +17,7 @@ import Items from "../../components/list/Items";
 import Logs from "../../components/history/Logs";
 
 // Constants
-import { content, history, items } from "./index.style"; // Styles
+import { content, history, items, loader } from "./index.style"; // Styles
 
 const List = () => {
     const { setlist } = useContext(ListCntxt);
@@ -47,7 +47,7 @@ const List = () => {
                     <Search request= { find } />
                     <Stack sx= { items } spacing= { 2 }>
                         <Sort refetch= { record } />
-                        { !fetching && !finding ? <Items /> : <Loader /> }
+                        { !fetching && !finding ? <Items /> : <Box sx= { loader }><Loader /></Box> }
                     </Stack>
                 </Stack>
             </Stack>
