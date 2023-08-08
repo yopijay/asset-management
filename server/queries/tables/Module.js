@@ -119,9 +119,12 @@ class Module {
         else { return { result: 'error', error: errors } }
     }
 
-    dropdown = async () => {
-        return [{ id: 0, name: '-- SELECT AN ITEM BELOW' }]
-                        .concat((await new Builder(`tbl_module`).select(`id, name, base_url`).condition(`WHERE status= 1 ORDER BY name ASC`).build()).rows);
+    dropdown = async data => {
+        switch(data.type) {
+            case 'nav': return (await new Builder(`tbl_module`).select(`id, name`).condition(`WHERE status= 1 ORDER BY name ASC`).build()).rows;
+            default: return [{ id: 0, name: '-- SELECT AN ITEM BELOW' }]
+                            .concat((await new Builder(`tbl_module`).select(`id, name, base_url`).condition(`WHERE status= 1 ORDER BY name ASC`).build()).rows);
+        }
     }
 }
 

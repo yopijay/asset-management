@@ -4,7 +4,28 @@ const Global = require("../../function/global"); // Function
 const audit = { series_no: '', table_name: 'tbl_sub_module',  item_id: 0, field: '', previous: null, current: null, action: '', user_id: 0, date: '' }; // Used for audit trail
 class Submodule {
     series = async () => { return (await new Builder(`tbl_sub_module`).select().build()).rows; }
-    specific = async id => { return (await new Builder(`tbl_sub_module AS sub`).select(`sub.*, mdl.base_url AS module`).join({ table: `tbl_module AS mdl`, condition: `sub.module_id = mdl.id`, type: `LEFT` }).condition(`WHERE sub.id= ${id}`).build()).rows; }
+    navs = async id => { return (await new Builder(`tbl_sub_module`).select().condition(`WHERE module_id= ${id}`).build()).rows; }
+
+    dropdown = async data => {
+        switch(data.type) {
+            case 'nav': return (await new Builder(`tbl_sub_module AS sub`)
+                                            .select(`sub.id, sub.name, mdl.base_url, sub.path`)
+                                            .join({ table: `tbl_module AS mdl`, condition: `sub.module_id = mdl.id`, type: `LEFT` })
+                                            .condition(`WHERE sub.module_id= ${data.id} AND sub.status= 1 ORDER BY sub.name ASC`)
+                                            .build()).rows;
+
+            default: return [{ id: 0, name: '-- SELECT AN ITEM BELOW --' }]
+                            .concat((await new Builder(`tbl_sub_module`).select(`id, name, path`).condition(`WHERE module_id= ${data.id} AND status= 1 ORDER BY name ASC`).build()).rows);
+        }
+    }
+
+    specific = async id => { 
+        return (await new Builder(`tbl_sub_module AS sub`)
+                        .select(`sub.*, mdl.base_url AS module`)
+                        .join({ table: `tbl_module AS mdl`, condition: `sub.module_id = mdl.id`, type: `LEFT` })
+                        .condition(`WHERE sub.id= ${id}`)
+                        .build()).rows; 
+    }
 
     logs = async data => {
         return (await new Builder(`tbl_audit_trail AS at`)

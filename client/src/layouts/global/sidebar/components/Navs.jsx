@@ -5,7 +5,9 @@ import { useContext } from "react";
 
 // Core
 import { GlobalCntxt } from "core/context/Global"; // Context
-import { Components } from "core/constants/Navs"; // Navs
+import { useGet } from "core/function/global";
+import { dropdown } from "core/api";
+import Subnavs from "./Subnavs";
 
 // Custom styles
 const link = {
@@ -27,6 +29,7 @@ const linkactive = {
 
 const Navs = () => {
     const { active, setactive, setopen } = useContext(GlobalCntxt);
+    const { data: module, isFetching: fetching } = useGet({ key: ['mdl_nav'], request: dropdown({ table: 'tbl_module', data: { type: 'nav' } }), options: { refetchOnWindowFocus: false } });
 
     return (
         <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 }>
@@ -37,6 +40,12 @@ const Navs = () => {
                         onClick= { () => { setopen({ left: false }); setactive('dashboard'); localStorage.setItem('nav', 'dashboard'); } }>Dashboard</Typography>
                 </Stack>
             </Stack>
+            { !fetching && module.length > 0 ?
+                module.map((mdl, index) => 
+                    <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 1 } key= { index }>
+                        <Typography variant= "caption" color= "#9BA4B5">{ (mdl.name).charAt(0) + (mdl.name).slice(1).toLowerCase() }</Typography>
+                        <Subnavs id= { mdl.id } />
+                    </Stack> ) : '' }
             <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 1 }>
                 <Typography variant= "caption" color= "#9BA4B5">Setup</Typography>
                 <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch">
@@ -46,17 +55,6 @@ const Navs = () => {
                         onClick= { () => { setopen({ left: false }); setactive('sub-module'); localStorage.setItem('nav', 'sub-module'); } }>Sub module</Typography>
                 </Stack>
             </Stack>
-            {/* { Components.map((cmpnts, index) => (
-                <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 1 } key= { index }>
-                    <Typography variant= "caption" color= "#9BA4B5">{ cmpnts.label }</Typography>
-                    <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch">
-                        { (cmpnts.components).map((nav, index) => (
-                            <Typography key= { index } component= { Link } to= { nav.path } sx= { active === nav.name ? linkactive : link }
-                                onClick= { () => { setopen({ left: false }); setactive(nav.name); localStorage.setItem('nav', nav.name); } }>{ nav.title }</Typography>
-                        )) }
-                    </Stack>
-                </Stack>
-            )) } */}
         </Stack>
     );
 }

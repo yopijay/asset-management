@@ -4,8 +4,9 @@ const Company = require('./tables/Company');
 const Module = require('./tables/Module');
 const Submodule = require('./tables/Submodule');
 
-const login = data => { return new Users().login(data) }
-const profile = id => { return new Users().profile(id) }
+const login = data => { return new Users().login(data); }
+const profile = id => { return new Users().profile(id); }
+const navs = id => { return new Submodule().navs(id); }
 
 const series = table => {
     return new Promise(async resolve => {
@@ -79,7 +80,8 @@ const search = (table, data) => {
 const dropdown = (table, data) => {
     return new Promise(async resolve => {
         switch(table) {
-            case 'tbl_module': resolve(await new Module().dropdown()); break;
+            case 'tbl_module': resolve(await new Module().dropdown(data)); break;
+            case 'tbl_sub_module': resolve(await new Submodule().dropdown(data)); break;
         }
     });
 }
@@ -94,5 +96,6 @@ module.exports = {
     search,
     save,
     update,
-    dropdown
+    dropdown,
+    navs
 }
