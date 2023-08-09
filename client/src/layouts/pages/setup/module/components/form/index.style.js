@@ -4,7 +4,11 @@ export const content = {
     alignItems: 'stretch',
     width: '100%',
     height: '100%',
-    padding: '100px 20px 20px 20px',
+    padding: {
+        xs: '90px 0 20px 0',
+        sm: '80px 0 20px 0',
+        lg: '100px 20px 20px 20px'
+    },
     overflowY: 'scroll',
     '&::-webkit-scrollbar': { display: 'none' }
 }
