@@ -5,7 +5,7 @@ import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { Link } from "react-router-dom";
 
 // Constants
-import { caption, list, subtitle, title } from "../list.style"; // Styles
+import { caption, list, subtitle, title } from "../../index.style"; // Styles
 
 const List = ({ data }) => {
 

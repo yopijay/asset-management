@@ -1,21 +1,37 @@
 // Libraries
+import { Stack } from "@mui/material";
 import { useEffect } from "react";
-import { Box } from "@mui/material";
+import { Route, Routes } from "react-router-dom";
 
-// Screens
-import Mobile from "./screens/mobile";
-import Tablet from "./screens/tablet";
-import Desktop from "./screens/desktop";
+// Core
+import { FormPrvdr } from "core/context/Form"; // Provider
+import { ListPrvdr } from "core/context/List"; // Provider
+
+// Components
+import List from "./components/list";
+import Form from "./components/form";
+
+// Custom styles
+const container = {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    width: '100%',
+    height: '100vh',
+    '&::-webkit-scrollbar': { display: 'none' }
+}
 
 const Index = () => {
-    useEffect(() => { document.title = 'GAMS | Sub Module' }, []);
+    useEffect(() => { document.title = 'GAMS | Sub module' }, []);
 
     return (
-        <Box>
-            <Box sx= {{ display: { xs: 'block', sm: 'none', md: 'none', lg: 'none' }, transition: 'all 0.2s ease-in-out' }}><Mobile /></Box>
-            <Box sx= {{ display: { xs: 'none', sm: 'block', md: 'block', lg: 'none' }, transition: 'all 0.2s ease-in-out' }}><Tablet /></Box>
-            <Box sx= {{ display: { xs: 'none', sm: 'none', md: 'none', lg: 'block' }, transition: 'all 0.2s ease-in-out' }}><Desktop /></Box>
-        </Box>
+        <Stack sx= { container }>
+            <Routes>
+                <Route exact path= "/" element= { <FormPrvdr><ListPrvdr><List /></ListPrvdr></FormPrvdr> } />
+                <Route exact path= "/form/:type" element= { <FormPrvdr><Form /></FormPrvdr> } />
+                <Route exact path= "/form/:type/:id" element= { <FormPrvdr><Form /></FormPrvdr> } />
+            </Routes>
+        </Stack>
     );
 }
 

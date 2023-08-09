@@ -3,7 +3,7 @@ import { Box, Stack, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 
 // Constants
-import { caption, list, subtitle, title } from "../list.style"; // Styles
+import { caption, list, subtitle, title } from "../../index.style"; // Styles
 
 const Grids = ({ data }) => {
 

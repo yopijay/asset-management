@@ -1,8 +1,10 @@
 // Libraries
 import { Box, Stack, Typography } from "@mui/material";
 
-// Components
+// Core
 import Loader from "core/components/loader/Screen"; // Loader
+
+// Components
 import Title from "../../components/list/components/Title";
 import Search from "../../components/list/components/Search";
 import Sort from "../../components/list/components/Sort";

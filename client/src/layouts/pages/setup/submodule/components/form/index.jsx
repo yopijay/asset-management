@@ -1,31 +1,30 @@
 // Libraries
-import { Stack, ThemeProvider, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useContext, useEffect } from "react";
 
 // Core
 import { FormCntxt } from "core/context/Form"; // Provider
-import { Components } from "core/theme"; // Theme
 import FormBuilder from "core/components/form"; // Form Builder
 import { successToast, useGet, usePost } from "core/function/global"; // Function
 import { save, specific, update } from "core/api"; // API
 
 // Constants
-import { cancelbtn, card, content, input, savebtn, title } from "./index.style"; // Styles
-import { validation } from "../../index.validation"; // Validations
+import { cancelbtn, card, content, savebtn, title } from "./index.style"; // Styles
 import Submodule from "../../submodule"; // Fields
+import { validation } from "../../index.validation"; // Validation
 
-const Form = () => {
+const Index = () => {
     const { type, id } = useParams();
     const navigate = useNavigate();
-    const { handleSubmit, setValue, setError, setValidation, register, reset } = useContext(FormCntxt);
+    const { handleSubmit, setValue, setError, setValidation, reset } = useContext(FormCntxt);
     const { isFetching, refetch } = 
-        useGet({ key: ['mdl_specific'], request: specific({ table: 'tbl_sub_module', id: id ?? null }), options: { enabled: type !== 'new', refetchOnWindowFocus: false },
+        useGet({ key: ['sub_specific'], request: specific({ table: 'tbl_sub_module', id: id ?? null }), options: { enabled: type !== 'new', refetchOnWindowFocus: false },
             onSuccess: data => {
                 if(Array.isArray(data)) 
                     for(let count = 0; count < Object.keys(data[0]).length; count++) { 
-                        let _name = Object.keys(data[0])[count]; 
-                        setValue(_name, _name === 'status' ? data[0][_name] === 1 : data[0][_name]); 
+                        let _name = Object.keys(data[0])[count];
+                        setValue(_name, _name === 'status' ? data[0][_name] === 1 : data[0][_name]);
                     }
             } 
         });
@@ -46,7 +45,7 @@ const Form = () => {
             }
         });
 
-    useEffect(() => { setValidation(validation()); reset(); register('module', ''); if(id !== undefined) refetch() }, [ reset, register, setValidation, id, refetch ]);
+    useEffect(() => { setValidation(validation()); reset(); if(id !== undefined) refetch() }, [ reset, setValidation, id, refetch ]);
 
     return (
         <Stack sx= { content } spacing= { 4 }>
@@ -55,23 +54,18 @@ const Form = () => {
                 <Typography variant= "caption" color= "#9BA4B5">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc non neque molestie, 
                     malesuada quam ut, vulputate massa.</Typography>
             </Stack>
-            <ThemeProvider theme= { Components(input) }>
-                <Stack sx= { card }><FormBuilder fields= { Submodule({ fetching: isFetching }) } /></Stack>
-            </ThemeProvider>
-            <Stack direction= "row" justifyContent= "space-between" alignItems= "center" spacing= { 1 }>
+            <Stack sx= { card }><FormBuilder fields= { Submodule({ fetching: isFetching }) } /></Stack>
+            {<Stack direction= "row" justifyContent= "flex-end" alignItems= "center" spacing= { 1 }>
                 <Typography sx= { cancelbtn } component= { Link } to= "/setup/sub-module">Cancel</Typography>
-                <Typography sx= { savebtn } onClick= { handleSubmit(data => {
+                { type !== 'view' ? <Typography sx= { savebtn } onClick= { handleSubmit(data => {
                     data['token'] = (sessionStorage.getItem('token')).split('.')[1];
                     
-                    if(data.module_id) {
-                        if(type === 'new') { saving({ table: 'tbl_sub_module', data: data }); }
-                        else { updating({ table: 'tbl_sub_module', data: data }); }
-                    }
-                    else { setError('module_id', { message: 'This field is required!' }); }
-                }) }>Save</Typography>
-            </Stack>
+                    if(type === 'new') { saving({ table: 'tbl_sub_module', data: data }); }
+                    else { updating({ table: 'tbl_sub_module', data: data }); }
+                }) }>Save</Typography> : '' }
+            </Stack>}
         </Stack>
     );
 }
 
-export default Form;
+export default Index;
