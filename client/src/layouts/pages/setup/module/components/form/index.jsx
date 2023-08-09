@@ -14,7 +14,7 @@ import { cancelbtn, card, content, savebtn, title } from "./index.style"; // Sty
 import Module from "../../module"; // Fields
 import { validation } from "../../index.validation"; // Validation
 
-const Form = () => {
+const Index = () => {
     const { type, id } = useParams();
     const navigate = useNavigate();
     const { handleSubmit, setValue, setError, setValidation, reset } = useContext(FormCntxt);
@@ -68,4 +68,4 @@ const Form = () => {
     );
 }
 
-export default Form;
+export default Index;

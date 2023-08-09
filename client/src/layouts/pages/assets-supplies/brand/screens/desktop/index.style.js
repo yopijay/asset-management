@@ -22,6 +22,7 @@ export const history = {
     justifyContent: 'flex-start',
     alignItems: 'stretch',
     width: '350px',
+    height: '100%',
     padding: '190px 0 20px 0'
 }
 
@@ -45,7 +46,7 @@ export const logs = {
     '&::-webkit-scrollbar': { display: 'none' }
 }
 
-export const save = {
+export const savebtn = {
     textAlign: 'center',
     width: '150px',
     color: '#FFFFFF',
@@ -57,7 +58,7 @@ export const save = {
     '&:hover': { backgroundColor: '#86a583' }
 }
 
-export const cancel = {
+export const cancelbtn = {
     textAlign: 'center',
     width: '150px',
     padding: '8px 0',
@@ -68,20 +69,6 @@ export const cancel = {
     textDecoration: 'none',
     color: '#394867',
     '&:hover': { backgroundColor: '#cdd6dd' }
-}
-
-export const input = {
-    MuiInput: {
-        styleOverrides: {
-            root: {
-                '&:before': { borderBottom: 'none' },
-                '&:after': { borderBottom: 'none' },
-                '&.Mui-disabled:before': { borderBottom: 'none' },
-                '&:hover:not(.Mui-disabled):before': { borderBottom: 'none' }
-            },
-            input: { textTransform: 'uppercase', fontFamily: 'Montserrat' }
-        }
-    }
 }
 
 export const card = {
@@ -101,4 +88,12 @@ export const title = {
     fontFamily: 'Montserrat Black',
     fontSize: '1.4rem',
     color: '#394867',
+}
+
+export const loader = {
+    display: 'flex', 
+    flexDirection: 'row', 
+    justifyContent: 'center', 
+    alignItems: 'center', 
+    width: '100%',
 }

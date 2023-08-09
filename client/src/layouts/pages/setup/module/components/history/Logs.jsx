@@ -6,7 +6,17 @@ import { history } from "core/api"; // API
 import { getdate, useGet } from "core/function/global"; // Function
 
 // Constants
-import { logs } from "../../screens/desktop/index.style"; // Styles
+const logs = {
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'stretch',
+    backgroundColor: '#FFFFFF',
+    borderRadius: '8px',
+    padding: '15px',
+    border: 'solid 1px #F1F6F9',
+    overflowY: 'scroll',
+    '&::-webkit-scrollbar': { display: 'none' }
+}
 
 const Logs = () => {
     const { data: log, isFetching: fetching } = useGet({ key: ['mdl_logs'], request: history({ table: 'tbl_module', data: {} }), options: { refetchOnWindowFocus: false } }); 

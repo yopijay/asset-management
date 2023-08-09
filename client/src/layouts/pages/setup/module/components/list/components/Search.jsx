@@ -9,7 +9,7 @@ import { useContext } from "react";
 import { FormCntxt } from "core/context/Form"; // Context
 
 // Constants
-import { btnicon, btntxt, download, logs, search, upload } from "./list.style"; // Styles
+import { btnicon, btntxt, download, logs, search, upload } from "../index.style"; // Styles
 
 const Search = ({ request }) => {
     const { register, setValue, getValues } = useContext(FormCntxt);

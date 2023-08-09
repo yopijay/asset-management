@@ -8,11 +8,11 @@ import { caption, list, subtitle, title } from "../list.style"; // Styles
 const Grids = ({ data }) => {
 
     return (
-        <Stack sx= { list } component= { Link } to= { `/setup/module/form/update/${data.id}` }>
+        <Stack sx= { list } component= { Link } to= { `/assets-supplies/brand/form/update/${data.id}` }>
             <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" sx= {{ flexGrow: 1, overflow: 'hidden' }}>
                 <Typography variant= "caption" sx= { caption }>{ data.series_no }</Typography>
                 <Typography sx= { title }>{ data.name }</Typography>
-                <Typography variant= "body2" sx= { subtitle }>Base URL: /{ data.base_url }</Typography>
+                {/* <Typography variant= "body2" sx= { subtitle }>Base URL: /{ data.base_url }</Typography> */}
             </Stack>
             <Box paddingLeft= "15px">
                 { data.status === 1 ? 

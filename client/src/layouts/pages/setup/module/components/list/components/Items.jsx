@@ -6,11 +6,11 @@ import { useContext } from "react";
 import { ListCntxt } from "core/context/List"; // Context
 
 // Components
-import List from "./components/List";
-import Grids from "./components/Grids";
+import List from "./listing/List";
+import Grids from "./listing/Grids";
 
 // Constants
-import { items } from "./list.style"; // Styles
+import { items } from "../index.style"; // Styles
 
 const Items = () => {
     const { list, listing } = useContext(ListCntxt);

@@ -1,23 +1,52 @@
 // Libraries
 import { Stack, ThemeProvider, Typography } from "@mui/material";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useContext, useEffect } from "react";
 
 // Core
 import { FormCntxt } from "core/context/Form"; // Provider
 import { Components } from "core/theme"; // Theme
 import FormBuilder from "core/components/form"; // Form Builder
+import { successToast, useGet, usePost } from "core/function/global"; // Function
+import { save, specific, update } from "core/api"; // API
 
 // Constants
-import { cancel, card, content, input, save, title } from "./index.style"; // Styles
+import { cancelbtn, card, content, input, savebtn, title } from "./index.style"; // Styles
 import { validation } from "../../index.validation"; // Validations
-import Brand from "../../brand"; // Fields
+import Module from "../../brand"; // Fields
 
 const Form = () => {
-    const { type } = useParams();
-    const { setValidation } = useContext(FormCntxt);
+    const { type, id } = useParams();
+    const navigate = useNavigate();
+    const { setValidation, handleSubmit, setValue, setError , reset} = useContext(FormCntxt);
+    const { isFetching, refetch } = 
+        useGet({ key: ['brd_specific'], request: specific({ table: 'tbl_brand', id: id ?? null }), options: { enabled: type !== 'new', refetchOnWindowFocus: false },
+            onSuccess: data => {
+                if(Array.isArray(data)) 
+                    for(let count = 0; count < Object.keys(data[0]).length; count++) { 
+                        let _name = Object.keys(data[0])[count]; 
+                        setValue(_name, _name === 'status' ? data[0][_name] === 1 : data[0][_name]); 
+                    }
+            } 
+        });
 
-    useEffect(() => { setValidation(validation()); }, [ setValidation ]);
+    const { mutate: saving } = 
+        usePost({ request: save,
+            onSuccess: data => {
+                if(data.result === 'error') { (data.error).forEach((err, index) => setError(err.name, { type: index === 0 ? 'focus' : '', message: err.message }, { shouldFocus: index === 0 })); }
+                else { successToast(data.message, 3000, navigate('/assets-supplies/brand', { replace: true })); }
+            } 
+        });
+
+    const { mutate: updating } =
+        usePost({ request: update,
+            onSuccess: data => {
+                if(data.result === 'error') { (data.error).forEach((err, index) => setError(err.name, { type: index === 0 ? 'focus' : '', message: err.message }, { shouldFocus: index === 0 })); }
+                else { successToast(data.message, 3000, navigate('/assets-supplies/brand', { replace: true })); }
+            }
+        });
+
+    useEffect(() => { setValidation(validation()); reset(); if(id !== undefined) refetch() }, [ reset, setValidation, id, refetch ]);
 
     return (
         <Stack sx= { content } spacing= { 4 }>
@@ -27,11 +56,16 @@ const Form = () => {
                     malesuada quam ut, vulputate massa.</Typography>
             </Stack>
             <ThemeProvider theme= { Components(input) }>
-                <Stack sx= { card }><FormBuilder fields= { Brand() } /></Stack>
+                <Stack sx= { card }><FormBuilder fields= { Module({ fetching: isFetching }) } /></Stack>
             </ThemeProvider>
             <Stack direction= "row" justifyContent= "flex-end" alignItems= "center" spacing= { 1 }>
-                <Typography sx= { cancel } component= { Link } to= "/assets-supplies/brand">Cancel</Typography>
-                <Typography sx= { save }>Save</Typography>
+                <Typography sx= { cancelbtn } component= { Link } to= "/assets-supplies/brand">Cancel</Typography>
+                <Typography sx= { savebtn } onClick= { handleSubmit(data => {
+                    data['token'] = (sessionStorage.getItem('token')).split('.')[1];
+
+                    if(type === 'new') { saving({ table: 'tbl_brand', data: data }); }
+                    else { updating({ table: 'tbl_brand', data: data }); }
+                }) }>Save</Typography>
             </Stack>
         </Stack>
     );

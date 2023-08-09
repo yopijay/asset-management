@@ -1,17 +1,16 @@
 // Libraries
 import { useContext } from "react";
 import { useParams } from "react-router-dom";
+import { InputAdornment } from "@mui/material";
 
 // Core
 import { series } from "core/api"; // API
 import { FormCntxt } from "core/context/Form"; // Context
 import { formatter, useGet } from "core/function/global"; // Function
-import { InputAdornment } from "@mui/material";
 
-const Company = ({ fetching }) => {
+const Module = ({ fetching }) => {
     const { type } = useParams();
     const { setValue, getValues } = useContext(FormCntxt);
-
     useGet({ key: ['mdl_series'], request: series('tbl_module'), options: {}, onSuccess: data => { if(type === 'new') setValue('series_no', `MDL-${formatter(parseInt(data.length) + 1, 7)}`) } });
 
     return ([
@@ -77,4 +76,4 @@ const Company = ({ fetching }) => {
     ]);
 }
 
-export default Company;
+export default Module;
