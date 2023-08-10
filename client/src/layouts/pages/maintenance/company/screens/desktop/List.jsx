@@ -1,53 +1,31 @@
 // Libraries
-import { Stack, Typography } from "@mui/material";
-import { useContext, useEffect } from "react";
+import { Box, Stack, Typography } from "@mui/material";
 
 // Core
-import { ListCntxt } from "core/context/List"; // Context
-import { FormCntxt } from "core/context/Form"; // Context
-import { usePost } from "core/function/global"; // Function
-import { look, records } from "core/api"; // API
+import Loader from "core/components/loader/Screen"; // Loader
 
 // Components
-import Loader from "core/components/loader/Screen"; // Loader
-import Title from "../../components/list/Title";
-import Search from "../../components/list/Search";
-import Sort from "../../components/list/Sort";
-import Items from "../../components/list/Items";
+import Title from "../../components/list/components/Title";
+import Search from "../../components/list/components/Search";
+import Sort from "../../components/list/components/Sort";
+import Items from "../../components/list/components/Items";
 import Logs from "../../components/history/Logs";
 
 // Constants
-import { content, history, items } from "./index.style"; // Styles
+import { content, history, items, loader } from "./index.style"; // Styles
 
-const List = () => {
-    const { setlist } = useContext(ListCntxt);
-    const { register, getValues } = useContext(FormCntxt);
-    const { mutate: find, isLoading: finding } = usePost({ request: look, onSuccess: data => setlist(data) });
-    const { mutate: record, isLoading: fetching } = usePost({ request: records, options: { refetchOnWindowFocus: false }, onSuccess: data => setlist(data) });
-
-    useEffect(() => {
-        register('orderby', { value: 'date_created' });
-        register('sort', { value: 'desc' });
-        register('token', { value: (sessionStorage.getItem('token')).split('.')[1] });
-
-        let data = getValues();
-        data['orderby'] = 'date_created';
-        data['sort'] = 'desc';
-        data['searchtxt'] = '';
-        data['token'] = (sessionStorage.getItem('token')).split('.')[1];
-
-        record({ table: 'tbl_company', data: data });
-    }, [ register, getValues, record ]);
+const List = props => {
+    const { find, record, fetching, finding } = props;
 
     return (
-        <Stack direction= "row" justifyContent= "flex-start" alignItems= "flex-start" width= "100%">
+        <Stack direction= "row" justifyContent= "flex-start" alignItems= "flex-start">
             <Stack sx= { content } spacing= { 5 }>
                 <Title />
                 <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 } flexGrow= { 1 }>
                     <Search request= { find } />
                     <Stack sx= { items } spacing= { 2 }>
                         <Sort refetch= { record } />
-                        { !fetching && !finding ? <Items /> : <Loader /> }
+                        { !fetching && !finding ? <Items /> : <Box sx= { loader }><Loader /></Box> }
                     </Stack>
                 </Stack>
             </Stack>

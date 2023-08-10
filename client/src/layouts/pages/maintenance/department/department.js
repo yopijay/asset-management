@@ -1,4 +1,17 @@
-const Department = () => {
+// Libraries
+import { useContext } from "react";
+import { useParams } from "react-router-dom";
+
+// Core
+import { series } from "core/api"; // API
+import { FormCntxt } from "core/context/Form"; // Context
+import { formatter, useGet } from "core/function/global"; // Function
+
+const Department = ({ fetching }) => {
+    const { type } = useParams();
+    const { setValue, getValues } = useContext(FormCntxt);
+
+    useGet({ key: ['dpt_series'], request: series('tbl_department'), options: {}, onSuccess: data => { if(type === 'new') setValue('series_no', `DPT-${formatter(parseInt(data.length) + 1, 7)}`) } });
 
     return ([
         {
@@ -7,8 +20,7 @@ const Department = () => {
                 name: 'series_no',
                 label: '*Series no.',
                 disabled: true,
-                fetching: false,
-                onchange: () => {}
+                fetching: fetching
             },
             type: 'textfield'
         },
@@ -17,10 +29,9 @@ const Department = () => {
             props: {
                 name: 'company_id',
                 label: '*Company',
-                disabled: false,
-                fetching: false,
-                options: [],
-                onchange: () => {}
+                disabled: type === 'view',
+                fetching: fetching,
+                options: []
             },
             type: 'dropdown'
         },
@@ -29,9 +40,8 @@ const Department = () => {
             props: {
                 name: 'name',
                 label: '*Department',
-                disabled: false,
-                fetching: false,
-                onchange: () => {}
+                disabled: type === 'view',
+                fetching: fetching
             },
             type: 'textfield'
         },
@@ -40,10 +50,9 @@ const Department = () => {
             props: {
                 name: 'department_head_id',
                 label: '*Department head',
-                disabled: false,
-                fetching: false,
-                options: [],
-                onchange: () => {}
+                disabled: type === 'view',
+                fetching: fetching,
+                options: []
             },
             type: 'dropdown'
         },
@@ -52,9 +61,8 @@ const Department = () => {
             props: {
                 name: 'description',
                 label: 'Description',
-                disabled: false,
-                fetching: false,
-                onchange: () => {}
+                disabled: type === 'view',
+                fetching: fetching
             },
             type: 'textarea'
         },
@@ -63,9 +71,8 @@ const Department = () => {
             props: {
                 name: 'status',
                 label: 'Status',
-                disabled: false,
-                fetching: false,
-                onchange: () => {}
+                disabled: type === 'view',
+                fetching: fetching
             },
             type: 'switch'
         }

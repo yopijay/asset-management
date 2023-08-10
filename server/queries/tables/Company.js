@@ -6,6 +6,10 @@ class Company {
     series = async () =>{ return (await new Builder(`tbl_company`).select().build()).rows; }
     specific = async id => { return (await new Builder(`tbl_company`).select().condition(`WHERE id= ${id}`).build()).rows; }
 
+    logs = async data => {
+        return [];
+    }
+
     list = async data => {
         return (await new Builder(`tbl_company AS cmp`)
                         .select(`cmp.id, cmp.series_no, cmp.name, cmp.telephone, cmp.address, cmp.status, CONCAT(cb.lname, ', ', cb.fname, ' ', cb.mname) AS created_by, cmp.date_created`)
