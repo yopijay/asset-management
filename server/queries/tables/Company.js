@@ -6,8 +6,20 @@ class Company {
     series = async () =>{ return (await new Builder(`tbl_company`).select().build()).rows; }
     specific = async id => { return (await new Builder(`tbl_company`).select().condition(`WHERE id= ${id}`).build()).rows; }
 
+    dropdown = async data => {
+        switch(data.type) {
+            case 'nav': return [];
+            default: return [{ id: 0, name: '-- SELECT AN ITEM BELOW --' }]
+                            .concat((await new Builder(`tbl_company`).select(`id, name`).condition(`WHERE status= 1 ORDER BY name ASC`).build()).rows);
+        }
+    }
+
     logs = async data => {
-        return [];
+        return (await new Builder(`tbl_audit_trail AS at`)
+                        .select(`at.id, at.series_no AS at_series, at.table_name, at.item_id, at.field, at.previous, at.current, at.action, at.user_id, at.date, cmp.series_no AS cmp_series, cmp.name`)
+                        .join({ table: `tbl_company AS cmp`, condition: `at.item_id = cmp.id`, type: `LEFT` })
+                        .condition(`WHERE at.table_name= 'tbl_company' ORDER BY at.date DESC LIMIT 3`)
+                        .build()).rows;
     }
 
     list = async data => {

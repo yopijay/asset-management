@@ -58,10 +58,17 @@ const Index = () => {
             {<Stack direction= "row" justifyContent= "flex-end" alignItems= "center" spacing= { 1 }>
                 <Typography sx= { cancelbtn } component= { Link } to= "/maintenance/department">Cancel</Typography>
                 { type !== 'view' ? <Typography sx= { savebtn } onClick= { handleSubmit(data => {
+                    let errors = [];
                     data['token'] = (sessionStorage.getItem('token')).split('.')[1];
                     
-                    if(type === 'new') { saving({ table: 'tbl_department', data: data }); }
-                    else { updating({ table: 'tbl_department', data: data }); }
+                    if(!data.company_id) { errors.push({ name: 'company_id', message: 'This field is required!' }) };
+                    if(!data.department_head_id) { errors.push({ name: 'department_head_id', message: 'This field is required!' }); }
+                    
+                    if(!(errors.length > 0)) {
+                        if(type === 'new') { saving({ table: 'tbl_department', data: data }); }
+                        else { updating({ table: 'tbl_department', data: data }); }
+                    }
+                    else { errors.forEach(data => setError(data.name, { message: data.message })); }
                 }) }>Save</Typography> : '' }
             </Stack>}
         </Stack>

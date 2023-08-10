@@ -91,6 +91,8 @@ const dropdown = (table, data) => {
         switch(table) {
             case 'tbl_module': resolve(await new Module().dropdown(data)); break;
             case 'tbl_sub_module': resolve(await new Submodule().dropdown(data)); break;
+            case 'tbl_users': resolve(await new Users().dropdown(data)); break;
+            case 'tbl_company': resolve(await new Company().dropdown(data)); break;
         }
     });
 }

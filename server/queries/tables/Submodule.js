@@ -29,7 +29,7 @@ class Submodule {
 
     logs = async data => {
         return (await new Builder(`tbl_audit_trail AS at`)
-                        .select(`at.id, at.series_no AS at_series, at.table_name, at.item_id, at.field, at.previous, at.current, at.action, at.user_id, at.date, sub.name`)
+                        .select(`at.id, at.series_no AS at_series, at.table_name, at.item_id, at.field, at.previous, at.current, at.action, at.user_id, at.date, sub.series_no AS sub_series, sub.name`)
                         .join({ table: `tbl_sub_module AS sub`, condition: `at.item_id = sub.id`, type: `LEFT` })
                         .condition(`WHERE at.table_name= 'tbl_sub_module' ORDER BY at.date DESC LIMIT 3`)
                         .build()).rows;
@@ -63,7 +63,7 @@ class Submodule {
         let errors = [];
 
         let series = await new Builder(`tbl_sub_module`).select().condition(`WHERE series_no= '${(data.series_no).toUpperCase()}'`).build();
-        let name = await new Builder(`tbl_sub_module`).select().condition(`WHERE name= '${(data.name).toUpperCase()}'`).build();
+        let name = await new Builder(`tbl_sub_module`).select().condition(`WHERE  module_id= ${data.module_id } AND name= '${(data.name).toUpperCase()}'`).build();
         let path = await new Builder(`tbl_sub_module`).select().condition(`WHERE path= '${(data.path).toLowerCase()}'`).build();
 
         if(series.rowCount > 0) { errors.push({ name: 'series_no', message: 'Series number already exist!' }); }
@@ -93,6 +93,47 @@ class Submodule {
 
     update = async data => {
         let sub = (await new Builder(`tbl_sub_module`).select().condition(`WHERE id= ${data.id}`).build()).rows[0];
+        let date = Global.date(new Date());
+        let user = JSON.parse(atob(data.token));
+        let audits = [];
+        let errors = [];
+
+        let name = await new Builder(`tbl_sub_module`).select().condition(`WHERE module_id= ${data.module_id} AND name= '${(data.name).toUpperCase()}'`).build();
+
+        if(Global.compare(sub.module_id, data.module_id)) {
+            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_sub_module', item_id: sub.id, field: 'module_id', previous: sub.module_id,
+                    current: data.module_id, action: 'update', user_id: user.id, date: date });
+        }
+
+        if(Global.compare(sub.name, data.name)) {
+            if(!(name.rowCount > 0)) {
+                audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_sub_module', item_id: sub.id, field: 'name', previous: sub.name,
+                    current: (data.name).toUpperCase(), action: 'update', user_id: user.id, date: date });
+            }
+            else { errors.push({ name: 'name', message: 'Sub module already exist in this module!' }); }
+        }
+
+        if(Global.compare(sub.path, data.path)) {
+            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_sub_module', item_id: sub.id, field: 'path', previous: sub.path,
+                    current: (data.path).toLowerCase(), action: 'update', user_id: user.id, date: date });
+        }
+
+        if(Global.compare(sub.status, data.status ? 1 : 0)) {
+            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_sub_module', item_id: sub.id, field: 'status', previous: sub.status, 
+                                    current: data.status ? 1 : 0, action: 'update', user_id: user.id, date: date });
+        }
+
+        if(!(errors.length > 0)) {
+            await new Builder(`tbl_sub_module`)
+                .update(`module_id= ${data.module_id}, name= '${(data.name).toUpperCase()}', path= '${(data.path).toLowerCase()}', status= ${data.status ? 1 : 0},
+                    updated_by= ${user.id}, date_updated= '${date}'`)
+                .condition(`WHERE id= ${data.id}`)
+                .build();
+
+                audits.forEach(data => Global.audit(data));
+                return { result: 'success', message: 'Successfully updated!' }
+        }
+        else { return { result: 'error', error: errors } }
     }
 }
 
