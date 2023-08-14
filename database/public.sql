@@ -12,7 +12,7 @@
  Target Server Version : 140003
  File Encoding         : 65001
 
- Date: 10/08/2023 16:53:33
+ Date: 14/08/2023 16:59:46
 */
 
 
@@ -65,6 +65,17 @@ CACHE 1;
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."tbl_module_id_seq";
 CREATE SEQUENCE "public"."tbl_module_id_seq" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 2147483647
+START 1
+CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for tbl_position_id_seq
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."tbl_position_id_seq";
+CREATE SEQUENCE "public"."tbl_position_id_seq" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 2147483647
@@ -142,6 +153,24 @@ INSERT INTO "public"."tbl_audit_trail" VALUES (25, 'HUHIKVW', 'tbl_module', 4, '
 INSERT INTO "public"."tbl_audit_trail" VALUES (26, 'S7T22JL', 'tbl_module', 4, 'status', '0', '1', 'update', 1, '2023-08-09 15:39:11+08');
 INSERT INTO "public"."tbl_audit_trail" VALUES (27, 'V8EF1N4', 'tbl_sub_module', 4, 'status', '1', '0', 'update', 1, '2023-08-10 16:34:42+08');
 INSERT INTO "public"."tbl_audit_trail" VALUES (28, '4L2MQW4', 'tbl_sub_module', 4, 'status', '0', '1', 'update', 1, '2023-08-10 16:34:46+08');
+INSERT INTO "public"."tbl_audit_trail" VALUES (29, 'ULCNWOX', 'tbl_company', 2, 'address', '#82 CORDILLERA ST. CORNER QUEZON AVE., QUEZON CITY', NULL, 'update', 1, '2023-08-14 09:27:49+08');
+INSERT INTO "public"."tbl_audit_trail" VALUES (30, 'XWKAM3C', 'tbl_company', 4, 'all', NULL, NULL, 'create', 1, '2023-08-14 11:26:04+08');
+INSERT INTO "public"."tbl_audit_trail" VALUES (31, 'TVK1MFJ', 'tbl_department', 1, 'all', NULL, NULL, 'create', 1, '2023-08-14 11:29:03+08');
+INSERT INTO "public"."tbl_audit_trail" VALUES (32, 'S5N0Y9G', 'tbl_department', 2, 'all', NULL, NULL, 'create', 1, '2023-08-14 11:40:31+08');
+INSERT INTO "public"."tbl_audit_trail" VALUES (33, 'KTK1JXQ', 'tbl_department', 3, 'all', NULL, NULL, 'create', 1, '2023-08-14 11:40:53+08');
+INSERT INTO "public"."tbl_audit_trail" VALUES (34, 'HGKYPOG', 'tbl_department', 4, 'all', NULL, NULL, 'create', 1, '2023-08-14 11:41:01+08');
+INSERT INTO "public"."tbl_audit_trail" VALUES (35, '3E2JW11', 'tbl_company', 4, 'status', '1', '0', 'update', 1, '2023-08-14 11:56:42+08');
+INSERT INTO "public"."tbl_audit_trail" VALUES (36, '7PV5MYN', 'tbl_company', 4, 'status', '0', '1', 'update', 1, '2023-08-14 11:56:50+08');
+INSERT INTO "public"."tbl_audit_trail" VALUES (37, 'O1S9IET', 'tbl_department', 4, 'status', '1', '0', 'update', 1, '2023-08-14 11:57:16+08');
+INSERT INTO "public"."tbl_audit_trail" VALUES (38, 'X67OKPX', 'tbl_department', 4, 'status', '0', '1', 'update', 1, '2023-08-14 11:57:19+08');
+INSERT INTO "public"."tbl_audit_trail" VALUES (39, 'I13IHMP', 'tbl_position', 1, 'all', NULL, NULL, 'create', 1, '2023-08-14 14:40:08+08');
+INSERT INTO "public"."tbl_audit_trail" VALUES (40, '07772PO', 'tbl_position', 2, 'all', NULL, NULL, 'create', 1, '2023-08-14 14:40:29+08');
+INSERT INTO "public"."tbl_audit_trail" VALUES (41, '8XV90RU', 'tbl_position', 3, 'all', NULL, NULL, 'create', 1, '2023-08-14 14:41:53+08');
+INSERT INTO "public"."tbl_audit_trail" VALUES (42, '25D4UZK', 'tbl_department', 3, 'status', '1', '0', 'update', 1, '2023-08-14 14:58:39+08');
+INSERT INTO "public"."tbl_audit_trail" VALUES (43, 'VZPMR1Y', 'tbl_position', 3, 'status', '0', '1', 'update', 1, '2023-08-14 14:58:59+08');
+INSERT INTO "public"."tbl_audit_trail" VALUES (44, '11HNU8B', 'tbl_position', 3, 'status', '1', '0', 'update', 1, '2023-08-14 14:59:02+08');
+INSERT INTO "public"."tbl_audit_trail" VALUES (45, '3A36YCQ', 'tbl_position', 3, 'status', '0', '1', 'update', 1, '2023-08-14 14:59:06+08');
+INSERT INTO "public"."tbl_audit_trail" VALUES (46, 'YY7AETT', 'tbl_sub_module', 5, 'all', NULL, NULL, 'create', 1, '2023-08-14 15:07:56+08');
 
 -- ----------------------------
 -- Table structure for tbl_company
@@ -170,8 +199,9 @@ CREATE TABLE "public"."tbl_company" (
 -- Records of tbl_company
 -- ----------------------------
 INSERT INTO "public"."tbl_company" VALUES (1, 'CMP-0000001', 'KC INDUSTRIAL CORPORATION', '8781-0071', NULL, '#82 CORDILLERA ST. CORNER QUEZON AVE., QUEZON CITY', 1, 1, NULL, NULL, NULL, '2023-08-02 15:00:29+08', NULL, NULL, NULL);
-INSERT INTO "public"."tbl_company" VALUES (2, 'CMP-0000002', 'S-POWER CORPORATION', '8230-4008, 8230-3275, 8230-4015', NULL, '#82 CORDILLERA ST. CORNER QUEZON AVE., QUEZON CITY', 1, 1, 1, NULL, NULL, '2023-08-02 16:38:22+08', '2023-08-03 16:58:40+08', NULL, NULL);
-INSERT INTO "public"."tbl_company" VALUES (3, 'CMP-0000003', 'SYSTEMS POWERMARK CORPORATION', '', NULL, NULL, 1, 1, NULL, NULL, NULL, '2023-08-04 09:55:41+08', NULL, NULL, NULL);
+INSERT INTO "public"."tbl_company" VALUES (3, 'CMP-0000003', 'SYSTEMS POWERMARK CORPORATION', NULL, NULL, NULL, 1, 1, 1, NULL, NULL, '2023-08-04 09:55:41+08', '2023-08-14 09:27:31+08', NULL, NULL);
+INSERT INTO "public"."tbl_company" VALUES (2, 'CMP-0000002', 'S-POWER CORPORATION', '8230-4008, 8230-3275, 8230-4015', NULL, NULL, 1, 1, 1, NULL, NULL, '2023-08-02 16:38:22+08', '2023-08-14 09:27:49+08', NULL, NULL);
+INSERT INTO "public"."tbl_company" VALUES (4, 'CMP-0000004', 'KC ELECTRICAL INNOVATION INC.', '8781-0071', NULL, '#82 CORDILLERA ST. CORNER QUEZON AVE., QUEZON CITY', 1, 1, NULL, NULL, NULL, '2023-08-14 11:26:04+08', NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for tbl_department
@@ -179,7 +209,7 @@ INSERT INTO "public"."tbl_company" VALUES (3, 'CMP-0000003', 'SYSTEMS POWERMARK 
 DROP TABLE IF EXISTS "public"."tbl_department";
 CREATE TABLE "public"."tbl_department" (
   "id" int4 NOT NULL DEFAULT nextval('tbl_department_id_seq'::regclass),
-  "serial_no" varchar(20) COLLATE "pg_catalog"."default",
+  "series_no" varchar(20) COLLATE "pg_catalog"."default",
   "company_id" int4,
   "department_head_id" int4,
   "name" varchar(100) COLLATE "pg_catalog"."default",
@@ -199,6 +229,10 @@ CREATE TABLE "public"."tbl_department" (
 -- ----------------------------
 -- Records of tbl_department
 -- ----------------------------
+INSERT INTO "public"."tbl_department" VALUES (1, 'DPT-0000001', 4, 1, 'IT/MIS', NULL, 1, 1, NULL, NULL, NULL, '2023-08-14 11:29:03+08', NULL, NULL, NULL);
+INSERT INTO "public"."tbl_department" VALUES (2, 'DPT-0000002', 4, 1, 'ACCOUNTING', NULL, 1, 1, NULL, NULL, NULL, '2023-08-14 11:40:31+08', NULL, NULL, NULL);
+INSERT INTO "public"."tbl_department" VALUES (3, 'DPT-0000003', 2, 1, 'ACCOUNTING', NULL, 1, 1, NULL, NULL, NULL, '2023-08-14 11:40:53+08', NULL, NULL, NULL);
+INSERT INTO "public"."tbl_department" VALUES (4, 'DPT-0000004', 2, 1, 'IT/MIS', NULL, 1, 1, 1, NULL, NULL, '2023-08-14 11:41:01+08', '2023-08-14 11:57:19+08', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for tbl_employee
@@ -216,14 +250,15 @@ CREATE TABLE "public"."tbl_employee" (
   "fname" varchar(200) COLLATE "pg_catalog"."default",
   "mname" varchar(200) COLLATE "pg_catalog"."default",
   "lname" varchar(200) COLLATE "pg_catalog"."default",
-  "address" text COLLATE "pg_catalog"."default"
+  "address" text COLLATE "pg_catalog"."default",
+  "profile" text COLLATE "pg_catalog"."default"
 )
 ;
 
 -- ----------------------------
 -- Records of tbl_employee
 -- ----------------------------
-INSERT INTO "public"."tbl_employee" VALUES (1, 1, '000000000', '0000000000', NULL, NULL, NULL, NULL, 'SUPER', NULL, 'ADMIN', NULL);
+INSERT INTO "public"."tbl_employee" VALUES (1, 1, '000000000', '0000000000', NULL, NULL, NULL, NULL, 'SUPER', NULL, 'ADMIN', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for tbl_module
@@ -253,7 +288,36 @@ CREATE TABLE "public"."tbl_module" (
 INSERT INTO "public"."tbl_module" VALUES (1, 'MDL-0000001', 'TOOLS', 'tools', NULL, 1, 1, 1, NULL, NULL, '2023-08-04 16:32:03+08', '2023-08-04 16:52:08+08', NULL, NULL);
 INSERT INTO "public"."tbl_module" VALUES (2, 'MDL-0000002', 'ASSETS & SUPPLIES', 'assets-supplies', NULL, 1, 1, NULL, NULL, NULL, '2023-08-04 16:54:26+08', NULL, NULL, NULL);
 INSERT INTO "public"."tbl_module" VALUES (3, 'MDL-0000003', 'WAREHOUSE', 'warehouse', NULL, 1, 1, NULL, NULL, NULL, '2023-08-04 16:55:09+08', NULL, NULL, NULL);
-INSERT INTO "public"."tbl_module" VALUES (4, 'MDL-0000004', 'MAINTENANCE', 'maintenance', NULL, 1, 1, 1, NULL, NULL, '2023-08-04 16:55:19+08', '2023-08-09 15:39:11+08', NULL, NULL);
+INSERT INTO "public"."tbl_module" VALUES (4, 'MDL-0000004', 'MAINTENANCE', 'maintenance', NULL, 1, 1, 1, NULL, NULL, '2023-08-04 16:55:19+08', '2023-08-14 09:24:58+08', NULL, NULL);
+
+-- ----------------------------
+-- Table structure for tbl_position
+-- ----------------------------
+DROP TABLE IF EXISTS "public"."tbl_position";
+CREATE TABLE "public"."tbl_position" (
+  "id" int4 NOT NULL DEFAULT nextval('tbl_position_id_seq'::regclass),
+  "series_no" varchar(20) COLLATE "pg_catalog"."default",
+  "company_id" int4,
+  "department_id" int4,
+  "name" varchar(100) COLLATE "pg_catalog"."default",
+  "status" int4,
+  "created_by" int4,
+  "updated_by" int4,
+  "deleted_by" int4,
+  "imported_by" int4,
+  "date_created" timestamptz(6),
+  "date_updated" timestamptz(6),
+  "date_deleted" timestamptz(6),
+  "date_imported" timestamptz(6)
+)
+;
+
+-- ----------------------------
+-- Records of tbl_position
+-- ----------------------------
+INSERT INTO "public"."tbl_position" VALUES (1, 'PST-0000001', 4, 1, 'IT PROGRAMMER', 1, 1, NULL, NULL, NULL, '2023-08-14 14:40:08+08', NULL, NULL, NULL);
+INSERT INTO "public"."tbl_position" VALUES (2, 'PST-0000002', 4, 1, 'IT STAFF', 1, 1, NULL, NULL, NULL, '2023-08-14 14:40:29+08', NULL, NULL, NULL);
+INSERT INTO "public"."tbl_position" VALUES (3, 'PST-0000003', 2, 4, 'IT STAFF', 1, 1, 1, NULL, NULL, '2023-08-14 14:41:53+08', '2023-08-14 14:59:06+08', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for tbl_sub_module
@@ -283,7 +347,8 @@ CREATE TABLE "public"."tbl_sub_module" (
 INSERT INTO "public"."tbl_sub_module" VALUES (1, 'SMDL-0000001', 4, 'COMPANY', 'company', 1, 1, NULL, NULL, NULL, '2023-08-07 15:00:37+08', NULL, NULL, NULL);
 INSERT INTO "public"."tbl_sub_module" VALUES (2, 'SMDL-0000002', 2, 'BRAND', 'brand', 1, 1, NULL, NULL, NULL, '2023-08-07 15:40:31+08', NULL, NULL, NULL);
 INSERT INTO "public"."tbl_sub_module" VALUES (3, 'SMDL-0000003', 4, 'DEPARTMENT', 'department', 1, 1, NULL, NULL, NULL, '2023-08-07 15:53:55+08', NULL, NULL, NULL);
-INSERT INTO "public"."tbl_sub_module" VALUES (4, 'SMDL-0000004', 4, 'POSITION', 'position', 1, 1, 1, NULL, NULL, '2023-08-07 16:00:12+08', '2023-08-10 16:34:46+08', NULL, NULL);
+INSERT INTO "public"."tbl_sub_module" VALUES (4, 'SMDL-0000004', 4, 'POSITION', 'position', 1, 1, 1, NULL, NULL, '2023-08-07 16:00:12+08', '2023-08-14 09:25:08+08', NULL, NULL);
+INSERT INTO "public"."tbl_sub_module" VALUES (5, 'SMDL-0000005', 4, 'EMPLOYEE', 'employee', 1, 1, NULL, NULL, NULL, '2023-08-14 15:07:56+08', NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for tbl_users
@@ -317,21 +382,21 @@ INSERT INTO "public"."tbl_users" VALUES (1, '000000000', 'superadmin@kcic.com.ph
 -- ----------------------------
 ALTER SEQUENCE "public"."tbl_audit_trail_id_seq"
 OWNED BY "public"."tbl_audit_trail"."id";
-SELECT setval('"public"."tbl_audit_trail_id_seq"', 29, true);
+SELECT setval('"public"."tbl_audit_trail_id_seq"', 47, true);
 
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
 ALTER SEQUENCE "public"."tbl_company_id_seq"
 OWNED BY "public"."tbl_company"."id";
-SELECT setval('"public"."tbl_company_id_seq"', 4, true);
+SELECT setval('"public"."tbl_company_id_seq"', 5, true);
 
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
 ALTER SEQUENCE "public"."tbl_department_id_seq"
 OWNED BY "public"."tbl_department"."id";
-SELECT setval('"public"."tbl_department_id_seq"', 2, false);
+SELECT setval('"public"."tbl_department_id_seq"', 5, true);
 
 -- ----------------------------
 -- Alter sequences owned by
@@ -350,9 +415,16 @@ SELECT setval('"public"."tbl_module_id_seq"', 5, true);
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
+ALTER SEQUENCE "public"."tbl_position_id_seq"
+OWNED BY "public"."tbl_position"."id";
+SELECT setval('"public"."tbl_position_id_seq"', 4, true);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
 ALTER SEQUENCE "public"."tbl_sub_module_id_seq"
 OWNED BY "public"."tbl_sub_module"."id";
-SELECT setval('"public"."tbl_sub_module_id_seq"', 5, true);
+SELECT setval('"public"."tbl_sub_module_id_seq"', 6, true);
 
 -- ----------------------------
 -- Alter sequences owned by
@@ -385,6 +457,11 @@ ALTER TABLE "public"."tbl_employee" ADD CONSTRAINT "tbl_employee_pkey" PRIMARY K
 -- Primary Key structure for table tbl_module
 -- ----------------------------
 ALTER TABLE "public"."tbl_module" ADD CONSTRAINT "tbl_module_pkey" PRIMARY KEY ("id");
+
+-- ----------------------------
+-- Primary Key structure for table tbl_position
+-- ----------------------------
+ALTER TABLE "public"."tbl_position" ADD CONSTRAINT "tbl_position_pkey" PRIMARY KEY ("id");
 
 -- ----------------------------
 -- Primary Key structure for table tbl_sub_module
@@ -431,6 +508,15 @@ ALTER TABLE "public"."tbl_module" ADD CONSTRAINT "tbl_module_created_by_fkey" FO
 ALTER TABLE "public"."tbl_module" ADD CONSTRAINT "tbl_module_deleted_by_fkey" FOREIGN KEY ("deleted_by") REFERENCES "public"."tbl_users" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
 ALTER TABLE "public"."tbl_module" ADD CONSTRAINT "tbl_module_imported_by_fkey" FOREIGN KEY ("imported_by") REFERENCES "public"."tbl_users" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
 ALTER TABLE "public"."tbl_module" ADD CONSTRAINT "tbl_module_updated_by_fkey" FOREIGN KEY ("updated_by") REFERENCES "public"."tbl_users" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- ----------------------------
+-- Foreign Keys structure for table tbl_position
+-- ----------------------------
+ALTER TABLE "public"."tbl_position" ADD CONSTRAINT "tbl_position_company_id_fkey" FOREIGN KEY ("company_id") REFERENCES "public"."tbl_company" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE "public"."tbl_position" ADD CONSTRAINT "tbl_position_created_by_fkey" FOREIGN KEY ("created_by") REFERENCES "public"."tbl_users" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE "public"."tbl_position" ADD CONSTRAINT "tbl_position_deleted_by_fkey" FOREIGN KEY ("deleted_by") REFERENCES "public"."tbl_users" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE "public"."tbl_position" ADD CONSTRAINT "tbl_position_department_id_fkey" FOREIGN KEY ("department_id") REFERENCES "public"."tbl_department" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE "public"."tbl_position" ADD CONSTRAINT "tbl_position_updated_by_fkey" FOREIGN KEY ("updated_by") REFERENCES "public"."tbl_users" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- ----------------------------
 -- Foreign Keys structure for table tbl_sub_module
