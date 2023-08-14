@@ -28,8 +28,8 @@ const Index = () => {
         <Stack sx= { container }>
             <Routes>
                 <Route exact path= "/" element= { <FormPrvdr><ListPrvdr><List /></ListPrvdr></FormPrvdr> } />
-                {/* <Route exact path= "/form/:type" element= { <FormPrvdr><Form /></FormPrvdr> } /> */}
-                {/* <Route exact path= "/form/:type/:id" element= { <FormPrvdr><Form /></FormPrvdr> } /> */}
+                <Route exact path= "/form/:type" element= { <FormPrvdr><Form /></FormPrvdr> } />
+                <Route exact path= "/form/:type/:id" element= { <FormPrvdr><Form /></FormPrvdr> } />
             </Routes>
         </Stack>
     );

@@ -1,5 +1,5 @@
 // Libraries
-import { Stack, Typography } from "@mui/material";
+import { Box, Grid, Stack, Typography } from "@mui/material";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useContext, useEffect } from "react";
 
@@ -11,15 +11,15 @@ import { save, specific, update } from "core/api"; // API
 
 // Constants
 import { cancelbtn, card, content, savebtn, title } from "./index.style"; // Styles
-import Position from "../../account"; // Fields
 import { validation } from "../../index.validation"; // Validation
+import Account from "../../account"; // Fields
 
 const Index = () => {
     const { type, id } = useParams();
     const navigate = useNavigate();
     const { handleSubmit, setValue, setError, setValidation, reset } = useContext(FormCntxt);
     const { isFetching, refetch } = 
-        useGet({ key: ['pst_specific'], request: specific({ table: 'tbl_position', id: id ?? null }), options: { enabled: type !== 'new', refetchOnWindowFocus: false },
+        useGet({ key: ['emp_specific'], request: specific({ table: 'tbl_users', id: id ?? null }), options: { enabled: type !== 'new', refetchOnWindowFocus: false },
             onSuccess: data => {
                 if(Array.isArray(data)) 
                     for(let count = 0; count < Object.keys(data[0]).length; count++) { 
@@ -33,7 +33,7 @@ const Index = () => {
         usePost({ request: save,
             onSuccess: data => {
                 if(data.result === 'error') { (data.error).forEach((err, index) => setError(err.name, { type: index === 0 ? 'focus' : '', message: err.message }, { shouldFocus: index === 0 })); }
-                else { successToast(data.message, 3000, navigate('/maintenance/position', { replace: true })); }
+                else { successToast(data.message, 3000, navigate('/maintenance/employee', { replace: true })); }
             } 
         });
 
@@ -41,7 +41,7 @@ const Index = () => {
         usePost({ request: update,
             onSuccess: data => {
                 if(data.result === 'error') { (data.error).forEach((err, index) => setError(err.name, { type: index === 0 ? 'focus' : '', message: err.message }, { shouldFocus: index === 0 })); }
-                else { successToast(data.message, 3000, navigate('/maintenance/position', { replace: true })); }
+                else { successToast(data.message, 3000, navigate('/maintenance/employee', { replace: true })); }
             }
         });
 
@@ -50,13 +50,29 @@ const Index = () => {
     return (
         <Stack sx= { content } spacing= { 4 }>
             <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch">
-                <Typography sx= { title }>{ type.charAt(0).toUpperCase() + type.slice(1) } Position</Typography>
+                <Typography sx= { title }>{ type.charAt(0).toUpperCase() + type.slice(1) } Employee</Typography>
                 <Typography variant= "caption" color= "#9BA4B5">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc non neque molestie, 
                     malesuada quam ut, vulputate massa.</Typography>
             </Stack>
-            <Stack sx= { card }><FormBuilder fields= { Position({ fetching: isFetching }) } /></Stack>
+            <Stack sx= { card } spacing= { 5 }>
+                <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 1 }>
+                    <Typography>Account Information</Typography>
+                    <Box>
+                        <Grid container direction= "row" justifyContent= "flex-start" alignItems= "flex-start" spacing= { 1 }>
+                            <Grid item xs= { 12 } md= { 5 }></Grid>
+                            <Grid item xs= { 12 } md= { 7 }><FormBuilder fields= { Account({ isFetching }) } /></Grid>
+                        </Grid>
+                    </Box>
+                </Stack>
+                <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 1 }>
+                    <Typography>Personal Information</Typography>
+                </Stack>
+                <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 1 }>
+                    <Typography>Employee Information</Typography>
+                </Stack>
+            </Stack>
             <Stack direction= "row" justifyContent= "flex-end" alignItems= "center" spacing= { 1 }>
-                <Typography sx= { cancelbtn } component= { Link } to= "/maintenance/position">Cancel</Typography>
+                <Typography sx= { cancelbtn } component= { Link } to= "/maintenance/employee">Cancel</Typography>
                 { type !== 'view' ? <Typography sx= { savebtn } onClick= { handleSubmit(data => {
                     let errors = [];
                     data['token'] = (sessionStorage.getItem('token')).split('.')[1];
@@ -65,8 +81,8 @@ const Index = () => {
                     if(!data.department_id) { errors.push({ name: 'department_id', message: 'This field is required!' }); }
                     
                     if(!(errors.length > 0)) {
-                        if(type === 'new') { saving({ table: 'tbl_position', data: data }); }
-                        else { updating({ table: 'tbl_position', data: data }); }
+                        if(type === 'new') { saving({ table: 'tbl_users', data: data }); }
+                        else { updating({ table: 'tbl_users', data: data }); }
                     }
                     else { errors.forEach(data => setError(data.name, { message: data.message })); }
                 }) }>Save</Typography> : '' }
