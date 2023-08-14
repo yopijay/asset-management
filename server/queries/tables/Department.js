@@ -6,6 +6,17 @@ class Department {
     series = async () =>{ return (await new Builder(`tbl_department`).select().build()).rows; }
     specific = async id => { return (await new Builder(`tbl_department`).select().condition(`WHERE id= ${id}`).build()).rows; }
 
+    dropdown = async data => {
+        console.log(data);
+        switch(data.type) {
+            case 'nav': return [];
+            case 'per-company': return [{ id: 0, name: '-- SELECT AN ITEM BELOW --' }]
+                                                .concat((await new Builder(`tbl_department`).select(`id, name`).condition(`WHERE company_id= ${data.id} AND status= 1 ORDER BY name ASC`).build()).rows);
+            default: return [{ id: 0, name: '-- SELECT AN ITEM BELOW --' }]
+                            .concat((await new Builder(`tbl_department`).select(`id, name`).condition(`WHERE status= 1 ORDER BY name ASC`).build()).rows);
+        }
+    }
+
     logs = async data => {
         return (await new Builder(`tbl_audit_trail AS at`)
                         .select(`at.id, at.series_no AS at_series, at.table_name, at.item_id, at.field, at.previous, at.current, at.action, at.user_id, at.date, dpt.series_no AS dpt_series, dpt.name`)
