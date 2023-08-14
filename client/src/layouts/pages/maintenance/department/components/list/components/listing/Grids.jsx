@@ -12,6 +12,7 @@ const Grids = ({ data }) => {
             <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" sx= {{ flexGrow: 1, overflow: 'hidden' }}>
                 <Typography variant= "caption" sx= { caption }>{ data.series_no }</Typography>
                 <Typography sx= { title }>{ data.name }</Typography>
+                <Typography sx= { subtitle } variant= "body2">{ data.company }</Typography>
             </Stack>
             <Box paddingLeft= "15px">
                 { data.status === 1 ? 

@@ -55,7 +55,7 @@ const Index = () => {
                     malesuada quam ut, vulputate massa.</Typography>
             </Stack>
             <Stack sx= { card }><FormBuilder fields= { Department({ fetching: isFetching }) } /></Stack>
-            {<Stack direction= "row" justifyContent= "flex-end" alignItems= "center" spacing= { 1 }>
+            <Stack direction= "row" justifyContent= "flex-end" alignItems= "center" spacing= { 1 }>
                 <Typography sx= { cancelbtn } component= { Link } to= "/maintenance/department">Cancel</Typography>
                 { type !== 'view' ? <Typography sx= { savebtn } onClick= { handleSubmit(data => {
                     let errors = [];
@@ -70,7 +70,7 @@ const Index = () => {
                     }
                     else { errors.forEach(data => setError(data.name, { message: data.message })); }
                 }) }>Save</Typography> : '' }
-            </Stack>}
+            </Stack>
         </Stack>
     );
 }

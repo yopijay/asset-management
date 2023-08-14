@@ -6,7 +6,7 @@ import { useContext } from "react";
 import { FormCntxt } from "core/context/Form"; // Context
 
 const Index = props => {
-    const { label, fetching, disabled, name, uppercase, ...others } = props;
+    const { label, fetching, disabled, name, uppercase = true, ...others } = props;
     const { register, errors } = useContext(FormCntxt);
 
     // Custom style

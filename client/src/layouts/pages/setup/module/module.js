@@ -21,7 +21,6 @@ const Module = ({ fetching }) => {
                 label: '*Series no.',
                 disabled: true,
                 fetching: fetching,
-                uppercase: true,
                 InputProps: { disableUnderline: true }
             },
             type: 'textfield'
@@ -34,7 +33,6 @@ const Module = ({ fetching }) => {
                 disabled: type === 'view',
                 fetching: fetching,
                 onChange: e => setValue('base_url', `${(e.target.value).toLowerCase()}`),
-                uppercase: true,
                 InputProps: { disableUnderline: true }
             },
             type: 'textfield'
@@ -57,8 +55,7 @@ const Module = ({ fetching }) => {
                 name: 'description',
                 label: 'Description',
                 disabled: type === 'view',
-                fetching: fetching,
-                uppercase: true,
+                fetching: fetching
             },
             type: 'textarea'
         },

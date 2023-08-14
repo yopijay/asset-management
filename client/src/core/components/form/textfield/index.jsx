@@ -7,7 +7,7 @@ import { FormCntxt } from "core/context/Form"; // Context
 import { Components } from "core/theme"; // Theme
 
 const Index = props => {
-    const { label, fetching, disabled, name, type = 'text', value, uppercase, ...others } = props;
+    const { label, fetching, disabled, name, type = 'text', value, uppercase = true, ...others } = props;
     const { register, errors } = useContext(FormCntxt);
 
     // Custom styles

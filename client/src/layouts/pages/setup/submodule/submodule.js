@@ -23,7 +23,6 @@ const Company = ({ fetching }) => {
                 label: '*Series no.',
                 disabled: true,
                 fetching: fetching,
-                uppercase: true,
                 InputProps: { disableUnderline: true }
             },
             type: 'textfield'
@@ -36,8 +35,7 @@ const Company = ({ fetching }) => {
                 disabled: type === 'view',
                 fetching: fetching,
                 onChange: (e, item) => { setError('module_id', { message: '' }); setValue('module_id', item.id); setValue('module', item.base_url); },
-                options: !ddfetching ? module : [],
-                uppercase: true
+                options: !ddfetching ? module : []
             },
             type: 'dropdown'
         },
@@ -48,8 +46,7 @@ const Company = ({ fetching }) => {
                 label: '*Sub module',
                 disabled: type === 'view',
                 fetching: fetching,
-                onChange: e => { setError('name', { message: '' }); setError('path', { message: '' }); setValue('path', (e.target.value).toLowerCase()); },
-                uppercase: true
+                onChange: e => { setError('name', { message: '' }); setError('path', { message: '' }); setValue('path', (e.target.value).toLowerCase()); }
             },
             type: 'textfield'
         },

@@ -22,8 +22,7 @@ const Department = ({ fetching }) => {
                 name: 'series_no',
                 label: '*Series no.',
                 disabled: true,
-                fetching: fetching,
-                uppercase: true
+                fetching: fetching
             },
             type: 'textfield'
         },
@@ -35,8 +34,7 @@ const Department = ({ fetching }) => {
                 disabled: type === 'view',
                 fetching: fetching,
                 options: !cmpfetching ? company : [],
-                onChange: (e, item) => { setError('company_id', { message: '' }); setValue('company_id', item.id); },
-                uppercase: true
+                onChange: (e, item) => { setError('company_id', { message: '' }); setValue('company_id', item.id); }
             },
             type: 'dropdown'
         },
@@ -48,8 +46,7 @@ const Department = ({ fetching }) => {
                 disabled: type === 'view',
                 fetching: fetching,
                 options: !usrfetching ? users : [],
-                onChange: (e, item) => { setError('department_head_id', { message: '' }); setValue('department_head_id', item.id); },
-                uppercase: true
+                onChange: (e, item) => { setError('department_head_id', { message: '' }); setValue('department_head_id', item.id); }
             },
             type: 'dropdown'
         },
@@ -59,8 +56,7 @@ const Department = ({ fetching }) => {
                 name: 'name',
                 label: '*Department',
                 disabled: type === 'view',
-                fetching: fetching,
-                uppercase: true
+                fetching: fetching
             },
             type: 'textfield'
         },
@@ -70,8 +66,7 @@ const Department = ({ fetching }) => {
                 name: 'description',
                 label: 'Description',
                 disabled: type === 'view',
-                fetching: fetching,
-                uppercase: true
+                fetching: fetching
             },
             type: 'textarea'
         },
