@@ -1,8 +1,9 @@
+// Libraries
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { InputAdornment } from "@mui/material";
 import { useState } from "react";
-import { useParams } from "react-router-dom"
+import { useParams } from "react-router-dom";
 
 const Account = ({ fetching }) => {
     const { type } = useParams();

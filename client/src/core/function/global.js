@@ -64,3 +64,8 @@ export const getdate = date => {
         label: `${hr > 12 ? 'PM' : 'AM'}`
     }
 }
+
+export const pad = (num, size) => {
+    let s = `0000000${num}`;
+    return s.substr(s.length-size);
+}

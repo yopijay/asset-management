@@ -1,23 +1,26 @@
 // Libraries
-import { Box, Grid, Stack, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useContext, useEffect } from "react";
 
 // Core
 import { FormCntxt } from "core/context/Form"; // Provider
-import FormBuilder from "core/components/form"; // Form Builder
 import { successToast, useGet, usePost } from "core/function/global"; // Function
 import { save, specific, update } from "core/api"; // API
+
+// Components
+import Account from "./components/Account";
+import Personal from "./components/Personal";
+import Employee from "./components/Employee";
 
 // Constants
 import { cancelbtn, card, content, savebtn, title } from "./index.style"; // Styles
 import { validation } from "../../index.validation"; // Validation
-import Account from "../../account"; // Fields
 
 const Index = () => {
     const { type, id } = useParams();
     const navigate = useNavigate();
-    const { handleSubmit, setValue, setError, setValidation, reset } = useContext(FormCntxt);
+    const { handleSubmit, setValue, setError, setValidation } = useContext(FormCntxt);
     const { isFetching, refetch } = 
         useGet({ key: ['emp_specific'], request: specific({ table: 'tbl_users', id: id ?? null }), options: { enabled: type !== 'new', refetchOnWindowFocus: false },
             onSuccess: data => {
@@ -26,7 +29,7 @@ const Index = () => {
                         let _name = Object.keys(data[0])[count];
                         setValue(_name, _name === 'status' ? data[0][_name] === 1 : data[0][_name]);
                     }
-            } 
+            }
         });
 
     const { mutate: saving } = 
@@ -45,7 +48,7 @@ const Index = () => {
             }
         });
 
-    useEffect(() => { setValidation(validation()); reset(); if(id !== undefined) refetch() }, [ reset, setValidation, id, refetch ]);
+    useEffect(() => { setValidation(validation()); if(id !== undefined) refetch() }, [ setValidation, id, refetch ]);
 
     return (
         <Stack sx= { content } spacing= { 4 }>
@@ -55,31 +58,23 @@ const Index = () => {
                     malesuada quam ut, vulputate massa.</Typography>
             </Stack>
             <Stack sx= { card } spacing= { 5 }>
-                <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 1 }>
-                    <Typography>Account Information</Typography>
-                    <Box>
-                        <Grid container direction= "row" justifyContent= "flex-start" alignItems= "flex-start" spacing= { 1 }>
-                            <Grid item xs= { 12 } md= { 5 }></Grid>
-                            <Grid item xs= { 12 } md= { 7 }><FormBuilder fields= { Account({ isFetching }) } /></Grid>
-                        </Grid>
-                    </Box>
-                </Stack>
-                <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 1 }>
-                    <Typography>Personal Information</Typography>
-                </Stack>
-                <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 1 }>
-                    <Typography>Employee Information</Typography>
-                </Stack>
+                <Account fetching= { isFetching } />
+                <Personal fetching= { isFetching } />
+                <Employee fetching= { isFetching } />
             </Stack>
             <Stack direction= "row" justifyContent= "flex-end" alignItems= "center" spacing= { 1 }>
                 <Typography sx= { cancelbtn } component= { Link } to= "/maintenance/employee">Cancel</Typography>
                 { type !== 'view' ? <Typography sx= { savebtn } onClick= { handleSubmit(data => {
                     let errors = [];
                     data['token'] = (sessionStorage.getItem('token')).split('.')[1];
-                    
-                    if(!data.company_id) { errors.push({ name: 'company_id', message: 'This field is required!' }) };
-                    if(!data.department_id) { errors.push({ name: 'department_id', message: 'This field is required!' }); }
-                    
+
+                    if(data.password !== data.confirm_password) { errors.push({ name: 'confirm_password', message: `Password doesn't match!` }); }
+                    if(!(data.branch)) { errors.push({ name: 'branch', message: 'This field is requierd!' }); }
+                    if(!(data.user_level)) { errors.push({ name: 'user_level', message: 'This field is requierd!' }); }
+                    if(!(data.company_id)) { errors.push({ name: 'company_id', message: 'This field is requierd!' }); }
+                    if(!(data.department_id)) { errors.push({ name: 'department_id', message: 'This field is requierd!' }); }
+                    if(!(data.position_id)) { errors.push({ name: 'position_id', message: 'This field is requierd!' }); }
+
                     if(!(errors.length > 0)) {
                         if(type === 'new') { saving({ table: 'tbl_users', data: data }); }
                         else { updating({ table: 'tbl_users', data: data }); }

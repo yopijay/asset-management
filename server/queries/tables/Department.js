@@ -7,7 +7,6 @@ class Department {
     specific = async id => { return (await new Builder(`tbl_department`).select().condition(`WHERE id= ${id}`).build()).rows; }
 
     dropdown = async data => {
-        console.log(data);
         switch(data.type) {
             case 'nav': return [];
             case 'per-company': return [{ id: 0, name: '-- SELECT AN ITEM BELOW --' }]
