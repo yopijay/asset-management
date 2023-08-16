@@ -1,5 +1,5 @@
 // Libraries
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 // Core
@@ -17,6 +17,14 @@ const Employee = ({ fetching }) => {
 
     useGet({ key: ['emp_series'], request: series('tbl_users'), options: {}, 
         onSuccess: data => { if(type === 'new') { setValue('employee_no', `${(new Date()).getFullYear().toString().slice(-2)}1${pad(parseInt(data.length) + 1, 5)}`); } } });
+
+    useEffect(() => {
+        if(!fetching)
+            if(type !== 'new') {
+                dptmenu({ table: 'tbl_department', data: { type: 'per-company', id: getValues()?.company_id } });
+                pstmenu({ table: 'tbl_position', data: { type: 'per-department', company_id: getValues()?.company_id, department_id: getValues()?.department_id } });
+            }
+    }, [ fetching, type, dptmenu, pstmenu, getValues ]);
 
     return ([
         {

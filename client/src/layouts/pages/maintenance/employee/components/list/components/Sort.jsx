@@ -14,7 +14,7 @@ import { orderby } from "../index.style"; // Styles
 const Sort = ({ refetch }) => {
     const { sort, setsort, listing, setlisting } = useContext(ListCntxt);
     const { getValues, setValue } = useContext(FormCntxt);
-    const [ order, setorder ] = useState('date_created');
+    const [ order, setorder ] = useState('usr.date_created');
 
     const onclick = name => { setValue('orderby', name); setorder(name); refetch({ table: 'tbl_users', data: getValues() }); }
     const onsort = sort => { setsort(sort); setValue('sort', sort); refetch({ table: 'tbl_users', data: getValues() }); }
@@ -23,9 +23,9 @@ const Sort = ({ refetch }) => {
         <Stack direction= "row" justifyContent= "flex-end" alignItems= "center" spacing= { 1 }>
             <Stack direction= "row" justifyContent= "flex-start" alignItems= "center" spacing= { 1 }>
                 <Typography variant= "caption">Order by:</Typography>
-                { order === 'date_created' ? <Typography variant= "caption" sx= { orderby } onClick= { () => onclick('name') }>Date created</Typography> :
-                    order === 'name' ? <Typography variant= "caption" sx= { orderby } onClick= { () => onclick('series_no') }>Name</Typography> :
-                        order === 'series_no' ? <Typography variant= "caption" sx= { orderby } onClick= { () => onclick('date_created') }>Series no.</Typography> : '' }
+                { order === 'usr.date_created' ? <Typography variant= "caption" sx= { orderby } onClick= { () => onclick('emp.lname') }>Date created</Typography> :
+                    order === 'emp.lname' ? <Typography variant= "caption" sx= { orderby } onClick= { () => onclick('emp.employee_no') }>Last name</Typography> :
+                        order === 'emp.employee_no' ? <Typography variant= "caption" sx= { orderby } onClick= { () => onclick('usr.date_created') }>Employee no.</Typography> : '' }
             </Stack>
             { sort === 'desc' ? 
                 <Typography sx= {{ cursor: 'pointer' }} onClick= { () => onsort('asc') }><FontAwesomeIcon icon= { solid('arrow-down-z-a') } color= "#9DB2BF" /></Typography> :

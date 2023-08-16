@@ -23,7 +23,7 @@ class Position {
                         .join({ table: `tbl_employee AS cb`, condition: `cb.user_id = pst.created_by`, type: `LEFT` })
                         .condition(`${data.searchtxt !== '' ? `WHERE pst.series_no LIKE '%${(data.searchtxt).toUpperCase()}%' or pst.name LIKE '%${(data.searchtxt).toUpperCase()}%'
                                                 OR cmp.name LIKE '%${(data.searchtxt).toUpperCase()}%' OR dpt.name LIKE '%${(data.searchtxt).toUpperCase()}%'` : ''} 
-                                            ORDER BY dpt.${data.orderby} ${(data.sort).toUpperCase()}`)
+                                            ORDER BY pst.${data.orderby} ${(data.sort).toUpperCase()}`)
                         .build()).rows;
     }
 
@@ -36,7 +36,7 @@ class Position {
                         .join({ table: `tbl_employee AS cb`, condition: `cb.user_id = pst.created_by`, type: `LEFT` })
                         .condition(`${data.searchtxt !== '' ? `WHERE pst.series_no LIKE '%${(data.searchtxt).toUpperCase()}%' or pst.name LIKE '%${(data.searchtxt).toUpperCase()}%'
                                                 OR cmp.name LIKE '%${(data.searchtxt).toUpperCase()}%' OR dpt.name LIKE '%${(data.searchtxt).toUpperCase()}%'` : ''} 
-                                            ORDER BY dpt.${data.orderby} ${(data.sort).toUpperCase()}`)
+                                            ORDER BY pst.${data.orderby} ${(data.sort).toUpperCase()}`)
                         .build()).rows;
     }
     

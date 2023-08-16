@@ -10,9 +10,11 @@ const Grids = ({ data }) => {
     return (
         <Stack sx= { list } component= { Link } to= { `/maintenance/employee/form/update/${data.id}` }>
             <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" sx= {{ flexGrow: 1, overflow: 'hidden' }}>
-                <Typography variant= "caption" sx= { caption }>{ data.series_no }</Typography>
-                <Typography sx= { title }>{ data.name }</Typography>
-                {/* <Typography sx= { subtitle } variant= "body2">{ data.company } - { data.department }</Typography> */}
+                <Typography variant= "caption" sx= { caption }>{ data.employee_no }</Typography>
+                <Typography sx= { title }>{ data.lname }, { data.fname }</Typography>
+                <Typography sx= { subtitle } variant= "body2">{ data.company }</Typography>
+                <Typography sx= { subtitle } variant= "body2">{ data.department }</Typography>
+                <Typography sx= { subtitle } variant= "body2">{ data.position }</Typography>
             </Stack>
             <Box paddingLeft= "15px">
                 { data.status === 1 ? 

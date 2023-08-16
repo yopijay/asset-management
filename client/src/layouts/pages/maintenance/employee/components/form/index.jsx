@@ -27,7 +27,7 @@ const Index = () => {
                 if(Array.isArray(data)) 
                     for(let count = 0; count < Object.keys(data[0]).length; count++) { 
                         let _name = Object.keys(data[0])[count];
-                        setValue(_name, _name === 'status' ? data[0][_name] === 1 : data[0][_name]);
+                        setValue(_name, _name === 'status' ? data[0][_name] === 1 : _name === 'password' ? '' : data[0][_name]);
                     }
             }
         });
@@ -74,6 +74,8 @@ const Index = () => {
                     if(!(data.company_id)) { errors.push({ name: 'company_id', message: 'This field is requierd!' }); }
                     if(!(data.department_id)) { errors.push({ name: 'department_id', message: 'This field is requierd!' }); }
                     if(!(data.position_id)) { errors.push({ name: 'position_id', message: 'This field is requierd!' }); }
+                    if(!(data.password) && type === 'new') { errors.push({ name: 'password', message: 'This field is required!' }); }
+                    if(!(data.confirm_password) && type === 'new') { errors.push({ name: 'confirm_password', message: 'This field is required!' }); }
 
                     if(!(errors.length > 0)) {
                         if(type === 'new') { saving({ table: 'tbl_users', data: data }); }

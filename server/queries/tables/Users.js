@@ -18,7 +18,12 @@ class Users {
     }
     
     logs = async data => {
-        return [];
+        return (await new Builder(`tbl_audit_trail AS at`)
+                        .select(`at.id, at.series_no AS at_series, at.table_name, at.item_id, at.field, at.previous, at.current, at.action, at.user_id, at.date, usr.series_no AS pst_series, emp.employee_no`)
+                        .join({ table: `tbl_users AS usr`, condition: `at.item_id = usr.id`, type: `LEFT` })
+                        .join({ table: `tbl_employee AS emp`, condition: `at.item_id = emp.user_id`, type: `LEFT` })
+                        .condition(`WHERE at.table_name= 'tbl_users' ORDER BY at.date DESC LIMIT 3`)
+                        .build()).rows;
     }
 
     login = async data => {
@@ -43,11 +48,31 @@ class Users {
     }
 
     list = async data => {
-        return [];
+        return (await new Builder(`tbl_users AS usr`)
+                        .select(`usr.id, usr.email, usr.user_level, usr.status, emp.employee_no, emp.rfid, emp.fname, emp.mname, emp.lname, 
+                                    cmp.name AS company, dpt.name AS department, pst.name AS position`)
+                        .join({ table: `tbl_employee AS emp`, condition: `emp.user_id = usr.id`, type: `LEFT` })
+                        .join({ table: `tbl_company AS cmp`, condition: `emp.company_id = cmp.id`, type: `LEFT` })
+                        .join({ table: `tbl_department AS dpt`, condition: `emp.department_id = dpt.id`, type: `LEFT` })
+                        .join({ table: `tbl_position AS pst`, condition: `emp.position_id = pst.id`, type: `LEFT` })
+                        .join({ table: `tbl_employee AS cb`, condition: `cb.user_id = usr.created_by`, type: `LEFT` })
+                        .condition(`WHERE ${data.searchtxt !== '' ? `emp.fname LIKE '%${(data.searchtxt).toUpperCase()}%' OR emp.lname LIKE '%${(data.searchtxt).toUpperCase()}%' ` : ''}
+                                            usr.id != 1 ORDER BY ${data.orderby} ${(data.sort).toUpperCase()}`)
+                        .build()).rows;
     }
 
     search = async data => {
-        return [];
+        return (await new Builder(`tbl_users AS usr`)
+                        .select(`usr.id, usr.email, usr.user_level, usr.status, emp.employee_no, emp.rfid, emp.fname, emp.mname, emp.lname, 
+                                    cmp.name AS company, dpt.name AS department, pst.name AS position`)
+                        .join({ table: `tbl_employee AS emp`, condition: `emp.user_id = usr.id`, type: `LEFT` })
+                        .join({ table: `tbl_company AS cmp`, condition: `emp.company_id = cmp.id`, type: `LEFT` })
+                        .join({ table: `tbl_department AS dpt`, condition: `emp.department_id = dpt.id`, type: `LEFT` })
+                        .join({ table: `tbl_position AS pst`, condition: `emp.position_id = pst.id`, type: `LEFT` })
+                        .join({ table: `tbl_employee AS cb`, condition: `cb.user_id = usr.created_by`, type: `LEFT` })
+                        .condition(`WHERE ${data.searchtxt !== '' ? `(emp.fname LIKE '%${(data.searchtxt).toUpperCase()}%' OR emp.lname LIKE '%${(data.searchtxt).toUpperCase()}%') AND` : ''}
+                                            usr.id != 1 ORDER BY ${data.orderby} ${(data.sort).toUpperCase()}`)
+                        .build()).rows;
     }
 
     dropdown = async data => {
@@ -79,32 +104,146 @@ class Users {
             let pass = await encrypt.hash(data.password, 10);
             let usr = (await new Builder(`tbl_users`)
                             .insert({ columns: `series_no, email, password, user_level, status, created_by, date_created`, 
-                                            values: `'${Global.series({ label: 'USR-', count: count, limit: 7 })}', '${data.email}', '${pass}', '${data.user_level}', ${data.status ? 1 : 0}, ${user.id}, '${date}'` })
+                                            values: `'${Global.series({ label: 'USR-', count: count+1, limit: 7 })}', '${data.email}', '${pass}', '${data.user_level}', ${data.status ? 1 : 0}, ${user.id}, '${date}'` })
                             .condition(`RETURNING id`)
                             .build()).rows[0];
                             
-            console.log(new Builder(`tbl_employee`)
+            await new Builder(`tbl_employee`)
                 .insert({ columns: `user_id, employee_no, rfid, branch, company_id, department_id, position_id, fname, mname, lname, address`, 
                                 values: `${usr.id}, '${data.employee_no}', '${data.rfid}', '${data.branch}', ${data.company_id}, ${data.department_id}, ${data.position_id}, 
                                                 '${(data.fname).toUpperCase()}', ${data.mname !== '' ? `'${(data.mname).toUpperCase()}'` : null}, '${(data.lname).toUpperCase()}',
                                                 ${data.address !== '' ? `'${(data.address).toUpperCase()}'` : null}` })
-                .test());
+                .build();
 
-            // audit.series_no = Global.randomizer(7);
-            // audit.field = 'all';
-            // audit.item_id = usr.id;
-            // audit.action = 'create';
-            // audit.user_id = user.id;
-            // audit.date = date;
+            audit.series_no = Global.randomizer(7);
+            audit.field = 'all';
+            audit.item_id = usr.id;
+            audit.action = 'create';
+            audit.user_id = user.id;
+            audit.date = date;
             
-            // Global.audit(audit);
+            Global.audit(audit);
             return { result: 'success', message: 'Successfully saved!' }
         }
         else { return { result: 'error', error: errors } }
     }
 
     update = async data => {
-        return [];
+        let usr = (await new Builder(`tbl_users AS usr`).select()
+                            .join({ table: `tbl_employee AS emp`, condition: `emp.user_id = usr.id`, type: `LEFT` }).condition(`WHERE usr.id= ${data.id}`).build()).rows[0];
+        let date = Global.date(new Date());
+        let user = JSON.parse(atob(data.token));
+        let pass = '';
+        let audits = [];
+        let errors = [];
+
+        let email = await new Builder(`tbl_users`).select().condition(`WHERE email= '${data.email}'`).build();
+        let name = await new Builder(`tbl_employee`).select().condition(`WHERE fname= '${(data.fname).toUpperCase()}' AND lname= '${(data.lname).toUpperCase()}'`).build();
+        let employeeno = await new Builder(`tbl_employee`).select().condition(`WHERE employee_no= '${data.employee_no}'`).build();
+        let rfid = await new Builder(`tbl_employee`).select().condition(`WHERE rfid= '${data.rfid}'`).build();
+
+        if(Global.compare(usr.email, data.email)) {
+            if(!(email.rowCount > 0)) {
+                audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_users', item_id: usr.id, field: 'email', previous: usr.email,
+                    current: data.email, action: 'update', user_id: user.id, date: date });
+            }
+            else { errors.push({ name: 'email', message: 'Email already used!' }); }
+        }
+
+        if(data.password !== '') {
+            pass = await encrypt.hash(data.password, 10);
+            if(Global.compare(usr.password, data.password)) {
+                audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_users', item_id: usr.id, field: 'password', previous: usr.password,
+                    current: pass, action: 'update', user_id: user.id, date: date });
+            }
+        }
+
+        if(Global.compare(usr.fname, data.fname)) {
+            if(!(name.rowCount > 0)) {
+                audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_users', item_id: usr.id, field: 'fname', previous: usr.fname,
+                    current: (data.fname).toUpperCase(), action: 'update', user_id: user.id, date: date });
+            }
+            else { errors.push({ name: 'fname', message: `First name with surname: ${(data.lname).toUpperCase()} already exist!` }); }
+        }
+
+        if(Global.compare(usr.lname, data.lname)) {
+            if(!(name.rowCount > 0)) {
+                audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_users', item_id: usr.id, field: 'lname', previous: usr.lname,
+                    current: (data.lname).toUpperCase(), action: 'update', user_id: user.id, date: date });
+            }
+            else { errors.push({ name: 'lname', message: `Name already exist!` }); }
+        }
+
+        if(Global.compare(usr.address, data.address)) {
+            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_users', item_id: usr.id, field: 'address', previous: usr.address,
+                current: (data.address).toUpperCase(), action: 'update', user_id: user.id, date: date });
+        }
+
+        if(Global.compare(usr.employee_no, data.employee_no)) {
+            if(!(employeeno.rowCount > 0)) {
+                audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_users', item_id: usr.id, field: 'employee_no', previous: usr.employee_no,
+                    current: data.employee_no, action: 'update', user_id: user.id, date: date });
+            }
+            else { errors.push({ name: 'employee_no', message: 'Employee no. already used!' }); }
+        }
+
+        if(Global.compare(usr.rfid, data.rfid)) {
+            if(!(rfid.rowCount > 0)) {
+                audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_users', item_id: usr.id, field: 'rfid', previous: usr.rfid,
+                    current: data.rfid, action: 'update', user_id: user.id, date: date });
+            }
+            else { errors.push({ name: 'rfid', message: 'RFID already used!' }); }
+        }
+
+        if(Global.compare(usr.branch, data.branch)) {
+            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_users', item_id: usr.id, field: 'branch', previous: usr.branch,
+                current: data.branch, action: 'update', user_id: user.id, date: date });
+        }
+
+        if(Global.compare(usr.user_level, data.user_level)) {
+            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_users', item_id: usr.id, field: 'user_level', previous: usr.user_level,
+                current: data.user_level, action: 'update', user_id: user.id, date: date });
+        }
+
+        if(Global.compare(usr.company_id, data.company_id)) {
+            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_users', item_id: usr.id, field: 'company_id', previous: usr.company_id,
+                current: data.company_id, action: 'update', user_id: user.id, date: date });
+        }
+
+        if(Global.compare(usr.department_id, data.department_id)) {
+            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_users', item_id: usr.id, field: 'department_id', previous: usr.department_id,
+                current: data.department_id, action: 'update', user_id: user.id, date: date });
+        }
+
+        if(Global.compare(usr.position_id, data.position_id)) {
+            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_users', item_id: usr.id, field: 'position_id', previous: usr.position_id,
+                current: data.position_id, action: 'update', user_id: user.id, date: date });
+        }
+
+        if(Global.compare(usr.status, data.status ? 1 : 0)) {
+            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_users', item_id: usr.id, field: 'status', previous: usr.status, 
+                                    current: data.status ? 1 : 0, action: 'update', user_id: user.id, date: date });
+        }
+
+        if(!(errors.length > 0)) {
+            await new Builder(`tbl_users`)
+                .update(`email= '${data.email}'${data.password !== '' ? `, password= '${pass}'` : ''}, user_level= '${data.user_level}', 
+                                status= ${data.status ? 1 : 0}, updated_by= ${user.id}, date_updated= '${date}'`)
+                .condition(`WHERE id= ${data.id}`)
+                .build();
+            
+            await new Builder(`tbl_employee`)
+                .update(`employee_no= '${data.employee_no}', rfid= '${data.rfid}', branch= '${data.branch}', company_id= ${data.company_id}, department_id= ${data.department_id},
+                                position_id= ${data.position_id}, fname= '${(data.fname).toUpperCase()}', 
+                                mname= ${data.mname !== null && data.mname !== '' ? `'${(data.mname).toUpperCase()}'` : null},
+                                lname= '${(data.lname).toUpperCase()}', address= ${data.address !== '' && data.address !== null ? `'${(data.address).toUpperCase()}'` : null}`)
+                .condition(`WHERE user_id= ${data.id}`)
+                .build();
+
+            audits.forEach(data => Global.audit(data));
+            return { result: 'success', message: 'Successfully updated!' }
+        }
+        else { return { result: 'error', error: errors } }
     }
 }
 
