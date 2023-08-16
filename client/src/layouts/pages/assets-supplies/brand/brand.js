@@ -1,21 +1,21 @@
 // Libraries
 import { useContext } from "react";
 import { useParams } from "react-router-dom";
-import { InputAdornment } from "@mui/material";
 
 // Core
-import { series } from "core/api"; // API
 import { FormCntxt } from "core/context/Form"; // Context
-import { formatter, useGet } from "core/function/global"; // Function
+import { formatter, useGet } from "core/function/global";
+import { series } from "core/api";
 
 const Brand = ({ fetching }) => {
     const { type } = useParams();
     const { setValue, getValues, setError } = useContext(FormCntxt);
-    // useGet({ key: ['brd_series'], request: series('tbl_brand'), options: {}, onSuccess: data => { if(type === 'new') setValue('series_no', `BRD-${formatter(parseInt(data.length) + 1, 7)}`) } });
+
+    useGet({ key: ['asb_series'], request: series('tbl_assets_supplies_brand'), options: {}, onSuccess: data => { if(type === 'new') setValue('series_no', `BRD-${formatter(parseInt(data.length) + 1, 7)}`) } });
 
     return ([
         {
-            grid: { xs: 12, md: 4 },
+            grid: { xs: 12, sm: 5, md: 4 },
             props: {
                 name: 'series_no',
                 label: '*Series no.',
@@ -29,12 +29,12 @@ const Brand = ({ fetching }) => {
         {
             grid: { xs: 12, sm: 7, md: 4 },
             props: {
-                name: 'category_id',
+                name: 'category',
                 label: '*Category',
                 disabled: type === 'view',
                 fetching: fetching,
                 options: [{ id: 0, name: '-- SELECT AN ITEM BELOW --' }, { id: 'assets', name: 'ASSETS' }, { id: 'supplies', name: 'SUPPLIES' }],
-                onChange: (e, item) => { setError('category_id', { message: '' }); setValue('category_id', item.id); },
+                onChange: (e, item) => { setError('category', { message: '' }); setValue('category', item.id); },
                 uppercase: true
             },
             type: 'dropdown'
@@ -57,8 +57,7 @@ const Brand = ({ fetching }) => {
                 name: 'description',
                 label: 'Description',
                 disabled: type === 'view',
-                fetching: fetching,
-                uppercase: true,
+                fetching: fetching
             },
             type: 'textarea'
         },

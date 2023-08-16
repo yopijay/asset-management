@@ -3,7 +3,7 @@ import { Box, Stack, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 
 // Constants
-import { caption, list, subtitle, title } from "../list.style"; // Styles
+import { caption, list, subtitle, title } from "../../index.style"; // Styles
 
 const Grids = ({ data }) => {
 
@@ -12,7 +12,7 @@ const Grids = ({ data }) => {
             <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" sx= {{ flexGrow: 1, overflow: 'hidden' }}>
                 <Typography variant= "caption" sx= { caption }>{ data.series_no }</Typography>
                 <Typography sx= { title }>{ data.name }</Typography>
-                {/* <Typography variant= "body2" sx= { subtitle }>Base URL: /{ data.base_url }</Typography> */}
+                <Typography sx= { subtitle } variant= "body2">{ (data.category).toUpperCase() }</Typography>
             </Stack>
             <Box paddingLeft= "15px">
                 { data.status === 1 ? 
