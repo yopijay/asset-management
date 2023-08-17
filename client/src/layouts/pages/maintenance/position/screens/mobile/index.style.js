@@ -16,3 +16,11 @@ export const items = {
     flexGrow: 1,
     overflow: 'hidden'
 }
+
+export const loader = {
+    display: 'flex', 
+    flexDirection: 'row', 
+    justifyContent: 'center', 
+    alignItems: 'center', 
+    width: '100%',
+}

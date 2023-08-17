@@ -1,5 +1,5 @@
 // Libraries
-import { Stack } from "@mui/material";
+import { Box, Stack } from "@mui/material";
 
 // Core
 import Loader from "core/components/loader/Screen"; // Loader
@@ -11,7 +11,7 @@ import Sort from "../../components/list/components/Sort";
 import Items from "../../components/list/components/Items";
 
 // Constants
-import { content, items } from "./index.style"; // Styles
+import { content, items, loader } from "./index.style"; // Styles
 
 const List = props => {
     const { find, record, fetching, finding } = props;
@@ -23,7 +23,7 @@ const List = props => {
                 <Search request= { find } />
                 <Stack sx= { items } spacing= { 1 }>
                     <Sort refetch= { record } />
-                    { !fetching && !finding ? <Items /> : <Loader /> }
+                    { !fetching && !finding ? <Items /> : <Box sx= { loader }><Loader /></Box> }
                 </Stack>
             </Stack>
         </Stack>
