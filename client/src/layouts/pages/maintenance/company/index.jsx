@@ -17,7 +17,7 @@ const container = {
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     width: '100%',
-    height: '100vh',
+    overflow: 'hidden',
     '&::-webkit-scrollbar': { display: 'none' }
 }
 

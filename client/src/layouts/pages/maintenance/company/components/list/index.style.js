@@ -87,8 +87,9 @@ export const items = {
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'stretch',
-    flexGrow: 1,
     overflowY: 'scroll',
+    height: '100%',
+    paddingBottom: '70px',
     '&::-webkit-scrollbar': { display: 'none' }
 }
 
