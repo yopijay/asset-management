@@ -3,10 +3,9 @@ export const content = {
     justifyContent: 'flex-start',
     alignItems: 'stretch',
     width: '100%',
-    height: '100%',
+    height: '100vh',
     padding: '100px 20px 20px 20px',
-    overflowY: 'scroll',
-    '&::-webkit-scrollbar': { display: 'none' }
+    overflow: 'hidden'
 }
 
 export const history = {
@@ -22,8 +21,7 @@ export const items = {
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'stretch',
-    flexGrow: 1,
-    overflow: 'hidden'
+    height: '100%'
 }
 
 export const loader = {

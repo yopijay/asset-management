@@ -64,7 +64,8 @@ class Submodule {
 
         let series = await new Builder(`tbl_sub_module`).select().condition(`WHERE series_no= '${(data.series_no).toUpperCase()}'`).build();
         let name = await new Builder(`tbl_sub_module`).select().condition(`WHERE  module_id= ${data.module_id } AND name= '${(data.name).toUpperCase()}'`).build();
-        let path = await new Builder(`tbl_sub_module`).select().condition(`WHERE path= '${(data.path).toLowerCase()}'`).build();
+        let path = await new Builder(`tbl_sub_module`).select()
+                            .condition(`WHERE module_id= ${data.module_id } AND name= '${(data.name).toUpperCase()}' AND path= '${(data.path).toLowerCase()}'`).build();
 
         if(series.rowCount > 0) { errors.push({ name: 'series_no', message: 'Series number already exist!' }); }
         if(name.rowCount > 0) { errors.push({ name: 'name', message: 'Category already exist!' }); }

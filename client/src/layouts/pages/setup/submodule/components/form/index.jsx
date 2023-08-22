@@ -55,7 +55,7 @@ const Index = () => {
                     malesuada quam ut, vulputate massa.</Typography>
             </Stack>
             <Stack sx= { card }><FormBuilder fields= { Submodule({ fetching: isFetching }) } /></Stack>
-            {<Stack direction= "row" justifyContent= "flex-end" alignItems= "center" spacing= { 1 }>
+            <Stack direction= "row" justifyContent= {{ xs: 'space-between', sm: 'flex-end' }} alignItems= "center" spacing= { 1 }>
                 <Typography sx= { cancelbtn } component= { Link } to= "/setup/sub-module">Cancel</Typography>
                 { type !== 'view' ? <Typography sx= { savebtn } onClick= { handleSubmit(data => {
                     data['token'] = (sessionStorage.getItem('token')).split('.')[1];
@@ -63,7 +63,7 @@ const Index = () => {
                     if(type === 'new') { saving({ table: 'tbl_sub_module', data: data }); }
                     else { updating({ table: 'tbl_sub_module', data: data }); }
                 }) }>Save</Typography> : '' }
-            </Stack>}
+            </Stack>
         </Stack>
     );
 }

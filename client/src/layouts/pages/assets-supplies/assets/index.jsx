@@ -25,7 +25,7 @@ const Index = () => {
     useEffect(() => { document.title = 'GAMS | Assets' }, []);
 
     return (
-        <Stack sx= { container }>
+        <Stack sx= { container }>   
             <Routes>
                 <Route exact path= "/" element= { <FormPrvdr><ListPrvdr><List /></ListPrvdr></FormPrvdr> } />
                 <Route exact path= "/form/:type" element= { <FormPrvdr><Form /></FormPrvdr> } />
