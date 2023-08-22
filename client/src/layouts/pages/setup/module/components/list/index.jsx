@@ -34,7 +34,7 @@ const Index = () => {
     }, [ register, getValues, record ]);
 
     return (
-        <Box width= "100%" height= "100%">
+        <Box width= "100%">
             <Box sx= {{ display: { xs: 'none', sm: 'none', md: 'none', lg: 'block' }, transition: 'all 0.2s ease-in-out' }}>
                 <Desktop find= { find } record= { record } fetching= { fetching } finding= { finding } />
             </Box>

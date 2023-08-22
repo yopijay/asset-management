@@ -17,7 +17,7 @@ const container = {
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
     width: '100%',
-    height: '100vh',
+    overflow: 'hidden',
     '&::-webkit-scrollbar': { display: 'none' }
 }
 
@@ -25,7 +25,7 @@ const Index = () => {
     useEffect(() => { document.title = 'GAMS | Module' }, []);
 
     return (
-        <Stack sx= { container }>
+        <Stack sx= { container } spacing= { 2 }>
             <Routes>
                 <Route exact path= "/" element= { <FormPrvdr><ListPrvdr><List /></ListPrvdr></FormPrvdr> } />
                 <Route exact path= "/form/:type" element= { <FormPrvdr><Form /></FormPrvdr> } />
