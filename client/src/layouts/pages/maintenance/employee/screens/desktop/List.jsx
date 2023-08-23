@@ -21,7 +21,7 @@ const List = props => {
         <Stack direction= "row" justifyContent= "flex-start" alignItems= "flex-start">
             <Stack sx= { content } spacing= { 5 }>
                 <Title />
-                <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 } flexGrow= { 1 }>
+                <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 } flexGrow= { 1 } sx= {{ overflow: 'hidden' }}>
                     <Search request= { find } />
                     <Stack sx= { items } spacing= { 2 }>
                         <Sort refetch= { record } />
