@@ -19,7 +19,7 @@ const List = props => {
     return (
         <Stack sx= { content } spacing= { 5 }>
             <Title />
-            <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 } flexGrow= { 1 }>
+            <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 } flexGrow= { 1 } sx= {{ overflow: 'hidden' }}>
                 <Search request= { find } />
                 <Stack sx= { items } spacing= { 1 }>
                     <Sort refetch= { record } />
