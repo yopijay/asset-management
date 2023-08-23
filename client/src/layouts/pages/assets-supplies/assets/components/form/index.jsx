@@ -57,7 +57,7 @@ const Index = () => {
             <Stack sx= { card } spacing= { 3 }>
                 <FormBuilder fields= { Assets({ fetching: isFetching }) } />
             </Stack>
-            <Stack direction= "row" justifyContent= "flex-end" alignItems= "center" spacing= { 1 }>
+            <Stack direction= "row" justifyContent= {{ xs: 'space-between', sm: 'flex-end' }} alignItems= "center" spacing= { 1 }>
                 <Typography sx= { cancelbtn } component= { Link } to= "/assets-supplies/assets">Cancel</Typography>
                 { type !== 'view' ? <Typography sx= { savebtn } onClick= { handleSubmit(data => {
                     let errors = [];

@@ -3,7 +3,7 @@ export const content = {
     justifyContent: 'flex-start',
     alignItems: 'stretch',
     width: '100%',
-    height: '100%',
+    height: '100vh',
     padding: {
         xs: '90px 0 20px 0',
         sm: '80px 0 20px 0',

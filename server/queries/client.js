@@ -7,6 +7,7 @@ const Department = require('./tables/Department');
 const Position = require('./tables/Position');
 const AssetsSuppliesBrand = require('./tables/AssetSuppliesBrand');
 const AssetsSuppliesClassification = require('./tables/AssetsSuppliesClassification');
+const Assets = require('./tables/Assets');
 
 const login = data => { return new Users().login(data); }
 const profile = id => { return new Users().profile(id); }
@@ -21,6 +22,7 @@ const series = table => {
             case 'tbl_company': resolve(await new Company().series()); break;
             case 'tbl_department': resolve(await new Department().series()); break;
             case 'tbl_position': resolve(await new Position().series()); break;
+            case 'tbl_assets': resolve(await new Assets().series()); break;
             case 'tbl_assets_supplies_brand': resolve(await new AssetsSuppliesBrand().series()); break;
             case 'tbl_assets_supplies_classification': resolve(await new AssetsSuppliesClassification().series()); break;
         }
@@ -36,6 +38,7 @@ const specific = (table, id) => {
             case 'tbl_company': resolve(await new Company().specific(id)); break;
             case 'tbl_department': resolve(await new Department().specific(id)); break;
             case 'tbl_position': resolve(await new Position().specific(id)); break;
+            case 'tbl_assets': resolve(await new Assets().specific(id)); break;
             case 'tbl_assets_supplies_brand': resolve(await new AssetsSuppliesBrand().specific(id)); break;
             case 'tbl_assets_supplies_classification': resolve(await new AssetsSuppliesClassification().specific(id)); break;
         }
@@ -51,6 +54,7 @@ const list = (table, data) => {
             case 'tbl_company': resolve(await new Company().list(data)); break;
             case 'tbl_department': resolve(await new Department().list(data)); break;
             case 'tbl_position': resolve(await new Position().list(data)); break;
+            case 'tbl_assets': resolve(await new Assets().list(data)); break;
             case 'tbl_assets_supplies_brand': resolve(await new AssetsSuppliesBrand().list(data)); break;
             case 'tbl_assets_supplies_classification': resolve(await new AssetsSuppliesClassification().list(data)); break;
         }
@@ -66,6 +70,7 @@ const logs = (table, data) => {
             case 'tbl_company': resolve(await new Company().logs(data)); break;
             case 'tbl_department': resolve(await new Department().logs(data)); break;
             case 'tbl_position': resolve(await new Position().logs(data)); break;
+            case 'tbl_assets': resolve(await new Assets().logs(data)); break;
             case 'tbl_assets_supplies_brand': resolve(await new AssetsSuppliesBrand().logs(data)); break;
             case 'tbl_assets_supplies_classification': resolve(await new AssetsSuppliesClassification().logs(data)); break;
         }
@@ -81,6 +86,7 @@ const save = (table, data) => {
             case 'tbl_company': resolve(await new Company().save(data)); break;
             case 'tbl_department': resolve(await new Department().save(data)); break;
             case 'tbl_position': resolve(await new Position().save(data)); break;
+            case 'tbl_assets': resolve(await new Assets().save(data)); break;
             case 'tbl_assets_supplies_brand': resolve(await new AssetsSuppliesBrand().save(data)); break;
             case 'tbl_assets_supplies_classification': resolve(await new AssetsSuppliesClassification().save(data)); break;
         }
@@ -96,6 +102,7 @@ const update = (table, data) => {
             case 'tbl_company': resolve(await new Company().update(data)); break;
             case 'tbl_department': resolve(await new Department().update(data)); break;
             case 'tbl_position': resolve(await new Position().update(data)); break;
+            case 'tbl_assets': resolve(await new Assets().update(data)); break;
             case 'tbl_assets_supplies_brand': resolve(await new AssetsSuppliesBrand().update(data)); break;
             case 'tbl_assets_supplies_classification': resolve(await new AssetsSuppliesClassification().update(data)); break;
         }
@@ -111,6 +118,7 @@ const search = (table, data) => {
             case 'tbl_company': resolve(await new Company().search(data)); break;
             case 'tbl_department': resolve(await new Department().search(data)); break;
             case 'tbl_position': resolve(await new Position().search(data)); break;
+            case 'tbl_assets': resolve(await new Assets().search(data)); break;
             case 'tbl_assets_supplies_brand': resolve(await new AssetsSuppliesBrand().search(data)); break;
             case 'tbl_assets_supplies_classification': resolve(await new AssetsSuppliesClassification().search(data)); break;
         }

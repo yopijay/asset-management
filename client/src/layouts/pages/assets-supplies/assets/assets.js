@@ -13,7 +13,7 @@ const Assets = ({ fetching }) => {
 
     const { data: brands, mutate: brdmenu, isLoading: brdloading } = usePost({ request: dropdown });
     useGet({ key: ['assts_series'], request: series('tbl_assets'), options: {}, 
-        onSuccess: data => { if(type === 'new') setValue('series_no', `CLFN-${formatter(parseInt(data.length) + 1, 7)}`) } });
+        onSuccess: data => { if(type === 'new') setValue('series_no', `ASST-${formatter(parseInt(data.length) + 1, 7)}`) } });
 
     return ([
         {
@@ -28,36 +28,35 @@ const Assets = ({ fetching }) => {
             },
             type: 'textfield'
         },
-        // {
-        //     grid: { xs: 12, sm: 7, md: 4 },
-        //     props: {
-        //         name: 'category',
-        //         label: '*Category',
-        //         disabled: type === 'view',
-        //         fetching: fetching,
-        //         options: [{ id: 0, name: '-- SELECT AN ITEM BELOW --' }, { id: 'assets', name: 'ASSETS' }, { id: 'supplies', name: 'SUPPLIES' }],
-        //         onChange: (e, item) => { 
-        //             setError('category', { message: '' }); 
-        //             setValue('category', item.id); 
-        //             brdmenu({ table: 'tbl_assets_supplies_brand', data: { type: 'per-category', category: item.id }}) 
-        //         },
-        //         uppercase: true
-        //     },
-        //     type: 'dropdown'
-        // },
-        // {
-        //     grid: { xs: 12, sm: 5, md: 4 },
-        //     props: {
-        //         name: 'brand_id',
-        //         label: '*Brand',
-        //         disabled: type === 'view',
-        //         fetching: fetching,
-        //         uppercase: true,
-        //         options: !brdloading && brands ? brands : [],
-        //         onChange: (e, item) => { setError('brand_id', { message: '' }); setValue('brand_id', item.id); },
-        //     },
-        //     type: 'dropdown'
-        // },
+        {
+            grid: { xs: 12, sm: 7, md: 4 },
+            props: {
+                name: 'classification_id',
+                label: '*Classification',
+                disabled: type === 'view',
+                fetching: fetching,
+                options: [],
+                onChange: (e, item) => { 
+                    setError('classification_id', { message: '' }); 
+                    setValue('classification_id', item.id); 
+                },
+                uppercase: true
+            },
+            type: 'dropdown'
+        },
+        {
+            grid: { xs: 12, sm: 5, md: 4 },
+            props: {
+                name: 'brand_id',
+                label: '*Brand',
+                disabled: type === 'view',
+                fetching: fetching,
+                uppercase: true,
+                options: [],
+                onChange: (e, item) => { setError('brand_id', { message: '' }); setValue('brand_id', item.id); },
+            },
+            type: 'dropdown'
+        },
         // {
         //     grid: { xs: 12, sm: 5, md: 4 },
         //     props: {
