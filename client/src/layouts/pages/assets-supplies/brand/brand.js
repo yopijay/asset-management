@@ -11,11 +11,11 @@ const Brand = ({ fetching }) => {
     const { type } = useParams();
     const { setValue, getValues, setError } = useContext(FormCntxt);
 
-    useGet({ key: ['asb_series'], request: series('tbl_assets_supplies_brand'), options: {}, onSuccess: data => { if(type === 'new') setValue('series_no', `BRD-${formatter(parseInt(data.length) + 1, 7)}`) } });
+    useGet({ key: ['asb_series'], request: series('tbl_brands'), options: {}, onSuccess: data => { if(type === 'new') setValue('series_no', `BRD-${formatter(parseInt(data.length) + 1, 7)}`) } });
 
     return ([
         {
-            grid: { xs: 12, sm: 5, md: 4 },
+            grid: { xs: 12, sm: 12, md: 4 },
             props: {
                 name: 'series_no',
                 label: '*Series no.',
@@ -27,7 +27,7 @@ const Brand = ({ fetching }) => {
             type: 'textfield'
         },
         {
-            grid: { xs: 12, sm: 7, md: 4 },
+            grid: { xs: 12, sm: 6, md: 4 },
             props: {
                 name: 'category',
                 label: '*Category',
@@ -40,7 +40,20 @@ const Brand = ({ fetching }) => {
             type: 'dropdown'
         },
         {
-            grid: { xs: 12, sm: 5, md: 4 },
+            grid: { xs: 12, sm: 6, md: 4 },
+            props: {
+                name: 'type',
+                label: '*Type',
+                disabled: type === 'view',
+                fetching: fetching,
+                options: [],
+                onChange: (e, item) => { setError('category', { message: '' }); setValue('category', item.id); },
+                uppercase: true
+            },
+            type: 'dropdown'
+        },
+        {
+            grid: { xs: 12 },
             props: {
                 name: 'name',
                 label: '*Brand',

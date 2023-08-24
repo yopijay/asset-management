@@ -19,7 +19,7 @@ const Index = () => {
     const navigate = useNavigate();
     const { handleSubmit, setValue, setError, setValidation, reset } = useContext(FormCntxt);
     const { isFetching, refetch } = 
-        useGet({ key: ['asb_specific'], request: specific({ table: 'tbl_assets_supplies_brand', id: id ?? null }), options: { enabled: type !== 'new', refetchOnWindowFocus: false },
+        useGet({ key: ['asb_specific'], request: specific({ table: 'tbl_brands', id: id ?? null }), options: { enabled: type !== 'new', refetchOnWindowFocus: false },
             onSuccess: data => {
                 if(Array.isArray(data)) 
                     for(let count = 0; count < Object.keys(data[0]).length; count++) { 
@@ -62,8 +62,8 @@ const Index = () => {
                     data['token'] = (sessionStorage.getItem('token')).split('.')[1];
                     
                     if(!(errors.length > 0)) {
-                        if(type === 'new') { saving({ table: 'tbl_assets_supplies_brand', data: data }); }
-                        else { updating({ table: 'tbl_assets_supplies_brand', data: data }); }
+                        if(type === 'new') { saving({ table: 'tbl_brands', data: data }); }
+                        else { updating({ table: 'tbl_brands', data: data }); }
                     }
                     else { errors.forEach(data => setError(data.name, { message: data.message })); }
                 }) }>Save</Typography> : '' }

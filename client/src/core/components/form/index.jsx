@@ -1,9 +1,5 @@
 // Libraries
 import { Grid } from "@mui/material";
-import { useContext, useEffect } from "react";
-
-// Core
-import { FormCntxt } from "core/context/Form"; // Context
 
 // Components
 import Textfield from "core/components/form/textfield";
@@ -12,10 +8,7 @@ import Switch from "core/components/form/switch";
 import Checkbox from "core/components/form/checkbox";
 import Dropdown from "core/components/form/dropdown";
 
-const Index = ({ fields, validation }) => {
-    const { setValidation } = useContext(FormCntxt);
-
-    useEffect(() => setValidation(validation), [ setValidation, validation ]);
+const Index = ({ fields }) => {
 
     return (
         <form autoComplete= "off">

@@ -12,26 +12,15 @@
  Target Server Version : 140003
  File Encoding         : 65001
 
- Date: 17/08/2023 16:54:11
+ Date: 24/08/2023 16:56:01
 */
 
 
 -- ----------------------------
--- Sequence structure for tbl_assets_supplies_brand_id_seq
+-- Sequence structure for tbl_assets_id_seq
 -- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."tbl_assets_supplies_brand_id_seq";
-CREATE SEQUENCE "public"."tbl_assets_supplies_brand_id_seq" 
-INCREMENT 1
-MINVALUE  1
-MAXVALUE 2147483647
-START 1
-CACHE 1;
-
--- ----------------------------
--- Sequence structure for tbl_assets_supplies_classification_id_seq
--- ----------------------------
-DROP SEQUENCE IF EXISTS "public"."tbl_assets_supplies_classification_id_seq";
-CREATE SEQUENCE "public"."tbl_assets_supplies_classification_id_seq" 
+DROP SEQUENCE IF EXISTS "public"."tbl_assets_id_seq";
+CREATE SEQUENCE "public"."tbl_assets_id_seq" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 2147483647
@@ -43,6 +32,17 @@ CACHE 1;
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."tbl_audit_trail_id_seq";
 CREATE SEQUENCE "public"."tbl_audit_trail_id_seq" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 2147483647
+START 1
+CACHE 1;
+
+-- ----------------------------
+-- Sequence structure for tbl_brands_id_seq
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."tbl_brands_id_seq";
+CREATE SEQUENCE "public"."tbl_brands_id_seq" 
 INCREMENT 1
 MINVALUE  1
 MAXVALUE 2147483647
@@ -127,15 +127,13 @@ START 1
 CACHE 1;
 
 -- ----------------------------
--- Table structure for tbl_assets_supplies_brand
+-- Table structure for tbl_assets
 -- ----------------------------
-DROP TABLE IF EXISTS "public"."tbl_assets_supplies_brand";
-CREATE TABLE "public"."tbl_assets_supplies_brand" (
-  "id" int4 NOT NULL DEFAULT nextval('tbl_assets_supplies_brand_id_seq'::regclass),
+DROP TABLE IF EXISTS "public"."tbl_assets";
+CREATE TABLE "public"."tbl_assets" (
+  "id" int4 NOT NULL DEFAULT nextval('tbl_assets_id_seq'::regclass),
   "series_no" varchar(20) COLLATE "pg_catalog"."default",
-  "category" varchar(20) COLLATE "pg_catalog"."default",
-  "name" varchar(100) COLLATE "pg_catalog"."default",
-  "description" text COLLATE "pg_catalog"."default",
+  "serial_no" varchar(100) COLLATE "pg_catalog"."default",
   "status" int4,
   "created_by" int4,
   "updated_by" int4,
@@ -149,40 +147,8 @@ CREATE TABLE "public"."tbl_assets_supplies_brand" (
 ;
 
 -- ----------------------------
--- Records of tbl_assets_supplies_brand
+-- Records of tbl_assets
 -- ----------------------------
-INSERT INTO "public"."tbl_assets_supplies_brand" VALUES (1, 'BRD-0000001', 'assets', 'AOC', NULL, 1, 1, NULL, NULL, NULL, '2023-08-16 16:53:32+08', NULL, NULL, NULL);
-INSERT INTO "public"."tbl_assets_supplies_brand" VALUES (2, 'BRD-0000002', 'supplies', 'ADVANCE', NULL, 1, 1, 1, NULL, NULL, '2023-08-16 16:54:28+08', '2023-08-17 09:05:46+08', NULL, NULL);
-
--- ----------------------------
--- Table structure for tbl_assets_supplies_classification
--- ----------------------------
-DROP TABLE IF EXISTS "public"."tbl_assets_supplies_classification";
-CREATE TABLE "public"."tbl_assets_supplies_classification" (
-  "id" int4 NOT NULL DEFAULT nextval('tbl_assets_supplies_classification_id_seq'::regclass),
-  "series_no" varchar(20) COLLATE "pg_catalog"."default",
-  "category" varchar(20) COLLATE "pg_catalog"."default",
-  "brand_id" int4,
-  "name" varchar(100) COLLATE "pg_catalog"."default",
-  "description" text COLLATE "pg_catalog"."default",
-  "fields" text COLLATE "pg_catalog"."default",
-  "status" int4,
-  "created_by" int4,
-  "updated_by" int4,
-  "deleted_by" int4,
-  "imported_by" int4,
-  "date_created" timestamptz(6),
-  "date_updated" timestamptz(6),
-  "date_deleted" timestamptz(6),
-  "date_imported" timestamptz(6)
-)
-;
-
--- ----------------------------
--- Records of tbl_assets_supplies_classification
--- ----------------------------
-INSERT INTO "public"."tbl_assets_supplies_classification" VALUES (1, 'CLFN-0000001', 'assets', 1, 'MONITOR', NULL, NULL, 1, 1, NULL, NULL, NULL, '2023-08-17 15:25:14+08', NULL, NULL, NULL);
-INSERT INTO "public"."tbl_assets_supplies_classification" VALUES (2, 'CLFN-0000002', 'supplies', 2, 'NOTEBOOK', NULL, NULL, 1, 1, 1, NULL, NULL, '2023-08-17 15:27:46+08', '2023-08-17 15:44:10+08', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for tbl_audit_trail
@@ -268,6 +234,36 @@ INSERT INTO "public"."tbl_audit_trail" VALUES (60, '6JNL8WM', 'tbl_assets_suppli
 INSERT INTO "public"."tbl_audit_trail" VALUES (61, 'TK3J7CR', 'tbl_assets_supplies_classification', 2, 'status', '0', '1', 'update', 1, '2023-08-17 15:44:10+08');
 INSERT INTO "public"."tbl_audit_trail" VALUES (62, 'YMAD4S3', 'tbl_sub_module', 7, 'all', NULL, NULL, 'create', 1, '2023-08-17 16:27:58+08');
 INSERT INTO "public"."tbl_audit_trail" VALUES (63, 'ZRGJ0Y0', 'tbl_sub_module', 8, 'all', NULL, NULL, 'create', 1, '2023-08-17 16:28:06+08');
+INSERT INTO "public"."tbl_audit_trail" VALUES (64, '5OBX35V', 'tbl_assets_supplies_brand', 3, 'all', NULL, NULL, 'create', 1, '2023-08-24 16:17:27+08');
+INSERT INTO "public"."tbl_audit_trail" VALUES (65, '4EULG9T', 'tbl_assets_supplies_brand', 4, 'all', NULL, NULL, 'create', 1, '2023-08-24 16:17:53+08');
+INSERT INTO "public"."tbl_audit_trail" VALUES (66, 'LXWOVIR', 'tbl_assets_supplies_brand', 5, 'all', NULL, NULL, 'create', 1, '2023-08-24 16:19:31+08');
+INSERT INTO "public"."tbl_audit_trail" VALUES (67, 'K38164S', 'tbl_assets_supplies_classification', 3, 'all', NULL, NULL, 'create', 1, '2023-08-24 16:19:41+08');
+
+-- ----------------------------
+-- Table structure for tbl_brands
+-- ----------------------------
+DROP TABLE IF EXISTS "public"."tbl_brands";
+CREATE TABLE "public"."tbl_brands" (
+  "id" int4 NOT NULL DEFAULT nextval('tbl_brands_id_seq'::regclass),
+  "series_no" varchar(20) COLLATE "pg_catalog"."default",
+  "category" varchar(20) COLLATE "pg_catalog"."default",
+  "type" varchar(100) COLLATE "pg_catalog"."default",
+  "name" varchar(100) COLLATE "pg_catalog"."default",
+  "status" int4,
+  "created_by" int4,
+  "updated_by" int4,
+  "deleted_by" int4,
+  "imported_by" int4,
+  "date_created" timestamptz(6),
+  "date_updated" timestamptz(6),
+  "date_deleted" timestamptz(6),
+  "date_imported" timestamptz(6)
+)
+;
+
+-- ----------------------------
+-- Records of tbl_brands
+-- ----------------------------
 
 -- ----------------------------
 -- Table structure for tbl_company
@@ -485,23 +481,23 @@ INSERT INTO "public"."tbl_users" VALUES (3, 'USR-0000001', 'calvs23@gmail.com', 
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
-ALTER SEQUENCE "public"."tbl_assets_supplies_brand_id_seq"
-OWNED BY "public"."tbl_assets_supplies_brand"."id";
-SELECT setval('"public"."tbl_assets_supplies_brand_id_seq"', 3, true);
-
--- ----------------------------
--- Alter sequences owned by
--- ----------------------------
-ALTER SEQUENCE "public"."tbl_assets_supplies_classification_id_seq"
-OWNED BY "public"."tbl_assets_supplies_classification"."id";
-SELECT setval('"public"."tbl_assets_supplies_classification_id_seq"', 3, true);
+ALTER SEQUENCE "public"."tbl_assets_id_seq"
+OWNED BY "public"."tbl_assets"."id";
+SELECT setval('"public"."tbl_assets_id_seq"', 2, false);
 
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
 ALTER SEQUENCE "public"."tbl_audit_trail_id_seq"
 OWNED BY "public"."tbl_audit_trail"."id";
-SELECT setval('"public"."tbl_audit_trail_id_seq"', 64, true);
+SELECT setval('"public"."tbl_audit_trail_id_seq"', 68, true);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
+ALTER SEQUENCE "public"."tbl_brands_id_seq"
+OWNED BY "public"."tbl_brands"."id";
+SELECT setval('"public"."tbl_brands_id_seq"', 2, false);
 
 -- ----------------------------
 -- Alter sequences owned by
@@ -553,19 +549,19 @@ OWNED BY "public"."tbl_users"."id";
 SELECT setval('"public"."tbl_users_id_seq"', 4, true);
 
 -- ----------------------------
--- Primary Key structure for table tbl_assets_supplies_brand
+-- Primary Key structure for table tbl_assets
 -- ----------------------------
-ALTER TABLE "public"."tbl_assets_supplies_brand" ADD CONSTRAINT "tbl_assets_supplies_brand_pkey" PRIMARY KEY ("id");
-
--- ----------------------------
--- Primary Key structure for table tbl_assets_supplies_classification
--- ----------------------------
-ALTER TABLE "public"."tbl_assets_supplies_classification" ADD CONSTRAINT "tbl_assets_supplies_classification_pkey" PRIMARY KEY ("id");
+ALTER TABLE "public"."tbl_assets" ADD CONSTRAINT "tbl_assets_pkey" PRIMARY KEY ("id");
 
 -- ----------------------------
 -- Primary Key structure for table tbl_audit_trail
 -- ----------------------------
 ALTER TABLE "public"."tbl_audit_trail" ADD CONSTRAINT "tbl_audit_trail_pkey" PRIMARY KEY ("id");
+
+-- ----------------------------
+-- Primary Key structure for table tbl_brands
+-- ----------------------------
+ALTER TABLE "public"."tbl_brands" ADD CONSTRAINT "tbl_brands_pkey" PRIMARY KEY ("id");
 
 -- ----------------------------
 -- Primary Key structure for table tbl_company
@@ -603,26 +599,25 @@ ALTER TABLE "public"."tbl_sub_module" ADD CONSTRAINT "tbl_sub_module_pkey" PRIMA
 ALTER TABLE "public"."tbl_users" ADD CONSTRAINT "tbl_users_pkey" PRIMARY KEY ("id");
 
 -- ----------------------------
--- Foreign Keys structure for table tbl_assets_supplies_brand
+-- Foreign Keys structure for table tbl_assets
 -- ----------------------------
-ALTER TABLE "public"."tbl_assets_supplies_brand" ADD CONSTRAINT "tbl_assets_supplies_brand_created_by_fkey" FOREIGN KEY ("created_by") REFERENCES "public"."tbl_users" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
-ALTER TABLE "public"."tbl_assets_supplies_brand" ADD CONSTRAINT "tbl_assets_supplies_brand_deleted_by_fkey" FOREIGN KEY ("deleted_by") REFERENCES "public"."tbl_users" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
-ALTER TABLE "public"."tbl_assets_supplies_brand" ADD CONSTRAINT "tbl_assets_supplies_brand_imported_by_fkey" FOREIGN KEY ("imported_by") REFERENCES "public"."tbl_users" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
-ALTER TABLE "public"."tbl_assets_supplies_brand" ADD CONSTRAINT "tbl_assets_supplies_brand_updated_by_fkey" FOREIGN KEY ("updated_by") REFERENCES "public"."tbl_users" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
-
--- ----------------------------
--- Foreign Keys structure for table tbl_assets_supplies_classification
--- ----------------------------
-ALTER TABLE "public"."tbl_assets_supplies_classification" ADD CONSTRAINT "tbl_assets_supplies_classification_brand_id_fkey" FOREIGN KEY ("brand_id") REFERENCES "public"."tbl_assets_supplies_brand" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
-ALTER TABLE "public"."tbl_assets_supplies_classification" ADD CONSTRAINT "tbl_assets_supplies_classification_created_by_fkey" FOREIGN KEY ("created_by") REFERENCES "public"."tbl_users" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
-ALTER TABLE "public"."tbl_assets_supplies_classification" ADD CONSTRAINT "tbl_assets_supplies_classification_deleted_by_fkey" FOREIGN KEY ("deleted_by") REFERENCES "public"."tbl_users" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
-ALTER TABLE "public"."tbl_assets_supplies_classification" ADD CONSTRAINT "tbl_assets_supplies_classification_imported_by_fkey" FOREIGN KEY ("imported_by") REFERENCES "public"."tbl_users" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
-ALTER TABLE "public"."tbl_assets_supplies_classification" ADD CONSTRAINT "tbl_assets_supplies_classification_updated_by_fkey" FOREIGN KEY ("updated_by") REFERENCES "public"."tbl_users" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE "public"."tbl_assets" ADD CONSTRAINT "tbl_assets_created_by_fkey" FOREIGN KEY ("created_by") REFERENCES "public"."tbl_users" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE "public"."tbl_assets" ADD CONSTRAINT "tbl_assets_deleted_by_fkey" FOREIGN KEY ("deleted_by") REFERENCES "public"."tbl_users" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE "public"."tbl_assets" ADD CONSTRAINT "tbl_assets_imported_by_fkey" FOREIGN KEY ("imported_by") REFERENCES "public"."tbl_users" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE "public"."tbl_assets" ADD CONSTRAINT "tbl_assets_updated_by_fkey" FOREIGN KEY ("updated_by") REFERENCES "public"."tbl_users" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- ----------------------------
 -- Foreign Keys structure for table tbl_audit_trail
 -- ----------------------------
 ALTER TABLE "public"."tbl_audit_trail" ADD CONSTRAINT "tbl_audit_trail_user_id_fkey" FOREIGN KEY ("user_id") REFERENCES "public"."tbl_users" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- ----------------------------
+-- Foreign Keys structure for table tbl_brands
+-- ----------------------------
+ALTER TABLE "public"."tbl_brands" ADD CONSTRAINT "tbl_brands_created_by_fkey" FOREIGN KEY ("created_by") REFERENCES "public"."tbl_users" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE "public"."tbl_brands" ADD CONSTRAINT "tbl_brands_deleted_by_fkey" FOREIGN KEY ("deleted_by") REFERENCES "public"."tbl_users" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE "public"."tbl_brands" ADD CONSTRAINT "tbl_brands_imported_by_fkey" FOREIGN KEY ("imported_by") REFERENCES "public"."tbl_users" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE "public"."tbl_brands" ADD CONSTRAINT "tbl_brands_updated_by_fkey" FOREIGN KEY ("updated_by") REFERENCES "public"."tbl_users" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- ----------------------------
 -- Foreign Keys structure for table tbl_company

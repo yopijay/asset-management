@@ -13,6 +13,7 @@ import { save, specific, update } from "core/api"; // API
 import { cancelbtn, card, content, savebtn, title } from "./index.style"; // Styles
 import Assets from "../../assets"; // Fields
 import { validation } from "../../index.validation"; // Validation
+import Classification from "./classifications";
 
 const Index = () => {
     const { type, id } = useParams();
@@ -56,6 +57,10 @@ const Index = () => {
             </Stack>
             <Stack sx= { card } spacing= { 3 }>
                 <FormBuilder fields= { Assets({ fetching: isFetching }) } />
+                <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 }>
+                    <Typography variant= "body2" color= "#9BA4B5">Specification:</Typography>
+                    <Classification fetching= { isFetching } />
+                </Stack>
             </Stack>
             <Stack direction= "row" justifyContent= {{ xs: 'space-between', sm: 'flex-end' }} alignItems= "center" spacing= { 1 }>
                 <Typography sx= { cancelbtn } component= { Link } to= "/assets-supplies/assets">Cancel</Typography>
@@ -63,7 +68,7 @@ const Index = () => {
                     let errors = [];
                     data['token'] = (sessionStorage.getItem('token')).split('.')[1];
 
-                    if(data.category === undefined) { errors.push({ name: 'category', message: 'This field is required!' }); }
+                    if(data.classification_id === undefined) { errors.push({ name: 'classification_id', message: 'This field is required!' }); }
                     if(data.brand_id === undefined) { errors.push({ name: 'brand_id', message: 'This field is required!' }); }
                     
                     if(!(errors.length > 0)) {

@@ -19,7 +19,7 @@ const logs = {
 }
 
 const Logs = () => {
-    const { data: log, isFetching: fetching } = useGet({ key: ['asb_logs'], request: history({ table: 'tbl_assets_supplies_brand', data: {} }), options: { refetchOnWindowFocus: false } }); 
+    const { data: log, isFetching: fetching } = useGet({ key: ['asb_logs'], request: history({ table: 'tbl_brands', data: {} }), options: { refetchOnWindowFocus: false } }); 
 
     return (
         <Stack sx= { logs } spacing= { 2 }>
