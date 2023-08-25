@@ -12,7 +12,7 @@
  Target Server Version : 140003
  File Encoding         : 65001
 
- Date: 24/08/2023 16:56:01
+ Date: 25/08/2023 16:57:57
 */
 
 
@@ -238,6 +238,14 @@ INSERT INTO "public"."tbl_audit_trail" VALUES (64, '5OBX35V', 'tbl_assets_suppli
 INSERT INTO "public"."tbl_audit_trail" VALUES (65, '4EULG9T', 'tbl_assets_supplies_brand', 4, 'all', NULL, NULL, 'create', 1, '2023-08-24 16:17:53+08');
 INSERT INTO "public"."tbl_audit_trail" VALUES (66, 'LXWOVIR', 'tbl_assets_supplies_brand', 5, 'all', NULL, NULL, 'create', 1, '2023-08-24 16:19:31+08');
 INSERT INTO "public"."tbl_audit_trail" VALUES (67, 'K38164S', 'tbl_assets_supplies_classification', 3, 'all', NULL, NULL, 'create', 1, '2023-08-24 16:19:41+08');
+INSERT INTO "public"."tbl_audit_trail" VALUES (68, 'UXI28CT', 'tbl_brands', 1, 'all', NULL, NULL, 'create', 1, '2023-08-25 10:27:27+08');
+INSERT INTO "public"."tbl_audit_trail" VALUES (69, '1GRYF4R', 'tbl_brands', 2, 'all', NULL, NULL, 'create', 1, '2023-08-25 10:29:01+08');
+INSERT INTO "public"."tbl_audit_trail" VALUES (70, 'HWIOERQ', 'tbl_brands', 3, 'all', NULL, NULL, 'create', 1, '2023-08-25 10:29:28+08');
+INSERT INTO "public"."tbl_audit_trail" VALUES (71, 'RCPZ3X9', 'tbl_brands', 4, 'all', NULL, NULL, 'create', 1, '2023-08-25 10:29:37+08');
+INSERT INTO "public"."tbl_audit_trail" VALUES (72, 'IGAN13L', 'tbl_brands', 4, 'status', '1', '0', 'update', 1, '2023-08-25 10:32:07+08');
+INSERT INTO "public"."tbl_audit_trail" VALUES (73, 'MWDL6EZ', 'tbl_brands', 4, 'status', '0', '1', 'update', 1, '2023-08-25 10:32:11+08');
+INSERT INTO "public"."tbl_audit_trail" VALUES (74, '0GN8C48', 'tbl_brands', 5, 'all', NULL, NULL, 'create', 1, '2023-08-25 16:13:38+08');
+INSERT INTO "public"."tbl_audit_trail" VALUES (75, 'M7E679Z', 'tbl_brands', 6, 'all', NULL, NULL, 'create', 1, '2023-08-25 16:13:48+08');
 
 -- ----------------------------
 -- Table structure for tbl_brands
@@ -264,6 +272,12 @@ CREATE TABLE "public"."tbl_brands" (
 -- ----------------------------
 -- Records of tbl_brands
 -- ----------------------------
+INSERT INTO "public"."tbl_brands" VALUES (1, 'BRD-0000001', 'assets', 'monitor', 'AOC', 1, 1, NULL, NULL, NULL, '2023-08-25 10:27:27+08', NULL, NULL, NULL);
+INSERT INTO "public"."tbl_brands" VALUES (2, 'BRD-0000002', 'assets', 'monitor', 'SAMSUNG', 1, 1, NULL, NULL, NULL, '2023-08-25 10:29:01+08', NULL, NULL, NULL);
+INSERT INTO "public"."tbl_brands" VALUES (3, 'BRD-0000003', 'assets', 'system_unit', 'DELL', 1, 1, NULL, NULL, NULL, '2023-08-25 10:29:28+08', NULL, NULL, NULL);
+INSERT INTO "public"."tbl_brands" VALUES (4, 'BRD-0000004', 'assets', 'system_unit', 'HP', 1, 1, 1, NULL, NULL, '2023-08-25 10:29:37+08', '2023-08-25 10:32:11+08', NULL, NULL);
+INSERT INTO "public"."tbl_brands" VALUES (5, 'BRD-0000005', 'supplies', 'office_chair', 'OFX', 1, 1, NULL, NULL, NULL, '2023-08-25 16:13:38+08', NULL, NULL, NULL);
+INSERT INTO "public"."tbl_brands" VALUES (6, 'BRD-0000006', 'supplies', 'table', 'OFX', 1, 1, NULL, NULL, NULL, '2023-08-25 16:13:48+08', NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for tbl_company
@@ -445,9 +459,8 @@ INSERT INTO "public"."tbl_sub_module" VALUES (2, 'SMDL-0000002', 2, 'BRAND', 'br
 INSERT INTO "public"."tbl_sub_module" VALUES (3, 'SMDL-0000003', 4, 'DEPARTMENT', 'department', 1, 1, NULL, NULL, NULL, '2023-08-07 15:53:55+08', NULL, NULL, NULL);
 INSERT INTO "public"."tbl_sub_module" VALUES (4, 'SMDL-0000004', 4, 'POSITION', 'position', 1, 1, 1, NULL, NULL, '2023-08-07 16:00:12+08', '2023-08-14 09:25:08+08', NULL, NULL);
 INSERT INTO "public"."tbl_sub_module" VALUES (5, 'SMDL-0000005', 4, 'EMPLOYEE', 'employee', 1, 1, NULL, NULL, NULL, '2023-08-14 15:07:56+08', NULL, NULL, NULL);
-INSERT INTO "public"."tbl_sub_module" VALUES (6, 'SMDL-0000006', 2, 'CLASSIFICATION', 'classification', 1, 1, NULL, NULL, NULL, '2023-08-17 10:24:10+08', NULL, NULL, NULL);
-INSERT INTO "public"."tbl_sub_module" VALUES (7, 'SMDL-0000007', 2, 'ASSETS', 'assets', 1, 1, NULL, NULL, NULL, '2023-08-17 16:27:58+08', NULL, NULL, NULL);
-INSERT INTO "public"."tbl_sub_module" VALUES (8, 'SMDL-0000008', 2, 'SUPPLIES', 'supplies', 1, 1, NULL, NULL, NULL, '2023-08-17 16:28:06+08', NULL, NULL, NULL);
+INSERT INTO "public"."tbl_sub_module" VALUES (6, 'SMDL-0000007', 2, 'ASSETS', 'assets', 1, 1, NULL, NULL, NULL, '2023-08-17 16:27:58+08', NULL, NULL, NULL);
+INSERT INTO "public"."tbl_sub_module" VALUES (7, 'SMDL-0000008', 2, 'SUPPLIES', 'supplies', 1, 1, NULL, NULL, NULL, '2023-08-17 16:28:06+08', NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for tbl_users
@@ -490,14 +503,14 @@ SELECT setval('"public"."tbl_assets_id_seq"', 2, false);
 -- ----------------------------
 ALTER SEQUENCE "public"."tbl_audit_trail_id_seq"
 OWNED BY "public"."tbl_audit_trail"."id";
-SELECT setval('"public"."tbl_audit_trail_id_seq"', 68, true);
+SELECT setval('"public"."tbl_audit_trail_id_seq"', 76, true);
 
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
 ALTER SEQUENCE "public"."tbl_brands_id_seq"
 OWNED BY "public"."tbl_brands"."id";
-SELECT setval('"public"."tbl_brands_id_seq"', 2, false);
+SELECT setval('"public"."tbl_brands_id_seq"', 7, true);
 
 -- ----------------------------
 -- Alter sequences owned by
@@ -539,7 +552,7 @@ SELECT setval('"public"."tbl_position_id_seq"', 5, true);
 -- ----------------------------
 ALTER SEQUENCE "public"."tbl_sub_module_id_seq"
 OWNED BY "public"."tbl_sub_module"."id";
-SELECT setval('"public"."tbl_sub_module_id_seq"', 9, true);
+SELECT setval('"public"."tbl_sub_module_id_seq"', 8, true);
 
 -- ----------------------------
 -- Alter sequences owned by

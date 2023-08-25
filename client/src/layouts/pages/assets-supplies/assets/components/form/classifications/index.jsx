@@ -12,7 +12,7 @@ const Index = ({ fetching }) => {
 
     return (
         <Box>
-            { getValues()?.classification === 'monitor' ? <FormBuilder fields= { Monitor({ fetching: fetching }) } /> : '' }
+            { getValues()?.type === 'monitor' ? <FormBuilder fields= { Monitor({ fetching: fetching }) } /> : '' }
         </Box>
     );
 }

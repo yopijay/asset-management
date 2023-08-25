@@ -17,7 +17,7 @@ class Brands {
 
     list = async data => {
         return (await new Builder(`tbl_brands AS brs`)
-                        .select(`brs.id, brs.series_no, brs.category, brs.name, brs.status, CONCAT(cb.lname, ', ', cb.fname, ' ', cb.mname) AS created_by, brs.date_created`)
+                        .select(`brs.id, brs.series_no, brs.category, brs.type, brs.name, brs.status, CONCAT(cb.lname, ', ', cb.fname, ' ', cb.mname) AS created_by, brs.date_created`)
                         .join({ table: `tbl_employee AS cb`, condition: `cb.user_id = brs.created_by`, type: `LEFT` })
                         .condition(`${data.searchtxt !== '' ? `WHERE brs.series_no LIKE '%${(data.searchtxt).toUpperCase()}%' OR brs.name LIKE '%${(data.searchtxt).toUpperCase()}%'` : ''}
                                             ORDER BY brs.${data.orderby} ${(data.sort).toUpperCase()}`)
@@ -26,7 +26,7 @@ class Brands {
 
     search = async data => {
         return (await new Builder(`tbl_brands AS brs`)
-                        .select(`brs.id, brs.series_no, brs.category, brs.name, brs.status, CONCAT(cb.lname, ', ', cb.fname, ' ', cb.mname) AS created_by, brs.date_created`)
+                        .select(`brs.id, brs.series_no, brs.category, brs.type, brs.name, brs.status, CONCAT(cb.lname, ', ', cb.fname, ' ', cb.mname) AS created_by, brs.date_created`)
                         .join({ table: `tbl_employee AS cb`, condition: `cb.user_id = brs.created_by`, type: `LEFT` })
                         .condition(`${data.searchtxt !== '' ? `WHERE brs.series_no LIKE '%${(data.searchtxt).toUpperCase()}%' OR brs.name LIKE '%${(data.searchtxt).toUpperCase()}%'` : ''}
                                             ORDER BY brs.${data.orderby} ${(data.sort).toUpperCase()}`)
@@ -39,16 +39,15 @@ class Brands {
         let errors = [];
 
         let series = await new Builder(`tbl_brands`).select().condition(`WHERE series_no= '${(data.series_no).toUpperCase()}'`).build();
-        let name = await new Builder(`tbl_brands`).select().condition(`WHERE category= '${data.category}' AND name= '${(data.name).toUpperCase()}'`).build();
+        let name = await new Builder(`tbl_brands`).select().condition(`WHERE category= '${data.category}' AND type= '${data.type}' AND name= '${(data.name).toUpperCase()}'`).build();
 
         if(series.rowCount > 0) { errors.push({ name: 'series_no', message: 'Series number already exist!' }); }
         if(name.rowCount > 0) { errors.push({ name: 'name', message: 'Brand already exist in this category!' }); }
 
         if(!(errors.length > 0)) {
             let brs = (await new Builder(`tbl_brands`)
-                                .insert({ columns: `series_no, category, name, description, status, created_by, date_created`, 
-                                                values: `'${(data.series_no).toUpperCase()}', '${data.category}', '${(data.name).toUpperCase()}',
-                                                                ${data.description !== '' ? `'${(data.description).toUpperCase()}'` : null}, ${data.status ? 1 : 0}, ${user.id}, '${date}'` })
+                                .insert({ columns: `series_no, category, type, name, status, created_by, date_created`, 
+                                                values: `'${(data.series_no).toUpperCase()}', '${data.category}', '${data.type}', '${(data.name).toUpperCase()}', ${data.status ? 1 : 0}, ${user.id}, '${date}'` })
                                 .condition(`RETURNING id`)
                                 .build()).rows[0];
 
@@ -90,11 +89,6 @@ class Brands {
             else { errors.push({ name: 'category', message: `Brand already exist in ${(data.category).toUpperCase()}` }); }
         }
 
-        if(Global.compare(brs.description, data.description)) {
-            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_brands', item_id: brs.id, field: 'description', previous: brs.description,
-                current: data.description !== '' && data.description !== null ? (data.description).toUpperCase() : null, action: 'update', user_id: user.id, date: date });
-        }
-
         if(Global.compare(brs.status, data.status ? 1 : 0)) {
             audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_brands', item_id: brs.id, field: 'status', previous: brs.status, 
                                     current: data.status ? 1 : 0, action: 'update', user_id: user.id, date: date });
@@ -102,9 +96,7 @@ class Brands {
 
         if(!(errors.length > 0)) {
             await new Builder(`tbl_brands`)
-                .update(`category= '${data.category}', name= '${(data.name).toUpperCase()}', 
-                                description= ${data.description !== '' && data.description !== null ? `'${(data.description).toUpperCase()}'` : null},
-                                status= ${data.status ? 1 : 0}, updated_by= ${user.id}, date_updated= '${date}'`)
+                .update(`category= '${data.category}', name= '${(data.name).toUpperCase()}', status= ${data.status ? 1 : 0}, updated_by= ${user.id}, date_updated= '${date}'`)
                 .condition(`WHERE id= ${data.id}`)
                 .build();
 
@@ -117,8 +109,13 @@ class Brands {
     dropdown = async data => {
         switch(data.type) {
             case 'per-category': return [{ id: 0, name: '-- SELECT AN ITEM BELOW --' }]
-                                                .concat((await new Builder(`tbl_brands`).select(`id, name`)
+                                                .concat((await new Builder(`tbl_brands`).select(`DISTINCT LOWER(type) AS id, REPLACE(UPPER(type), '_', ' ') AS name`)
                                                     .condition(`WHERE category= '${data.category}' AND status= 1 ORDER BY name ASC`)
+                                                    .build()).rows);
+            
+            case 'per-type': return [{ id: 0, name: '-- SELECT AN ITEM BELOW --' }]
+                                                .concat((await new Builder(`tbl_brands`).select(`id, name`)
+                                                    .condition(`WHERE type= '${data.id}' AND status= 1 ORDER BY name ASC`)
                                                     .build()).rows);
             default: return [{ id: 0, name: '-- SELECT AN ITEM BELOW --' }]
                             .concat((await new Builder(`tbl_brands`).select(`id, name`).condition(`WHERE status= 1`).build()).rows);

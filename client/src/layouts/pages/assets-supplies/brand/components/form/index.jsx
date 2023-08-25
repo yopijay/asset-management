@@ -61,6 +61,9 @@ const Index = () => {
                     let errors = [];
                     data['token'] = (sessionStorage.getItem('token')).split('.')[1];
                     
+                    if(!data.category) { errors.push({ name: 'category', message: 'This field is required!' }); }
+                    if(!data.type) { errors.push({ name: 'type', message: 'This field is required!' }); }
+                    
                     if(!(errors.length > 0)) {
                         if(type === 'new') { saving({ table: 'tbl_brands', data: data }); }
                         else { updating({ table: 'tbl_brands', data: data }); }

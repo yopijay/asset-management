@@ -4,8 +4,25 @@ import { useParams } from "react-router-dom";
 
 // Core
 import { FormCntxt } from "core/context/Form"; // Context
-import { formatter, useGet } from "core/function/global";
-import { series } from "core/api";
+import { formatter, useGet } from "core/function/global"; // Function
+import { series } from "core/api"; // API
+
+// Constants
+const types = {
+    assets: [
+        { id: 0, name: '-- SELECT AN ITEM BELOW --' },
+        { id: 'monitor', name: 'MONITOR' },
+        { id: 'system_unit', name: 'SYSTEM UNIT' },
+        { id: 'keyboard', name: 'KEYBOARD' },
+        { id: 'mouse', name: 'MOUSE' },
+    ],
+    supplies: [
+        { id: 0, name: '-- SELECT AN ITEM BELOW --' },
+        { id: 'office_chair', name: 'OFFICE CHAIR' },
+        { id: 'table', name: 'TABLE' },
+        { id: 'cabinet', name: 'CABINET' },
+    ]
+}
 
 const Brand = ({ fetching }) => {
     const { type } = useParams();
@@ -46,8 +63,8 @@ const Brand = ({ fetching }) => {
                 label: '*Type',
                 disabled: type === 'view',
                 fetching: fetching,
-                options: [],
-                onChange: (e, item) => { setError('category', { message: '' }); setValue('category', item.id); },
+                options: !getValues().category ? [{ id: 0, name: '-- SELECT AN ITEM BELOW --' }] : types[`${getValues().category}`],
+                onChange: (e, item) => { setError('type', { message: '' }); setValue('type', item.id); },
                 uppercase: true
             },
             type: 'dropdown'
@@ -63,16 +80,6 @@ const Brand = ({ fetching }) => {
                 InputProps: { disableUnderline: true }
             },
             type: 'textfield'
-        },
-        {
-            grid: { xs: 12 },
-            props: {
-                name: 'description',
-                label: 'Description',
-                disabled: type === 'view',
-                fetching: fetching
-            },
-            type: 'textarea'
         },
         {
             grid: { xs: 12 },
