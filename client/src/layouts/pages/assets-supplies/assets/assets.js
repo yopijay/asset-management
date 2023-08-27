@@ -49,7 +49,7 @@ const Assets = ({ fetching }) => {
             type: 'dropdown'
         },
         {
-            grid: { xs: 12, sm: 5, md: 4 },
+            grid: { xs: 12, sm: 7, md: 4 },
             props: {
                 name: 'brand_id',
                 label: '*Brand',

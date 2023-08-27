@@ -1,11 +1,13 @@
-const Monitor = ({ fetching }) => {
+const Monitor = props => {
+    const { fetching, type, getValues, setValue } = props;
+
     return ([
         {
             grid: { xs: 12, sm: 4 },
             props: {
                 name: 'model',
                 label: 'Model',
-                disabled: false,
+                disabled: type === 'view',
                 fetching: fetching
             },
             type: 'textfield'
@@ -15,7 +17,7 @@ const Monitor = ({ fetching }) => {
             props: {
                 name: 'panel',
                 label: 'Panel',
-                disabled: false,
+                disabled: type === 'view',
                 fetching: fetching
             },
             type: 'textfield'
@@ -25,7 +27,7 @@ const Monitor = ({ fetching }) => {
             props: {
                 name: 'resolution',
                 label: 'Resolution',
-                disabled: false,
+                disabled: type === 'view',
                 fetching: fetching
             },
             type: 'textfield'
@@ -35,7 +37,7 @@ const Monitor = ({ fetching }) => {
             props: {
                 name: 'color',
                 label: 'Color',
-                disabled: false,
+                disabled: type === 'view',
                 fetching: fetching
             },
             type: 'textfield'
@@ -45,7 +47,7 @@ const Monitor = ({ fetching }) => {
             props: {
                 name: 'power_supply',
                 label: 'Power Supply',
-                disabled: false,
+                disabled: type === 'view',
                 fetching: fetching
             },
             type: 'textfield'
