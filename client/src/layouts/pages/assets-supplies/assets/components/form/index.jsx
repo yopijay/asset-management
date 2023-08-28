@@ -70,12 +70,14 @@ const Index = () => {
 
                     if(data.classification_id === undefined) { errors.push({ name: 'classification_id', message: 'This field is required!' }); }
                     if(data.brand_id === undefined) { errors.push({ name: 'brand_id', message: 'This field is required!' }); }
+
+                    console.log(data);
                     
-                    if(!(errors.length > 0)) {
-                        if(type === 'new') { saving({ table: 'tbl_assets', data: data }); }
-                        else { updating({ table: 'tbl_assets', data: data }); }
-                    }
-                    else { errors.forEach(data => setError(data.name, { message: data.message })); }
+                    // if(!(errors.length > 0)) {
+                    //     if(type === 'new') { saving({ table: 'tbl_assets', data: data }); }
+                    //     else { updating({ table: 'tbl_assets', data: data }); }
+                    // }
+                    // else { errors.forEach(data => setError(data.name, { message: data.message })); }
                 }) }>Save</Typography> : '' }
             </Stack>
         </Stack>

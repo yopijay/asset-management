@@ -1,4 +1,4 @@
-const Laptop = props => {
+const SystemUnit = props => {
     const { fetching, type, getValues, setValue } = props;
 
     return([
@@ -139,37 +139,15 @@ const Laptop = props => {
         {
             grid: { xs: 6, sm: 4, md: 3 },
             props: {
-                name: 'fingerprint',
-                label: 'Fingerprint reader',
+                name: 'wfii',
+                label: 'WiFi',
                 disabled: type === 'view',
                 fetching: fetching,
-                onChange:  () => setValue('fingerprint', !(getValues().fingerprint) ?? true)
-            },
-            type: 'switch'
-        },
-        {
-            grid: { xs: 6, sm: 4, md: 3 },
-            props: {
-                name: 'webcam',
-                label: 'Web camera',
-                disabled: type === 'view',
-                fetching: fetching,
-                onChange:  () => setValue('webcam', !(getValues().webcam) ?? true)
-            },
-            type: 'switch'
-        },
-        {
-            grid: { xs: 6, sm: 4, md: 3 },
-            props: {
-                name: 'backlit_keyboard',
-                label: 'Backlit Keyboard',
-                disabled: type === 'view',
-                fetching: fetching,
-                onChange:  () => setValue('backlit_keyboard', !(getValues().backlit_keyboard) ?? true)
+                onChange:  () => setValue('wfii', !(getValues().wfii) ?? true)
             },
             type: 'switch'
         }
     ])
 }
 
-export default Laptop;
+export default SystemUnit;

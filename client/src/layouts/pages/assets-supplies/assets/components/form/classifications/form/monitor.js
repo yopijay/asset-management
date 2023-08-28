@@ -52,6 +52,16 @@ const Monitor = props => {
             },
             type: 'textfield'
         },
+        {
+            grid: { xs: 12, sm: 4 },
+            props: {
+                name: 'warranty',
+                label: 'Warranty',
+                disabled: type === 'view',
+                fetching: fetching
+            },
+            type: 'textfield'
+        }
     ]);
 }
 
