@@ -1,18 +1,18 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : local
+ Source Server         : kc
  Source Server Type    : PostgreSQL
- Source Server Version : 150001
+ Source Server Version : 140003
  Source Host           : localhost:5432
- Source Catalog        : db_ams
+ Source Catalog        : db_kc_ams
  Source Schema         : public
 
  Target Server Type    : PostgreSQL
- Target Server Version : 150001
+ Target Server Version : 140003
  File Encoding         : 65001
 
- Date: 29/08/2023 08:15:27
+ Date: 29/08/2023 12:00:28
 */
 
 
@@ -160,6 +160,7 @@ CREATE TABLE "public"."tbl_assets" (
 -- ----------------------------
 -- Records of tbl_assets
 -- ----------------------------
+INSERT INTO "public"."tbl_assets" VALUES (1, 'ASST-0000001', 'GCDG7HA097603', 1, 1, NULL, NULL, NULL, '2023-08-29 10:26:09+08', NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for tbl_assets_info
@@ -182,20 +183,21 @@ CREATE TABLE "public"."tbl_assets_info" (
   "os" varchar(150) COLLATE "pg_catalog"."default",
   "power_supply" varchar(70) COLLATE "pg_catalog"."default",
   "warranty" varchar(100) COLLATE "pg_catalog"."default",
-  "hdmi" varchar(10) COLLATE "pg_catalog"."default",
-  "vga" varchar(10) COLLATE "pg_catalog"."default",
-  "dvi" varchar(10) COLLATE "pg_catalog"."default",
-  "wifi" varchar(10) COLLATE "pg_catalog"."default",
-  "bluetooth" varchar(10) COLLATE "pg_catalog"."default",
-  "fingerprint" varchar(10) COLLATE "pg_catalog"."default",
-  "webcam" varchar(10) COLLATE "pg_catalog"."default",
-  "backlit_keyboard" varchar(10) COLLATE "pg_catalog"."default"
+  "hdmi" int4,
+  "vga" int4,
+  "dvi" int4,
+  "wifi" int4,
+  "bluetooth" int4,
+  "fingerprint" int4,
+  "webcam" int4,
+  "backlit_keyboard" int4
 )
 ;
 
 -- ----------------------------
 -- Records of tbl_assets_info
 -- ----------------------------
+INSERT INTO "public"."tbl_assets_info" VALUES (1, 1, 'monitor', 1, 'M2060SWD', '19.53" W', '1920×1080@60HZ', 'BLACK', NULL, NULL, NULL, NULL, NULL, NULL, '100~240V AC, 50/60HZ', '2 YRS', 0, 1, 1, NULL, NULL, NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for tbl_audit_trail
@@ -218,6 +220,9 @@ CREATE TABLE "public"."tbl_audit_trail" (
 -- ----------------------------
 -- Records of tbl_audit_trail
 -- ----------------------------
+INSERT INTO "public"."tbl_audit_trail" VALUES (2, 'DBBJ0T4', 'tbl_brands', 3, 'all', NULL, NULL, 'create', 1, '2023-08-29 10:20:09+08');
+INSERT INTO "public"."tbl_audit_trail" VALUES (4, '8Y3YZZB', 'tbl_brands', 10, 'all', NULL, NULL, 'create', 1, '2023-08-29 10:51:41+08');
+INSERT INTO "public"."tbl_audit_trail" VALUES (3, 'NNARS0K', 'tbl_assets', 1, 'all', NULL, NULL, 'create', 1, '2023-08-29 10:26:09+08');
 
 -- ----------------------------
 -- Table structure for tbl_brands
@@ -251,6 +256,7 @@ INSERT INTO "public"."tbl_brands" VALUES (4, 'BRD-0000004', 'assets', 'system_un
 INSERT INTO "public"."tbl_brands" VALUES (5, 'BRD-0000005', 'supplies', 'office_chair', 'OFX', 1, 1, NULL, NULL, NULL, '2023-08-25 16:13:38+08', NULL, NULL, NULL);
 INSERT INTO "public"."tbl_brands" VALUES (6, 'BRD-0000006', 'supplies', 'table', 'OFX', 1, 1, NULL, NULL, NULL, '2023-08-25 16:13:48+08', NULL, NULL, NULL);
 INSERT INTO "public"."tbl_brands" VALUES (8, 'BRD-0000007', 'assets', 'laptop', 'ACER', 1, 1, NULL, NULL, NULL, '2023-08-28 00:07:38+08', NULL, NULL, NULL);
+INSERT INTO "public"."tbl_brands" VALUES (10, 'BRD-0000008', 'assets', 'laptop', 'DELL', 1, 1, NULL, NULL, NULL, '2023-08-29 10:51:41+08', NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for tbl_company
@@ -469,77 +475,77 @@ INSERT INTO "public"."tbl_users" VALUES (3, 'USR-0000001', 'calvs23@gmail.com', 
 -- ----------------------------
 ALTER SEQUENCE "public"."tbl_assets_id_seq"
 OWNED BY "public"."tbl_assets"."id";
-SELECT setval('"public"."tbl_assets_id_seq"', 3, false);
+SELECT setval('"public"."tbl_assets_id_seq"', 2, true);
 
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
 ALTER SEQUENCE "public"."tbl_assets_info_id_seq"
 OWNED BY "public"."tbl_assets_info"."id";
-SELECT setval('"public"."tbl_assets_info_id_seq"', 2, false);
+SELECT setval('"public"."tbl_assets_info_id_seq"', 2, true);
 
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
 ALTER SEQUENCE "public"."tbl_audit_trail_id_seq"
 OWNED BY "public"."tbl_audit_trail"."id";
-SELECT setval('"public"."tbl_audit_trail_id_seq"', 2, false);
+SELECT setval('"public"."tbl_audit_trail_id_seq"', 5, true);
 
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
 ALTER SEQUENCE "public"."tbl_brands_id_seq"
 OWNED BY "public"."tbl_brands"."id";
-SELECT setval('"public"."tbl_brands_id_seq"', 9, true);
+SELECT setval('"public"."tbl_brands_id_seq"', 11, true);
 
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
 ALTER SEQUENCE "public"."tbl_company_id_seq"
 OWNED BY "public"."tbl_company"."id";
-SELECT setval('"public"."tbl_company_id_seq"', 6, true);
+SELECT setval('"public"."tbl_company_id_seq"', 7, true);
 
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
 ALTER SEQUENCE "public"."tbl_department_id_seq"
 OWNED BY "public"."tbl_department"."id";
-SELECT setval('"public"."tbl_department_id_seq"', 6, true);
+SELECT setval('"public"."tbl_department_id_seq"', 7, true);
 
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
 ALTER SEQUENCE "public"."tbl_employee_id_seq"
 OWNED BY "public"."tbl_employee"."id";
-SELECT setval('"public"."tbl_employee_id_seq"', 5, true);
+SELECT setval('"public"."tbl_employee_id_seq"', 6, true);
 
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
 ALTER SEQUENCE "public"."tbl_module_id_seq"
 OWNED BY "public"."tbl_module"."id";
-SELECT setval('"public"."tbl_module_id_seq"', 6, true);
+SELECT setval('"public"."tbl_module_id_seq"', 7, true);
 
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
 ALTER SEQUENCE "public"."tbl_position_id_seq"
 OWNED BY "public"."tbl_position"."id";
-SELECT setval('"public"."tbl_position_id_seq"', 6, true);
+SELECT setval('"public"."tbl_position_id_seq"', 7, true);
 
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
 ALTER SEQUENCE "public"."tbl_sub_module_id_seq"
 OWNED BY "public"."tbl_sub_module"."id";
-SELECT setval('"public"."tbl_sub_module_id_seq"', 9, true);
+SELECT setval('"public"."tbl_sub_module_id_seq"', 10, true);
 
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
 ALTER SEQUENCE "public"."tbl_users_id_seq"
 OWNED BY "public"."tbl_users"."id";
-SELECT setval('"public"."tbl_users_id_seq"', 5, true);
+SELECT setval('"public"."tbl_users_id_seq"', 6, true);
 
 -- ----------------------------
 -- Primary Key structure for table tbl_assets
