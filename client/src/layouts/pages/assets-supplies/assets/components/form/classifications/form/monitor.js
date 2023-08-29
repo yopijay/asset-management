@@ -61,6 +61,39 @@ const Monitor = props => {
                 fetching: fetching
             },
             type: 'textfield'
+        },
+        {
+            grid: { xs: 6, sm: 4, md: 3 },
+            props: {
+                name: 'hdmi',
+                label: 'HDMI',
+                disabled: type === 'view',
+                fetching: fetching,
+                onChange:  () => setValue('hdmi', !(getValues().hdmi) ?? true)
+            },
+            type: 'switch'
+        },
+        {
+            grid: { xs: 6, sm: 4, md: 3 },
+            props: {
+                name: 'vga',
+                label: 'VGA',
+                disabled: type === 'view',
+                fetching: fetching,
+                onChange:  () => setValue('vga', !(getValues().vga) ?? true)
+            },
+            type: 'switch'
+        },
+        {
+            grid: { xs: 6, sm: 4, md: 3 },
+            props: {
+                name: 'dvi',
+                label: 'DVI',
+                disabled: type === 'view',
+                fetching: fetching,
+                onChange:  () => setValue('dvi', !(getValues().dvi) ?? true)
+            },
+            type: 'switch'
         }
     ]);
 }

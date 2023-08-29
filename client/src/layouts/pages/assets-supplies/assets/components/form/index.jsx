@@ -11,9 +11,9 @@ import { save, specific, update } from "core/api"; // API
 
 // Constants
 import { cancelbtn, card, content, savebtn, title } from "./index.style"; // Styles
+import Classification from "./classifications"; // Classifications
 import Assets from "../../assets"; // Fields
 import { validation } from "../../index.validation"; // Validation
-import Classification from "./classifications";
 
 const Index = () => {
     const { type, id } = useParams();
@@ -68,16 +68,14 @@ const Index = () => {
                     let errors = [];
                     data['token'] = (sessionStorage.getItem('token')).split('.')[1];
 
-                    if(data.classification_id === undefined) { errors.push({ name: 'classification_id', message: 'This field is required!' }); }
+                    if(data.type === undefined) { errors.push({ name: 'type', message: 'This field is required!' }); }
                     if(data.brand_id === undefined) { errors.push({ name: 'brand_id', message: 'This field is required!' }); }
-
-                    console.log(data);
                     
-                    // if(!(errors.length > 0)) {
-                    //     if(type === 'new') { saving({ table: 'tbl_assets', data: data }); }
-                    //     else { updating({ table: 'tbl_assets', data: data }); }
-                    // }
-                    // else { errors.forEach(data => setError(data.name, { message: data.message })); }
+                    if(!(errors.length > 0)) {
+                        if(type === 'new') { saving({ table: 'tbl_assets', data: data }); }
+                        else { updating({ table: 'tbl_assets', data: data }); }
+                    }
+                    else { errors.forEach(data => setError(data.name, { message: data.message })); }
                 }) }>Save</Typography> : '' }
             </Stack>
         </Stack>
