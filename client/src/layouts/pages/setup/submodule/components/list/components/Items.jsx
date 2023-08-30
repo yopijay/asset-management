@@ -1,5 +1,5 @@
 // Libraries
-import { Box, Grid, Stack, Typography } from "@mui/material";
+import { Grid, Stack, Typography } from "@mui/material";
 import { useContext } from "react";
 
 // Core
