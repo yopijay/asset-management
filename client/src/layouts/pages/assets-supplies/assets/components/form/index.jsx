@@ -25,7 +25,10 @@ const Index = () => {
                 if(Array.isArray(data)) 
                     for(let count = 0; count < Object.keys(data[0]).length; count++) { 
                         let _name = Object.keys(data[0])[count];
-                        setValue(_name, _name === 'status' ? data[0][_name] === 1 : data[0][_name]);
+                        setValue(_name, 
+                            _name === 'status' || _name === 'hdmi' || _name === 'vga' || _name === 'dvi' || _name === 'bluetooth' || _name === 'fingerprint' ||
+                            _name === 'webcam' || _name === 'backlit_keyboard' ? 
+                                data[0][_name] === 1 : data[0][_name]);
                     }
             } 
         });

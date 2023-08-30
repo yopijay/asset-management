@@ -14,7 +14,7 @@ const List = ({ data }) => {
             <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" sx= {{ flexGrow: 1, overflow: 'hidden' }}>
                 <Typography variant= "caption" sx= { caption }>{ data.series_no }</Typography>
                 <Typography sx= { title }>{ data.serial_no }</Typography>
-                <Typography sx= { subtitle } variant= "body2">{ (data.type).toUpperCase() } - { data.brand }</Typography>
+                <Typography sx= { subtitle } variant= "body2">{ ((data.type).replace('_', ' ')).toUpperCase() } - { data.brand }</Typography>
             </Stack>
             <Stack direction= "row" justifyContent= "flex-start" alignItems= "center" spacing= { 2 } paddingLeft= "10px">
                 { data.status === 1 ? 

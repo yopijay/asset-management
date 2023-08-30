@@ -1,5 +1,5 @@
 // Libraries
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 // Core
@@ -17,6 +17,12 @@ const Assets = ({ fetching }) => {
     const { data: brand, mutate: brdmenu, isLoading: brdloading } = usePost({ request: dropdown });
     useGet({ key: ['assts_series'], request: series('tbl_assets'), options: {}, 
         onSuccess: data => { if(type === 'new') setValue('series_no', `ASST-${formatter(parseInt(data.length) + 1, 7)}`) } });
+
+    useEffect(() => {
+        if(!fetching)
+            if(type !== 'new')
+                brdmenu({ table: 'tbl_brands', data: { type: 'per-type', category: 'assets', id: getValues()?.type } });
+    }, [ fetching, type, brdmenu, getValues ]);
 
     return ([
         {
@@ -36,7 +42,7 @@ const Assets = ({ fetching }) => {
             props: {
                 name: 'type',
                 label: '*Type',
-                disabled: type === 'view',
+                disabled: type !== 'new',
                 fetching: fetching,
                 options: !typsfetching ? types : [],
                 onChange: (e, item) => { 
@@ -65,8 +71,8 @@ const Assets = ({ fetching }) => {
             grid: { xs: 12 },
             props: {
                 name: 'serial_no',
-                label: '*Serial No.',
-                disabled: false,
+                label: '*Serial No. | Product ID',
+                disabled: type === 'view',
                 fetching: fetching
             },
             type: 'textfield'
