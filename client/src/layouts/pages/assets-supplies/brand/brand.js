@@ -13,15 +13,11 @@ const types = {
         { id: 0, name: '-- SELECT AN ITEM BELOW --' },
         { id: 'monitor', name: 'MONITOR' },
         { id: 'system_unit', name: 'SYSTEM UNIT' },
-        { id: 'keyboard', name: 'KEYBOARD' },
-        { id: 'mouse', name: 'MOUSE' },
-        { id: 'laptop', name: 'LAPTOP' },
+        { id: 'laptop', name: 'LAPTOP' }
     ],
     supplies: [
         { id: 0, name: '-- SELECT AN ITEM BELOW --' },
-        { id: 'office_chair', name: 'OFFICE CHAIR' },
-        { id: 'table', name: 'TABLE' },
-        { id: 'cabinet', name: 'CABINET' },
+        { id: 'toner', name: 'TONER' }
     ]
 }
 
