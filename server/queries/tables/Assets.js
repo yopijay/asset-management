@@ -146,34 +146,41 @@ class Assets {
                 current: data.model !== '' && data.model !== null ? (data.model).toUpperCase() : null, action: 'update', user_id: user.id, date: date });
         }
 
-        if(Global.compare(asst.cpu, data.cpu)) {
-            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_assets', item_id: asst.id, field: 'cpu', previous: asst.cpu,
-                current: data.cpu !== '' && data.cpu !== null ? (data.cpu).toUpperCase() : null, action: 'update', user_id: user.id, date: date });
-        }
+        if(data.type === 'system_unit' && data.type === 'laptop') {
+            if(Global.compare(asst.cpu, data.cpu)) {
+                audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_assets', item_id: asst.id, field: 'cpu', previous: asst.cpu,
+                    current: data.cpu !== '' && data.cpu !== null ? (data.cpu).toUpperCase() : null, action: 'update', user_id: user.id, date: date });
+            }
+    
+            if(Global.compare(asst.gpu, data.gpu)) {
+                audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_assets', item_id: asst.id, field: 'gpu', previous: asst.gpu,
+                    current: data.gpu !== '' && data.gpu !== null ? (data.gpu).toUpperCase() : null, action: 'update', user_id: user.id, date: date });
+            }
+    
+            if(Global.compare(asst.hdd, data.hdd)) {
+                audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_assets', item_id: asst.id, field: 'hdd', previous: asst.hdd,
+                    current: data.hdd !== '' && data.hdd !== null ? (data.hdd).toUpperCase() : null, action: 'update', user_id: user.id, date: date });
+            }
+    
+            if(Global.compare(asst.ssd, data.ssd)) {
+                audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_assets', item_id: asst.id, field: 'ssd', previous: asst.ssd,
+                    current: data.ssd !== '' && data.ssd !== null ? (data.ssd).toUpperCase() : null, action: 'update', user_id: user.id, date: date });
+            }
+    
+            if(Global.compare(asst.ram, data.ram)) {
+                audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_assets', item_id: asst.id, field: 'ram', previous: asst.ram,
+                    current: data.ram !== '' && data.ram !== null ? (data.ram).toUpperCase() : null, action: 'update', user_id: user.id, date: date });
+            }
+    
+            if(Global.compare(asst.os, data.os)) {
+                audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_assets', item_id: asst.id, field: 'os', previous: asst.os,
+                    current: data.os !== '' && data.os !== null ? (data.os).toUpperCase() : null, action: 'update', user_id: user.id, date: date });
+            }
 
-        if(Global.compare(asst.gpu, data.gpu)) {
-            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_assets', item_id: asst.id, field: 'gpu', previous: asst.gpu,
-                current: data.gpu !== '' && data.gpu !== null ? (data.gpu).toUpperCase() : null, action: 'update', user_id: user.id, date: date });
-        }
-
-        if(Global.compare(asst.hdd, data.hdd)) {
-            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_assets', item_id: asst.id, field: 'hdd', previous: asst.hdd,
-                current: data.hdd !== '' && data.hdd !== null ? (data.hdd).toUpperCase() : null, action: 'update', user_id: user.id, date: date });
-        }
-
-        if(Global.compare(asst.ssd, data.ssd)) {
-            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_assets', item_id: asst.id, field: 'ssd', previous: asst.ssd,
-                current: data.ssd !== '' && data.ssd !== null ? (data.ssd).toUpperCase() : null, action: 'update', user_id: user.id, date: date });
-        }
-
-        if(Global.compare(asst.ram, data.ram)) {
-            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_assets', item_id: asst.id, field: 'ram', previous: asst.ram,
-                current: data.ram !== '' && data.ram !== null ? (data.ram).toUpperCase() : null, action: 'update', user_id: user.id, date: date });
-        }
-
-        if(Global.compare(asst.os, data.os)) {
-            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_assets', item_id: asst.id, field: 'os', previous: asst.os,
-                current: data.os !== '' && data.os !== null ? (data.os).toUpperCase() : null, action: 'update', user_id: user.id, date: date });
+            if(Global.compare(asst.bluetooth, data.bluetooth ? 1 : 0)) {
+                audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_assets', item_id: asst.id, field: 'bluetooth', previous: asst.bluetooth, 
+                                        current: data.bluetooth ? 1 : 0, action: 'update', user_id: user.id, date: date });
+            }
         }
 
         if(Global.compare(asst.power_supply, data.power_supply)) {
@@ -201,29 +208,28 @@ class Assets {
                                     current: data.dvi ? 1 : 0, action: 'update', user_id: user.id, date: date });
         }
 
-        if(Global.compare(asst.bluetooth, data.bluetooth ? 1 : 0)) {
-            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_assets', item_id: asst.id, field: 'bluetooth', previous: asst.bluetooth, 
-                                    current: data.bluetooth ? 1 : 0, action: 'update', user_id: user.id, date: date });
+        if(data.type === 'system_unit') {
+            if(Global.compare(asst.wifi, data.wifi ? 1 : 0)) {
+                audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_assets', item_id: asst.id, field: 'wifi', previous: asst.wifi, 
+                                        current: data.wifi ? 1 : 0, action: 'update', user_id: user.id, date: date });
+            }
         }
 
-        if(Global.compare(asst.wifi, data.wifi ? 1 : 0)) {
-            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_assets', item_id: asst.id, field: 'wifi', previous: asst.wifi, 
-                                    current: data.wifi ? 1 : 0, action: 'update', user_id: user.id, date: date });
-        }
-
-        if(Global.compare(asst.fingerprint, data.fingerprint ? 1 : 0)) {
-            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_assets', item_id: asst.id, field: 'fingerprint', previous: asst.fingerprint, 
-                                    current: data.fingerprint ? 1 : 0, action: 'update', user_id: user.id, date: date });
-        }
-
-        if(Global.compare(asst.webcamera, data.webcamera ? 1 : 0)) {
-            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_assets', item_id: asst.id, field: 'webcamera', previous: asst.webcamera, 
-                                    current: data.webcamera ? 1 : 0, action: 'update', user_id: user.id, date: date });
-        }
-
-        if(Global.compare(asst.backlit_keyboard, data.backlit_keyboard ? 1 : 0)) {
-            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_assets', item_id: asst.id, field: 'backlit_keyboard', previous: asst.backlit_keyboard, 
-                                    current: data.backlit_keyboard ? 1 : 0, action: 'update', user_id: user.id, date: date });
+        if(data.type === 'laptop') {
+            if(Global.compare(asst.fingerprint, data.fingerprint ? 1 : 0)) {
+                audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_assets', item_id: asst.id, field: 'fingerprint', previous: asst.fingerprint, 
+                                        current: data.fingerprint ? 1 : 0, action: 'update', user_id: user.id, date: date });
+            }
+    
+            if(Global.compare(asst.webcamera, data.webcamera ? 1 : 0)) {
+                audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_assets', item_id: asst.id, field: 'webcamera', previous: asst.webcamera, 
+                                        current: data.webcamera ? 1 : 0, action: 'update', user_id: user.id, date: date });
+            }
+    
+            if(Global.compare(asst.backlit_keyboard, data.backlit_keyboard ? 1 : 0)) {
+                audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_assets', item_id: asst.id, field: 'backlit_keyboard', previous: asst.backlit_keyboard, 
+                                        current: data.backlit_keyboard ? 1 : 0, action: 'update', user_id: user.id, date: date });
+            }
         }
 
         if(!(errors.length > 0)) {
@@ -248,9 +254,12 @@ class Assets {
                 case 'laptop': 
                     await new Builder(`tbl_assets_info`)
                         .update(`model= ${data.model !== '' && data.model !== null ? `'${(data.model).toUpperCase()}'` : null},
-                                        cpu= ${data.cpu !== '' && data.cpu !== null ? `'${(data.cpu).toUpperCase()}'` : null}, gpu= ${data.gpu !== '' && data.gpu !== null ? `'${(data.gpu).toUpperCase()}'` : null},
-                                        hdd= ${data.hdd !== '' && data.hdd !== null ? `'${(data.hdd).toUpperCase()}'` : null}, ssd= ${data.ssd !== '' && data.ssd !== null ? `'${(data.ssd).toUpperCase()}'` : null},
-                                        ram= ${data.ram !== '' && data.ram !== null ? `'${(data.ram).toUpperCase()}'` : null}, os= ${data.os !== '' && data.os !== null ? `'${(data.os).toUpperCase()}'` : null},
+                                        cpu= ${data.cpu !== '' && data.cpu !== null ? `'${(data.cpu).toUpperCase()}'` : null}, 
+                                        gpu= ${data.gpu !== '' && data.gpu !== null ? `'${(data.gpu).toUpperCase()}'` : null},
+                                        hdd= ${data.hdd !== '' && data.hdd !== null ? `'${(data.hdd).toUpperCase()}'` : null}, 
+                                        ssd= ${data.ssd !== '' && data.ssd !== null ? `'${(data.ssd).toUpperCase()}'` : null},
+                                        ram= ${data.ram !== '' && data.ram !== null ? `'${(data.ram).toUpperCase()}'` : null}, 
+                                        os= ${data.os !== '' && data.os !== null ? `'${(data.os).toUpperCase()}'` : null},
                                         power_supply= ${data.power_supply !== '' && data.power_supply !== null ? `'${(data.power_supply).toUpperCase()}'` : null},
                                         warranty= ${data.warranty !== '' && data.warranty !== null ? `'${(data.warranty).toUpperCase()}'` : null}, 
                                         hdmi= ${data.hdmi ? 1 : 0}, vga= ${data.vga ? 1 : 0}, dvi= ${data.dvi ? 1 : 0}, bluetooth= ${data.bluetooth ? 1 : 0}, fingerprint= ${data.fingerprint ? 1 : 0},
@@ -261,9 +270,12 @@ class Assets {
                 case 'system_unit': 
                     await new Builder(`tbl_assets_info`)
                         .update(`model= ${data.model !== '' && data.model !== null ? `'${(data.model).toUpperCase()}'` : null},
-                                        cpu= ${data.cpu !== '' && data.cpu !== null ? `'${(data.cpu).toUpperCase()}'` : null}, gpu= ${data.gpu !== '' && data.gpu !== null ? `'${(data.gpu).toUpperCase()}'` : null},
-                                        hdd= ${data.hdd !== '' && data.hdd !== null ? `'${(data.hdd).toUpperCase()}'` : null}, ssd= ${data.ssd !== '' && data.ssd !== null ? `'${(data.ssd).toUpperCase()}'` : null},
-                                        ram= ${data.ram !== '' && data.ram !== null ? `'${(data.ram).toUpperCase()}'` : null}, os= ${data.os !== '' && data.os !== null ? `'${(data.os).toUpperCase()}'` : null},
+                                        cpu= ${data.cpu !== '' && data.cpu !== null ? `'${(data.cpu).toUpperCase()}'` : null}, 
+                                        gpu= ${data.gpu !== '' && data.gpu !== null ? `'${(data.gpu).toUpperCase()}'` : null},
+                                        hdd= ${data.hdd !== '' && data.hdd !== null ? `'${(data.hdd).toUpperCase()}'` : null}, 
+                                        ssd= ${data.ssd !== '' && data.ssd !== null ? `'${(data.ssd).toUpperCase()}'` : null},
+                                        ram= ${data.ram !== '' && data.ram !== null ? `'${(data.ram).toUpperCase()}'` : null}, 
+                                        os= ${data.os !== '' && data.os !== null ? `'${(data.os).toUpperCase()}'` : null},
                                         power_supply= ${data.power_supply !== '' && data.power_supply !== null ? `'${(data.power_supply).toUpperCase()}'` : null},
                                         warranty= ${data.warranty !== '' && data.warranty !== null ? `'${(data.warranty).toUpperCase()}'` : null}, 
                                         hdmi= ${data.hdmi ? 1 : 0}, vga= ${data.vga ? 1 : 0}, dvi= ${data.dvi ? 1 : 0}, bluetooth= ${data.bluetooth ? 1 : 0}, wifi= ${data.wifi ? 1 : 0}`)

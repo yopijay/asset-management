@@ -13,8 +13,7 @@ const Grids = ({ data }) => {
                 <Typography variant= "caption" sx= { caption }>{ data.employee_no }</Typography>
                 <Typography sx= { title }>{ data.lname }, { data.fname }</Typography>
                 <Typography sx= { subtitle } variant= "body2">{ data.company }</Typography>
-                <Typography sx= { subtitle } variant= "body2">{ data.department }</Typography>
-                <Typography sx= { subtitle } variant= "body2">{ data.position }</Typography>
+                <Typography sx= { subtitle } variant= "body2">{ data.department } - { data.position }</Typography>
             </Stack>
             <Box paddingLeft= "15px">
                 { data.status === 1 ? 
