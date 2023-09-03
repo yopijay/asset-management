@@ -11,7 +11,7 @@ import { save, specific, update } from "core/api"; // API
 
 // Constants
 import { cancelbtn, card, content, savebtn, title } from "./index.style"; // Styles
-import Classification from "./classifications"; // Classifications
+// import Classification from "./classifications"; // Classifications
 import Supplies from "../../supplies"; // Fields
 import { validation } from "../../index.validation"; // Validation
 
@@ -20,15 +20,12 @@ const Index = () => {
     const navigate = useNavigate();
     const { handleSubmit, setValue, setError, setValidation, reset } = useContext(FormCntxt);
     const { isFetching, refetch } = 
-        useGet({ key: ['assts_specific'], request: specific({ table: 'tbl_assets', id: id ?? null }), options: { enabled: type !== 'new', refetchOnWindowFocus: false },
+        useGet({ key: ['assts_specific'], request: specific({ table: 'tbl_supplies', id: id ?? null }), options: { enabled: type !== 'new', refetchOnWindowFocus: false },
             onSuccess: data => {
                 if(Array.isArray(data)) 
                     for(let count = 0; count < Object.keys(data[0]).length; count++) { 
                         let _name = Object.keys(data[0])[count];
-                        setValue(_name, 
-                            _name === 'status' || _name === 'hdmi' || _name === 'vga' || _name === 'dvi' || _name === 'bluetooth' || _name === 'fingerprint' ||
-                            _name === 'webcam' || _name === 'backlit_keyboard' ? 
-                                data[0][_name] === 1 : data[0][_name]);
+                        setValue(_name, _name === 'status' ? data[0][_name] === 1 : data[0][_name]);
                     }
             } 
         });
@@ -75,8 +72,8 @@ const Index = () => {
                     if(data.brand_id === undefined) { errors.push({ name: 'brand_id', message: 'This field is required!' }); }
                     
                     if(!(errors.length > 0)) {
-                        if(type === 'new') { saving({ table: 'tbl_assets', data: data }); }
-                        else { updating({ table: 'tbl_assets', data: data }); }
+                        if(type === 'new') { saving({ table: 'tbl_supplies', data: data }); }
+                        else { updating({ table: 'tbl_supplies', data: data }); }
                     }
                     else { errors.forEach(data => setError(data.name, { message: data.message })); }
                 }) }>Save</Typography> : '' }
