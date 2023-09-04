@@ -76,17 +76,17 @@ const Supplies = ({ fetching }) => {
         //     },
         //     type: 'textfield'
         // },
-        // {
-        //     grid: { xs: 12 },
-        //     props: {
-        //         name: 'status',
-        //         label: 'Status',
-        //         disabled: type === 'view',
-        //         fetching: fetching,
-        //         onChange:  () => setValue('status', !(getValues().status) ?? true)
-        //     },
-        //     type: 'switch'
-        // }
+        {
+            grid: { xs: 12 },
+            props: {
+                name: 'status',
+                label: 'Status',
+                disabled: type === 'view',
+                fetching: fetching,
+                onChange:  () => setValue('status', !(getValues().status) ?? true)
+            },
+            type: 'switch'
+        }
     ]);
 }
 

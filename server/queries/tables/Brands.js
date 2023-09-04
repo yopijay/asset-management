@@ -71,7 +71,7 @@ class Brands {
         let audits = [];
         let errors = [];
 
-        let name = await new Builder(`tbl_brands`).select().condition(`WHERE category= '${data.category}' AND name= '${(data.name).toUpperCase()}'`).build();
+        let name = await new Builder(`tbl_brands`).select().condition(`WHERE category= '${data.category}' AND type= '${data.type}' AND name= '${(data.name).toUpperCase()}'`).build();
 
         if(Global.compare(brs.name, data.name)) {
             if(!(name.rowCount > 0)) {

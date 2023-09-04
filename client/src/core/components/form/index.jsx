@@ -7,6 +7,7 @@ import Textarea from "core/components/form/textarea";
 import Switch from "core/components/form/switch";
 import Checkbox from "core/components/form/checkbox";
 import Dropdown from "core/components/form/dropdown";
+import Datepicker from "core/components/form/datepicker";
 
 const Index = ({ fields }) => {
 
@@ -20,6 +21,7 @@ const Index = ({ fields }) => {
                         { field.type === 'switch' ? <Switch { ...field.props } /> : '' }
                         { field.type === 'checkbox' ? <Checkbox { ...field.props } /> : '' }
                         { field.type === 'dropdown' ? <Dropdown { ...field.props } /> : '' }
+                        { field.type === 'datepicker' ? <Datepicker { ...field.props } /> : '' }
                     </Grid>
                 )) }
             </Grid>

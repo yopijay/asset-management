@@ -17,6 +17,8 @@ const types = {
     ],
     supplies: [
         { id: 0, name: '-- SELECT AN ITEM BELOW --' },
+        { id: 'office_chair', name: 'OFFICE CHAIR' },
+        { id: 'table', name: 'TABLE' },
         { id: 'toner', name: 'TONER' }
     ]
 }
