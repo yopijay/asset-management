@@ -3,17 +3,7 @@ const Toner = props => {
 
     return([
         {
-            grid: { xs: 12, sm: 4 },
-            props: {
-                name: 'model',
-                label: 'Model',
-                disabled: type === 'view',
-                fetching: fetching
-            },
-            type: 'textfield'
-        },
-        {
-            grid: { xs: 12, sm: 4 },
+            grid: { xs: 12, sm: 6 },
             props: {
                 name: 'date_received',
                 label: 'Date received',
@@ -24,7 +14,7 @@ const Toner = props => {
             type: 'textfield'
         },
         {
-            grid: { xs: 6, sm: 2 },
+            grid: { xs: 6, sm: 3 },
             props: {
                 name: 'quantity',
                 label: 'Quantity',
@@ -35,7 +25,7 @@ const Toner = props => {
             type: 'textfield'
         },
         {
-            grid: { xs: 6, sm: 2 },
+            grid: { xs: 6, sm: 3 },
             props: {
                 name: 'warranty',
                 label: 'Warranty',

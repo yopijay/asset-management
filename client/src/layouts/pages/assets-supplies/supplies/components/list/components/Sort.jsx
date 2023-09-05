@@ -23,8 +23,8 @@ const Sort = ({ refetch }) => {
         <Stack direction= "row" justifyContent= "flex-end" alignItems= "center" spacing= { 1 }>
             <Stack direction= "row" justifyContent= "flex-start" alignItems= "center" spacing= { 1 }>
                 <Typography variant= "caption">Order by:</Typography>
-                { order === 'date_created' ? <Typography variant= "caption" sx= { orderby } onClick= { () => onclick('name') }>Date created</Typography> :
-                    order === 'name' ? <Typography variant= "caption" sx= { orderby } onClick= { () => onclick('series_no') }>Name</Typography> :
+                { order === 'date_created' ? <Typography variant= "caption" sx= { orderby } onClick= { () => onclick('model') }>Date created</Typography> :
+                    order === 'model' ? <Typography variant= "caption" sx= { orderby } onClick= { () => onclick('series_no') }>Model</Typography> :
                         order === 'series_no' ? <Typography variant= "caption" sx= { orderby } onClick= { () => onclick('date_created') }>Series no.</Typography> : '' }
             </Stack>
             { sort === 'desc' ? 

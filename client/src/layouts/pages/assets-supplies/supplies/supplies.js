@@ -66,16 +66,16 @@ const Supplies = ({ fetching }) => {
             },
             type: 'dropdown'
         },
-        // {
-        //     grid: { xs: 12 },
-        //     props: {
-        //         name: 'serial_no',
-        //         label: '*Serial No. | Product ID',
-        //         disabled: type === 'view',
-        //         fetching: fetching
-        //     },
-        //     type: 'textfield'
-        // },
+        {
+            grid: { xs: 12, sm: 6 },
+            props: {
+                name: 'model',
+                label: 'Model',
+                disabled: type === 'view',
+                fetching: fetching
+            },
+            type: 'textfield'
+        },
         {
             grid: { xs: 12 },
             props: {

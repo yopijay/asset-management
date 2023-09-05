@@ -68,16 +68,14 @@ const Index = () => {
                     let errors = [];
                     data['token'] = (sessionStorage.getItem('token')).split('.')[1];
 
-                    console.log(data);
-
-                    // if(data.type === undefined) { errors.push({ name: 'type', message: 'This field is required!' }); }
-                    // if(data.brand_id === undefined) { errors.push({ name: 'brand_id', message: 'This field is required!' }); }
+                    if(data.type === undefined) { errors.push({ name: 'type', message: 'This field is required!' }); }
+                    if(data.brand_id === undefined) { errors.push({ name: 'brand_id', message: 'This field is required!' }); }
                     
-                    // if(!(errors.length > 0)) {
-                    //     if(type === 'new') { saving({ table: 'tbl_supplies', data: data }); }
-                    //     else { updating({ table: 'tbl_supplies', data: data }); }
-                    // }
-                    // else { errors.forEach(data => setError(data.name, { message: data.message })); }
+                    if(!(errors.length > 0)) {
+                        if(type === 'new') { saving({ table: 'tbl_supplies', data: data }); }
+                        else { updating({ table: 'tbl_supplies', data: data }); }
+                    }
+                    else { errors.forEach(data => setError(data.name, { message: data.message })); }
                 }) }>Save</Typography> : '' }
             </Stack>
         </Stack>

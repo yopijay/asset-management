@@ -11,8 +11,9 @@ const Grids = ({ data }) => {
         <Stack sx= { list } component= { Link } to= { `/assets-supplies/supplies/form/update/${data.id}` }>
             <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" sx= {{ flexGrow: 1, overflow: 'hidden' }}>
                 <Typography variant= "caption" sx= { caption }>{ data.series_no }</Typography>
-                <Typography sx= { title }>{ data.name }</Typography>
+                <Typography sx= { title }>{ data.model }</Typography>
                 <Typography sx= { subtitle } variant= "body2">{ ((data.type).replace('_', ' ')).toUpperCase() } - { data.brand }</Typography>
+                <Typography sx= { subtitle } variant= "caption">Date received: { data.date_received }</Typography>
             </Stack>
             <Box paddingLeft= "15px">
                 { data.status === 1 ? 
