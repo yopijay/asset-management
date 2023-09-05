@@ -289,6 +289,14 @@ class Assets {
         }
         else { return { result: 'error', error: errors } }
     }
+
+    dropdown = async data => {
+        return [{ id: 0, name: '-- SELECT AN ITEM BELOW --' }]
+            .concat((await new Builder(`tbl_assets AS asst`).select(`asst.id, info.model AS name`)
+                .join({ table: `tbl_assets_info AS info`, condition: `info.assets_id = asst.id`, type: `LEFT` })
+                .condition(`WHERE type= '${data.type}' AND brand_id= ${data.id}`)
+                .build()).rows);
+    }
 }
 
 module.exports = Assets;

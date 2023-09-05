@@ -28,7 +28,7 @@ class Supplies {
                         .join({ table: `tbl_supplies_info AS info`, condition: `info.supplies_id = supp.id`, type: `LEFT` })
                         .join({ table: `tbl_brands AS brd`, condition: `supp.brand_id = brd.id`, type: `LEFT` })
                         .join({ table: `tbl_employee AS cb`, condition: `supp.created_by = cb.user_id`, type: `LEFT` })
-                        .condition(`${data.searchtxt !== '' ? `WHERE supp.series_no LIKE '%${(data.searchtxt).toUpperCase()}%' OR supp.name LIKE '%${(data.searchtxt).toUpperCase()}%'` : ''}
+                        .condition(`${data.searchtxt !== '' ? `WHERE supp.series_no LIKE '%${(data.searchtxt).toUpperCase()}%' OR supp.model LIKE '%${(data.searchtxt).toUpperCase()}%'` : ''}
                                             ORDER BY supp.${data.orderby} ${(data.sort).toUpperCase()}`)
                         .build()).rows;
     }
@@ -40,7 +40,7 @@ class Supplies {
                         .join({ table: `tbl_supplies_info AS info`, condition: `info.supplies_id = supp.id`, type: `LEFT` })
                         .join({ table: `tbl_brands AS brd`, condition: `supp.brand_id = brd.id`, type: `LEFT` })
                         .join({ table: `tbl_employee AS cb`, condition: `supp.created_by = cb.user_id`, type: `LEFT` })
-                        .condition(`${data.searchtxt !== '' ? `WHERE supp.series_no LIKE '%${(data.searchtxt).toUpperCase()}%' OR supp.name LIKE '%${(data.searchtxt).toUpperCase()}%'` : ''}
+                        .condition(`${data.searchtxt !== '' ? `WHERE supp.series_no LIKE '%${(data.searchtxt).toUpperCase()}%' OR supp.model LIKE '%${(data.searchtxt).toUpperCase()}%'` : ''}
                                             ORDER BY supp.${data.orderby} ${(data.sort).toUpperCase()}`)
                         .build()).rows;
     }
@@ -157,6 +157,13 @@ class Supplies {
             return { result: 'success', message: 'Successfully updated!' }
         }
         else { return { result: 'error', error: errors } }
+    }
+
+    dropdown = async data => {
+        return [{ id: 0, name: '-- SELECT AN ITEM BELOW --' }]
+            .concat((await new Builder(`tbl_supplies`).select(`id, model AS name`)
+                .condition(`WHERE type= '${data.type}' AND brand_id= ${data.id}`)
+                .build()).rows);
     }
 }
 

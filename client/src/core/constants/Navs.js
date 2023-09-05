@@ -5,7 +5,7 @@ import React from "react";
 const AssetsBrand = React.lazy(() => import('layouts/pages/assets-supplies/brand'));
 const Assets = React.lazy(() => import('layouts/pages/assets-supplies/assets'));
 const Supplies = React.lazy(() => import('layouts/pages/assets-supplies/supplies'));
-// const Issuance = React.lazy(() => import('layouts/pages/assets-supplies/issuance'));
+const Issuance = React.lazy(() => import('layouts/pages/assets-supplies/issuance'));
 
 // // Warehouse
 // const WarehouseBrand = React.lazy(() => import('layouts/pages/warehouse/brand'));
@@ -30,6 +30,7 @@ export const Components = ([
     { path: '/assets-supplies/brand', name: 'assets-supplies-brand', title: 'Brand', component: <AssetsBrand /> },
     { path: '/assets-supplies/assets', name: 'assets', title: 'Assets', component: <Assets /> },
     { path: '/assets-supplies/supplies', name: 'supplies', title: 'Supplies', component: <Supplies /> },
+    { path: '/assets-supplies/issuance', name: 'issuance', title: 'Issuance', component: <Issuance /> },
 
     // Maintenance
     { path: '/maintenance/company', name: 'company', title: 'Company', component: <Company /> },
@@ -43,9 +44,6 @@ export const Components = ([
     // { label: 'Overview', components: [
     // ] },
     // { label: 'Assets & Supplies', components: [
-    //     { path: '/assets-supplies/classification', name: 'assets-supplies-classification', title: 'Classification', component: <Classificaiton /> },
-    //     { path: '/assets-supplies/assets', name: 'assets', title: 'Assets', component: <Assets /> },
-    //     { path: '/assets-supplies/issuance', name: 'issuance', title: 'Issuance', component: <Issuance /> }
     // ] },
     // { label: 'Warehouse', components: [
     //     { path: '/warehouse/brand', name: 'warehouse-brand', title: 'Brand', component: <WarehouseBrand /> },
