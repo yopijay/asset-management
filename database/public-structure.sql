@@ -12,7 +12,7 @@
  Target Server Version : 140003
  File Encoding         : 65001
 
- Date: 04/09/2023 16:59:18
+ Date: 05/09/2023 11:24:48
 */
 
 
@@ -415,7 +415,9 @@ DROP TABLE IF EXISTS "public"."tbl_supplies_info";
 CREATE TABLE "public"."tbl_supplies_info" (
   "id" int4 NOT NULL DEFAULT nextval('tbl_supplies_info_id_seq'::regclass),
   "supplies_id" int4,
-  "quantity" int4
+  "quantity" int4,
+  "date_received" varchar(50) COLLATE "pg_catalog"."default",
+  "warranty" varchar(20) COLLATE "pg_catalog"."default"
 )
 ;
 
@@ -460,7 +462,7 @@ SELECT setval('"public"."tbl_assets_info_id_seq"', 5, true);
 -- ----------------------------
 ALTER SEQUENCE "public"."tbl_audit_trail_id_seq"
 OWNED BY "public"."tbl_audit_trail"."id";
-SELECT setval('"public"."tbl_audit_trail_id_seq"', 14, true);
+SELECT setval('"public"."tbl_audit_trail_id_seq"', 20, true);
 
 -- ----------------------------
 -- Alter sequences owned by
@@ -509,21 +511,21 @@ SELECT setval('"public"."tbl_position_id_seq"', 9, true);
 -- ----------------------------
 ALTER SEQUENCE "public"."tbl_sub_module_id_seq"
 OWNED BY "public"."tbl_sub_module"."id";
-SELECT setval('"public"."tbl_sub_module_id_seq"', 12, true);
+SELECT setval('"public"."tbl_sub_module_id_seq"', 13, true);
 
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
 ALTER SEQUENCE "public"."tbl_supplies_id_seq"
 OWNED BY "public"."tbl_supplies"."id";
-SELECT setval('"public"."tbl_supplies_id_seq"', 3, false);
+SELECT setval('"public"."tbl_supplies_id_seq"', 5, true);
 
 -- ----------------------------
 -- Alter sequences owned by
 -- ----------------------------
 ALTER SEQUENCE "public"."tbl_supplies_info_id_seq"
 OWNED BY "public"."tbl_supplies_info"."id";
-SELECT setval('"public"."tbl_supplies_info_id_seq"', 3, false);
+SELECT setval('"public"."tbl_supplies_info_id_seq"', 5, true);
 
 -- ----------------------------
 -- Alter sequences owned by
