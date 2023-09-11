@@ -7,6 +7,7 @@ const Department = require('./tables/Department');
 const Position = require('./tables/Position');
 const Category = require('./tables/Category');
 const Brands = require('./tables/Brands');
+const Stocks = require('./tables/Stocks');
 
 const login = data => { return new Users().login(data); }
 const profile = id => { return new Users().profile(id); }
@@ -23,6 +24,7 @@ const series = table => {
             case 'tbl_position': resolve(await new Position().series()); break;
             case 'tbl_category': resolve(await new Category().series()); break;
             case 'tbl_brands': resolve(await new Brands().series()); break;
+            case 'tbl_stocks': resolve(await new Stocks().series()); break;
         }
     });
 }
@@ -38,6 +40,7 @@ const specific = (table, id) => {
             case 'tbl_position': resolve(await new Position().specific(id)); break;
             case 'tbl_category': resolve(await new Category().specific(id)); break;
             case 'tbl_brands': resolve(await new Brands().specific(id)); break;
+            case 'tbl_stocks': resolve(await new Stocks().specific(id)); break;
         }
     });
 }
@@ -53,6 +56,7 @@ const list = (table, data) => {
             case 'tbl_position': resolve(await new Position().list(data)); break;
             case 'tbl_category': resolve(await new Category().list(data)); break;
             case 'tbl_brands': resolve(await new Brands().list(data)); break;
+            case 'tbl_stocks': resolve(await new Stocks().list(data)); break;
         }
     });
 }
@@ -68,6 +72,7 @@ const logs = (table, data) => {
             case 'tbl_position': resolve(await new Position().logs(data)); break;
             case 'tbl_category': resolve(await new Category().logs(data)); break;
             case 'tbl_brands': resolve(await new Brands().logs(data)); break;
+            case 'tbl_stocks': resolve(await new Stocks().logs(data)); break;
         }
     });
 }
@@ -83,6 +88,7 @@ const save = (table, data) => {
             case 'tbl_position': resolve(await new Position().save(data)); break;
             case 'tbl_category': resolve(await new Category().save(data)); break;
             case 'tbl_brands': resolve(await new Brands().save(data)); break;
+            case 'tbl_stocks': resolve(await new Stocks().save(data)); break;
         }
     });
 }
@@ -98,6 +104,7 @@ const update = (table, data) => {
             case 'tbl_position': resolve(await new Position().update(data)); break;
             case 'tbl_category': resolve(await new Category().update(data)); break;
             case 'tbl_brands': resolve(await new Brands().update(data)); break;
+            case 'tbl_stocks': resolve(await new Stocks().update(data)); break;
         }
     });
 }
@@ -113,6 +120,7 @@ const search = (table, data) => {
             case 'tbl_position': resolve(await new Position().search(data)); break;
             case 'tbl_category': resolve(await new Category().search(data)); break;
             case 'tbl_brands': resolve(await new Brands().search(data)); break;
+            case 'tbl_stocks': resolve(await new Stocks().search(data)); break;
         }
     });
 }

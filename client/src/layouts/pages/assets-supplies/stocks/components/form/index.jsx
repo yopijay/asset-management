@@ -11,8 +11,8 @@ import { save, specific, update } from "core/api"; // API
 
 // Constants
 import { cancelbtn, card, content, savebtn, title } from "./index.style"; // Styles
-import Classification from "./classifications"; // Classifications
-import Assets from "../../assets"; // Fields
+// import Classification from "./classifications"; // Classifications
+import Stocks from "../../stocks"; // Fields
 import { validation } from "../../index.validation"; // Validation
 
 const Index = () => {
@@ -20,15 +20,12 @@ const Index = () => {
     const navigate = useNavigate();
     const { handleSubmit, setValue, setError, setValidation, reset } = useContext(FormCntxt);
     const { isFetching, refetch } = 
-        useGet({ key: ['assts_specific'], request: specific({ table: 'tbl_assets', id: id ?? null }), options: { enabled: type !== 'new', refetchOnWindowFocus: false },
+        useGet({ key: ['stck_specific'], request: specific({ table: 'tbl_stocks', id: id ?? null }), options: { enabled: type !== 'new', refetchOnWindowFocus: false },
             onSuccess: data => {
                 if(Array.isArray(data)) 
                     for(let count = 0; count < Object.keys(data[0]).length; count++) { 
                         let _name = Object.keys(data[0])[count];
-                        setValue(_name, 
-                            _name === 'status' || _name === 'hdmi' || _name === 'vga' || _name === 'dvi' || _name === 'bluetooth' || _name === 'fingerprint' ||
-                            _name === 'webcam' || _name === 'backlit_keyboard' ? 
-                                data[0][_name] === 1 : data[0][_name]);
+                        setValue(_name, _name === 'status' ? data[0][_name] === 1 : data[0][_name]);
                     }
             } 
         });
@@ -37,7 +34,7 @@ const Index = () => {
         usePost({ request: save,
             onSuccess: data => {
                 if(data.result === 'error') { (data.error).forEach((err, index) => setError(err.name, { type: index === 0 ? 'focus' : '', message: err.message }, { shouldFocus: index === 0 })); }
-                else { successToast(data.message, 3000, navigate('/assets-supplies/assets', { replace: true })); }
+                else { successToast(data.message, 3000, navigate('/assets-supplies/stocks', { replace: true })); }
             } 
         });
 
@@ -45,7 +42,7 @@ const Index = () => {
         usePost({ request: update,
             onSuccess: data => {
                 if(data.result === 'error') { (data.error).forEach((err, index) => setError(err.name, { type: index === 0 ? 'focus' : '', message: err.message }, { shouldFocus: index === 0 })); }
-                else { successToast(data.message, 3000, navigate('/assets-supplies/assets', { replace: true })); }
+                else { successToast(data.message, 3000, navigate('/assets-supplies/stocks', { replace: true })); }
             }
         });
 
@@ -54,29 +51,26 @@ const Index = () => {
     return (
         <Stack sx= { content } spacing= { 4 }>
             <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch">
-                <Typography sx= { title }>{ type.charAt(0).toUpperCase() + type.slice(1) } Assets</Typography>
+                <Typography sx= { title }>{ type.charAt(0).toUpperCase() + type.slice(1) } Stocks</Typography>
                 <Typography variant= "caption" color= "#9BA4B5">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc non neque molestie, 
                     malesuada quam ut, vulputate massa.</Typography>
             </Stack>
             <Stack sx= { card } spacing= { 3 }>
-                <FormBuilder fields= { Assets({ fetching: isFetching }) } />
-                <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 }>
+                <FormBuilder fields= { Stocks({ fetching: isFetching }) } />
+                {/* <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 }>
                     <Typography variant= "body2" color= "#9BA4B5">Specification:</Typography>
                     <Classification fetching= { isFetching } />
-                </Stack>
+                </Stack> */}
             </Stack>
             <Stack direction= "row" justifyContent= {{ xs: 'space-between', sm: 'flex-end' }} alignItems= "center" spacing= { 1 }>
-                <Typography sx= { cancelbtn } component= { Link } to= "/assets-supplies/assets">Cancel</Typography>
+                <Typography sx= { cancelbtn } component= { Link } to= "/assets-supplies/stocks">Cancel</Typography>
                 { type !== 'view' ? <Typography sx= { savebtn } onClick= { handleSubmit(data => {
                     let errors = [];
                     data['token'] = (sessionStorage.getItem('token')).split('.')[1];
-
-                    if(data.type === undefined) { errors.push({ name: 'type', message: 'This field is required!' }); }
-                    if(data.brand_id === undefined) { errors.push({ name: 'brand_id', message: 'This field is required!' }); }
                     
                     if(!(errors.length > 0)) {
-                        if(type === 'new') { saving({ table: 'tbl_assets', data: data }); }
-                        else { updating({ table: 'tbl_assets', data: data }); }
+                        if(type === 'new') { saving({ table: 'tbl_stocks', data: data }); }
+                        else { updating({ table: 'tbl_stocks', data: data }); }
                     }
                     else { errors.forEach(data => setError(data.name, { message: data.message })); }
                 }) }>Save</Typography> : '' }

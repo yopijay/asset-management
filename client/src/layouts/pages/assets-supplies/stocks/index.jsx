@@ -22,7 +22,7 @@ const container = {
 }
 
 const Index = () => {
-    useEffect(() => { document.title = 'GAMS | Assets' }, []);
+    useEffect(() => { document.title = 'GAMS | Stocks' }, []);
 
     return (
         <Stack sx= { container }>   

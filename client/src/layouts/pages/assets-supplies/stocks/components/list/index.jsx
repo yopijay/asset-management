@@ -30,7 +30,7 @@ const Index = () => {
         data['searchtxt'] = '';
         data['token'] = (sessionStorage.getItem('token')).split('.')[1];
 
-        record({ table: 'tbl_assets', data: data });
+        record({ table: 'tbl_stocks', data: data });
     }, [ register, getValues, record ]);
 
     return (

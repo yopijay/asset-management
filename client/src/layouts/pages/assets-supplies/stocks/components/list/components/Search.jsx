@@ -20,15 +20,15 @@ const Search = ({ request }) => {
                 <Box sx= { search }>
                     <TextField { ...register('searchtxt') } variant= "standard" size= "small" fullWidth InputProps= {{ disableUnderline: true, 
                         startAdornment: <InputAdornment position= "start"><FontAwesomeIcon icon= { solid('magnifying-glass') } /></InputAdornment> }}
-                        placeholder= "Search..." sx= {{ padding: '' }} onChange= { e => { setValue('searchtxt', e.target.value); request({ table: 'tbl_assets', data: getValues() }) } } />
+                        placeholder= "Search..." sx= {{ padding: '' }} onChange= { e => { setValue('searchtxt', e.target.value); request({ table: 'tbl_stocks', data: getValues() }) } } />
                 </Box>
             </form>
             <Stack direction= "row" justifyContent= "flex-end" alignItems= "center" spacing= { 1 }>
                 <Typography sx= { logs }><FontAwesomeIcon icon= { solid('clock-rotate-left') } /></Typography>
                 <Typography sx= { download }><FontAwesomeIcon icon= { solid('download') } /></Typography>
                 <Typography sx= { upload }><FontAwesomeIcon icon= { solid('upload') } /></Typography>
-                <Typography component= { Link } to= "/assets-supplies/assets/form/new" sx= { btnicon }><FontAwesomeIcon icon= { solid('plus') } /></Typography>
-                <Typography component= { Link } to= "/assets-supplies/assets/form/new" sx= { btntxt }>New Assets</Typography>
+                <Typography component= { Link } to= "/assets-supplies/stocks/form/new" sx= { btnicon }><FontAwesomeIcon icon= { solid('plus') } /></Typography>
+                <Typography component= { Link } to= "/assets-supplies/stocks/form/new" sx= { btntxt }>Add Stocks</Typography>
             </Stack>
         </Stack>
     );
