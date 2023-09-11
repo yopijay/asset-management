@@ -76,11 +76,21 @@ class Users {
     }
 
     dropdown = async data => {
-        return [{ id: 0, name: '-- SELECT AN ITEM BELOW --' }]
-            .concat((await new Builder(`tbl_users AS usr`)
-                            .select(`usr.id, CONCAT(emp.lname, ', ', emp.fname) AS name`)
-                            .join({ table: `tbl_employee AS emp`, condition: 'emp.user_id = usr.id', type: `LEFT` })
-                            .condition(`WHERE usr.status= 1 ORDER BY emp.lname ASC`).build()).rows);
+        switch(data.type) {
+            case 'per-position':
+                return [{ id: 0, name: '-- SELECT AN ITEM BELOW --' }]
+                    .concat((await new Builder(`tbl_users AS usr`)
+                                    .select(`usr.id, CONCAT(emp.lname, ', ', emp.fname) AS name`)
+                                    .join({ table: `tbl_employee AS emp`, condition: 'emp.user_id = usr.id', type: `LEFT` })
+                                    .condition(`WHERE company_id= ${data.company_id} AND department_id= ${data.department_id} 
+                                                        AND position_id= ${data.position_id} AND usr.status= 1 ORDER BY emp.lname ASC`).build()).rows)
+            default: 
+                return [{ id: 0, name: '-- SELECT AN ITEM BELOW --' }]
+                    .concat((await new Builder(`tbl_users AS usr`)
+                                    .select(`usr.id, CONCAT(emp.lname, ', ', emp.fname) AS name`)
+                                    .join({ table: `tbl_employee AS emp`, condition: 'emp.user_id = usr.id', type: `LEFT` })
+                                    .condition(`WHERE usr.status= 1 ORDER BY emp.lname ASC`).build()).rows);
+        }
     }
 
     save = async data => {

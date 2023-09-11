@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 // Core
 import { FormCntxt } from "core/context/Form"; // Context
 import { formatter, useGet, usePost } from "core/function/global"; // Function
-import { dropdown, series } from "core/api"; // API
+import { dropdown, series, specific } from "core/api"; // API
 
 const Assets = ({ fetching }) => {
     const { type } = useParams();
@@ -14,8 +14,20 @@ const Assets = ({ fetching }) => {
     const { data: types, mutate: typemenu, isLoading: typeloading } = usePost({ request: dropdown });
     const { data: brand, mutate: brdmenu, isLoading: brdloading } = usePost({ request: dropdown });
     const { data: items, mutate: itmmenu, isLoading: itmloading } = usePost({ request: dropdown });
-    useGet({ key: ['assts_series'], request: series('tbl_assets'), options: {}, 
-        onSuccess: data => { if(type === 'new') setValue('series_no', `ASST-${formatter(parseInt(data.length) + 1, 7)}`) } });
+    const { mutate: itmspecific } = usePost({ request: specific, onSuccess: data => {
+        if(Array.isArray(data)) {
+            for(let count = 0; count < Object.keys(data[0]).length; count++) { 
+                let _name = Object.keys(data[0])[count];
+                setValue(_name, 
+                    _name === 'status' || _name === 'hdmi' || _name === 'vga' || _name === 'dvi' || _name === 'bluetooth' || _name === 'fingerprint' ||
+                    _name === 'webcam' || _name === 'backlit_keyboard' ? 
+                        data[0][_name] === 1 : data[0][_name]);
+            }
+        }
+    } });
+
+    useGet({ key: ['issuance_series'], request: series('tbl_issuance'), options: {}, 
+        onSuccess: data => { if(type === 'new') setValue('series_no', `ISSUANCE-${formatter(parseInt(data.length) + 1, 7)}`) } });
 
     useEffect(() => {
         if(!fetching)
@@ -25,8 +37,6 @@ const Assets = ({ fetching }) => {
                 itmmenu({ table: `tbl_${getValues()?.category}`, category: getValues()?.category, type: getValues()?.type, id: getValues()?.brand_id });
             }
     }, [ fetching, type, typemenu, brdmenu, itmmenu, getValues ]);
-
-    console.log(items);
 
     return ([
         {
@@ -49,7 +59,11 @@ const Assets = ({ fetching }) => {
                 disabled: type === 'view',
                 fetching: fetching,
                 options: [{ id: 0, name: '-- SELECT AN ITEM BELOW --' }, { id: 'assets', name: 'ASSETS' }, { id: 'supplies', name: 'SUPPLIES' }],
-                onChange: (e, item) => { setError('category', { message: '' }); setValue('category', item.id); typemenu({ table: 'tbl_brands', data: { type: 'per-category', category: getValues().category } }); },
+                onChange: (e, item) => { 
+                    setError('category', { message: '' });
+                    setValue('category', item.id);
+                    typemenu({ table: 'tbl_brands', data: { type: 'per-category', category: getValues().category } });
+                },
                 uppercase: true
             },
             type: 'dropdown'
@@ -89,7 +103,7 @@ const Assets = ({ fetching }) => {
             type: 'dropdown'
         },
         {
-            grid: { xs: 12, sm: 5 },
+            grid: { xs: 12, sm: 7 },
             props: {
                 name: 'item_id',
                 label: '*Item',
@@ -97,7 +111,11 @@ const Assets = ({ fetching }) => {
                 fetching: fetching,
                 uppercase: true,
                 options: !itmloading && items ? items : [],
-                onChange: (e, item) => { setError('item_id', { message: '' }); setValue('item_id', item.id); },
+                onChange: (e, item) => { 
+                    setError('item_id', { message: '' });
+                    setValue('item_id', item.id);
+                    itmspecific({ table: `tbl_${getValues().category}`, id: item.id });
+                },
             },
             type: 'dropdown'
         }

@@ -1,5 +1,5 @@
 const Toner = props => {
-    const { fetching, type } = props;
+    const { fetching } = props;
 
     return([
         {
@@ -7,7 +7,7 @@ const Toner = props => {
             props: {
                 name: 'date_received',
                 label: 'Date received',
-                disabled: type === 'view',
+                disabled: true,
                 type: 'date',
                 fetching: fetching
             },
@@ -19,7 +19,7 @@ const Toner = props => {
                 name: 'quantity',
                 label: 'Quantity',
                 type: 'number',
-                disabled: type === 'view',
+                disabled: true,
                 fetching: fetching
             },
             type: 'textfield'
@@ -29,7 +29,7 @@ const Toner = props => {
             props: {
                 name: 'warranty',
                 label: 'Warranty',
-                disabled: type === 'view',
+                disabled: true,
                 fetching: fetching
             },
             type: 'textfield'

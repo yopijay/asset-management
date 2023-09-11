@@ -2,10 +2,10 @@
 import React from "react";
 
 // Assets & Supplies
-const AssetsBrand = React.lazy(() => import('layouts/pages/assets-supplies/brand'));
-const Assets = React.lazy(() => import('layouts/pages/assets-supplies/assets'));
-const Supplies = React.lazy(() => import('layouts/pages/assets-supplies/supplies'));
-const Issuance = React.lazy(() => import('layouts/pages/assets-supplies/issuance'));
+// const AssetsBrand = React.lazy(() => import('layouts/pages/assets-supplies/brand'));
+// const Assets = React.lazy(() => import('layouts/pages/assets-supplies/assets'));
+// const Supplies = React.lazy(() => import('layouts/pages/assets-supplies/supplies'));
+// const Issuance = React.lazy(() => import('layouts/pages/assets-supplies/issuance'));
 
 // // Warehouse
 // const WarehouseBrand = React.lazy(() => import('layouts/pages/warehouse/brand'));
@@ -18,6 +18,7 @@ const Company = React.lazy(() => import('layouts/pages/maintenance/company'));
 const Department = React.lazy(() => import('layouts/pages/maintenance/department'));
 const Position = React.lazy(() => import('layouts/pages/maintenance/position'));
 const Employee = React.lazy(() => import('layouts/pages/maintenance/employee'));
+const Category = React.lazy(() => import('layouts/pages/maintenance/category'));
 
 // Setup
 const Module = React.lazy(() => import('layouts/pages/setup/module'));
@@ -27,16 +28,17 @@ export const Components = ([
     { path: '/', name: 'dashboard', title: 'Dashboard', component: 'DASHBOARD' },
     
     // Assets & Supplies
-    { path: '/assets-supplies/brand', name: 'assets-supplies-brand', title: 'Brand', component: <AssetsBrand /> },
-    { path: '/assets-supplies/assets', name: 'assets', title: 'Assets', component: <Assets /> },
-    { path: '/assets-supplies/supplies', name: 'supplies', title: 'Supplies', component: <Supplies /> },
-    { path: '/assets-supplies/issuance', name: 'issuance', title: 'Issuance', component: <Issuance /> },
+    // { path: '/assets-supplies/brand', name: 'assets-supplies-brand', title: 'Brand', component: <AssetsBrand /> },
+    // { path: '/assets-supplies/assets', name: 'assets', title: 'Assets', component: <Assets /> },
+    // { path: '/assets-supplies/supplies', name: 'supplies', title: 'Supplies', component: <Supplies /> },
+    // { path: '/assets-supplies/issuance', name: 'issuance', title: 'Issuance', component: <Issuance /> },
 
     // Maintenance
     { path: '/maintenance/company', name: 'company', title: 'Company', component: <Company /> },
     { path: '/maintenance/department', name: 'department', title: 'Department', component: <Department /> },
     { path: '/maintenance/position', name: 'position', title: 'Position', component: <Position /> },
     { path: '/maintenance/employee', name: 'employee', title: 'Employee', component: <Employee /> },
+    { path: '/maintenance/category', name: 'category', title: 'Category', component: <Category /> },
 
     // Setup
     { path: '/setup/module', name: 'module', title: 'Module', component: <Module /> },

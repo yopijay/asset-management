@@ -18,9 +18,11 @@ const Supplies = ({ fetching }) => {
         onSuccess: data => { if(type === 'new') setValue('series_no', `SUPP-${formatter(parseInt(data.length) + 1, 7)}`) } });
 
     useEffect(() => {
-        if(!fetching)
-            if(type !== 'new')
+        if(!fetching) {
+            if(type !== 'new') {
                 brdmenu({ table: 'tbl_brands', data: { type: 'per-type', category: 'supplies', id: getValues()?.type } });
+            }
+        }
     }, [ fetching, type, brdmenu, getValues ]);
 
     return ([

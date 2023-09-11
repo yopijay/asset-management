@@ -12,7 +12,7 @@ import { save, specific, update } from "core/api"; // API
 // Constants
 import { cancelbtn, card, content, savebtn, title } from "./index.style"; // Styles
 import Classification from "./classifications"; // Classifications
-import Assets from "../../assets"; // Fields
+import Assets from "../../stocks"; // Fields
 import { validation } from "../../index.validation"; // Validation
 
 const Index = () => {

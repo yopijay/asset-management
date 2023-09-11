@@ -22,10 +22,10 @@ const container = {
 }
 
 const Index = () => {
-    useEffect(() => { document.title = 'GAMS | Assets' }, []);
+    useEffect(() => { document.title = 'GAMS | Stocks' }, []);
 
     return (
-        <Stack sx= { container }>   
+        <Stack sx= { container }>
             <Routes>
                 <Route exact path= "/" element= { <FormPrvdr><ListPrvdr><List /></ListPrvdr></FormPrvdr> } />
                 <Route exact path= "/form/:type" element= { <FormPrvdr><Form /></FormPrvdr> } />
