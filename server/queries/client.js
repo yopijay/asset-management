@@ -6,6 +6,7 @@ const Submodule = require('./tables/Submodule');
 const Department = require('./tables/Department');
 const Position = require('./tables/Position');
 const Category = require('./tables/Category');
+const Brands = require('./tables/Brands');
 
 const login = data => { return new Users().login(data); }
 const profile = id => { return new Users().profile(id); }
@@ -21,6 +22,7 @@ const series = table => {
             case 'tbl_department': resolve(await new Department().series()); break;
             case 'tbl_position': resolve(await new Position().series()); break;
             case 'tbl_category': resolve(await new Category().series()); break;
+            case 'tbl_brands': resolve(await new Brands().series()); break;
         }
     });
 }
@@ -35,6 +37,7 @@ const specific = (table, id) => {
             case 'tbl_department': resolve(await new Department().specific(id)); break;
             case 'tbl_position': resolve(await new Position().specific(id)); break;
             case 'tbl_category': resolve(await new Category().specific(id)); break;
+            case 'tbl_brands': resolve(await new Brands().specific(id)); break;
         }
     });
 }
@@ -49,6 +52,7 @@ const list = (table, data) => {
             case 'tbl_department': resolve(await new Department().list(data)); break;
             case 'tbl_position': resolve(await new Position().list(data)); break;
             case 'tbl_category': resolve(await new Category().list(data)); break;
+            case 'tbl_brands': resolve(await new Brands().list(data)); break;
         }
     });
 }
@@ -63,6 +67,7 @@ const logs = (table, data) => {
             case 'tbl_department': resolve(await new Department().logs(data)); break;
             case 'tbl_position': resolve(await new Position().logs(data)); break;
             case 'tbl_category': resolve(await new Category().logs(data)); break;
+            case 'tbl_brands': resolve(await new Brands().logs(data)); break;
         }
     });
 }
@@ -77,6 +82,7 @@ const save = (table, data) => {
             case 'tbl_department': resolve(await new Department().save(data)); break;
             case 'tbl_position': resolve(await new Position().save(data)); break;
             case 'tbl_category': resolve(await new Category().save(data)); break;
+            case 'tbl_brands': resolve(await new Brands().save(data)); break;
         }
     });
 }
@@ -91,6 +97,7 @@ const update = (table, data) => {
             case 'tbl_department': resolve(await new Department().update(data)); break;
             case 'tbl_position': resolve(await new Position().update(data)); break;
             case 'tbl_category': resolve(await new Category().update(data)); break;
+            case 'tbl_brands': resolve(await new Brands().update(data)); break;
         }
     });
 }
@@ -105,6 +112,7 @@ const search = (table, data) => {
             case 'tbl_department': resolve(await new Department().search(data)); break;
             case 'tbl_position': resolve(await new Position().search(data)); break;
             case 'tbl_category': resolve(await new Category().search(data)); break;
+            case 'tbl_brands': resolve(await new Brands().search(data)); break;
         }
     });
 }
@@ -119,6 +127,7 @@ const dropdown = (table, data) => {
             case 'tbl_department': resolve(await new Department().dropdown(data)); break;
             case 'tbl_position': resolve(await new Position().dropdown(data)); break;
             case 'tbl_category': resolve(await new Category().dropdown(data)); break;
+            case 'tbl_brands': resolve(await new Brands().dropdown(data)); break;
         }
     });
 }
