@@ -12,7 +12,7 @@
  Target Server Version : 140003
  File Encoding         : 65001
 
- Date: 11/09/2023 16:57:04
+ Date: 15/09/2023 17:00:58
 */
 
 
@@ -127,6 +127,17 @@ START 1
 CACHE 1;
 
 -- ----------------------------
+-- Sequence structure for tbl_stocks_info_id_seq
+-- ----------------------------
+DROP SEQUENCE IF EXISTS "public"."tbl_stocks_info_id_seq";
+CREATE SEQUENCE "public"."tbl_stocks_info_id_seq" 
+INCREMENT 1
+MINVALUE  1
+MAXVALUE 2147483647
+START 1
+CACHE 1;
+
+-- ----------------------------
 -- Sequence structure for tbl_sub_module_id_seq
 -- ----------------------------
 DROP SEQUENCE IF EXISTS "public"."tbl_sub_module_id_seq";
@@ -227,11 +238,10 @@ INSERT INTO "public"."tbl_brands" VALUES (1, 'BRD-0000001', 1, 'DELL', 1, 1, NUL
 INSERT INTO "public"."tbl_brands" VALUES (2, 'BRD-0000002', 2, 'DELL', 1, 1, NULL, NULL, NULL, '2023-09-11 16:04:16+08', NULL, NULL, NULL);
 INSERT INTO "public"."tbl_brands" VALUES (3, 'BRD-0000003', 1, 'HP', 1, 1, NULL, NULL, NULL, '2023-09-11 16:04:27+08', NULL, NULL, NULL);
 INSERT INTO "public"."tbl_brands" VALUES (4, 'BRD-0000004', 2, 'HP', 1, 1, NULL, NULL, NULL, '2023-09-11 16:04:32+08', NULL, NULL, NULL);
-INSERT INTO "public"."tbl_brands" VALUES (5, 'BRD-0000005', 3, 'ABOC', 1, 1, NULL, NULL, NULL, '2023-09-11 16:04:40+08', NULL, NULL, NULL);
-INSERT INTO "public"."tbl_brands" VALUES (6, 'BRD-0000006', 3, 'SAMSUNG', 1, 1, NULL, NULL, NULL, '2023-09-11 16:04:47+08', NULL, NULL, NULL);
-INSERT INTO "public"."tbl_brands" VALUES (7, 'BRD-0000007', 3, 'BROTHER', 1, 1, NULL, NULL, NULL, '2023-09-11 16:04:53+08', NULL, NULL, NULL);
-INSERT INTO "public"."tbl_brands" VALUES (8, 'BRD-0000008', 4, 'AOC', 1, 1, NULL, NULL, NULL, '2023-09-11 16:04:59+08', NULL, NULL, NULL);
-INSERT INTO "public"."tbl_brands" VALUES (9, 'BRD-0000009', 4, 'SAMSUNG', 1, 1, 1, NULL, NULL, '2023-09-11 16:05:04+08', '2023-09-11 16:05:33+08', NULL, NULL);
+INSERT INTO "public"."tbl_brands" VALUES (5, 'BRD-0000006', 3, 'SAMSUNG', 1, 1, NULL, NULL, NULL, '2023-09-11 16:04:47+08', NULL, NULL, NULL);
+INSERT INTO "public"."tbl_brands" VALUES (6, 'BRD-0000007', 3, 'BROTHER', 1, 1, NULL, NULL, NULL, '2023-09-11 16:04:53+08', NULL, NULL, NULL);
+INSERT INTO "public"."tbl_brands" VALUES (7, 'BRD-0000008', 4, 'AOC', 1, 1, NULL, NULL, NULL, '2023-09-11 16:04:59+08', NULL, NULL, NULL);
+INSERT INTO "public"."tbl_brands" VALUES (8, 'BRD-0000009', 4, 'SAMSUNG', 1, 1, 1, NULL, NULL, '2023-09-11 16:05:04+08', '2023-09-11 16:05:33+08', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for tbl_category
@@ -458,6 +468,41 @@ CREATE TABLE "public"."tbl_stocks" (
 -- ----------------------------
 
 -- ----------------------------
+-- Table structure for tbl_stocks_info
+-- ----------------------------
+DROP TABLE IF EXISTS "public"."tbl_stocks_info";
+CREATE TABLE "public"."tbl_stocks_info" (
+  "id" int4 NOT NULL DEFAULT nextval('tbl_stocks_info_id_seq'::regclass),
+  "stock_id" int4,
+  "serial_no" varchar(100) COLLATE "pg_catalog"."default",
+  "model" varchar(100) COLLATE "pg_catalog"."default",
+  "type" varchar(50) COLLATE "pg_catalog"."default",
+  "condition" varchar(20) COLLATE "pg_catalog"."default",
+  "color" varchar(50) COLLATE "pg_catalog"."default",
+  "cpu" varchar(100) COLLATE "pg_catalog"."default",
+  "gpu" varchar(100) COLLATE "pg_catalog"."default",
+  "hdd" varchar(100) COLLATE "pg_catalog"."default",
+  "ssd" varchar(100) COLLATE "pg_catalog"."default",
+  "ram" varchar(50) COLLATE "pg_catalog"."default",
+  "operating_system" varchar(100) COLLATE "pg_catalog"."default",
+  "power_supply" varchar(100) COLLATE "pg_catalog"."default",
+  "warranty" varchar(100) COLLATE "pg_catalog"."default",
+  "hdmi" int4,
+  "vga" int4,
+  "dvi" int4,
+  "bluetooth" int4,
+  "wifi" int4,
+  "fingerprint" int4,
+  "webcamera" int4,
+  "backlit" int4
+)
+;
+
+-- ----------------------------
+-- Records of tbl_stocks_info
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for tbl_sub_module
 -- ----------------------------
 DROP TABLE IF EXISTS "public"."tbl_sub_module";
@@ -530,7 +575,7 @@ SELECT setval('"public"."tbl_audit_trail_id_seq"', 30, true);
 -- ----------------------------
 ALTER SEQUENCE "public"."tbl_brands_id_seq"
 OWNED BY "public"."tbl_brands"."id";
-SELECT setval('"public"."tbl_brands_id_seq"', 10, true);
+SELECT setval('"public"."tbl_brands_id_seq"', 9, true);
 
 -- ----------------------------
 -- Alter sequences owned by
@@ -587,6 +632,13 @@ SELECT setval('"public"."tbl_position_id_seq"', 2, false);
 ALTER SEQUENCE "public"."tbl_stocks_id_seq"
 OWNED BY "public"."tbl_stocks"."id";
 SELECT setval('"public"."tbl_stocks_id_seq"', 2, false);
+
+-- ----------------------------
+-- Alter sequences owned by
+-- ----------------------------
+ALTER SEQUENCE "public"."tbl_stocks_info_id_seq"
+OWNED BY "public"."tbl_stocks_info"."id";
+SELECT setval('"public"."tbl_stocks_info_id_seq"', 2, false);
 
 -- ----------------------------
 -- Alter sequences owned by
@@ -651,6 +703,11 @@ ALTER TABLE "public"."tbl_position" ADD CONSTRAINT "tbl_position_pkey" PRIMARY K
 -- Primary Key structure for table tbl_stocks
 -- ----------------------------
 ALTER TABLE "public"."tbl_stocks" ADD CONSTRAINT "tbl_stocks_pkey" PRIMARY KEY ("id");
+
+-- ----------------------------
+-- Primary Key structure for table tbl_stocks_info
+-- ----------------------------
+ALTER TABLE "public"."tbl_stocks_info" ADD CONSTRAINT "tbl_stocks_info_pkey" PRIMARY KEY ("id");
 
 -- ----------------------------
 -- Primary Key structure for table tbl_sub_module
@@ -747,6 +804,11 @@ ALTER TABLE "public"."tbl_stocks" ADD CONSTRAINT "tbl_stocks_imported_by_fkey" F
 ALTER TABLE "public"."tbl_stocks" ADD CONSTRAINT "tbl_stocks_issued_by_fkey" FOREIGN KEY ("issued_by") REFERENCES "public"."tbl_users" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
 ALTER TABLE "public"."tbl_stocks" ADD CONSTRAINT "tbl_stocks_issued_to_fkey" FOREIGN KEY ("issued_to") REFERENCES "public"."tbl_users" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
 ALTER TABLE "public"."tbl_stocks" ADD CONSTRAINT "tbl_stocks_updated_by_fkey" FOREIGN KEY ("updated_by") REFERENCES "public"."tbl_users" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+-- ----------------------------
+-- Foreign Keys structure for table tbl_stocks_info
+-- ----------------------------
+ALTER TABLE "public"."tbl_stocks_info" ADD CONSTRAINT "tbl_stocks_info_stock_id_fkey" FOREIGN KEY ("stock_id") REFERENCES "public"."tbl_stocks" ("id") ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 -- ----------------------------
 -- Foreign Keys structure for table tbl_sub_module
