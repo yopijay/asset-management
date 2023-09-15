@@ -3,6 +3,16 @@ const Monitor = props => {
 
     return ([
         {
+            grid: { xs: 12, sm: 8 },
+            props: {
+                name: 'serial_no',
+                label: '*Serial no',
+                disabled: type === 'view',
+                fetching: fetching
+            },
+            type: 'textfield'
+        },
+        {
             grid: { xs: 12, sm: 4 },
             props: {
                 name: 'model',
@@ -13,7 +23,7 @@ const Monitor = props => {
             type: 'textfield'
         },
         {
-            grid: { xs: 12, sm: 4 },
+            grid: { xs: 12, sm: 6 },
             props: {
                 name: 'panel',
                 label: 'Panel',
@@ -23,7 +33,7 @@ const Monitor = props => {
             type: 'textfield'
         },
         {
-            grid: { xs: 12, sm: 4 },
+            grid: { xs: 12, sm: 3 },
             props: {
                 name: 'resolution',
                 label: 'Resolution',
@@ -33,7 +43,7 @@ const Monitor = props => {
             type: 'textfield'
         },
         {
-            grid: { xs: 12, sm: 4 },
+            grid: { xs: 12, sm: 3 },
             props: {
                 name: 'color',
                 label: 'Color',
@@ -63,7 +73,19 @@ const Monitor = props => {
             type: 'textfield'
         },
         {
-            grid: { xs: 6, sm: 4, md: 3 },
+            grid: { xs: 12, sm: 4 },
+            props: {
+                name: 'quantity',
+                label: 'Quantity',
+                disabled: true,
+                fetching: fetching,
+                value: 1,
+                type: 'number'
+            },
+            type: 'textfield'
+        },
+        {
+            grid: { xs: 6, sm: 4 },
             props: {
                 name: 'hdmi',
                 label: 'HDMI',
@@ -74,7 +96,7 @@ const Monitor = props => {
             type: 'switch'
         },
         {
-            grid: { xs: 6, sm: 4, md: 3 },
+            grid: { xs: 6, sm: 4 },
             props: {
                 name: 'vga',
                 label: 'VGA',
@@ -85,7 +107,7 @@ const Monitor = props => {
             type: 'switch'
         },
         {
-            grid: { xs: 6, sm: 4, md: 3 },
+            grid: { xs: 6, sm: 4 },
             props: {
                 name: 'dvi',
                 label: 'DVI',

@@ -12,7 +12,7 @@ class Brands {
             case 'nav': return [];
             case 'per-category': return [{ id: 0, name: '-- SELECT AN ITEM BELOW --' }]
                                                 .concat((await new Builder(`tbl_brands`).select(`id, name`)
-                                                                .condition(`WHERE category_id= ${data.category_id} AND status= 1 ORDER BY name ASC`).build()).rows);
+                                                                .condition(`WHERE category_id= ${data.id} AND status= 1 ORDER BY name ASC`).build()).rows);
             default: return [{ id: 0, name: '-- SELECT AN ITEM BELOW --' }]
                             .concat((await new Builder(`tbl_brands`).select(`id, name`).condition(`WHERE status= 1 ORDER BY name ASC`).build()).rows);
         }

@@ -11,7 +11,7 @@ import { save, specific, update } from "core/api"; // API
 
 // Constants
 import { cancelbtn, card, content, savebtn, title } from "./index.style"; // Styles
-// import Classification from "./classifications"; // Classifications
+import Classification from "./classifications"; // Classifications
 import Stocks from "../../stocks"; // Fields
 import { validation } from "../../index.validation"; // Validation
 
@@ -57,16 +57,19 @@ const Index = () => {
             </Stack>
             <Stack sx= { card } spacing= { 3 }>
                 <FormBuilder fields= { Stocks({ fetching: isFetching }) } />
-                {/* <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 }>
+                <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 }>
                     <Typography variant= "body2" color= "#9BA4B5">Specification:</Typography>
                     <Classification fetching= { isFetching } />
-                </Stack> */}
+                </Stack>
             </Stack>
             <Stack direction= "row" justifyContent= {{ xs: 'space-between', sm: 'flex-end' }} alignItems= "center" spacing= { 1 }>
                 <Typography sx= { cancelbtn } component= { Link } to= "/assets-supplies/stocks">Cancel</Typography>
                 { type !== 'view' ? <Typography sx= { savebtn } onClick= { handleSubmit(data => {
                     let errors = [];
                     data['token'] = (sessionStorage.getItem('token')).split('.')[1];
+                    
+                    if(!data.category_id) { errors.push({ name: 'category_id', message: 'This field is required!' }) };
+                    if(!data.brand_id) { errors.push({ name: 'brand_id', message: 'This field is required!' }) };
                     
                     if(!(errors.length > 0)) {
                         if(type === 'new') { saving({ table: 'tbl_stocks', data: data }); }

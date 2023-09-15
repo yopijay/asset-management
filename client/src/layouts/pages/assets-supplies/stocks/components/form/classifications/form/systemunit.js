@@ -3,6 +3,16 @@ const SystemUnit = props => {
 
     return([
         {
+            grid: { xs: 12, sm: 8 },
+            props: {
+                name: 'serial_no',
+                label: '*Serial no',
+                disabled: type === 'view',
+                fetching: fetching
+            },
+            type: 'textfield'
+        },
+        {
             grid: { xs: 12, sm: 4 },
             props: {
                 name: 'model',
@@ -13,7 +23,7 @@ const SystemUnit = props => {
             type: 'textfield'
         },
         {
-            grid: { xs: 12, sm: 4 },
+            grid: { xs: 12, sm: 6 },
             props: {
                 name: 'cpu',
                 label: 'CPU',
@@ -23,7 +33,7 @@ const SystemUnit = props => {
             type: 'textfield'
         },
         {
-            grid: { xs: 12, sm: 4 },
+            grid: { xs: 12, sm: 6 },
             props: {
                 name: 'gpu',
                 label: 'GPU',
@@ -63,7 +73,7 @@ const SystemUnit = props => {
             type: 'textfield'
         },
         {
-            grid: { xs: 12, sm: 6 },
+            grid: { xs: 12, sm: 3 },
             props: {
                 name: 'os',
                 label: 'Operating System',
@@ -89,6 +99,18 @@ const SystemUnit = props => {
                 label: 'Warranty',
                 disabled: type === 'view',
                 fetching: fetching
+            },
+            type: 'textfield'
+        },
+        {
+            grid: { xs: 12, sm: 3 },
+            props: {
+                name: 'quantity',
+                label: 'Quantity',
+                disabled: true,
+                fetching: fetching,
+                value: 1,
+                type: 'number'
             },
             type: 'textfield'
         },
