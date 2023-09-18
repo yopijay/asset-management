@@ -37,7 +37,7 @@ const Assets = ({ fetching }) => {
             props: {
                 name: 'category_id',
                 label: '*Category',
-                disabled: type === 'view',
+                disabled: type !== 'new',
                 fetching: fetching,
                 options: !ctgfetching ? categories : [],
                 onChange: (e, item) => { 
@@ -60,6 +60,17 @@ const Assets = ({ fetching }) => {
                 onChange: (e, item) => { setError('brand_id', { message: '' }); setValue('brand_id', item.id); }
             },
             type: 'dropdown'
+        },
+        {
+            grid: { xs: 12, sm: 4 },
+            props: {
+                name: 'date_received',
+                label: 'Date received',
+                disabled: type === 'view',
+                fetching: fetching,
+                type: 'date',
+            },
+            type: 'textfield'
         }
     ]);
 }

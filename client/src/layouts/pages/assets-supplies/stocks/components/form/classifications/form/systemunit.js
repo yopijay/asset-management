@@ -75,7 +75,7 @@ const SystemUnit = props => {
         {
             grid: { xs: 12, sm: 3 },
             props: {
-                name: 'os',
+                name: 'operating_system',
                 label: 'Operating System',
                 disabled: type === 'view',
                 fetching: fetching

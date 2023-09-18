@@ -8,11 +8,11 @@ import { caption, list, subtitle, title } from "../../index.style"; // Styles
 const Grids = ({ data }) => {
 
     return (
-        <Stack sx= { list } component= { Link } to= { `/assets-supplies/assets/form/update/${data.id}` }>
+        <Stack sx= { list } component= { Link } to= { `/assets-supplies/stocks/form/update/${data.id}` }>
             <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" sx= {{ flexGrow: 1, overflow: 'hidden' }}>
                 <Typography variant= "caption" sx= { caption }>{ data.series_no }</Typography>
-                <Typography sx= { title }>{ data.serial_no }</Typography>
-                <Typography sx= { subtitle } variant= "body2">{ ((data.type).replace('_', ' ')).toUpperCase() } - { data.brand }</Typography>
+                <Typography sx= { title }>{ (data.serial_no ?? data.model) ?? '-' }</Typography>
+                <Typography sx= { subtitle } variant= "body2">{ ((data.category).replace('_', ' ')).toUpperCase() } - { data.brand }</Typography>
             </Stack>
             <Box paddingLeft= "15px">
                 { data.status === 1 ? 

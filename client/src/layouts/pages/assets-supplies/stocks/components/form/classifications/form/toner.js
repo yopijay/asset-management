@@ -54,7 +54,6 @@ const Toner = props => {
                 disabled: type === 'view',
                 fetching: fetching,
                 type: 'number',
-                
                 inputProps: { min: 1 }
             },
             type: 'textfield'

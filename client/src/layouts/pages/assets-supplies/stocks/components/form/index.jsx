@@ -25,7 +25,9 @@ const Index = () => {
                 if(Array.isArray(data)) 
                     for(let count = 0; count < Object.keys(data[0]).length; count++) { 
                         let _name = Object.keys(data[0])[count];
-                        setValue(_name, _name === 'status' ? data[0][_name] === 1 : data[0][_name]);
+                        setValue(_name, _name === 'status' || _name === 'hdmi' || _name === 'vga' || _name === 'dvi' || _name === 'bluetooth' || _name === 'wifi' ||
+                                        _name === 'fingerprint' || _name === 'webcam' || _name === 'backlit' ? 
+                                        data[0][_name] === 1 : _name === 'category' ? ((data[0][_name]).replace(' ', '_')).toLowerCase() : data[0][_name]);
                     }
             } 
         });
@@ -70,7 +72,11 @@ const Index = () => {
                     
                     if(!data.category_id) { errors.push({ name: 'category_id', message: 'This field is required!' }) };
                     if(!data.brand_id) { errors.push({ name: 'brand_id', message: 'This field is required!' }) };
-                    
+                    if(data.category === 'toner') { if(data.model === '') { errors.push({ name: 'model', message: 'This field is required' }); } }
+                    if(data.category === 'laptop' || data.category === 'system_unit' || data.category === 'monitor') {
+                        if(data.serial_no === '') { errors.push({ name: 'serial_no', message: 'This field is required' }); }
+                    }
+
                     if(!(errors.length > 0)) {
                         if(type === 'new') { saving({ table: 'tbl_stocks', data: data }); }
                         else { updating({ table: 'tbl_stocks', data: data }); }
