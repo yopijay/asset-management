@@ -78,7 +78,7 @@ class Stocks {
                                 .build()).rows[0];
 
             switch(data.category) {
-                case 'laptop': await new Laptop().save(data, stck.id); break;
+                case 'laptop': await new Laptop(data).save(stck.id); break;
                 case 'system_unit': await new SystemUnit().save(data, stck.id); break;
                 case 'toner': await new Toner().save(data, stck.id); break;
                 case 'monitor': await new Monitor().save(data, stck.id); break;
@@ -99,23 +99,20 @@ class Stocks {
 
     update = async data => {
         let stck = (await new Builder(`tbl_stocks AS stck`).select()
-                            .join({ table: `tbl_stocks_info AS info`, condition: `info.stock_id = stck.id`, type: `LEFT` }).condition(`WHERE id= ${data.id}`).build()).rows[0];
+                            .join({ table: `tbl_stocks_info AS info`, condition: `info.stock_id = stck.id`, type: `LEFT` }).condition(`WHERE stck.id= ${data.id}`).build()).rows[0];
         let date = Global.date(new Date());
         let user = JSON.parse(atob(data.token));
         let audits = [];
         let errors = [];
-        let serial = {};
-
-        if(data.category === 'laptop' || data.category === 'system_unit' || data.category === 'monitor') {
-            serial = await new Builder(`tbl_stocks AS stck`).select()
-                            .join({ table: `tbl_stocks_info AS info`, condition: `info.stock_id = stck.id`, type: `LEFT` })
-                            .condition(`WHERE stck.category_id= ${data.category_id} AND info.serial_no= '${(data.serial_no).toUpperCase()}'`)
-                            .build();
-        }
 
         switch(data.category) {
-            case 'laptop': await new Laptop().update(stck, data); break;
+            case 'laptop': await new Laptop(data).update(stck, errors, audits); break;
         }
+
+        if(!(errors.length > 0)) {
+
+        }
+        else { return { result: 'error', error: errors } }
     }
 }
 
