@@ -12,7 +12,7 @@
  Target Server Version : 140003
  File Encoding         : 65001
 
- Date: 21/09/2023 08:45:48
+ Date: 21/09/2023 16:56:29
 */
 
 
@@ -223,6 +223,11 @@ INSERT INTO "public"."tbl_audit_trail" VALUES (40, 'U44T35C', 'tbl_stocks', 10, 
 INSERT INTO "public"."tbl_audit_trail" VALUES (41, 'LHS1XYM', 'tbl_stocks', 11, 'all', NULL, NULL, 'create', 1, '2023-09-19 09:08:03+08');
 INSERT INTO "public"."tbl_audit_trail" VALUES (42, 'DJHMT0F', 'tbl_stocks', 3, 'vga', '0', NULL, 'update', 1, '2023-09-21 08:42:46+08');
 INSERT INTO "public"."tbl_audit_trail" VALUES (43, '8XH4WYM', 'tbl_stocks', 3, 'vga', '1', NULL, 'update', 1, '2023-09-21 08:42:50+08');
+INSERT INTO "public"."tbl_audit_trail" VALUES (44, 'FUDGRAZ', 'tbl_stocks', 5, 'color', 'BLACK', 'BLACK1', 'update', 1, '2023-09-21 09:38:06+08');
+INSERT INTO "public"."tbl_audit_trail" VALUES (45, 'XCMT1I8', 'tbl_stocks', 5, 'color', 'BLACK1', 'BLACK', 'update', 1, '2023-09-21 09:38:13+08');
+INSERT INTO "public"."tbl_audit_trail" VALUES (46, 'GK557QT', 'tbl_stocks', 1, 'hdmi', '1', '0', 'update', 1, '2023-09-21 10:17:09+08');
+INSERT INTO "public"."tbl_audit_trail" VALUES (47, 'T80VF03', 'tbl_stocks', 8, 'hdmi', '1', '0', 'update', 1, '2023-09-21 10:18:07+08');
+INSERT INTO "public"."tbl_audit_trail" VALUES (48, 'L6GR8LQ', 'tbl_sub_module', 9, 'all', NULL, NULL, 'create', 1, '2023-09-21 15:39:51+08');
 
 -- ----------------------------
 -- Table structure for tbl_brands
@@ -482,17 +487,17 @@ CREATE TABLE "public"."tbl_stocks" (
 -- ----------------------------
 -- Records of tbl_stocks
 -- ----------------------------
-INSERT INTO "public"."tbl_stocks" VALUES (1, 'STOCK-0000001', 1, 10, 1, 1, NULL, NULL, NULL, 1, NULL, NULL, NULL, '2023-09-18 11:08:04+08', NULL, NULL, NULL);
 INSERT INTO "public"."tbl_stocks" VALUES (2, 'STOCK-0000002', 1, 10, 1, 1, NULL, NULL, NULL, 1, NULL, NULL, NULL, '2023-09-18 11:09:44+08', NULL, NULL, NULL);
-INSERT INTO "public"."tbl_stocks" VALUES (4, 'STOCK-0000004', 2, 2, 1, 1, NULL, NULL, NULL, 1, NULL, NULL, NULL, '2023-09-18 11:26:47+08', NULL, NULL, NULL);
-INSERT INTO "public"."tbl_stocks" VALUES (5, 'STOCK-0000005', 3, 9, 3, 1, NULL, NULL, NULL, 1, NULL, NULL, NULL, '2023-09-18 11:33:32+08', NULL, NULL, NULL);
-INSERT INTO "public"."tbl_stocks" VALUES (6, 'STOCK-0000006', 3, 9, 3, 1, NULL, NULL, NULL, 1, NULL, NULL, NULL, '2023-09-18 11:35:22+08', NULL, NULL, NULL);
 INSERT INTO "public"."tbl_stocks" VALUES (7, 'STOCK-0000007', 3, 6, 6, 1, NULL, NULL, NULL, 1, NULL, NULL, NULL, '2023-09-18 11:36:08+08', NULL, NULL, NULL);
-INSERT INTO "public"."tbl_stocks" VALUES (8, 'STOCK-0000008', 2, 2, 1, 1, NULL, NULL, NULL, 1, NULL, NULL, NULL, '2023-09-18 11:38:11+08', NULL, NULL, NULL);
-INSERT INTO "public"."tbl_stocks" VALUES (9, 'STOCK-0000009', 4, 7, 1, 1, NULL, NULL, NULL, 1, NULL, NULL, NULL, '2023-09-18 11:47:44+08', NULL, NULL, NULL);
-INSERT INTO "public"."tbl_stocks" VALUES (10, 'STOCK-0000010', 4, 7, 1, 1, NULL, NULL, NULL, 1, NULL, NULL, NULL, '2023-09-18 11:54:19+08', NULL, NULL, NULL);
 INSERT INTO "public"."tbl_stocks" VALUES (11, 'STOCK-0000011', 1, 1, 1, 1, NULL, NULL, NULL, 1, 1, NULL, NULL, '2023-09-19 09:08:03+08', '2023-09-21 08:28:42+08', NULL, NULL);
 INSERT INTO "public"."tbl_stocks" VALUES (3, 'STOCK-0000003', 2, 2, 1, 1, NULL, NULL, NULL, 1, 1, NULL, NULL, '2023-09-18 11:20:30+08', '2023-09-21 08:42:50+08', NULL, NULL);
+INSERT INTO "public"."tbl_stocks" VALUES (6, 'STOCK-0000006', 3, 9, 3, 1, NULL, NULL, NULL, 1, 1, NULL, NULL, '2023-09-18 11:35:22+08', '2023-09-21 09:37:59+08', NULL, NULL);
+INSERT INTO "public"."tbl_stocks" VALUES (5, 'STOCK-0000005', 3, 9, 3, 1, NULL, NULL, NULL, 1, 1, NULL, NULL, '2023-09-18 11:33:32+08', '2023-09-21 09:38:13+08', NULL, NULL);
+INSERT INTO "public"."tbl_stocks" VALUES (1, 'STOCK-0000001', 1, 10, 1, 1, NULL, NULL, NULL, 1, 1, NULL, NULL, '2023-09-18 11:08:04+08', '2023-09-21 10:17:09+08', NULL, NULL);
+INSERT INTO "public"."tbl_stocks" VALUES (8, 'STOCK-0000008', 2, 2, 1, 1, NULL, NULL, NULL, 1, 1, NULL, NULL, '2023-09-18 11:38:11+08', '2023-09-21 10:18:07+08', NULL, NULL);
+INSERT INTO "public"."tbl_stocks" VALUES (4, 'STOCK-0000004', 2, 2, 1, 1, NULL, NULL, NULL, 1, 1, NULL, NULL, '2023-09-18 11:26:47+08', '2023-09-21 10:39:20+08', NULL, NULL);
+INSERT INTO "public"."tbl_stocks" VALUES (10, 'STOCK-0000010', 4, 7, 1, 1, NULL, NULL, NULL, 1, 1, NULL, NULL, '2023-09-18 11:54:19+08', '2023-09-21 10:42:01+08', NULL, NULL);
+INSERT INTO "public"."tbl_stocks" VALUES (9, 'STOCK-0000009', 4, 7, 1, 1, NULL, NULL, NULL, 1, 1, NULL, NULL, '2023-09-18 11:47:44+08', '2023-09-21 10:43:35+08', NULL, NULL);
 
 -- ----------------------------
 -- Table structure for tbl_stocks_info
@@ -531,17 +536,17 @@ CREATE TABLE "public"."tbl_stocks_info" (
 -- ----------------------------
 -- Records of tbl_stocks_info
 -- ----------------------------
-INSERT INTO "public"."tbl_stocks_info" VALUES (1, 1, 'PF3ZKC5C', 'IDEAPAD 1', NULL, NULL, NULL, 'INTEL N4020', 'INTEGRATED', '64 GB', NULL, '4 GB', 'WINDOWS 11 HOME', NULL, NULL, 1, 0, 0, 1, NULL, 0, 0, 0, '2022-07-26', NULL, NULL);
 INSERT INTO "public"."tbl_stocks_info" VALUES (2, 2, 'PF400PSP', 'IDEAPAD 1', NULL, NULL, NULL, 'INTEL N4020', 'INTEGRATED', '64 GB', NULL, '4 GB', 'WINDOWS 11 HOME', NULL, NULL, 1, 0, 0, 1, NULL, 0, 0, 0, '2022-07-26', NULL, NULL);
-INSERT INTO "public"."tbl_stocks_info" VALUES (4, 4, 'HGP5RJ3', 'INSPIRON 3891', NULL, NULL, NULL, 'INTEL CORE(TM) I3-10105', 'INTEGRATED INTEL UHD GRAPHICS', '1 TB', NULL, '8 GB', 'WINDOWS 11 HOME', NULL, NULL, 1, 0, 1, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO "public"."tbl_stocks_info" VALUES (5, 5, NULL, 'MLT-101S', 'laser', 'rema', 'BLACK', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-08-28', NULL, NULL);
-INSERT INTO "public"."tbl_stocks_info" VALUES (6, 6, NULL, 'HP 85A', 'laser', 'rema', 'BLACK', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-07-04', NULL, NULL);
 INSERT INTO "public"."tbl_stocks_info" VALUES (7, 7, NULL, 'LQ-310', 'ribbon', 'original', 'BLACK', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-09-13', NULL, NULL);
-INSERT INTO "public"."tbl_stocks_info" VALUES (8, 8, 'H7M2H03', 'INSPIRON 3671', NULL, NULL, NULL, 'INTEL CORE(TM) I3-9100', 'INTEGRATED INTEL UHD GRAPHICS', '1 TB', NULL, '8 GB', 'WINDOWS 11 HOME', NULL, '1', 1, 0, 1, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL);
-INSERT INTO "public"."tbl_stocks_info" VALUES (9, 9, 'GCDLAHA236824', 'M2060SW', NULL, NULL, 'SRGB IEC61966-2.1', NULL, NULL, NULL, NULL, NULL, NULL, '100~240V AC, 50/60HZ', '1', 0, 1, 1, NULL, NULL, NULL, NULL, NULL, NULL, '19.53 INCH W', '1920×1080@60HZ');
-INSERT INTO "public"."tbl_stocks_info" VALUES (10, 10, 'GCDG7HA097603', 'M2060W', NULL, NULL, 'SRGB IEC61966-2.1', NULL, NULL, NULL, NULL, NULL, NULL, '100~240V AC, 50/60HZ', '1', 0, 1, 1, NULL, NULL, NULL, NULL, NULL, NULL, '19.53 INCH W', '1920×1080@60HZ');
 INSERT INTO "public"."tbl_stocks_info" VALUES (11, 11, 'DTWN0H3', 'G5 15', NULL, NULL, NULL, 'INTEL CORE I5-11400', 'NVIDIA GEFORCE GRAPHICS', NULL, '512 GB', '8 GB', 'WINDOWS 10 HOME', NULL, '1', 1, 0, 0, 1, NULL, 0, 0, 0, NULL, NULL, NULL);
 INSERT INTO "public"."tbl_stocks_info" VALUES (3, 3, '172DNK3', 'XPS 8940', NULL, NULL, NULL, '11TH GEN INTEL(4) CORE(TM) I7-11700 @ 2.50 GHZ', 'NVIDIA GEFORCE GTX 1660 TI', '1 TB', '250 GB', '16 GB', 'WINDOWS 11 HOME', NULL, NULL, 1, 0, 1, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO "public"."tbl_stocks_info" VALUES (6, 6, NULL, 'HP 85A', 'laser', 'rema', 'BLACK', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-07-04', NULL, NULL);
+INSERT INTO "public"."tbl_stocks_info" VALUES (5, 5, NULL, 'MLT-101S', 'laser', 'rema', 'BLACK', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2023-08-28', NULL, NULL);
+INSERT INTO "public"."tbl_stocks_info" VALUES (1, 1, 'PF3ZKC5C', 'IDEAPAD 1', NULL, NULL, NULL, 'INTEL N4020', 'INTEGRATED', '64 GB', NULL, '4 GB', 'WINDOWS 11 HOME', NULL, NULL, 0, 0, 0, 1, NULL, 0, 0, 0, '2022-07-26', NULL, NULL);
+INSERT INTO "public"."tbl_stocks_info" VALUES (8, 8, 'H7M2H03', 'INSPIRON 3671', NULL, NULL, NULL, 'INTEL CORE(TM) I3-9100', 'INTEGRATED INTEL UHD GRAPHICS', '1 TB', NULL, '8 GB', 'WINDOWS 11 HOME', NULL, '1', 0, 0, 1, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO "public"."tbl_stocks_info" VALUES (4, 4, 'HGP5RJ3', 'INSPIRON 3891', NULL, NULL, NULL, 'INTEL CORE(TM) I3-10105', 'INTEGRATED INTEL UHD GRAPHICS', '1 TB', NULL, '8 GB', 'WINDOWS 11 HOME', NULL, NULL, 1, 0, 1, 1, 0, NULL, NULL, NULL, NULL, NULL, NULL);
+INSERT INTO "public"."tbl_stocks_info" VALUES (10, 10, 'GCDG7HA097603', 'M2060W', NULL, NULL, 'SRGB IEC61966-2.1', NULL, NULL, NULL, NULL, NULL, NULL, '100~240V AC, 50/60HZ', '1', 0, 1, 1, NULL, NULL, NULL, NULL, NULL, NULL, '19.53 INCH W', '1920×1080@60HZ');
+INSERT INTO "public"."tbl_stocks_info" VALUES (9, 9, 'GCDLAHA236824', 'M2060SW', NULL, NULL, 'SRGB IEC61966-2.1', NULL, NULL, NULL, NULL, NULL, NULL, '100~240V AC, 50/60HZ', '1', 0, 1, 1, NULL, NULL, NULL, NULL, NULL, NULL, '19.53 INCH W', '1920×1080@60HZ');
 
 -- ----------------------------
 -- Table structure for tbl_sub_module
@@ -576,6 +581,7 @@ INSERT INTO "public"."tbl_sub_module" VALUES (5, 'SMDL-0000005', 1, 'BRANDS', 'b
 INSERT INTO "public"."tbl_sub_module" VALUES (6, 'SMDL-0000006', 2, 'STOCKS', 'stocks', 1, 1, NULL, NULL, NULL, '2023-09-11 09:01:47+08', NULL, NULL, NULL);
 INSERT INTO "public"."tbl_sub_module" VALUES (7, 'SMDL-0000007', 2, 'ISSUANCE', 'issuance', 1, 1, NULL, NULL, NULL, '2023-09-11 09:01:56+08', NULL, NULL, NULL);
 INSERT INTO "public"."tbl_sub_module" VALUES (8, 'SMDL-0000008', 1, 'CATEGORY', 'category', 1, 1, NULL, NULL, NULL, '2023-09-11 11:48:27+08', NULL, NULL, NULL);
+INSERT INTO "public"."tbl_sub_module" VALUES (9, 'SMDL-0000009', 2, 'ASSETS', 'assets', 1, 1, NULL, NULL, NULL, '2023-09-21 15:39:51+08', NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for tbl_users
@@ -609,7 +615,7 @@ INSERT INTO "public"."tbl_users" VALUES (1, 'USR-0000000', 'superadmin@kcic.com.
 -- ----------------------------
 ALTER SEQUENCE "public"."tbl_audit_trail_id_seq"
 OWNED BY "public"."tbl_audit_trail"."id";
-SELECT setval('"public"."tbl_audit_trail_id_seq"', 44, true);
+SELECT setval('"public"."tbl_audit_trail_id_seq"', 49, true);
 
 -- ----------------------------
 -- Alter sequences owned by
@@ -686,7 +692,7 @@ SELECT setval('"public"."tbl_stocks_info_id_seq"', 12, true);
 -- ----------------------------
 ALTER SEQUENCE "public"."tbl_sub_module_id_seq"
 OWNED BY "public"."tbl_sub_module"."id";
-SELECT setval('"public"."tbl_sub_module_id_seq"', 9, true);
+SELECT setval('"public"."tbl_sub_module_id_seq"', 10, true);
 
 -- ----------------------------
 -- Alter sequences owned by
