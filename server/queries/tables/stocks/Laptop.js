@@ -88,37 +88,42 @@ class Laptop {
         
         if(Global.compare(prev.hdmi, curr.hdmi ? 1 : 0)) {
             audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks', item_id: prev.id, field: 'hdmi', previous: prev.hdmi,
-                current: curr.warranty !== '' && curr.warranty !== null ? (curr.warranty).toUpperCase() : null, action: 'update', user_id: user.id, date: date });
+                current: curr.hdmi ? 1 : 0, action: 'update', user_id: user.id, date: date });
         }
         
         if(Global.compare(prev.vga, curr.vga ? 1 : 0)) {
             audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks', item_id: prev.id, field: 'vga', previous: prev.vga,
-                current: curr.warranty !== '' && curr.warranty !== null ? (curr.warranty).toUpperCase() : null, action: 'update', user_id: user.id, date: date });
+                current: curr.vga ? 1 : 0, action: 'update', user_id: user.id, date: date });
         }
         
         if(Global.compare(prev.dvi, curr.dvi ? 1 : 0)) {
             audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks', item_id: prev.id, field: 'dvi', previous: prev.dvi,
-                current: curr.warranty !== '' && curr.warranty !== null ? (curr.warranty).toUpperCase() : null, action: 'update', user_id: user.id, date: date });
+                current: curr.dvi ? 1 : 0, action: 'update', user_id: user.id, date: date });
         }
         
         if(Global.compare(prev.bluetooth, curr.bluetooth ? 1 : 0)) {
             audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks', item_id: prev.id, field: 'bluetooth', previous: prev.bluetooth,
-                current: curr.warranty !== '' && curr.warranty !== null ? (curr.warranty).toUpperCase() : null, action: 'update', user_id: user.id, date: date });
+                current: curr.bluetooth ? 1 : 0, action: 'update', user_id: user.id, date: date });
         }
         
         if(Global.compare(prev.fingerprint, curr.fingerprint ? 1 : 0)) {
             audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks', item_id: prev.id, field: 'fingerprint', previous: prev.fingerprint,
-                current: curr.warranty !== '' && curr.warranty !== null ? (curr.warranty).toUpperCase() : null, action: 'update', user_id: user.id, date: date });
+                current: curr.fingerprint ? 1 : 0, action: 'update', user_id: user.id, date: date });
         }
         
         if(Global.compare(prev.webcamera, curr.webcamera ? 1 : 0)) {
             audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks', item_id: prev.id, field: 'webcamera', previous: prev.webcamera,
-                current: curr.warranty !== '' && curr.warranty !== null ? (curr.warranty).toUpperCase() : null, action: 'update', user_id: user.id, date: date });
+                current: curr.webcamera ? 1 : 0, action: 'update', user_id: user.id, date: date });
         }
         
         if(Global.compare(prev.backlit, curr.backlit ? 1 : 0)) {
             audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks', item_id: prev.id, field: 'backlit', previous: prev.backlit,
-                current: curr.warranty !== '' && curr.warranty !== null ? (curr.warranty).toUpperCase() : null, action: 'update', user_id: user.id, date: date });
+                current: curr.backlit ? 1 : 0, action: 'update', user_id: user.id, date: date });
+        }
+
+        if(Global.compare(prev.date_received, curr.date_received)) {
+            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks', item_id: prev.id, field: 'date_received', previous: prev.date_received,
+                current: curr.date_received !== '' && curr.date_received !== null ? curr.date_received : null, action: 'update', user_id: user.id, date: date });
         }
 
         if(!(errors.length > 0)) {
@@ -132,7 +137,8 @@ class Laptop {
                                 operating_system= ${curr.operating_system !== '' && curr.operating_system !== null ? `'${(curr.operating_system).toUpperCase()}'` : null},
                                 power_supply= ${curr.power_supply !== '' && curr.power_supply !== null ? `'${(curr.power_supply).toUpperCase()}'` : null},
                                 warranty= ${curr.warranty !== '' && curr.warranty !== null ? `'${(curr.warranty).toUpperCase()}'` : null}, hdmi= ${curr.hdmi ? 1 : 0}, vga= ${curr.vga ? 1 : 0}, 
-                                dvi= ${curr.dvi ? 1 : 0}, bluetooth= ${curr.bluetooth ? 1 : 0}, fingerprint= ${curr.fingerprint ? 1 : 0}, webcamera= ${curr.webcamera ? 1 : 0}, backlit= ${curr.backlit ? 1 : 0}`)
+                                dvi= ${curr.dvi ? 1 : 0}, bluetooth= ${curr.bluetooth ? 1 : 0}, fingerprint= ${curr.fingerprint ? 1 : 0}, webcamera= ${curr.webcamera ? 1 : 0}, backlit= ${curr.backlit ? 1 : 0},
+                                date_received= ${curr.date_received !== '' && curr.date_received !== null ? `'${curr.date_received}'` : null}`)
                 .condition(`WHERE stock_id= ${curr.id}`)
                 .build();
 

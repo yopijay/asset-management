@@ -80,8 +80,8 @@ class Stocks {
             switch(data.category) {
                 case 'laptop': await new Laptop(data).save(stck.id); break;
                 case 'system_unit': await new SystemUnit(data).save(stck.id); break;
-                case 'toner': await new Toner().save(data, stck.id); break;
-                case 'monitor': await new Monitor().save(data, stck.id); break;
+                case 'toner': await new Toner(data).save(stck.id); break;
+                case 'monitor': await new Monitor(data).save(stck.id); break;
             }
 
             audit.series_no = Global.randomizer(7);
@@ -105,6 +105,8 @@ class Stocks {
             switch(data.category) {
                 case 'laptop': resolve(await new Laptop(data).update(stck)); break;
                 case 'system_unit': resolve(await new SystemUnit(data).update(stck)); break;
+                case 'toner': resolve(await new Toner(data).update(stck)); break;
+                case 'monitor': resolve(await new Monitor(data).update(stck)); break;
             }
         });
     }

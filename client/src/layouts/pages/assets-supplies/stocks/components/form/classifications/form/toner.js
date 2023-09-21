@@ -1,5 +1,5 @@
 const Toner = props => {
-    const { fetching, type, getValues, setValue } = props;
+    const { fetching, type, setValue } = props;
 
     return([
         {
