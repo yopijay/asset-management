@@ -4,12 +4,10 @@ import { Stack } from "@mui/material";
 import { Route, Routes } from "react-router-dom";
 
 // Core
-import { FormPrvdr } from "core/context/Form"; // Provider
 import { ListPrvdr } from "core/context/List"; // Provider
 
 // Components
-import List from "./components/list";
-import Form from "./components/form";
+import Dashboard from "./components/dashboard";
 
 // Custom styles
 const container = {
@@ -22,14 +20,13 @@ const container = {
 }
 
 const Index = () => {
-    useEffect(() => { document.title = 'GAMS | Stocks' }, []);
+    useEffect(() => { document.title = 'GAMS | Assets' }, []);
 
     return (
         <Stack sx= { container }>
             <Routes>
-                <Route exact path= "/" element= { <FormPrvdr><ListPrvdr><List /></ListPrvdr></FormPrvdr> } />
-                <Route exact path= "/form/:type" element= { <FormPrvdr><Form /></FormPrvdr> } />
-                <Route exact path= "/form/:type/:id" element= { <FormPrvdr><Form /></FormPrvdr> } />
+                <Route exact path= "/" element= { <ListPrvdr><Dashboard /></ListPrvdr> } />
+                <Route exact path= "/:category" element= { '' } />
             </Routes>
         </Stack>
     );

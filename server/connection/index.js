@@ -14,3 +14,15 @@ const config = process.env.DATABASE_URL ? {
 
 const pool = new Pool(config);
 module.exports = pool;
+
+// const mysql = require('mysql');
+
+// const config = {
+//     host: '100.100.100.20',
+//     user: 'kenneth',
+//     password: 'kenneth',
+//     database: 'kci'
+// }
+
+// const conn = mysql.createConnection(config);
+// module.exports = conn;

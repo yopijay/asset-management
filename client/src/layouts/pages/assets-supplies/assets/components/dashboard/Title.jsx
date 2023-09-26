@@ -5,7 +5,7 @@ import { Stack, Typography } from "@mui/material";
 const title = {
     fontFamily: 'Montserrat Black',
     fontSize: '1.4rem',
-    color: '#394867',
+    color: '#394867'
 }
 
 const Title = () => {

@@ -4,7 +4,11 @@ export const content = {
     alignItems: 'stretch',
     width: '100%',
     height: '100vh',
-    padding: '90px 0 20px 0',
+    padding: {
+        xs: '80px 0 20px 0',
+        sm: '90px 0 20px 0',
+        lg: '100px 20px 20px 20px'
+    },
     overflow: 'hidden'
 }
 
@@ -12,14 +16,8 @@ export const items = {
     flexDirection: 'column',
     justifyContent: 'flex-start',
     alignItems: 'stretch',
-    flexGrow: 1,
-    overflow: 'hidden'
-}
-
-export const loader = {
-    display: 'flex', 
-    flexDirection: 'row', 
-    justifyContent: 'center', 
-    alignItems: 'center', 
-    width: '100%',
+    overflowY: 'scroll',
+    height: '100%',
+    paddingBottom: '70px',
+    '&::-webkit-scrollbar': { display: 'none' }
 }
