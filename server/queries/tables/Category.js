@@ -24,13 +24,26 @@ class Category {
     }
 
     list = async data => {
-        return (await new Builder(`tbl_category AS ctg`)
-                        .select(`ctg.id, ctg.series_no, ctg.name, ctg.status, CONCAT(cb.lname, ', ', cb.fname, ' ', cb.mname) AS created_by, ctg.date_created`)
-                        .join({ table: `tbl_employee AS cb`, condition: `cb.user_id = ctg.created_by`, type: `LEFT` })
-                        .condition(`${data.searchtxt !== '' ?
-                                                `WHERE ctg.series_no LIKE '%${(data.searchtxt).toUpperCase()}%' OR ctg.name LIKE '%${(data.searchtxt).toUpperCase()}%'` : ''} 
-                                                ORDER BY ctg.${data.orderby} ${(data.sort).toUpperCase()}`)
-                        .build()).rows;
+        switch(data.type) {
+            case 'count': 
+                let _count = [];
+
+                let ctg = (await new Builder(`tbl_category`).select('id, name').condition(`WHERE status= 1`).build()).rows;
+                
+                for(let count = 0; count < ctg.length; count++) {
+                    let qty = (await new Builder(`tbl_stocks`).select().condition(`WHERE category_id= ${ctg[count].id}`).build()).rowCount;
+
+                    _count.push({ name: ctg[count].name, count: qty });
+                }
+                
+                return _count;
+            default: return (await new Builder(`tbl_category AS ctg`)
+                                        .select(`ctg.id, ctg.series_no, ctg.name, ctg.status, CONCAT(cb.lname, ', ', cb.fname, ' ', cb.mname) AS created_by, ctg.date_created`)
+                                        .join({ table: `tbl_employee AS cb`, condition: `cb.user_id = ctg.created_by`, type: `LEFT` })
+                                        .condition(`${data.searchtxt !== '' ? `WHERE ctg.series_no LIKE '%${(data.searchtxt).toUpperCase()}%' OR ctg.name LIKE '%${(data.searchtxt).toUpperCase()}%'` : ''} 
+                                                            ORDER BY ctg.${data.orderby} ${(data.sort).toUpperCase()}`)
+                                        .build()).rows;
+        }
     }
 
     search = async data => {

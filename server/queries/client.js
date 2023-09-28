@@ -1,5 +1,3 @@
-const db = require('../connection');
-
 // Tables
 const Users = require('./tables/Users');
 const Company = require('./tables/Company');
@@ -141,12 +139,6 @@ const dropdown = (table, data) => {
         }
     });
 }
-
-// const testing = () => {
-//     return new Promise(async resolve => {
-//         resolve(db.query('SELECT * FROM tblcustomer_discount', (errors, results, fields) => console.log(results)));
-//     });
-// }
 
 module.exports = {
     login,
