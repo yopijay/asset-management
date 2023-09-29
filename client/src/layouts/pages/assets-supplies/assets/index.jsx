@@ -5,9 +5,11 @@ import { Route, Routes } from "react-router-dom";
 
 // Core
 import { ListPrvdr } from "core/context/List"; // Provider
+import { FormPrvdr } from "core/context/Form"; // Provider
 
 // Components
 import Dashboard from "./components/dashboard";
+import List from "./components/list";
 
 // Custom styles
 const container = {
@@ -26,7 +28,7 @@ const Index = () => {
         <Stack sx= { container }>
             <Routes>
                 <Route exact path= "/" element= { <ListPrvdr><Dashboard /></ListPrvdr> } />
-                <Route exact path= "/:category" element= { '' } />
+                <Route exact path= "/:category" element= { <ListPrvdr><FormPrvdr><List /></FormPrvdr></ListPrvdr> } />
             </Routes>
         </Stack>
     );

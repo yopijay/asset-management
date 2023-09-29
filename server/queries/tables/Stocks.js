@@ -23,18 +23,35 @@ class Stocks {
     }
 
     list = async data => {
-        return (await new Builder(`tbl_stocks AS stck`)
-                        .select(`stck.id, stck.series_no, stck.status, info.serial_no, info.model, ctg.name AS category, brd.name AS brand, stck.date_created,
-                                        CONCAT(it.lname, ', ', it.fname) AS issued_to, stck.issued_date, CONCAT(ib.lname, ', ', ib.fname) AS issued_by`)
-                        .join({ table: `tbl_stocks_info AS info`, condition: `info.stock_id = stck.id`, type: `LEFT` })
-                        .join({ table: `tbl_category AS ctg`, condition: `stck.category_id = ctg.id`, type: `LEFT` })
-                        .join({ table: `tbl_brands AS brd`, condition: `stck.brand_id = brd.id`, type: `LEFT` })
-                        .join({ table: `tbl_employee AS it`, condition: `stck.issued_to = it.user_id`, type: `LEFT` })
-                        .join({ table: `tbl_employee AS ib`, condition: `stck.issued_by = ib.user_id`, type: `LEFT` })
-                        .condition(`${data.searchtxt !== '' ? `WHERE stck.series_no LIKE '%${(data.searchtxt).toUpperCase()}%' OR info.serial_no LIKE '%${(data.searchtxt).toUpperCase()}%'
-                                            OR info.model LIKE '%${(data.searchtxt).toUpperCase()}%'` : ''} 
-                                            ORDER BY stck.${(data.orderby).toUpperCase()} ${(data.sort).toUpperCase()}`)
-                        .build()).rows;
+        switch(data.type) {
+            case 'per-category':
+                let ctg = (await new Builder(`tbl_category`).select().condition(`WHERE name= '${((data.category).replace('-', ' ')).toUpperCase()}'`).build()).rows[0];
+
+                return (await new Builder(`tbl_stocks AS stck`)
+                                .select(`stck.id, stck.series_no, stck.status, info.serial_no, info.model, ctg.name AS category, brd.name AS brand, stck.date_created,
+                                                CONCAT(it.lname, ', ', it.fname) AS issued_to, stck.issued_date, CONCAT(ib.lname, ', ', ib.fname) AS issued_by`)
+                                .join({ table: `tbl_stocks_info AS info`, condition: `info.stock_id = stck.id`, type: `LEFT` })
+                                .join({ table: `tbl_category AS ctg`, condition: `stck.category_id = ctg.id`, type: `LEFT` })
+                                .join({ table: `tbl_brands AS brd`, condition: `stck.brand_id = brd.id`, type: `LEFT` })
+                                .join({ table: `tbl_employee AS it`, condition: `stck.issued_to = it.user_id`, type: `LEFT` })
+                                .join({ table: `tbl_employee AS ib`, condition: `stck.issued_by = ib.user_id`, type: `LEFT` })
+                                .condition(`WHERE stck.category_id= ${ctg.id} ${data.searchtxt !== '' ? 
+                                                    `AND stck.series_no LIKE '%${(data.searchtxt).toUpperCase()}%' OR info.serial_no LIKE '%${(data.searchtxt).toUpperCase()}%'
+                                                    OR info.model LIKE '%${(data.searchtxt).toUpperCase()}%'` : ''} ORDER BY stck.${(data.orderby).toUpperCase()} ${(data.sort).toUpperCase()}`)
+                                .build()).rows;
+            default: 
+                return (await new Builder(`tbl_stocks AS stck`)
+                                .select(`stck.id, stck.series_no, stck.status, info.serial_no, info.model, ctg.name AS category, brd.name AS brand, stck.date_created,
+                                                CONCAT(it.lname, ', ', it.fname) AS issued_to, stck.issued_date, CONCAT(ib.lname, ', ', ib.fname) AS issued_by`)
+                                .join({ table: `tbl_stocks_info AS info`, condition: `info.stock_id = stck.id`, type: `LEFT` })
+                                .join({ table: `tbl_category AS ctg`, condition: `stck.category_id = ctg.id`, type: `LEFT` })
+                                .join({ table: `tbl_brands AS brd`, condition: `stck.brand_id = brd.id`, type: `LEFT` })
+                                .join({ table: `tbl_employee AS it`, condition: `stck.issued_to = it.user_id`, type: `LEFT` })
+                                .join({ table: `tbl_employee AS ib`, condition: `stck.issued_by = ib.user_id`, type: `LEFT` })
+                                .condition(`${data.searchtxt !== '' ? `WHERE stck.series_no LIKE '%${(data.searchtxt).toUpperCase()}%' OR info.serial_no LIKE '%${(data.searchtxt).toUpperCase()}%'
+                                                    OR info.model LIKE '%${(data.searchtxt).toUpperCase()}%'` : ''} ORDER BY stck.${(data.orderby).toUpperCase()} ${(data.sort).toUpperCase()}`)
+                                .build()).rows;
+        }
     }
 
     search = async data => {
