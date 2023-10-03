@@ -54,7 +54,7 @@ const Index = () => {
                 <Typography variant= "caption" color= "#9BA4B5">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc non neque molestie, 
                     malesuada quam ut, vulputate massa.</Typography>
             </Stack>
-            <Stack sx= { card }><FormBuilder fields= { Position({ fetching: isFetching }) } /></Stack>
+            <Stack sx= { card }><form autoComplete= "off"><FormBuilder fields= { Position({ fetching: isFetching }) } /></form></Stack>
             <Stack direction= "row" justifyContent= {{ xs: 'space-between', sm: 'flex-end' }} alignItems= "center" spacing= { 1 }>
                 <Typography sx= { cancelbtn } component= { Link } to= "/maintenance/position">Cancel</Typography>
                 { type !== 'view' ? <Typography sx= { savebtn } onClick= { handleSubmit(data => {

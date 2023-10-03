@@ -11,28 +11,24 @@ import { save, specific, update } from "core/api"; // API
 
 // Constants
 import { cancelbtn, card, content, savebtn, title } from "./index.style"; // Styles
-import Classification from "./classifications"; // Classification
-import Issuance from "../../issuance"; // Fields
-import Employee from "../../employee"; // Fields
 import { validation } from "../../index.validation"; // Validation
+import Receiver from "../../receiver"; // Fields
 
 const Index = () => {
     const { type, id } = useParams();
     const navigate = useNavigate();
     const { handleSubmit, setValue, setError, setValidation, reset } = useContext(FormCntxt);
     const { isFetching, refetch } = 
-        useGet({ key: ['assts_specific'], request: specific({ table: 'tbl_assets', id: id ?? null }), options: { enabled: type !== 'new', refetchOnWindowFocus: false },
+        useGet({ key: ['iss_specific'], request: specific({ table: 'tbl_stocks_issuance', id: id ?? null }), options: { enabled: type !== 'new', refetchOnWindowFocus: false },
             onSuccess: data => {
-                if(Array.isArray(data)) {
+                if(Array.isArray(data)) 
                     for(let count = 0; count < Object.keys(data[0]).length; count++) { 
                         let _name = Object.keys(data[0])[count];
-                        setValue(_name, 
-                            _name === 'status' || _name === 'hdmi' || _name === 'vga' || _name === 'dvi' || _name === 'bluetooth' || _name === 'fingerprint' ||
-                            _name === 'webcam' || _name === 'backlit_keyboard' ? 
-                                data[0][_name] === 1 : data[0][_name]);
+                        setValue(_name, _name === 'status' || _name === 'hdmi' || _name === 'vga' || _name === 'dvi' || _name === 'bluetooth' || _name === 'wifi' ||
+                                        _name === 'fingerprint' || _name === 'webcam' || _name === 'backlit' ? 
+                                        data[0][_name] === 1 : _name === 'category' ? ((data[0][_name]).replace(' ', '_')).toLowerCase() : data[0][_name]);
                     }
-                }
-            }
+            } 
         });
 
     const { mutate: saving } = 
@@ -61,32 +57,26 @@ const Index = () => {
                     malesuada quam ut, vulputate massa.</Typography>
             </Stack>
             <Stack sx= { card } spacing= { 3 }>
-                <FormBuilder fields= { Issuance({ fetching: isFetching }) } />
-                <Classification />
-                <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 }>
-                    <Typography variant= "body2" color= "#9BA4B5">Employee:</Typography>
-                    <FormBuilder fields= { Employee({ fetching: isFetching }) } />
-                </Stack>
+                <form autoComplete= "off">
+                    <FormBuilder fields= { Receiver({ fetching: isFetching }) } />
+                </form>
             </Stack>
             <Stack direction= "row" justifyContent= {{ xs: 'space-between', sm: 'flex-end' }} alignItems= "center" spacing= { 1 }>
                 <Typography sx= { cancelbtn } component= { Link } to= "/assets-supplies/issuance">Cancel</Typography>
                 { type !== 'view' ? <Typography sx= { savebtn } onClick= { handleSubmit(data => {
                     let errors = [];
                     data['token'] = (sessionStorage.getItem('token')).split('.')[1];
-
-                    if(data.category === undefined) { errors.push({ name: 'category', message: 'This field is required!' }); }
-                    if(data.type === undefined) { errors.push({ name: 'type', message: 'This field is required!' }); }
-                    if(data.brand_id === undefined) { errors.push({ name: 'brand_id', message: 'This field is required!' }); }
-                    if(data.item_id === undefined) { errors.push({ name: 'item_id', message: 'This field is required!' }); }
-                    if(data.company_id === undefined) { errors.push({ name: 'company_id', message: 'This field is required!' }); }
-                    if(data.department_id === undefined) { errors.push({ name: 'department_id', message: 'This field is required!' }); }
-                    if(data.position_id === undefined) { errors.push({ name: 'position_id', message: 'This field is required!' }); }
-                    if(data.issued_to === undefined) { errors.push({ name: 'issued_to', message: 'This field is required!' }); }
-                    if(data.date_issued === '') { errors.push({ name: 'date_issued', message: 'This field is required!' }); }
                     
+                    if(!data.category_id) { errors.push({ name: 'category_id', message: 'This field is required!' }) };
+                    if(!data.brand_id) { errors.push({ name: 'brand_id', message: 'This field is required!' }) };
+                    if(data.category === 'toner') { if(data.model === '') { errors.push({ name: 'model', message: 'This field is required' }); } }
+                    if(data.category === 'laptop' || data.category === 'system_unit' || data.category === 'monitor') {
+                        if(data.serial_no === '') { errors.push({ name: 'serial_no', message: 'This field is required' }); }
+                    }
+
                     if(!(errors.length > 0)) {
-                        if(type === 'new') { saving({ table: 'tbl_issuance', data: data }); }
-                        else { updating({ table: 'tbl_issuance', data: data }); }
+                        if(type === 'new') { saving({ table: 'tbl_stocks_issuance', data: data }); }
+                        else { updating({ table: 'tbl_stocks_issuance', data: data }); }
                     }
                     else { errors.forEach(data => setError(data.name, { message: data.message })); }
                 }) }>Save</Typography> : '' }

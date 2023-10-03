@@ -58,11 +58,13 @@ const Index = () => {
                     malesuada quam ut, vulputate massa.</Typography>
             </Stack>
             <Stack sx= { card } spacing= { 3 }>
-                <FormBuilder fields= { Stocks({ fetching: isFetching }) } />
-                <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 }>
-                    <Typography variant= "body2" color= "#9BA4B5">Specification:</Typography>
-                    <Classification fetching= { isFetching } />
-                </Stack>
+                <form autoComplete= "off">
+                    <FormBuilder fields= { Stocks({ fetching: isFetching }) } />
+                    <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 }>
+                        <Typography variant= "body2" color= "#9BA4B5">Specification:</Typography>
+                        <Classification fetching= { isFetching } />
+                    </Stack>
+                </form>
             </Stack>
             <Stack direction= "row" justifyContent= {{ xs: 'space-between', sm: 'flex-end' }} alignItems= "center" spacing= { 1 }>
                 <Typography sx= { cancelbtn } component= { Link } to= "/assets-supplies/stocks">Cancel</Typography>

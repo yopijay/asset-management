@@ -19,7 +19,7 @@ const logs = {
 }
 
 const Logs = () => {
-    const { data: log, isFetching: fetching } = useGet({ key: ['issuance_logs'], request: history({ table: 'tbl_issuance', data: {} }), options: { refetchOnWindowFocus: false } }); 
+    const { data: log, isFetching: fetching } = useGet({ key: ['issuance_logs'], request: history({ table: 'tbl_stocks_issuance', data: {} }), options: { refetchOnWindowFocus: false } }); 
 
     return (
         <Stack sx= { logs } spacing= { 2 }>

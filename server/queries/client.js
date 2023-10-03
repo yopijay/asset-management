@@ -136,6 +136,7 @@ const dropdown = (table, data) => {
             case 'tbl_position': resolve(await new Position().dropdown(data)); break;
             case 'tbl_category': resolve(await new Category().dropdown(data)); break;
             case 'tbl_brands': resolve(await new Brands().dropdown(data)); break;
+            case 'tbl_stocks': resolve(await new Stocks().dropdown(data)); break;
         }
     });
 }

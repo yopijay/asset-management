@@ -127,6 +127,18 @@ class Stocks {
             }
         });
     }
+
+    dropdown = async data => {
+        switch(data.type) {
+            case 'per-brand': return [{ id: 0, name: '-- SELECT AN ITEM BELOW --' }]
+                                            .concat((await new Builder(`tbl_stocks AS stck`)
+                                                            .select(`stck.id, CASE WHEN info.serial_no IS NOT NULL AND info.serial_no <> '' THEN info.serial_no ELSE info.model END AS name`)
+                                                            .join({ table: `tbl_stocks_info AS info`, condition: `info.stock_id = stck.id`, type: `LEFT` })
+                                                            .condition(`WHERE stck.category_id= ${data.category_id} AND stck.brand_id= ${data.brand_id} AND stck.status= 1`)
+                                                            .build()).rows);
+            default: return [];
+        }
+    }
 }
 
 module.exports = Stocks;

@@ -1,33 +1,43 @@
-const SystemUnit = props => {
-    const { fetching, getValues, setValue } = props;
+const Laptop = props => {
+    const { fetching, type, getValues, setValue } = props;
 
     return([
+        {
+            grid: { xs: 12, sm: 8 },
+            props: {
+                name: 'serial_no',
+                label: '*Serial no',
+                disabled: type === 'view',
+                fetching: fetching
+            },
+            type: 'textfield'
+        },
         {
             grid: { xs: 12, sm: 4 },
             props: {
                 name: 'model',
                 label: 'Model',
-                disabled: true,
+                disabled: type === 'view',
                 fetching: fetching
             },
             type: 'textfield'
         },
         {
-            grid: { xs: 12, sm: 4 },
+            grid: { xs: 12, sm: 6 },
             props: {
                 name: 'cpu',
                 label: 'CPU',
-                disabled: true,
+                disabled: type === 'view',
                 fetching: fetching
             },
             type: 'textfield'
         },
         {
-            grid: { xs: 12, sm: 4 },
+            grid: { xs: 12, sm: 6 },
             props: {
                 name: 'gpu',
                 label: 'GPU',
-                disabled: true,
+                disabled: type === 'view',
                 fetching: fetching
             },
             type: 'textfield'
@@ -37,7 +47,7 @@ const SystemUnit = props => {
             props: {
                 name: 'hdd',
                 label: 'HDD',
-                disabled: true,
+                disabled: type === 'view',
                 fetching: fetching
             },
             type: 'textfield'
@@ -47,7 +57,7 @@ const SystemUnit = props => {
             props: {
                 name: 'ssd',
                 label: 'SSD',
-                disabled: true,
+                disabled: type === 'view',
                 fetching: fetching
             },
             type: 'textfield'
@@ -57,17 +67,17 @@ const SystemUnit = props => {
             props: {
                 name: 'ram',
                 label: 'RAM',
-                disabled: true,
+                disabled: type === 'view',
                 fetching: fetching
             },
             type: 'textfield'
         },
         {
-            grid: { xs: 12, sm: 6 },
+            grid: { xs: 12, sm: 3 },
             props: {
-                name: 'os',
+                name: 'operating_system',
                 label: 'Operating System',
-                disabled: true,
+                disabled: type === 'view',
                 fetching: fetching
             },
             type: 'textfield'
@@ -77,7 +87,7 @@ const SystemUnit = props => {
             props: {
                 name: 'power_supply',
                 label: 'Power Supply',
-                disabled: true,
+                disabled: type === 'view',
                 fetching: fetching
             },
             type: 'textfield'
@@ -87,8 +97,20 @@ const SystemUnit = props => {
             props: {
                 name: 'warranty',
                 label: 'Warranty',
-                disabled: true,
+                disabled: type === 'view',
                 fetching: fetching
+            },
+            type: 'textfield'
+        },
+        {
+            grid: { xs: 12, sm: 3 },
+            props: {
+                name: 'quantity',
+                label: 'Quantity',
+                disabled: true,
+                fetching: fetching,
+                value: 1,
+                type: 'number'
             },
             type: 'textfield'
         },
@@ -97,7 +119,7 @@ const SystemUnit = props => {
             props: {
                 name: 'hdmi',
                 label: 'HDMI',
-                disabled: true,
+                disabled: type === 'view',
                 fetching: fetching,
                 onChange:  () => setValue('hdmi', !(getValues().hdmi) ?? true)
             },
@@ -108,7 +130,7 @@ const SystemUnit = props => {
             props: {
                 name: 'vga',
                 label: 'VGA',
-                disabled: true,
+                disabled: type === 'view',
                 fetching: fetching,
                 onChange:  () => setValue('vga', !(getValues().vga) ?? true)
             },
@@ -119,7 +141,7 @@ const SystemUnit = props => {
             props: {
                 name: 'dvi',
                 label: 'DVI',
-                disabled: true,
+                disabled: type === 'view',
                 fetching: fetching,
                 onChange:  () => setValue('dvi', !(getValues().dvi) ?? true)
             },
@@ -130,7 +152,7 @@ const SystemUnit = props => {
             props: {
                 name: 'bluetooth',
                 label: 'Bluetooth',
-                disabled: true,
+                disabled: type === 'view',
                 fetching: fetching,
                 onChange:  () => setValue('bluetooth', !(getValues().bluetooth) ?? true)
             },
@@ -139,15 +161,37 @@ const SystemUnit = props => {
         {
             grid: { xs: 6, sm: 4, md: 3 },
             props: {
-                name: 'wfii',
-                label: 'WiFi',
-                disabled: true,
+                name: 'fingerprint',
+                label: 'Fingerprint reader',
+                disabled: type === 'view',
                 fetching: fetching,
-                onChange:  () => setValue('wfii', !(getValues().wfii) ?? true)
+                onChange:  () => setValue('fingerprint', !(getValues().fingerprint) ?? true)
+            },
+            type: 'switch'
+        },
+        {
+            grid: { xs: 6, sm: 4, md: 3 },
+            props: {
+                name: 'webcam',
+                label: 'Web camera',
+                disabled: type === 'view',
+                fetching: fetching,
+                onChange:  () => setValue('webcam', !(getValues().webcam) ?? true)
+            },
+            type: 'switch'
+        },
+        {
+            grid: { xs: 6, sm: 4, md: 3 },
+            props: {
+                name: 'backlit_keyboard',
+                label: 'Backlit Keyboard',
+                disabled: type === 'view',
+                fetching: fetching,
+                onChange:  () => setValue('backlit_keyboard', !(getValues().backlit_keyboard) ?? true)
             },
             type: 'switch'
         }
     ])
 }
 
-export default SystemUnit;
+export default Laptop;
