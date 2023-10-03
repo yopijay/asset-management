@@ -1,14 +1,10 @@
 // Libraries
-import { useContext } from "react";
 import { Checkbox, Skeleton, Stack, Typography } from "@mui/material";
 import { Controller } from "react-hook-form";
-
-// Core
-import { FormCntxt } from "core/context/Form"; // Context
+import PropTypes from "prop-types";
 
 const Index = props => {
-    const { label, fetching, disabled, name, onchange } = props;
-    const { control, getValues, setValue } = useContext(FormCntxt);
+    const { label, fetching, disabled, name, onchange, control, getValues, setValue } = props;
 
     return (
         <Stack direction= "row" justifyContent= "flex-start" alignItems= "center" spacing= { 2 }>
@@ -22,6 +18,18 @@ const Index = props => {
                     ) } /> }
         </Stack>
     );
+}
+
+Index.defaultProps = { label: '', disabled: false }
+Index.propTypes = {
+    label: PropTypes.string,
+    fetching: PropTypes.bool.isRequired,
+    disabled: PropTypes.bool,
+    name: PropTypes.string.isRequired,
+    onchange: PropTypes.func.isRequired,
+    control: PropTypes.object.isRequired,
+    getValues: PropTypes.func.isRequired,
+    setValue: PropTypes.func.isRequired
 }
 
 export default Index;

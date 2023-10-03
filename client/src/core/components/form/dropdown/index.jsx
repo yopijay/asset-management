@@ -1,15 +1,13 @@
 // Libraries
 import { Autocomplete, Box, Skeleton, Stack, TextField, ThemeProvider, Typography } from "@mui/material";
-import { useContext } from "react";
 import { Controller } from "react-hook-form";
+import PropTypes from "prop-types";
 
 // Core
-import { FormCntxt } from "core/context/Form"; // Context
 import { Components } from "core/theme"; // Theme
 
 const Index = props => {
-    const { label, fetching, disabled, name, options, multiple = false, uppercase = true, ...others } = props;
-    const { control, errors, getValues } = useContext(FormCntxt);
+    const { label, fetching, disabled, name, options, multiple, uppercase, control, errors, getValues, ...others } = props;
 
     // Custom styles
     const select = {
@@ -70,6 +68,21 @@ const Index = props => {
             <Typography variant= "body2" color= "error.dark">{ errors[name]?.message }</Typography>
         </Stack>
     );
+}
+
+Index.defaultProps = { label: '', disabled: false, multiple: false, uppercase: true }
+Index.propTypes = {
+    label: PropTypes.string,
+    fetching: PropTypes.bool.isRequired, 
+    disabled: PropTypes.bool, 
+    name: PropTypes.string.isRequired, 
+    options: PropTypes.array.isRequired, 
+    multiple: PropTypes.bool, 
+    uppercase: PropTypes.bool, 
+    control: PropTypes.object.isRequired, 
+    errors: PropTypes.object.isRequired, 
+    getValues: PropTypes.func.isRequired, 
+    others: PropTypes.object
 }
 
 export default Index;

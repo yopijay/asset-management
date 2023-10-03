@@ -1,13 +1,9 @@
 // Libraries
 import { Skeleton, Stack, TextareaAutosize, Typography } from "@mui/material";
-import { useContext } from "react";
-
-// Core
-import { FormCntxt } from "core/context/Form"; // Context
+import PropTypes from "prop-types";
 
 const Index = props => {
-    const { label, fetching, disabled, name, uppercase = true, ...others } = props;
-    const { register, errors } = useContext(FormCntxt);
+    const { label, fetching, disabled, name, uppercase, register, errors, ...others } = props;
 
     // Custom style
     const textarea = {
@@ -30,6 +26,18 @@ const Index = props => {
             <Typography variant= "body2" color= "error.dark">{ errors[name]?.message }</Typography>
         </Stack>
     );
+}
+
+Index.defaultProps = { label: '', disabled: false, uppercase: true }
+Index.propTypes = {
+    label: PropTypes.string,
+    fetching: PropTypes.bool.isRequired,
+    disabled: PropTypes.bool,
+    name: PropTypes.string.isRequired,
+    uppercase: PropTypes.bool,
+    register: PropTypes.func.isRequired,
+    errors: PropTypes.func.isRequired,
+    others: PropTypes.object
 }
 
 export default Index;

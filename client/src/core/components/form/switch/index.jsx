@@ -1,11 +1,8 @@
 // Libraries
 import styled from "@emotion/styled";
 import { Skeleton, Stack, Switch, Typography } from "@mui/material";
-import { useContext } from "react";
 import { Controller } from "react-hook-form";
-
-// Core
-import { FormCntxt } from "core/context/Form"; // Context
+import PropTypes from "prop-types";
 
 // Custom style
 const IOSSwitch = 
@@ -21,14 +18,20 @@ const IOSSwitch =
                 '&.Mui-checked': {
                     transform: 'translateX(16px)',
                     color: '#fff',
-                    '& + .MuiSwitch-track': { backgroundColor: theme.palette.mode === 'dark' ? '#2ECA45' : '#A0C49D', opacity: 1, border: 0, },
+                    '& + .MuiSwitch-track': { 
+                        backgroundColor: theme.palette.mode === 'dark' ? '#2ECA45' : '#A0C49D', 
+                        opacity: 1, 
+                        border: 0, },
                     '&.Mui-disabled + .MuiSwitch-track': { opacity: 0.5 },
                 },
                 '&.Mui-focusVisible .MuiSwitch-thumb': { color: '#33cf4d', border: '6px solid #fff', },
                 '&.Mui-disabled .MuiSwitch-thumb': { color: theme.palette.mode === 'light' ? theme.palette.grey[100] : theme.palette.grey[600], },
                 '&.Mui-disabled + .MuiSwitch-track': { opacity: theme.palette.mode === 'light' ? 0.7 : 0.3, },
             },
-            '& .MuiSwitch-thumb': { boxSizing: 'border-box', width: 22, height: 22, },
+            '& .MuiSwitch-thumb': { 
+                boxSizing: 'border-box', 
+                width: 22, 
+                height: 22, },
             '& .MuiSwitch-track': {
                 borderRadius: 26 / 2,
                 backgroundColor: theme.palette.mode === 'light' ? '#E9E9EA' : '#39393D',
@@ -39,8 +42,7 @@ const IOSSwitch =
     ));
 
 const Index = props => {
-    const { label, fetching, disabled, name, ...others } = props;
-    const { control, getValues } = useContext(FormCntxt);
+    const { label, fetching, disabled, name, control, getValues, ...others } = props;
 
     return (
         <Stack direction= "row" justifyContent= {{ xs: 'space-between', md: 'flex-start' }} alignItems= "center" spacing= { 2 }>
@@ -51,6 +53,17 @@ const Index = props => {
                         <IOSSwitch checked= { getValues()[name] !== null && getValues()[name] !== undefined ? getValues()[name] : true } disabled= { disabled } { ...others } /> ) } /> }
         </Stack>
     );
+}
+
+Index.defaultProps = { label: '', disabled: false }
+Index.propTypes = {
+    label: PropTypes.string,
+    fetching: PropTypes.bool.isRequired,
+    disabled: PropTypes.bool,
+    name: PropTypes.string.isRequired,
+    control: PropTypes.object.isRequired,
+    getValues: PropTypes.func.isRequired,
+    others: PropTypes.object
 }
 
 export default Index;

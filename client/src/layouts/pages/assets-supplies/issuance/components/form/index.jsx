@@ -1,23 +1,27 @@
 // Libraries
-import { Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useContext, useEffect } from "react";
 
 // Core
 import { FormCntxt } from "core/context/Form"; // Provider
-import FormBuilder from "core/components/form"; // Form Builder
 import { successToast, useGet, usePost } from "core/function/global"; // Function
 import { save, specific, update } from "core/api"; // API
+import FormBuilder from "core/components/form" // Form Builder
 
 // Constants
 import { cancelbtn, card, content, savebtn, title } from "./index.style"; // Styles
 import { validation } from "../../index.validation"; // Validation
-import Receiver from "../../receiver"; // Fields
+
+// Components
+import Series from "./components/Series";
+import ReceiverInfo from "./components/ReceiverInfo";
+import ItemInfo from "./components/ItemInfo";
 
 const Index = () => {
     const { type, id } = useParams();
-    const navigate = useNavigate();
-    const { handleSubmit, setValue, setError, setValidation, reset } = useContext(FormCntxt);
+    // const navigate = useNavigate();
+    const { handleSubmit, setValue, setError, setValidation, reset, register, errors, control, getValues } = useContext(FormCntxt);
     const { isFetching, refetch } = 
         useGet({ key: ['iss_specific'], request: specific({ table: 'tbl_stocks_issuance', id: id ?? null }), options: { enabled: type !== 'new', refetchOnWindowFocus: false },
             onSuccess: data => {
@@ -31,21 +35,21 @@ const Index = () => {
             } 
         });
 
-    const { mutate: saving } = 
-        usePost({ request: save,
-            onSuccess: data => {
-                if(data.result === 'error') { (data.error).forEach((err, index) => setError(err.name, { type: index === 0 ? 'focus' : '', message: err.message }, { shouldFocus: index === 0 })); }
-                else { successToast(data.message, 3000, navigate('/assets-supplies/issuance', { replace: true })); }
-            } 
-        });
+    // const { mutate: saving } = 
+    //     usePost({ request: save,
+    //         onSuccess: data => {
+    //             if(data.result === 'error') { (data.error).forEach((err, index) => setError(err.name, { type: index === 0 ? 'focus' : '', message: err.message }, { shouldFocus: index === 0 })); }
+    //             else { successToast(data.message, 3000, navigate('/assets-supplies/issuance', { replace: true })); }
+    //         } 
+    //     });
 
-    const { mutate: updating } =
-        usePost({ request: update,
-            onSuccess: data => {
-                if(data.result === 'error') { (data.error).forEach((err, index) => setError(err.name, { type: index === 0 ? 'focus' : '', message: err.message }, { shouldFocus: index === 0 })); }
-                else { successToast(data.message, 3000, navigate('/assets-supplies/issuance', { replace: true })); }
-            }
-        });
+    // const { mutate: updating } =
+    //     usePost({ request: update,
+    //         onSuccess: data => {
+    //             if(data.result === 'error') { (data.error).forEach((err, index) => setError(err.name, { type: index === 0 ? 'focus' : '', message: err.message }, { shouldFocus: index === 0 })); }
+    //             else { successToast(data.message, 3000, navigate('/assets-supplies/issuance', { replace: true })); }
+    //         }
+    //     });
 
     useEffect(() => { setValidation(validation()); reset(); if(id !== undefined) refetch() }, [ reset, setValidation, id, refetch ]);
 
@@ -58,7 +62,11 @@ const Index = () => {
             </Stack>
             <Stack sx= { card } spacing= { 3 }>
                 <form autoComplete= "off">
-                    <FormBuilder fields= { Receiver({ fetching: isFetching }) } />
+                    <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 }>
+                        <Series fetching= { isFetching } register= { register } errors= { errors } setValue= { setValue } />
+                        <ReceiverInfo fetching= { isFetching } errors= { errors }  control= { control } setValue= { setValue } setError= { setError } getValues= { getValues } />
+                        <ItemInfo fetching= { isFetching } errors= { errors }  control= { control } setValue= { setValue } setError= { setError } getValues= { getValues } />
+                    </Stack>
                 </form>
             </Stack>
             <Stack direction= "row" justifyContent= {{ xs: 'space-between', sm: 'flex-end' }} alignItems= "center" spacing= { 1 }>
@@ -67,18 +75,18 @@ const Index = () => {
                     let errors = [];
                     data['token'] = (sessionStorage.getItem('token')).split('.')[1];
                     
-                    if(!data.category_id) { errors.push({ name: 'category_id', message: 'This field is required!' }) };
-                    if(!data.brand_id) { errors.push({ name: 'brand_id', message: 'This field is required!' }) };
-                    if(data.category === 'toner') { if(data.model === '') { errors.push({ name: 'model', message: 'This field is required' }); } }
-                    if(data.category === 'laptop' || data.category === 'system_unit' || data.category === 'monitor') {
-                        if(data.serial_no === '') { errors.push({ name: 'serial_no', message: 'This field is required' }); }
-                    }
+                    // if(!data.category_id) { errors.push({ name: 'category_id', message: 'This field is required!' }) };
+                    // if(!data.brand_id) { errors.push({ name: 'brand_id', message: 'This field is required!' }) };
+                    // if(data.category === 'toner') { if(data.model === '') { errors.push({ name: 'model', message: 'This field is required' }); } }
+                    // if(data.category === 'laptop' || data.category === 'system_unit' || data.category === 'monitor') {
+                    //     if(data.serial_no === '') { errors.push({ name: 'serial_no', message: 'This field is required' }); }
+                    // }
 
-                    if(!(errors.length > 0)) {
-                        if(type === 'new') { saving({ table: 'tbl_stocks_issuance', data: data }); }
-                        else { updating({ table: 'tbl_stocks_issuance', data: data }); }
-                    }
-                    else { errors.forEach(data => setError(data.name, { message: data.message })); }
+                    // if(!(errors.length > 0)) {
+                    //     if(type === 'new') { saving({ table: 'tbl_stocks_issuance', data: data }); }
+                    //     else { updating({ table: 'tbl_stocks_issuance', data: data }); }
+                    // }
+                    // else { errors.forEach(data => setError(data.name, { message: data.message })); }
                 }) }>Save</Typography> : '' }
             </Stack>
         </Stack>

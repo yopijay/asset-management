@@ -1,5 +1,6 @@
 // Libraries
 import { Grid } from "@mui/material";
+import PropTypes from "prop-types";
 
 // Components
 import Textfield from "core/components/form/textfield";
@@ -24,5 +25,7 @@ const Index = ({ fields }) => {
         </Grid>
     );
 }
+
+Index.propTypes = { fields: PropTypes.array.isRequired }
 
 export default Index;

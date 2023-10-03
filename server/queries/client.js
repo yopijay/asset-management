@@ -8,6 +8,7 @@ const Position = require('./tables/Position');
 const Category = require('./tables/Category');
 const Brands = require('./tables/Brands');
 const Stocks = require('./tables/Stocks');
+const Issuance = require('./tables/Issuance');
 
 const login = data => { return new Users().login(data); }
 const profile = id => { return new Users().profile(id); }
@@ -25,6 +26,7 @@ const series = table => {
             case 'tbl_category': resolve(await new Category().series()); break;
             case 'tbl_brands': resolve(await new Brands().series()); break;
             case 'tbl_stocks': resolve(await new Stocks().series()); break;
+            case 'tbl_stocks_issuance': resolve(await new Issuance().series()); break;
         }
     });
 }
