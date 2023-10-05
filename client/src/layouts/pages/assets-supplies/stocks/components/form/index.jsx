@@ -12,13 +12,13 @@ import { save, specific, update } from "core/api"; // API
 // Constants
 import { cancelbtn, card, content, savebtn, title } from "./index.style"; // Styles
 import Classification from "./classifications"; // Classifications
-import Stocks from "../../stocks"; // Fields
+import Assets from "../../assets"; // Fields
 import { validation } from "../../index.validation"; // Validation
 
 const Index = () => {
     const { type, id } = useParams();
     const navigate = useNavigate();
-    const { handleSubmit, setValue, setError, setValidation, reset } = useContext(FormCntxt);
+    const { handleSubmit, setValue, setError, setValidation, reset, register, errors, control, getValues } = useContext(FormCntxt);
     const { isFetching, refetch } = 
         useGet({ key: ['stck_specific'], request: specific({ table: 'tbl_stocks', id: id ?? null }), options: { enabled: type !== 'new', refetchOnWindowFocus: false },
             onSuccess: data => {
@@ -59,10 +59,12 @@ const Index = () => {
             </Stack>
             <Stack sx= { card } spacing= { 3 }>
                 <form autoComplete= "off">
-                    <FormBuilder fields= { Stocks({ fetching: isFetching }) } />
                     <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 }>
-                        <Typography variant= "body2" color= "#9BA4B5">Specification:</Typography>
-                        <Classification fetching= { isFetching } />
+                        <FormBuilder fields= { Assets({ register: register, fetching: isFetching, errors: errors, control: control, setValue: setValue, setError: setError, getValues:  getValues }) } />
+                        <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 1 }>
+                            <Typography variant= "body2" color= "#9BA4B5">Specification:</Typography>
+                            <Classification register= { register } fetching= { isFetching } errors= { errors }  control= { control } setValue= { setValue } setError= { setError } getValues= { getValues } />
+                        </Stack>
                     </Stack>
                 </form>
             </Stack>

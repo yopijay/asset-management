@@ -1,126 +1,163 @@
+// Libraries
+import PropTypes from "prop-types";
+
 const SystemUnit = props => {
-    const { fetching, type, getValues, setValue } = props;
+    const { register, fetching, errors, control, getValues, setValue } = props;
 
     return([
         {
             grid: { xs: 12, sm: 8 },
             props: {
-                name: 'serial_no',
-                label: '*Serial no',
-                disabled: type === 'view',
-                fetching: fetching
-            },
-            type: 'textfield'
-        },
-        {
-            grid: { xs: 12, sm: 4 },
-            props: {
-                name: 'model',
-                label: 'Model',
-                disabled: type === 'view',
-                fetching: fetching
-            },
-            type: 'textfield'
-        },
-        {
-            grid: { xs: 12, sm: 6 },
-            props: {
-                name: 'cpu',
-                label: 'CPU',
-                disabled: type === 'view',
-                fetching: fetching
-            },
-            type: 'textfield'
-        },
-        {
-            grid: { xs: 12, sm: 6 },
-            props: {
-                name: 'gpu',
-                label: 'GPU',
-                disabled: type === 'view',
-                fetching: fetching
-            },
-            type: 'textfield'
-        },
-        {
-            grid: { xs: 12, sm: 4 },
-            props: {
-                name: 'hdd',
-                label: 'HDD',
-                disabled: type === 'view',
-                fetching: fetching
-            },
-            type: 'textfield'
-        },
-        {
-            grid: { xs: 12, sm: 4 },
-            props: {
-                name: 'ssd',
-                label: 'SSD',
-                disabled: type === 'view',
-                fetching: fetching
-            },
-            type: 'textfield'
-        },
-        {
-            grid: { xs: 12, sm: 4 },
-            props: {
-                name: 'ram',
-                label: 'RAM',
-                disabled: type === 'view',
-                fetching: fetching
-            },
-            type: 'textfield'
-        },
-        {
-            grid: { xs: 12, sm: 3 },
-            props: {
-                name: 'operating_system',
-                label: 'Operating System',
-                disabled: type === 'view',
-                fetching: fetching
-            },
-            type: 'textfield'
-        },
-        {
-            grid: { xs: 12, sm: 3 },
-            props: {
-                name: 'power_supply',
-                label: 'Power Supply',
-                disabled: type === 'view',
-                fetching: fetching
-            },
-            type: 'textfield'
-        },
-        {
-            grid: { xs: 12, sm: 3 },
-            props: {
-                name: 'warranty',
-                label: 'Warranty',
-                disabled: type === 'view',
-                fetching: fetching
-            },
-            type: 'textfield'
-        },
-        {
-            grid: { xs: 12, sm: 3 },
-            props: {
-                name: 'quantity',
-                label: 'Quantity',
-                disabled: true,
+                register: register,
+                label: 'Serial no',
                 fetching: fetching,
-                value: 1,
-                type: 'number'
+                disabled: true,
+                name: 'serial_no',
+                errors: errors,
+                InputProps: { disableUnderline: true }
+            },
+            type: 'textfield'
+        },
+        {
+            grid: { xs: 12, sm: 4 },
+            props: {
+                register: register,
+                label: 'Model',
+                fetching: fetching,
+                disabled: true,
+                name: 'model',
+                errors: errors,
+                InputProps: { disableUnderline: true }
+            },
+            type: 'textfield'
+        },
+        {
+            grid: { xs: 12, sm: 6 },
+            props: {
+                register: register,
+                label: 'CPU',
+                fetching: fetching,
+                disabled: true,
+                name: 'cpu',
+                errors: errors,
+                InputProps: { disableUnderline: true }
+            },
+            type: 'textfield'
+        },
+        {
+            grid: { xs: 12, sm: 6 },
+            props: {
+                register: register,
+                label: 'GPU',
+                fetching: fetching,
+                disabled: true,
+                name: 'gpu',
+                errors: errors,
+                InputProps: { disableUnderline: true }
+            },
+            type: 'textfield'
+        },
+        {
+            grid: { xs: 12, sm: 4 },
+            props: {
+                register: register,
+                label: 'HDD',
+                fetching: fetching,
+                disabled: true,
+                name: 'hdd',
+                errors: errors,
+                InputProps: { disableUnderline: true }
+            },
+            type: 'textfield'
+        },
+        {
+            grid: { xs: 12, sm: 4 },
+            props: {
+                register: register,
+                label: 'SSD',
+                fetching: fetching,
+                disabled: true,
+                name: 'ssd',
+                errors: errors,
+                InputProps: { disableUnderline: true }
+            },
+            type: 'textfield'
+        },
+        {
+            grid: { xs: 12, sm: 4 },
+            props: {
+                register: register,
+                label: 'RAM',
+                fetching: fetching,
+                disabled: true,
+                name: 'ram',
+                errors: errors,
+                InputProps: { disableUnderline: true }
+            },
+            type: 'textfield'
+        },
+        {
+            grid: { xs: 12, sm: 3 },
+            props: {
+                register: register,
+                label: 'Operating system',
+                fetching: fetching,
+                disabled: true,
+                name: 'operating_system',
+                errors: errors,
+                InputProps: { disableUnderline: true }
+            },
+            type: 'textfield'
+        },
+        {
+            grid: { xs: 12, sm: 3 },
+            props: {
+                register: register,
+                label: 'Power supply',
+                fetching: fetching,
+                disabled: true,
+                name: 'power_supply',
+                errors: errors,
+                InputProps: { disableUnderline: true }
+            },
+            type: 'textfield'
+        },
+        {
+            grid: { xs: 12, sm: 3 },
+            props: {
+                register: register,
+                label: 'Warranty',
+                fetching: fetching,
+                disabled: true,
+                name: 'warranty',
+                errors: errors,
+                InputProps: { disableUnderline: true }
+            },
+            type: 'textfield'
+        },
+        {
+            grid: { xs: 12, sm: 3 },
+            props: {
+                register: register,
+                label: 'Quantity',
+                fetching: fetching,
+                disabled: true,
+                name: 'quantity',
+                errors: errors,
+                type: 'number',
+                InputProps: { disableUnderline: true }
             },
             type: 'textfield'
         },
         {
             grid: { xs: 6, sm: 4, md: 3 },
             props: {
-                name: 'hdmi',
                 label: 'HDMI',
-                disabled: type === 'view',
                 fetching: fetching,
+                disabled: true,
+                name: 'hdmi',
+                control: control,
+                getValues: getValues,
                 onChange:  () => setValue('hdmi', !(getValues().hdmi) ?? true)
             },
             type: 'switch'
@@ -128,10 +165,12 @@ const SystemUnit = props => {
         {
             grid: { xs: 6, sm: 4, md: 3 },
             props: {
-                name: 'vga',
                 label: 'VGA',
-                disabled: type === 'view',
                 fetching: fetching,
+                disabled: true,
+                name: 'vga',
+                control: control,
+                getValues: getValues,
                 onChange:  () => setValue('vga', !(getValues().vga) ?? true)
             },
             type: 'switch'
@@ -139,10 +178,12 @@ const SystemUnit = props => {
         {
             grid: { xs: 6, sm: 4, md: 3 },
             props: {
-                name: 'dvi',
                 label: 'DVI',
-                disabled: type === 'view',
                 fetching: fetching,
+                disabled: true,
+                name: 'dvi',
+                control: control,
+                getValues: getValues,
                 onChange:  () => setValue('dvi', !(getValues().dvi) ?? true)
             },
             type: 'switch'
@@ -150,10 +191,12 @@ const SystemUnit = props => {
         {
             grid: { xs: 6, sm: 4, md: 3 },
             props: {
-                name: 'bluetooth',
                 label: 'Bluetooth',
-                disabled: type === 'view',
                 fetching: fetching,
+                disabled: true,
+                name: 'bluetooth',
+                control: control,
+                getValues: getValues,
                 onChange:  () => setValue('bluetooth', !(getValues().bluetooth) ?? true)
             },
             type: 'switch'
@@ -161,15 +204,26 @@ const SystemUnit = props => {
         {
             grid: { xs: 6, sm: 4, md: 3 },
             props: {
-                name: 'wfii',
-                label: 'WiFi',
-                disabled: type === 'view',
+                label: 'Wifi',
                 fetching: fetching,
-                onChange:  () => setValue('wfii', !(getValues().wfii) ?? true)
+                disabled: true,
+                name: 'wifi',
+                control: control,
+                getValues: getValues,
+                onChange:  () => setValue('wifi', !(getValues().wifi) ?? true)
             },
             type: 'switch'
         }
-    ])
+    ]);
+}
+
+SystemUnit.propTypes = {
+    register: PropTypes.func.isRequired,
+    fetching: PropTypes.bool.isRequired,
+    errors: PropTypes.object.isRequired,
+    control: PropTypes.node.isRequired,
+    getValues: PropTypes.array.isRequired,
+    setValue: PropTypes.func.isRequired
 }
 
 export default SystemUnit;

@@ -1,5 +1,6 @@
 // Libraries
 import { Box, Stack, Typography } from "@mui/material";
+import PropTypes from "prop-types";
 
 // Core
 import Loader from "core/components/loader/Screen"; // Loader
@@ -38,6 +39,13 @@ const List = props => {
             </Stack>
         </Stack>
     );
+}
+
+List.propTypes = {
+    find: PropTypes.func.isRequired,
+    record: PropTypes.func.isRequired,
+    fetching: PropTypes.bool.isRequired,
+    finding: PropTypes.bool.isRequired
 }
 
 export default List;

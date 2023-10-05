@@ -17,7 +17,7 @@ import { validation } from "../../index.validation"; // Validation
 const Index = () => {
     const { type, id } = useParams();
     const navigate = useNavigate();
-    const { handleSubmit, setValue, setError, setValidation, reset } = useContext(FormCntxt);
+    const { handleSubmit, setValue, setError, setValidation, reset, register, errors, control, getValues } = useContext(FormCntxt);
     const { isFetching, refetch } = 
         useGet({ key: ['ctg_specific'], request: specific({ table: 'tbl_category', id: id ?? null }), options: { enabled: type !== 'new', refetchOnWindowFocus: false },
             onSuccess: data => {
@@ -54,7 +54,21 @@ const Index = () => {
                 <Typography variant= "caption" color= "#9BA4B5">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc non neque molestie, 
                     malesuada quam ut, vulputate massa.</Typography>
             </Stack>
-            <Stack sx= { card }><form autoComplete= "off"><FormBuilder fields= { Category({ fetching: isFetching }) } /></form></Stack>
+            <Stack sx= { card }>
+                <form autoComplete= "off">
+                    <FormBuilder 
+                        fields= { 
+                            Category({ 
+                                register: register, 
+                                fetching: isFetching, 
+                                errors: errors, 
+                                control: control, 
+                                setValue: setValue,
+                                getValues: getValues 
+                            }) 
+                        } />
+                </form>
+            </Stack>
             <Stack direction= "row" justifyContent= {{ xs: 'space-between', sm: 'flex-end' }} alignItems= "center" spacing= { 1 }>
                 <Typography sx= { cancelbtn } component= { Link } to= "/maintenance/category">Cancel</Typography>
                 { type !== 'view' ? <Typography sx= { savebtn } onClick= { handleSubmit(data => {

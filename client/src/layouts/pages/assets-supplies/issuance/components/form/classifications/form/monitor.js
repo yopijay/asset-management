@@ -1,96 +1,124 @@
+// Libraries
+import PropTypes from "prop-types";
+
 const Monitor = props => {
-    const { fetching, type, getValues, setValue } = props;
+    const { register, fetching, errors, control, getValues, setValue } = props;
 
     return ([
         {
             grid: { xs: 12, sm: 8 },
             props: {
+                register: register,
+                label: 'Serial no',
+                fetching: fetching,
+                disabled: true,
                 name: 'serial_no',
-                label: '*Serial no',
-                disabled: type === 'view',
-                fetching: fetching
+                errors: errors,
+                InputProps: { disableUnderline: true }
             },
             type: 'textfield'
         },
         {
             grid: { xs: 12, sm: 4 },
             props: {
-                name: 'model',
+                register: register,
                 label: 'Model',
-                disabled: type === 'view',
-                fetching: fetching
+                fetching: fetching,
+                disabled: true,
+                name: 'model',
+                errors: errors,
+                InputProps: { disableUnderline: true }
             },
             type: 'textfield'
         },
         {
             grid: { xs: 12, sm: 6 },
             props: {
-                name: 'panel',
+                register: register,
                 label: 'Panel',
-                disabled: type === 'view',
-                fetching: fetching
-            },
-            type: 'textfield'
-        },
-        {
-            grid: { xs: 12, sm: 3 },
-            props: {
-                name: 'resolution',
-                label: 'Resolution',
-                disabled: type === 'view',
-                fetching: fetching
-            },
-            type: 'textfield'
-        },
-        {
-            grid: { xs: 12, sm: 3 },
-            props: {
-                name: 'color',
-                label: 'Color',
-                disabled: type === 'view',
-                fetching: fetching
-            },
-            type: 'textfield'
-        },
-        {
-            grid: { xs: 12, sm: 4 },
-            props: {
-                name: 'power_supply',
-                label: 'Power Supply',
-                disabled: type === 'view',
-                fetching: fetching
-            },
-            type: 'textfield'
-        },
-        {
-            grid: { xs: 12, sm: 4 },
-            props: {
-                name: 'warranty',
-                label: 'Warranty',
-                disabled: type === 'view',
-                fetching: fetching
-            },
-            type: 'textfield'
-        },
-        {
-            grid: { xs: 12, sm: 4 },
-            props: {
-                name: 'quantity',
-                label: 'Quantity',
-                disabled: true,
                 fetching: fetching,
-                value: 1,
-                type: 'number'
+                disabled: true,
+                name: 'panel',
+                errors: errors,
+                InputProps: { disableUnderline: true }
+            },
+            type: 'textfield'
+        },
+        {
+            grid: { xs: 12, sm: 3 },
+            props: {
+                register: register,
+                label: 'Resolution',
+                fetching: fetching,
+                disabled: true,
+                name: 'resolution',
+                errors: errors,
+                InputProps: { disableUnderline: true }
+            },
+            type: 'textfield'
+        },
+        {
+            grid: { xs: 12, sm: 3 },
+            props: {
+                register: register,
+                label: 'Color',
+                fetching: fetching,
+                disabled: true,
+                name: 'color',
+                errors: errors,
+                InputProps: { disableUnderline: true }
+            },
+            type: 'textfield'
+        },
+        {
+            grid: { xs: 12, sm: 4 },
+            props: {
+                register: register,
+                label: 'Power supply',
+                fetching: fetching,
+                disabled: true,
+                name: 'power_supply',
+                errors: errors,
+                InputProps: { disableUnderline: true }
+            },
+            type: 'textfield'
+        },
+        {
+            grid: { xs: 12, sm: 4 },
+            props: {
+                register: register,
+                label: 'Warranty',
+                fetching: fetching,
+                disabled: true,
+                name: 'warranty',
+                errors: errors,
+                InputProps: { disableUnderline: true }
+            },
+            type: 'textfield'
+        },
+        {
+            grid: { xs: 12, sm: 4 },
+            props: {
+                register: register,
+                label: 'Quantity',
+                fetching: fetching,
+                disabled: true,
+                name: 'quantity',
+                errors: errors,
+                type: 'number',
+                InputProps: { disableUnderline: true }
             },
             type: 'textfield'
         },
         {
             grid: { xs: 6, sm: 4 },
             props: {
-                name: 'hdmi',
                 label: 'HDMI',
-                disabled: type === 'view',
                 fetching: fetching,
+                disabled: true,
+                name: 'hdmi',
+                control: control,
+                getValues: getValues,
                 onChange:  () => setValue('hdmi', !(getValues().hdmi) ?? true)
             },
             type: 'switch'
@@ -98,10 +126,12 @@ const Monitor = props => {
         {
             grid: { xs: 6, sm: 4 },
             props: {
-                name: 'vga',
                 label: 'VGA',
-                disabled: type === 'view',
                 fetching: fetching,
+                disabled: true,
+                name: 'vga',
+                control: control,
+                getValues: getValues,
                 onChange:  () => setValue('vga', !(getValues().vga) ?? true)
             },
             type: 'switch'
@@ -109,15 +139,26 @@ const Monitor = props => {
         {
             grid: { xs: 6, sm: 4 },
             props: {
-                name: 'dvi',
                 label: 'DVI',
-                disabled: type === 'view',
                 fetching: fetching,
+                disabled: true,
+                name: 'dvi',
+                control: control,
+                getValues: getValues,
                 onChange:  () => setValue('dvi', !(getValues().dvi) ?? true)
             },
             type: 'switch'
         }
     ]);
+}
+
+Monitor.propTypes = {
+    register: PropTypes.func.isRequired,
+    fetching: PropTypes.bool.isRequired,
+    errors: PropTypes.object.isRequired,
+    control: PropTypes.node.isRequired,
+    getValues: PropTypes.array.isRequired,
+    setValue: PropTypes.func.isRequired
 }
 
 export default Monitor;

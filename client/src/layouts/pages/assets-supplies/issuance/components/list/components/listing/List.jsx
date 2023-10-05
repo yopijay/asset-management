@@ -3,6 +3,7 @@ import { Box, Stack, Typography } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
 // Constants
 import { caption, list, subtitle, title } from "../../index.style"; // Styles
@@ -28,5 +29,7 @@ const List = ({ data }) => {
         </Stack>
     );
 }
+
+List.propTypes = { data: PropTypes.object.isRequired }
 
 export default List;

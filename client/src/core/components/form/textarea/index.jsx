@@ -36,7 +36,7 @@ Index.propTypes = {
     name: PropTypes.string.isRequired,
     uppercase: PropTypes.bool,
     register: PropTypes.func.isRequired,
-    errors: PropTypes.func.isRequired,
+    errors: PropTypes.object.isRequired,
     others: PropTypes.object
 }
 

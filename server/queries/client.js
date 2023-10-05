@@ -59,6 +59,7 @@ const list = (table, data) => {
             case 'tbl_category': resolve(await new Category().list(data)); break;
             case 'tbl_brands': resolve(await new Brands().list(data)); break;
             case 'tbl_stocks': resolve(await new Stocks().list(data)); break;
+            case 'tbl_stocks_issuance': resolve(await new Issuance().list(data)); break;
         }
     });
 }
@@ -75,6 +76,7 @@ const logs = (table, data) => {
             case 'tbl_category': resolve(await new Category().logs(data)); break;
             case 'tbl_brands': resolve(await new Brands().logs(data)); break;
             case 'tbl_stocks': resolve(await new Stocks().logs(data)); break;
+            case 'tbl_stocks_issuance': resolve(await new Issuance().logs(data)); break;
         }
     });
 }
@@ -127,7 +129,7 @@ const search = (table, data) => {
     });
 }
 
-const dropdown = (table, data) => {
+const dropdown = async (table, data) => {
     return new Promise(async resolve => {
         switch(table) {
             case 'tbl_module': resolve(await new Module().dropdown(data)); break;

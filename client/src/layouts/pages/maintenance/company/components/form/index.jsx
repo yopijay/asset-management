@@ -17,7 +17,7 @@ import { validation } from "../../index.validation"; // Validation
 const Index = () => {
     const { type, id } = useParams();
     const navigate = useNavigate();
-    const { handleSubmit, setValue, setError, setValidation, reset } = useContext(FormCntxt);
+    const { handleSubmit, setValue, setError, setValidation, reset, register, errors, control, getValues } = useContext(FormCntxt);
     const { isFetching, refetch } = 
         useGet({ key: ['cmp_specific'], request: specific({ table: 'tbl_company', id: id ?? null }), options: { enabled: type !== 'new', refetchOnWindowFocus: false },
             onSuccess: data => {
@@ -54,7 +54,22 @@ const Index = () => {
                 <Typography variant= "caption" color= "#9BA4B5">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc non neque molestie, 
                     malesuada quam ut, vulputate massa.</Typography>
             </Stack>
-            <Stack sx= { card }><form autoComplete= "off"><FormBuilder fields= { Company({ fetching: isFetching }) } /></form></Stack>
+            <Stack sx= { card }>
+                <form autoComplete= "off">
+                    <FormBuilder 
+                        fields= { 
+                            Company({
+                                register: register, 
+                                fetching: isFetching, 
+                                errors: errors, 
+                                control: control, 
+                                setValue: setValue, 
+                                setError: setError, 
+                                getValues: getValues 
+                            }) 
+                        } />
+                </form>
+            </Stack>
             <Stack direction= "row" justifyContent= {{ xs: 'space-between', sm: 'flex-end' }} alignItems= "center" spacing= { 1 }>
                 <Typography sx= { cancelbtn } component= { Link } to= "/maintenance/company">Cancel</Typography>
                 { type !== 'view' ? <Typography sx= { savebtn } onClick= { handleSubmit(data => {
