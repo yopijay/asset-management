@@ -9,9 +9,9 @@ import { successToast, useGet, usePost } from "core/function/global"; // Functio
 import { save, specific, update } from "core/api"; // API
 
 // Components
-import Account from "./components/Account";
-import Personal from "./components/Personal";
-import Employee from "./components/Employee";
+import AccountForm from "./components/AccountForm";
+import PersonalForm from "./components/PersonalForm";
+import EmployeeForm from "./components/EmployeeForm";
 
 // Constants
 import { cancelbtn, card, content, savebtn, title } from "./index.style"; // Styles
@@ -20,7 +20,7 @@ import { validation } from "../../index.validation"; // Validation
 const Index = () => {
     const { type, id } = useParams();
     const navigate = useNavigate();
-    const { handleSubmit, setValue, setError, setValidation } = useContext(FormCntxt);
+    const { handleSubmit, setValue, setError, setValidation, register, errors, control, getValues } = useContext(FormCntxt);
     const { isFetching, refetch } = 
         useGet({ key: ['emp_specific'], request: specific({ table: 'tbl_users', id: id ?? null }), options: { enabled: type !== 'new', refetchOnWindowFocus: false },
             onSuccess: data => {
@@ -59,9 +59,11 @@ const Index = () => {
             </Stack>
             <Stack sx= { card } spacing= { 5 }>
                 <form autoComplete= "off">
-                    <Account fetching= { isFetching } />
-                    <Personal fetching= { isFetching } />
-                    <Employee fetching= { isFetching } />
+                    <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 }>
+                        <AccountForm register= { register } fetching= { isFetching } errors= { errors } />
+                        <PersonalForm register= { register } fetching= { isFetching } errors= { errors } />
+                        <EmployeeForm register= { register } fetching= { isFetching } errors= { errors } control= { control } setValue= { setValue } setError= { setError } getValues= { getValues } />
+                    </Stack>
                 </form>
             </Stack>
             <Stack direction= "row" justifyContent= {{ xs: 'space-between', sm: 'flex-end' }} alignItems= "center" spacing= { 1 }>

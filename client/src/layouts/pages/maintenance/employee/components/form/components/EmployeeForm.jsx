@@ -10,7 +10,7 @@ import { FormCntxt } from "core/context/Form"; // Context
 // Constants
 import Employee from "./employee.fields";
 
-const EmployeeForm = ({ fetching }) => {
+const EmployeeForm = props => {
     const { type } = useParams();
     const { setValue } = useContext(FormCntxt);
 
@@ -19,7 +19,7 @@ const EmployeeForm = ({ fetching }) => {
     return (
         <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 1 }>
             <Typography>Employee Information</Typography>
-            <FormBuilder fields= { Employee({ fetching }) } />
+            <FormBuilder fields= { Employee({ ...props }) } />
         </Stack>
     );
 }

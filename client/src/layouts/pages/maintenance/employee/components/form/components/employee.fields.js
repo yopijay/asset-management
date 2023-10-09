@@ -1,15 +1,16 @@
 // Libraries
 import { useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import PropTypes from "prop-types";
 
 // Core
 import { dropdown, series } from "core/api"; // API
 import { FormCntxt } from "core/context/Form"; // Context
 import { pad, useGet, usePost } from "core/function/global"; // Function
 
-const Employee = ({ fetching }) => {
+const Employee = props => {
     const { type } = useParams();
-    const { setError, setValue, getValues } = useContext(FormCntxt);
+    const { register, fetching, errors, control, setValue, setError, getValues } = props;
 
     const { data: company, isFetching: cmpfetching } = useGet({ key: ['cmp_dd'], request: dropdown({ table: 'tbl_company', data: {} }), options: { refetchOnWindowFocus: false } });
     const { data: department, mutate: dptmenu, isLoading: dptloading } = usePost({ request: dropdown });
@@ -30,51 +31,64 @@ const Employee = ({ fetching }) => {
         {
             grid: { xs: 12, md: 6 },
             props: {
-                name: 'employee_no',
+                register: register,
                 label: '*Employee no.',
+                fetching: fetching,
                 disabled: type === 'view',
-                fetching: fetching
+                name: 'employee_no',
+                errors: errors,
+                InputProps: { disableUnderline: true }
             },
             type: 'textfield'
         },
         {
             grid: { xs: 12, md: 6 },
             props: {
-                name: 'rfid',
+                register: register,
                 label: '*RFID',
+                fetching: fetching,
                 disabled: type === 'view',
-                fetching: fetching
+                name: 'rfid',
+                errors: errors,
+                InputProps: { disableUnderline: true }
             },
             type: 'textfield'
         },
         {
             grid: { xs: 12, md: 6 },
             props: {
+                control: control,
                 name: 'branch',
                 label: '*Branch',
                 disabled: type === 'view',
                 fetching: fetching,
                 options: [{ id: '', name: '-- SELECT AN ITEM BELOW --' }, { id: 'quezon_ave', name: 'QUEZON AVE.' }, 
                                 { id: 'sto_domingo', name: 'STO. DOMINGO' }, { id: 'manila', name: 'MANILA' }, { id: 'cavite', name: 'CAVITE' }],
-                onChange: (e, item) => { setError('branch', { message: '' }); setValue('branch', item.id); }
+                onChange: (e, item) => { setError('branch', { message: '' }); setValue('branch', item.id); },
+                errors: errors,
+                getValues: getValues
             },
             type: 'dropdown'
         },
         {
             grid: { xs: 12, md: 6 },
             props: {
+                control: control,
                 name: 'user_level',
                 label: '*User level',
                 disabled: type === 'view',
                 fetching: fetching,
                 options: [{ id: '', name: '-- SELECT AN ITEM BELOW --' }, { id: 'user', name: 'USER' }, { id: 'admin', name: 'ADMIN' }],
-                onChange: (e, item) => { setError('user_level', { message: '' }); setValue('user_level', item.id); }
+                onChange: (e, item) => { setError('user_level', { message: '' }); setValue('user_level', item.id); },
+                errors: errors,
+                getValues: getValues
             },
             type: 'dropdown'
         },
         {
             grid: { xs: 12, md: 4 },
             props: {
+                control: control,
                 name: 'company_id',
                 label: '*Company',
                 disabled: type === 'view',
@@ -85,13 +99,16 @@ const Employee = ({ fetching }) => {
                     setValue('company_id', item.id); 
                     dptmenu({ table: 'tbl_department', data: { type: 'per-company', id: item.id } }); 
                     pstmenu({ table: 'tbl_position', data: { type: 'per-department', company_id: item.id } });
-                }
+                },
+                errors: errors,
+                getValues: getValues
             },
             type: 'dropdown'
         },
         {
             grid: { xs: 12, md: 4 },
             props: {
+                control: control,
                 name: 'department_id',
                 label: '*Department',
                 disabled: type === 'view',
@@ -101,34 +118,51 @@ const Employee = ({ fetching }) => {
                     setError('department_id', { message: '' }); 
                     setValue('department_id', item.id);
                     pstmenu({ table: 'tbl_position', data: { type: 'per-department', company_id: getValues().company_id, department_id: item.id } });
-                }
+                },
+                errors: errors,
+                getValues: getValues
             },
             type: 'dropdown'
         },
         {
             grid: { xs: 12, md: 4 },
             props: {
+                control: control,
                 name: 'position_id',
                 label: '*Position',
                 disabled: type === 'view',
                 fetching: fetching,
                 options: !pstloading && position ? position : [],
-                onChange: (e, item) => { setError('position_id', { message: '' }); setValue('position_id', item.id); }
+                onChange: (e, item) => { setError('position_id', { message: '' }); setValue('position_id', item.id); },
+                errors: errors,
+                getValues: getValues
             },
             type: 'dropdown'
         },
         {
             grid: { xs: 12 },
             props: {
-                name: 'status',
                 label: 'Status',
-                disabled: type === 'view',
                 fetching: fetching,
+                disabled: type === 'view',
+                name: 'status',
+                control: control,
+                getValues: getValues,
                 onChange:  () => setValue('status', !(getValues().status) ?? true)
             },
             type: 'switch'
         }
     ]);
+}
+
+Employee.propTypes = {
+    register: PropTypes.func.isRequired,
+    fetching: PropTypes.bool.isRequired,
+    errors: PropTypes.object.isRequired,
+    control: PropTypes.node.isRequired,
+    getValues: PropTypes.array.isRequired,
+    setValue: PropTypes.func.isRequired,
+    setError: PropTypes.func.isRequired
 }
 
 export default Employee; 

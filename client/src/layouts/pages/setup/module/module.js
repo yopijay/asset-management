@@ -1,26 +1,27 @@
 // Libraries
-import { useContext } from "react";
 import { useParams } from "react-router-dom";
 import { InputAdornment } from "@mui/material";
+import PropTypes from "prop-types";
 
 // Core
 import { series } from "core/api"; // API
-import { FormCntxt } from "core/context/Form"; // Context
 import { formatter, useGet } from "core/function/global"; // Function
 
-const Module = ({ fetching }) => {
+const Module = props => {
     const { type } = useParams();
-    const { setValue, getValues } = useContext(FormCntxt);
+    const { register, fetching, errors, control, setValue, getValues } = props;
     useGet({ key: ['mdl_series'], request: series('tbl_module'), options: {}, onSuccess: data => { if(type === 'new') setValue('series_no', `MDL-${formatter(parseInt(data.length) + 1, 7)}`) } });
 
     return ([
         {
             grid: { xs: 12, md: 7 },
             props: {
-                name: 'series_no',
+                register: register,
                 label: '*Series no.',
-                disabled: true,
                 fetching: fetching,
+                disabled: true,
+                name: 'series_no',
+                errors: errors,
                 InputProps: { disableUnderline: true }
             },
             type: 'textfield'
@@ -28,11 +29,12 @@ const Module = ({ fetching }) => {
         {
             grid: { xs: 12, sm: 7, md: 6 },
             props: {
-                name: 'name',
-                label: '*Category',
-                disabled: type === 'view',
+                register: register,
+                label: '*Name',
                 fetching: fetching,
-                onChange: e => setValue('base_url', `${(e.target.value).toLowerCase()}`),
+                disabled: type === 'view',
+                name: 'name',
+                errors: errors,
                 InputProps: { disableUnderline: true }
             },
             type: 'textfield'
@@ -40,11 +42,13 @@ const Module = ({ fetching }) => {
         {
             grid: { xs: 12, sm: 5, md: 6 },
             props: {
-                name: 'base_url',
+                register: register,
                 label: '*Base URL',
-                disabled: type === 'view',
                 fetching: fetching,
+                disabled: type === 'view',
+                name: 'base_url',
                 uppercase: false,
+                errors: errors,
                 InputProps: { disableUnderline: true, startAdornment: <InputAdornment position="start">/</InputAdornment> }
             },
             type: 'textfield'
@@ -52,25 +56,38 @@ const Module = ({ fetching }) => {
         {
             grid: { xs: 12 },
             props: {
-                name: 'description',
                 label: 'Description',
+                fetching: fetching,
                 disabled: type === 'view',
-                fetching: fetching
+                name: 'description',
+                register: register,
+                errors: errors
             },
             type: 'textarea'
         },
         {
             grid: { xs: 12 },
             props: {
-                name: 'status',
                 label: 'Status',
-                disabled: type === 'view',
                 fetching: fetching,
+                disabled: type === 'view',
+                name: 'status',
+                control: control,
+                getValues: getValues,
                 onChange:  () => setValue('status', !(getValues().status) ?? true)
             },
             type: 'switch'
         }
     ]);
+}
+
+Module.propTypes = {
+    register: PropTypes.func.isRequired,
+    fetching: PropTypes.bool.isRequired,
+    errors: PropTypes.object.isRequired,
+    control: PropTypes.node.isRequired,
+    getValues: PropTypes.array.isRequired,
+    setValue: PropTypes.func.isRequired
 }
 
 export default Module;

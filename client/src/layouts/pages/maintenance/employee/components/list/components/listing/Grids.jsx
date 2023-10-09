@@ -1,6 +1,7 @@
 // Libraries
 import { Box, Stack, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
 // Constants
 import { caption, list, subtitle, title } from "../../index.style"; // Styles
@@ -23,5 +24,7 @@ const Grids = ({ data }) => {
         </Stack>
     );
 }
+
+Grids.propTypes = { data: PropTypes.object.isRequired }
 
 export default Grids;

@@ -10,7 +10,7 @@ import { FormCntxt } from "core/context/Form"; // Context
 // Constants
 import Account from "./account.fields";
 
-const AccountForm = ({ fetching }) => {
+const AccountForm = props => {
     const { type } = useParams();
     const { setValue } = useContext(FormCntxt);
 
@@ -22,7 +22,7 @@ const AccountForm = ({ fetching }) => {
             <Box>
                 <Grid container direction= "row" justifyContent= "flex-start" alignItems= "flex-start" spacing= { 1 }>
                     <Grid item xs= { 12 } md= { 5 }></Grid>
-                    <Grid item xs= { 12 } md= { 7 }><FormBuilder fields= { Account({ fetching }) } /></Grid>
+                    <Grid item xs= { 12 } md= { 7 }><FormBuilder fields= { Account({ ...props }) } /></Grid>
                 </Grid>
             </Box>
         </Stack>

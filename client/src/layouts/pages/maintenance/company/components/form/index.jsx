@@ -63,8 +63,7 @@ const Index = () => {
                                 fetching: isFetching, 
                                 errors: errors, 
                                 control: control, 
-                                setValue: setValue, 
-                                setError: setError, 
+                                setValue: setValue,
                                 getValues: getValues 
                             }) 
                         } />

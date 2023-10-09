@@ -10,7 +10,7 @@ import { FormCntxt } from "core/context/Form"; // Context
 // Constants
 import Personal from "./personal.fields";
 
-const PersonalForm = ({ fetching }) => {
+const PersonalForm = props => {
     const { type } = useParams();
     const { setValue } = useContext(FormCntxt);
 
@@ -19,7 +19,7 @@ const PersonalForm = ({ fetching }) => {
     return (
         <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 1 }>
             <Typography>Personal Information</Typography>
-            <FormBuilder fields= { Personal({ fetching }) } />
+            <FormBuilder fields= { Personal({ ...props }) } />
         </Stack>
     );
 }

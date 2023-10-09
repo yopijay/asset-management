@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
+import PropTypes from "prop-types";
 
 // Core
 import { FormCntxt } from "core/context/Form"; // Context
@@ -33,5 +34,7 @@ const Search = ({ request }) => {
         </Stack>
     );
 }
+
+Search.propTypes = { request: PropTypes.func.isRequired }
 
 export default Search;

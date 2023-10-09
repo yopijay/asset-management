@@ -8,7 +8,7 @@ import { formatter, useGet } from "core/function/global"; // Function
 
 const Company = props => {
     const { type } = useParams();
-    const { register, fetching, errors, control, setValue, setError, getValues } = props;
+    const { register, fetching, errors, control, setValue, getValues } = props;
 
     useGet({ key: ['cmp_series'], request: series('tbl_company'), options: {}, onSuccess: data => { if(type === 'new') setValue('series_no', `CMP-${formatter(parseInt(data.length) + 1, 7)}`) } });
 
@@ -98,8 +98,7 @@ Company.propTypes = {
     errors: PropTypes.object.isRequired,
     control: PropTypes.node.isRequired,
     getValues: PropTypes.array.isRequired,
-    setValue: PropTypes.func.isRequired,
-    setError: PropTypes.func.isRequired
+    setValue: PropTypes.func.isRequired
 }
 
 export default Company;
