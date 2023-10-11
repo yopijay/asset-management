@@ -50,7 +50,7 @@ const Index = () => {
             }
         });
 
-    useEffect(() => { setValidation(validation()); reset(); if(id !== undefined) refetch() }, [ reset, setValidation, id, refetch ]);
+    useEffect(() => { if(id !== undefined) refetch() }, [ reset, setValidation, id, refetch ]);
 
     return (
         <Stack sx= { content } spacing= { 4 }>
@@ -73,8 +73,13 @@ const Index = () => {
                 { type !== 'view' ? <Typography sx= { savebtn } onClick= { handleSubmit(data => {
                     let errors = [];
                     data['token'] = (sessionStorage.getItem('token')).split('.')[1];
+                    validation({ data: data, errors: errors });
                     
-                    console.log(data);
+                    if(!(errors.length > 0)) {
+                        if(type === 'new') { saving({ table: 'tbl_stocks_issuance', data: data }); }
+                        else { updating({ table: 'tbl_stocks_issuance', data: data }); }
+                    }
+                    else { errors.forEach(data => setError(data.name, { message: data.message })); }
                 }) }>Save</Typography> : '' }
             </Stack>
         </Stack>

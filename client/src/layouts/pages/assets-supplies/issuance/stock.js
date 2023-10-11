@@ -9,7 +9,7 @@ import { dropdown, specific } from "core/api"; // API
 
 const Stock = props => {
     const { type } = useParams();
-    const { fetching, errors, control, getValues, setValue, setError } = props;
+    const { register, fetching, errors, control, getValues, setValue, setError } = props;
 
     const { data: categories, isFetching: ctgfetching } = useGet({ key: ['ctg_dd'], request: dropdown({ table: 'tbl_category', data: {} }), options: { refetchOnWindowFocus: false } });
     const { data: brands, mutate: brdmenu, isLoading: brdfetching } = usePost({ request: dropdown });
@@ -21,14 +21,15 @@ const Stock = props => {
                     for(let count = 0; count < Object.keys(data[0]).length; count++) {
                         let _name = Object.keys(data[0])[count];
 
-                        if(!(['series_no', 'category_id', 'brand_id', 'stock_id'].includes(_name))) {
+                        if(!(['series_no', 'category_id', 'brand_id', 'stock_id', 'issued_to', 'created_by', 'updated_by', 'deleted_by', 'imported_by', 'date_created', 
+                                'date_updated', 'date_deleted', 'date_imported'].includes(_name))) {
                             setValue(_name, _name === 'hdmi' || _name === 'vga' || _name === 'dvi' || _name === 'bluetooth' || _name === 'wifi' ||
                                                 _name === 'fingerprint' || _name === 'webcam' || _name === 'backlit' ? 
                                                 data[0][_name] === 1 : _name === 'category' ? ((data[0][_name]).replace(' ', '_')).toLowerCase() : data[0][_name])
                         }
                     }
                 }
-            } 
+            }
         });
 
     useEffect(() => {
@@ -99,11 +100,24 @@ const Stock = props => {
                 getValues: getValues
             },
             type: 'dropdown'
+        },
+        {
+            grid: { xs: 12 },
+            props: {
+                label: 'Remarks',
+                fetching: fetching,
+                disabled: type === 'view',
+                name: 'remarks',
+                register: register,
+                errors: errors
+            },
+            type: 'textarea'
         }
     ]);
 }
 
 Stock.propTypes = {
+    register: PropTypes.func.isRequired,
     fetching: PropTypes.bool.isRequired,
     errors: PropTypes.object.isRequired,
     control: PropTypes.node.isRequired,

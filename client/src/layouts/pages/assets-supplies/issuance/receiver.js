@@ -102,7 +102,8 @@ const Receiver = props => {
                 label: '*Branch',
                 disabled: type !== 'new',
                 fetching: fetching,
-                options: [],
+                options: [{ id: 0, name: '-- SELECT AN ITEM BELOW --' }, { id: 'quezon_ave', name: 'QUEZON AVE.' }, 
+                                { id: 'sto_domingo', name: 'STO. DOMINGO' }, { id: 'manila', name: 'MANILA' }, { id: 'cavite', name: 'CAVITE' }],
                 onChange: (e, item) => {
                     setError('branch', { message: '' });
                     setValue('branch', item.id);

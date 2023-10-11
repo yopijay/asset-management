@@ -43,6 +43,7 @@ const specific = (table, id) => {
             case 'tbl_category': resolve(await new Category().specific(id)); break;
             case 'tbl_brands': resolve(await new Brands().specific(id)); break;
             case 'tbl_stocks': resolve(await new Stocks().specific(id)); break;
+            case 'tbl_stocks_issuance': resolve(await new Issuance().specific(id)); break;
         }
     });
 }
@@ -93,6 +94,7 @@ const save = (table, data) => {
             case 'tbl_category': resolve(await new Category().save(data)); break;
             case 'tbl_brands': resolve(await new Brands().save(data)); break;
             case 'tbl_stocks': resolve(await new Stocks().save(data)); break;
+            case 'tbl_stocks_issuance': resolve(await new Issuance().save(data)); break;
         }
     });
 }
@@ -109,6 +111,7 @@ const update = (table, data) => {
             case 'tbl_category': resolve(await new Category().update(data)); break;
             case 'tbl_brands': resolve(await new Brands().update(data)); break;
             case 'tbl_stocks': resolve(await new Stocks().update(data)); break;
+            case 'tbl_stocks_issuance': resolve(await new Issuance().update(data)); break;
         }
     });
 }
@@ -125,6 +128,7 @@ const search = (table, data) => {
             case 'tbl_category': resolve(await new Category().search(data)); break;
             case 'tbl_brands': resolve(await new Brands().search(data)); break;
             case 'tbl_stocks': resolve(await new Stocks().search(data)); break;
+            case 'tbl_stocks_issuance': resolve(await new Issuance().search(data)); break;
         }
     });
 }
