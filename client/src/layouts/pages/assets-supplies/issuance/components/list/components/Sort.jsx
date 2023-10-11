@@ -17,15 +17,14 @@ const Sort = ({ refetch }) => {
     const { getValues, setValue } = useContext(FormCntxt);
     const [ order, setorder ] = useState('date_created');
 
-    const onclick = name => { setValue('orderby', name); setorder(name); refetch({ table: 'tbl_issuance', data: getValues() }); }
-    const onsort = sort => { setsort(sort); setValue('sort', sort); refetch({ table: 'tbl_issuance', data: getValues() }); }
+    const onclick = name => { setValue('orderby', name); setorder(name); refetch({ table: 'tbl_stocks_issuance', data: getValues() }); }
+    const onsort = sort => { setsort(sort); setValue('sort', sort); refetch({ table: 'tbl_stocks_issuance', data: getValues() }); }
 
     return (
         <Stack direction= "row" justifyContent= "flex-end" alignItems= "center" spacing= { 1 }>
             <Stack direction= "row" justifyContent= "flex-start" alignItems= "center" spacing= { 1 }>
                 <Typography variant= "caption">Order by:</Typography>
-                { order === 'date_created' ? <Typography variant= "caption" sx= { orderby } onClick= { () => onclick('serial_no') }>Date created</Typography> :
-                    order === 'serial_no' ? <Typography variant= "caption" sx= { orderby } onClick= { () => onclick('series_no') }>Serial no.</Typography> :
+                { order === 'date_created' ? <Typography variant= "caption" sx= { orderby } onClick= { () => onclick('series_no') }>Date created</Typography> :
                         order === 'series_no' ? <Typography variant= "caption" sx= { orderby } onClick= { () => onclick('date_created') }>Series no.</Typography> : '' }
             </Stack>
             { sort === 'desc' ? 

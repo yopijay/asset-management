@@ -127,3 +127,9 @@ export const caption = {
     textOverflow: 'ellipsis',
     width: '100%'
 }
+
+export const info = {
+    fontSize: '85%', 
+    marginRight: '10px', 
+    color: '#9DB2BF'
+}
