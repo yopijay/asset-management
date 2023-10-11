@@ -36,7 +36,7 @@ const Stock = props => {
         if(!fetching) {
             if(type !== 'new') {
                 brdmenu({ table: 'tbl_brands', data: { type: 'per-category', category_id: getValues()?.category_id } });
-                stckmenu({ table: 'tbl_stocks', data: { type: 'per-brand', category_id: getValues()?.category_id, brand_id: getValues()?.brand_id } });
+                stckmenu({ table: 'tbl_stocks', data: { type: 'per-brand', category_id: getValues()?.category_id, brand_id: getValues()?.brand_id, issued_to: getValues()?.issued_to, form: type } });
             }
         }
     }, [ fetching, type, getValues, brdmenu, stckmenu ]);
@@ -48,7 +48,7 @@ const Stock = props => {
                 control: control,
                 name: 'category_id',
                 label: '*Category',
-                disabled: type !== 'new',
+                disabled: type === 'view',
                 fetching: fetching,
                 options: !ctgfetching ? categories : [],
                 onChange: (e, item) => {
@@ -56,7 +56,7 @@ const Stock = props => {
                     setValue('category_id', item.id);
                     setValue('category', ((item.name).replace(' ', '_')).toLowerCase());
                     brdmenu({ table: 'tbl_brands', data: { type: 'per-category', category_id: item.id } });
-                    stckmenu({ table: 'tbl_stocks', data: { type: 'per-brand', category_id: item.id, brand_id: getValues()?.brand_id ?? null } });
+                    stckmenu({ table: 'tbl_stocks', data: { type: 'per-brand', category_id: item.id, brand_id: getValues()?.brand_id ?? null, issued_to: getValues()?.issued_to, form: type } });
                 },
                 errors: errors,
                 getValues: getValues
@@ -69,13 +69,13 @@ const Stock = props => {
                 control: control,
                 name: 'brand_id',
                 label: '*Brand',
-                disabled: type !== 'new',
+                disabled: type === 'view',
                 fetching: fetching,
                 options: !brdfetching && brands ? brands : [],
                 onChange: (e, item) => {
                     setError('brand_id', { message: '' });
                     setValue('brand_id', item.id);
-                    stckmenu({ table: 'tbl_stocks', data: { type: 'per-brand', category_id: getValues().category_id, brand_id: item.id } });
+                    stckmenu({ table: 'tbl_stocks', data: { type: 'per-brand', category_id: getValues().category_id, brand_id: item.id, issued_to: getValues()?.issued_to, form: type } });
                 },
                 errors: errors,
                 getValues: getValues
@@ -88,7 +88,7 @@ const Stock = props => {
                 control: control,
                 name: 'stock_id',
                 label: '*Serial no. | Model',
-                disabled: type !== 'new',
+                disabled: type === 'view',
                 fetching: fetching,
                 options: !stckfetching && stocks ? stocks : [],
                 onChange: (e, item) => {

@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 // Core
 import { dropdown } from "core/api"; // API
 import { useGet, usePost } from "core/function/global"; // Function
+import { useEffect } from "react";
 
 const Receiver = props => {
     const { type } = useParams();
@@ -14,6 +15,16 @@ const Receiver = props => {
     const { data: departments, mutate: dptmenu, isFetching: dptfetching } = usePost({ request: dropdown });
     const { data: positions, mutate: pstmenu, isFetching: pstfetching } = usePost({ request: dropdown });
     const { data: employees, mutate: empmenu, isFetching: empfetching } = usePost({ request: dropdown });
+
+    useEffect(() => {
+        if(!fetching) {
+            if(type !== 'new') {
+                dptmenu({ table: 'tbl_department', data: { type: 'per-company', company_id: getValues()?.company_id } });
+                pstmenu({ table: 'tbl_position', data: { type: 'per-department', company_id: getValues()?.company_id, department_id: getValues()?.department_id } });
+                empmenu({ table: 'tbl_users', data: { type: 'per-position', company_id: getValues()?.company_id, department_id: getValues()?.department_id, position_id: getValues()?.position_id } });
+            }
+        }
+    }, [ fetching, type, getValues, dptmenu, pstmenu, empmenu ])
     
     return ([
         {

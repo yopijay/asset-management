@@ -134,7 +134,9 @@ class Stocks {
                 let stocks = (await new Builder(`tbl_stocks AS stck`)
                                         .select(`stck.id, CASE WHEN info.serial_no IS NOT NULL AND info.serial_no <> '' THEN info.serial_no ELSE info.model END AS name`)
                                         .join({ table: `tbl_stocks_info AS info`, condition: `info.stock_id = stck.id`, type: `LEFT` })
-                                        .condition(`WHERE stck.category_id= ${data.category_id} AND stck.brand_id= ${data.brand_id ?? null} AND stck.status= 1`)
+                                        .join({ table: `tbl_stocks_issuance AS iss`, condition: `iss.stock_id = stck.id`, type: `LEFT` })
+                                        .condition(`WHERE stck.category_id= ${data.category_id} AND stck.brand_id= ${data.brand_id ?? null} 
+                                                            ${data.form === 'new' ? `AND stck.status= 1` : `AND iss.issued_to= ${data.issued_to}`}`)
                                         .build()).rows;
                                         
                 return [{ id: 0, name: '-- SELECT AN ITEM BELOW --' }].concat(stocks);
