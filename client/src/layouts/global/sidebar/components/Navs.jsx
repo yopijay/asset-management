@@ -29,7 +29,7 @@ const linkactive = {
 
 const Navs = () => {
     const { active, setactive, setopen } = useContext(GlobalCntxt);
-    const { data: module, isFetching: fetching } = useGet({ key: ['mdl_nav'], request: dropdown({ table: 'tbl_module', data: { type: 'nav' } }), options: { refetchOnWindowFocus: false } });
+    const { data: module, isFetching: fetching } = useGet({ key: ['mdl_nav'], request: dropdown({ table: 'tbl_module', data: { type: 'nav' } }), options: { refetchInterval: 1000 } });
 
     return (
         <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 }>

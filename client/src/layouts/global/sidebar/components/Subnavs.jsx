@@ -29,17 +29,16 @@ const linkactive = {
 const Subnavs = ({ id }) => {
     const { active, setactive, setopen } = useContext(GlobalCntxt);
     const [ submodule, setSubmodule ] = useState([]);
-    const { mutate: nav, isLoading } = usePost({ request: dropdown, onSuccess: data => setSubmodule(data) });
+    const { mutate: nav } = usePost({ request: dropdown, onSuccess: data => setSubmodule(data) });
 
     const navclick = name => { setopen({ left: false }); setactive(name); localStorage.setItem('nav', name); }
-    useEffect(() => nav({ table: 'tbl_sub_module', data: { type: 'nav', id: id }}) , [ nav, id ]);
+    useEffect(() => { setInterval(() => { nav({ table: 'tbl_sub_module', data: { type: 'nav', id: id }}) }, 1000) } , [ nav, id ]);
 
     return (
         <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch">
-            { !isLoading && submodule.length > 0 ?
-                submodule.map((sub, index) => 
+            { submodule?.map((sub, index) => 
                     <Typography key= { index } component= { Link } to= { `/${sub.base_url}/${sub.path} `} sx= { active === (sub.name).toLowerCase() ? linkactive : link } 
-                        onClick= { () => navclick((sub.name).toLowerCase()) }>{ (sub.name).charAt(0) + (sub.name).slice(1).toLowerCase() }</Typography> ) : '' }
+                        onClick= { () => navclick((sub.name).toLowerCase()) }>{ (sub.name).charAt(0) + (sub.name).slice(1).toLowerCase() }</Typography> ) }
         </Stack>
     );
 }
