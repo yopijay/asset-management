@@ -1,11 +1,10 @@
 // Libraries
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import PropTypes from "prop-types";
 
 // Core
 import { dropdown, series } from "core/api"; // API
-import { FormCntxt } from "core/context/Form"; // Context
 import { pad, useGet, usePost } from "core/function/global"; // Function
 
 const Employee = props => {
@@ -22,10 +21,10 @@ const Employee = props => {
     useEffect(() => {
         if(!fetching)
             if(type !== 'new') {
-                dptmenu({ table: 'tbl_department', data: { type: 'per-company', id: getValues()?.company_id } });
+                dptmenu({ table: 'tbl_department', data: { type: 'per-company', company_id: getValues()?.company_id } });
                 pstmenu({ table: 'tbl_position', data: { type: 'per-department', company_id: getValues()?.company_id, department_id: getValues()?.department_id } });
             }
-    }, [ fetching, type, dptmenu, pstmenu, getValues ]);
+    }, [ fetching, type, dptmenu, pstmenu, getValues, setValue ]);
 
     return ([
         {
@@ -55,7 +54,7 @@ const Employee = props => {
             type: 'textfield'
         },
         {
-            grid: { xs: 12, md: 6 },
+            grid: { xs: 12, md: 4 },
             props: {
                 control: control,
                 name: 'branch',
@@ -71,7 +70,7 @@ const Employee = props => {
             type: 'dropdown'
         },
         {
-            grid: { xs: 12, md: 6 },
+            grid: { xs: 12, md: 4 },
             props: {
                 control: control,
                 name: 'user_level',
@@ -89,6 +88,21 @@ const Employee = props => {
             grid: { xs: 12, md: 4 },
             props: {
                 control: control,
+                name: 'employment_status',
+                label: '*Employment status',
+                disabled: type === 'view',
+                fetching: fetching,
+                options: [{ id: '', name: '-- SELECT AN ITEM BELOW --' }, { id: 'intern', name: 'INTERN' }, { id: 'probation', name: 'PROBATION' }, { id: 'regular', name: 'REGULAR' }],
+                onChange: (e, item) => { setError('employment_status', { message: '' }); setValue('employment_status', item.id); },
+                errors: errors,
+                getValues: getValues
+            },
+            type: 'dropdown'
+        },
+        {
+            grid: { xs: 12, md: 4 },
+            props: {
+                control: control,
                 name: 'company_id',
                 label: '*Company',
                 disabled: type === 'view',
@@ -97,8 +111,8 @@ const Employee = props => {
                 onChange: (e, item) => { 
                     setError('company_id', { message: '' }); 
                     setValue('company_id', item.id); 
-                    dptmenu({ table: 'tbl_department', data: { type: 'per-company', id: item.id } }); 
-                    pstmenu({ table: 'tbl_position', data: { type: 'per-department', company_id: item.id } });
+                    dptmenu({ table: 'tbl_department', data: { type: 'per-company', company_id: item.id } }); 
+                    pstmenu({ table: 'tbl_position', data: { type: 'per-department', company_id: item.id, department_id: getValues()?.department_id } });
                 },
                 errors: errors,
                 getValues: getValues
@@ -117,7 +131,7 @@ const Employee = props => {
                 onChange: (e, item) => { 
                     setError('department_id', { message: '' }); 
                     setValue('department_id', item.id);
-                    pstmenu({ table: 'tbl_position', data: { type: 'per-department', company_id: getValues().company_id, department_id: item.id } });
+                    pstmenu({ table: 'tbl_position', data: { type: 'per-department', company_id: getValues()?.company_id, department_id: item.id } });
                 },
                 errors: errors,
                 getValues: getValues

@@ -20,7 +20,7 @@ import { validation } from "../../index.validation"; // Validation
 const Index = () => {
     const { type, id } = useParams();
     const navigate = useNavigate();
-    const { handleSubmit, setValue, setError, setValidation, register, errors, control, getValues } = useContext(FormCntxt);
+    const { handleSubmit, setValue, setError, setValidation, register, errors, control, getValues, reset } = useContext(FormCntxt);
     const { isFetching, refetch } = 
         useGet({ key: ['emp_specific'], request: specific({ table: 'tbl_users', id: id ?? null }), options: { enabled: type !== 'new', refetchOnWindowFocus: false },
             onSuccess: data => {
@@ -48,7 +48,12 @@ const Index = () => {
             }
         });
 
-    useEffect(() => { setValidation(validation()); if(id !== undefined) refetch() }, [ setValidation, id, refetch ]);
+    useEffect(() => { 
+        setValidation(validation()); 
+        reset(); 
+        if(id !== undefined) { refetch(); }
+        else { setValue('branch', ''); setValue('user_level', ''); setValue('employment_status', ''); }
+    }, [ setValidation, reset, id, refetch, setValue ]);
 
     return (
         <Stack sx= { content } spacing= { 4 }>
@@ -59,7 +64,7 @@ const Index = () => {
             </Stack>
             <Stack sx= { card } spacing= { 5 }>
                 <form autoComplete= "off">
-                    <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 }>
+                    <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 4 }>
                         <AccountForm register= { register } fetching= { isFetching } errors= { errors } />
                         <PersonalForm register= { register } fetching= { isFetching } errors= { errors } />
                         <EmployeeForm register= { register } fetching= { isFetching } errors= { errors } control= { control } setValue= { setValue } setError= { setError } getValues= { getValues } />
@@ -77,7 +82,9 @@ const Index = () => {
                     if(!(data.user_level)) { errors.push({ name: 'user_level', message: 'This field is requierd!' }); }
                     if(!(data.company_id)) { errors.push({ name: 'company_id', message: 'This field is requierd!' }); }
                     if(!(data.department_id)) { errors.push({ name: 'department_id', message: 'This field is requierd!' }); }
-                    if(!(data.position_id)) { errors.push({ name: 'position_id', message: 'This field is requierd!' }); }
+                    if(data.employment_status) {
+                        if(data.employment_status !== 'intern') if(!(data.position_id)) errors.push({ name: 'position_id', message: 'This field is requierd!' });
+                    } else { errors.push({ name: 'employment_status', message: 'This field is required!' }); }
                     if(!(data.password) && type === 'new') { errors.push({ name: 'password', message: 'This field is required!' }); }
                     if(!(data.confirm_password) && type === 'new') { errors.push({ name: 'confirm_password', message: 'This field is required!' }); }
 

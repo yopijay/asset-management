@@ -49,7 +49,7 @@ const Department = props => {
                 control: control,
                 name: 'department_head_id',
                 label: '*Department head',
-                disabled: type !== 'new',
+                disabled: type === 'view',
                 fetching: fetching,
                 options: !usrfetching ? users : [],
                 onChange: (e, item) => { setError('department_head_id', { message: '' }); setValue('department_head_id', item.id); },

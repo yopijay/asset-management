@@ -10,7 +10,8 @@ class Department {
         switch(data.type) {
             case 'nav': return [];
             case 'per-company': return [{ id: 0, name: '-- SELECT AN ITEM BELOW --' }]
-                                                .concat((await new Builder(`tbl_department`).select(`id, name`).condition(`WHERE company_id= ${data.company_id} AND status= 1 ORDER BY name ASC`).build()).rows);
+                                                .concat((await new Builder(`tbl_department`).select(`id, name`)
+                                                .condition(`WHERE company_id= ${data.company_id} AND status= 1 ORDER BY name ASC`).build()).rows);
             default: return [{ id: 0, name: '-- SELECT AN ITEM BELOW --' }]
                             .concat((await new Builder(`tbl_department`).select(`id, name`).condition(`WHERE status= 1 ORDER BY name ASC`).build()).rows);
         }

@@ -18,7 +18,7 @@ const Position = props => {
     useEffect(() => { 
         if(!fetching)
             if(type !== 'new')
-                dptmenu({ table: 'tbl_department', data: { type: 'per-company', id: getValues()?.company_id } });
+                dptmenu({ table: 'tbl_department', data: { type: 'per-company', company_id: getValues()?.company_id } });
     }, [ fetching, type, dptmenu, getValues ]);
 
     return ([
@@ -47,7 +47,7 @@ const Position = props => {
                 onChange: (e, item) => { 
                     setError('company_id', { message: '' });
                     setValue('company_id', item.id);
-                    dptmenu({ table: 'tbl_department', data: { type: 'per-company', id: item.id } });
+                    dptmenu({ table: 'tbl_department', data: { type: 'per-company', company_id: item.id } });
                 },
                 errors: errors,
                 getValues: getValues

@@ -1,7 +1,7 @@
 // Libraries
 import { useParams } from "react-router-dom";
 import { useContext, useEffect } from "react";
-import { Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 
 // Core
 import FormBuilder from "core/components/form"; // Form Builder
@@ -17,9 +17,9 @@ const PersonalForm = props => {
     useEffect(() => { if(type === 'new') { ['fname', 'mname', 'lname', 'address'].map(name => setValue(name, '')); setValue('company_id', 0) } }, [ type, setValue ]);
 
     return (
-        <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 1 }>
+        <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 }>
             <Typography>Personal Information</Typography>
-            <FormBuilder fields= { Personal({ ...props }) } />
+            <Box><FormBuilder fields= { Personal({ ...props }) } /></Box>
         </Stack>
     );
 }
