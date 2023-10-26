@@ -7,6 +7,8 @@ const Laptop = require("./stocks/Laptop");
 const SystemUnit = require("./stocks/SystemUnit");
 const Toner = require("./stocks/Toner");
 const Monitor = require("./stocks/Monitor");
+const Mouse = require("./stocks/Mouse");
+const Keyboard = require("./stocks/Keyboard");
 
 const audit = { series_no: '', table_name: 'tbl_stocks',  item_id: 0, field: '', previous: null, current: null, action: '', user_id: 0, date: '' }; // Used for audit trail
 class Stocks {
@@ -99,6 +101,8 @@ class Stocks {
                 case 'system_unit': await new SystemUnit(data).save(stck.id); break;
                 case 'toner': await new Toner(data).save(stck.id); break;
                 case 'monitor': await new Monitor(data).save(stck.id); break;
+                case 'mouse': await new Mouse(data).save(stck.id); break;
+                case 'keyboard': await new Keyboard(data).save(stck.id); break;
             }
 
             audit.series_no = Global.randomizer(7);
@@ -124,6 +128,8 @@ class Stocks {
                 case 'system_unit': resolve(await new SystemUnit(data).update(stck)); break;
                 case 'toner': resolve(await new Toner(data).update(stck)); break;
                 case 'monitor': resolve(await new Monitor(data).update(stck)); break;
+                case 'mouse': resolve(await new Mouse(data).update(stck)); break;
+                case 'keyboard': resolve(await new Keyboard(data).update(stck)); break;
             }
         });
     }

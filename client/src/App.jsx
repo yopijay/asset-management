@@ -9,7 +9,6 @@ import { AccountPrvdr } from "core/context/Account"; // Provider
 // // Layouts
 import Signin from "layouts/authentication/sign-in";
 import Main from "layouts/pages";import { useEffect } from "react";
-;
 
 const App = () => {
     const client = new QueryClient();
