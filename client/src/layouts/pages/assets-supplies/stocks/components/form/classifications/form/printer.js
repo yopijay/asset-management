@@ -50,21 +50,6 @@ const Laptop = props => {
             grid: { xs: 12, sm: 3 },
             props: {
                 register: register,
-                label: 'Quantity',
-                fetching: fetching,
-                disabled: type === 'view',
-                name: 'quantity',
-                errors: errors,
-                type: 'number',
-                InputProps: { disableUnderline: true },
-                inputProps: { min: 1 }
-            },
-            type: 'textfield'
-        },
-        {
-            grid: { xs: 12, sm: 3 },
-            props: {
-                register: register,
                 label: 'Printer Resolution',
                 fetching: fetching,
                 disabled: type === 'view',
@@ -86,6 +71,21 @@ const Laptop = props => {
                 InputProps: { disableUnderline: true },
             },
             type: 'textfield'
+        },
+        {
+            grid: { xs: 12, sm: 3 },
+            props: {
+                control: control,
+                name: 'type',
+                label: 'Type',
+                disabled: type === 'view',
+                fetching: fetching,
+                options: [{ id: '', name: '-- SELECT AN ITEM BELOW --' }, { id: 'laser', name: 'LASER JET' }, { id: 'ink', name: 'INK JET' }, { id: 'ribbon', name: 'RIBBON' }],
+                onChange: (e, item) => { setValue('type', item.id); },
+                errors: errors,
+                getValues: getValues
+            },
+            type: 'dropdown'
         },
         {
             grid: { xs: 6, sm: 4 },

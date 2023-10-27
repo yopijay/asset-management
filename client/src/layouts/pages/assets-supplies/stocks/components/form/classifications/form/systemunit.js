@@ -99,7 +99,7 @@ const SystemUnit = props => {
             type: 'textfield'
         },
         {
-            grid: { xs: 12, sm: 3 },
+            grid: { xs: 12, sm: 4 },
             props: {
                 register: register,
                 label: 'Operating system',
@@ -112,7 +112,7 @@ const SystemUnit = props => {
             type: 'textfield'
         },
         {
-            grid: { xs: 12, sm: 3 },
+            grid: { xs: 12, sm: 4 },
             props: {
                 register: register,
                 label: 'Power supply',
@@ -125,7 +125,7 @@ const SystemUnit = props => {
             type: 'textfield'
         },
         {
-            grid: { xs: 12, sm: 3 },
+            grid: { xs: 12, sm: 4 },
             props: {
                 register: register,
                 label: 'Warranty',
@@ -134,21 +134,6 @@ const SystemUnit = props => {
                 name: 'warranty',
                 errors: errors,
                 InputProps: { disableUnderline: true }
-            },
-            type: 'textfield'
-        },
-        {
-            grid: { xs: 12, sm: 3 },
-            props: {
-                register: register,
-                label: 'Quantity',
-                fetching: fetching,
-                disabled: type === 'view',
-                name: 'quantity',
-                errors: errors,
-                type: 'number',
-                InputProps: { disableUnderline: true },
-                inputProps: { min: 1 }
             },
             type: 'textfield'
         },

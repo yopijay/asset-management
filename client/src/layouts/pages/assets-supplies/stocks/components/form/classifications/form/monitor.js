@@ -73,7 +73,7 @@ const Monitor = props => {
             type: 'textfield'
         },
         {
-            grid: { xs: 12, sm: 4 },
+            grid: { xs: 12, sm: 6 },
             props: {
                 register: register,
                 label: 'Power supply',
@@ -86,7 +86,7 @@ const Monitor = props => {
             type: 'textfield'
         },
         {
-            grid: { xs: 12, sm: 4 },
+            grid: { xs: 12, sm: 6 },
             props: {
                 register: register,
                 label: 'Warranty',
@@ -95,21 +95,6 @@ const Monitor = props => {
                 name: 'warranty',
                 errors: errors,
                 InputProps: { disableUnderline: true }
-            },
-            type: 'textfield'
-        },
-        {
-            grid: { xs: 12, sm: 4 },
-            props: {
-                register: register,
-                label: 'Quantity',
-                fetching: fetching,
-                disabled: type === 'view',
-                name: 'quantity',
-                errors: errors,
-                type: 'number',
-                InputProps: { disableUnderline: true },
-                inputProps: { min: 1 }
             },
             type: 'textfield'
         },

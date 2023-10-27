@@ -7,7 +7,7 @@ class Keyboard {
 
     save = async id => {
         await new Builder(`tbl_stocks_info`)
-            .insert({ columns: `stock_id, serial_no, model, type, warranty, date_received, no_of_keys`, 
+            .insert({ columns: `stock_id, serial_no, model, type, warranty, backlit, date_received, no_of_keys`, 
                             values: `${id}, ${(this.data).serial_no !== '' ? `'${((this.data).serial_no).toUpperCase()}'` : null}, ${(this.data).model !== '' ? `'${((this.data).model).toUpperCase()}'` : null},
                                             ${(this.data).type ? `'${(this.data).type}'` : null}, ${(this.data).warranty !== '' ? `'${((this.data).warranty).toUpperCase()}'` : null}, 
                                             ${(this.data).backlit ? 1 : 0}, ${(this.data).date_received !== '' ? `'${(this.data).date_received}'` : null}, 

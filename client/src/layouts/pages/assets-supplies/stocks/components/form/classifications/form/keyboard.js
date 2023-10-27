@@ -34,7 +34,7 @@ const Laptop = props => {
             type: 'textfield'
         },
         {
-            grid: { xs: 12, sm: 3 },
+            grid: { xs: 12, sm: 4 },
             props: {
                 register: register,
                 label: 'No. of keys',
@@ -49,7 +49,7 @@ const Laptop = props => {
             type: 'textfield'
         },
         {
-            grid: { xs: 12, sm: 3 },
+            grid: { xs: 12, sm: 4 },
             props: {
                 register: register,
                 label: 'Warranty',
@@ -62,22 +62,7 @@ const Laptop = props => {
             type: 'textfield'
         },
         {
-            grid: { xs: 12, sm: 3 },
-            props: {
-                register: register,
-                label: 'Quantity',
-                fetching: fetching,
-                disabled: type === 'view',
-                name: 'quantity',
-                errors: errors,
-                type: 'number',
-                InputProps: { disableUnderline: true },
-                inputProps: { min: 1 }
-            },
-            type: 'textfield'
-        },
-        {
-            grid: { xs: 12, sm: 3 },
+            grid: { xs: 12, sm: 4 },
             props: {
                 control: control,
                 name: 'type',
