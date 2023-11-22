@@ -118,7 +118,7 @@ export const orderby = {
 }
 
 export const listview = {
-    padding: '10px 17px',
+    padding: '20px 16px',
     backgroundColor: '#FFFFFF',
     borderRadius: '8px',
     overflow: 'hidden',

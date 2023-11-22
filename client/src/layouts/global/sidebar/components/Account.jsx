@@ -10,7 +10,7 @@ const Account = () => {
 
     return (
         <Stack direction= "row" justifyContent= "flex-start" alignItems= "center" spacing= { 2 }>
-            <Avatar variant= "rounded" />
+            <Avatar variant= "rounded" src= { JSON.parse(data.profile) } />
             <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch">
                 <Typography>{ data.fname } { data.lname }</Typography>
                 <Typography variant= "caption">{ (data.user_level).toUpperCase() }</Typography>

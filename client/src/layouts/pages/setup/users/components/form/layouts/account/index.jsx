@@ -42,7 +42,7 @@ const Index = props => {
                         <TextField { ...register('email') } name= "email" variant= "standard" InputProps= {{ disableUnderline: true }} sx= { input } disabled= { type === 'view' } />
                         <Typography variant= "caption" color= "error.dark" sx= {{ textAlign: 'right' }}>{ errors.email?.message }</Typography>
                 </Stack>
-                { !(role === 'superadmin' || role === 'admin') ? <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch">
+                { !(role === 'superadmin' || role === 'admin') || type === 'new' ? <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch">
                     <Typography gutterBottom variant= "body2" color= "#9BA4B5">*Password</Typography>
                     <TextField { ...register('password') } name= "password" type= { !showpass ? 'password' : 'text' } variant= "standard" 
                             InputProps= {{ disableUnderline: true, 
@@ -52,7 +52,7 @@ const Index = props => {
                                     </InputAdornment> }} sx= { input } />
                     <Typography variant= "caption" color= "error.dark" sx= {{ textAlign: 'right' }}>{ errors.password?.message }</Typography>
                 </Stack> : '' }
-                { !(role === 'superadmin' || role === 'admin') ? <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch">
+                { !(role === 'superadmin' || role === 'admin') || type === 'new' ? <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch">
                     <Typography gutterBottom variant= "body2" color= "#9BA4B5">*Confirm Password</Typography>
                     <TextField { ...register('cpassword') } name= "cpassword" type= { !showcpass ? 'password' : 'text' } variant= "standard" 
                             InputProps= {{ disableUnderline: true, 
