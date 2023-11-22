@@ -19,13 +19,12 @@ const container = {
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'stretch',
-    height: '100vh',
     overflow: 'hidden'
 }
 
 const content = {
     width: '100%',
-    height: '100%',
+    height: '100vh',
     overflow: 'hidden',
     transition: 'all 0.2s ease-in-out'
 }
@@ -46,7 +45,7 @@ const Index = () => {
         useGet({ key: ['profile'], request: profile(JSON.parse(atob(_token[1])).id), options: { refetchOnWindowFocus: false }, onSuccess: data => setData(data[0]) });
 
     return (
-        <Container maxWidth= "xl">
+        <Container maxWidth= "xl" >
             { !isFetching ? 
                 <Box>
                     <Navbar />

@@ -1,10 +1,10 @@
 // Libraries
 import { Stack, Typography } from "@mui/material";
 
-// Custom styles
+// Styles
 const title = {
     fontFamily: 'Montserrat Black',
-    fontSize: '1.4rem',
+    fontSize: '1.17rem',
     color: '#394867',
 }
 

@@ -10,9 +10,9 @@ import { successToast, useGet, usePost } from "core/function/global"; // Functio
 import { save, specific, update } from "core/api"; // API
 
 // Constants
-import { cancelbtn, card, content, savebtn, title } from "./index.style"; // Styles
-import Company from "../../company"; // Fields
-import { validation } from "../../index.validation"; // Validation
+import { cancelbtn, card, content, savebtn, title } from "./style"; // Styles
+import Fields from "./fields"; // Fields
+import { validation } from "./validation"; // Validation
 
 const Index = () => {
     const { type, id } = useParams();
@@ -45,7 +45,11 @@ const Index = () => {
             }
         });
 
-    useEffect(() => { setValidation(validation()); reset(); if(id !== undefined) refetch() }, [ reset, setValidation, id, refetch ]);
+    useEffect(() => { 
+        setValidation(validation()); 
+        reset(); 
+        if(id !== undefined) refetch(); 
+    }, [ reset, setValidation, id, refetch ]);
 
     return (
         <Stack sx= { content } spacing= { 4 }>
@@ -58,7 +62,7 @@ const Index = () => {
                 <form autoComplete= "off">
                     <FormBuilder 
                         fields= { 
-                            Company({
+                            Fields({
                                 register: register, 
                                 fetching: isFetching, 
                                 errors: errors, 

@@ -32,13 +32,13 @@ const Subnavs = ({ id }) => {
     const { mutate: nav } = usePost({ request: dropdown, onSuccess: data => setSubmodule(data) });
 
     const navclick = name => { setopen({ left: false }); setactive(name); localStorage.setItem('nav', name); }
-    useEffect(() => { setInterval(() => { nav({ table: 'tbl_sub_module', data: { type: 'nav', id: id }}) }, 1000) } , [ nav, id ]);
+    useEffect(() => { setInterval(() => { nav({ table: 'tbl_modules', data: { type: 'nav', id: id }}) }, 1000) } , [ nav, id ]);
 
     return (
         <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch">
-            { submodule?.map((sub, index) => 
-                    <Typography key= { index } component= { Link } to= { `/${sub.base_url}/${sub.path} `} sx= { active === (sub.name).toLowerCase() ? linkactive : link } 
-                        onClick= { () => navclick((sub.name).toLowerCase()) }>{ (sub.name).charAt(0) + (sub.name).slice(1).toLowerCase() }</Typography> ) }
+            { submodule?.map((mdl, index) => 
+                    <Typography key= { index } component= { Link } to= { `/${mdl.base_url}/${mdl.path} `} sx= { active === (mdl.name).toLowerCase() ? linkactive : link } 
+                        onClick= { () => navclick((mdl.name).toLowerCase()) }>{ (mdl.name).charAt(0) + (mdl.name).slice(1).toLowerCase() }</Typography> ) }
         </Stack>
     );
 }

@@ -29,7 +29,7 @@ const linkactive = {
 
 const Navs = () => {
     const { active, setactive, setopen } = useContext(GlobalCntxt);
-    const { data: module, isFetching: fetching } = useGet({ key: ['mdl_nav'], request: dropdown({ table: 'tbl_module', data: { type: 'nav' } }), options: { refetchInterval: 1000 } });
+    const { data: routes, isFetching: fetching } = useGet({ key: ['rts_nav'], request: dropdown({ table: 'tbl_routes', data: { type: 'nav' } }), options: { refetchInterval: 1000 } });
 
     return (
         <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 }>
@@ -40,19 +40,21 @@ const Navs = () => {
                         onClick= { () => { setopen({ left: false }); setactive('dashboard'); localStorage.setItem('nav', 'dashboard'); } }>Dashboard</Typography>
                 </Stack>
             </Stack>
-            { !fetching && module.length > 0 ?
-                module.map((mdl, index) => 
+            { !fetching && routes.length > 0 ?
+                routes.map((rts, index) => 
                     <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 1 } key= { index }>
-                        <Typography variant= "caption" color= "#9BA4B5">{ (mdl.name).charAt(0) + (mdl.name).slice(1).toLowerCase() }</Typography>
-                        <Subnavs id= { mdl.id } />
+                        <Typography variant= "caption" color= "#9BA4B5">{ (rts.route).charAt(0) + (rts.route).slice(1).toLowerCase() }</Typography>
+                        <Subnavs id= { rts.id } />
                     </Stack> ) : '' }
             <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 1 }>
                 <Typography variant= "caption" color= "#9BA4B5">Setup</Typography>
                 <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch">
-                    <Typography component= { Link } to= "/setup/module" sx= { active === 'module' ? linkactive : link }
-                        onClick= { () => { setopen({ left: false }); setactive('module'); localStorage.setItem('nav', 'module'); } }>Module</Typography>
-                    <Typography component= { Link } to= "/setup/sub-module" sx= { active === 'sub-module' ? linkactive : link }
-                        onClick= { () => { setopen({ left: false }); setactive('sub-module'); localStorage.setItem('nav', 'sub-module'); } }>Sub module</Typography>
+                    <Typography component= { Link } to= "/setup/users" sx= { active === 'users' ? linkactive : link }
+                        onClick= { () => { setopen({ left: false }); setactive('users'); localStorage.setItem('nav', 'users'); } }>Users</Typography>
+                    <Typography component= { Link } to= "/setup/route" sx= { active === 'route' ? linkactive : link }
+                        onClick= { () => { setopen({ left: false }); setactive('route'); localStorage.setItem('nav', 'route'); } }>Route</Typography>
+                    <Typography component= { Link } to= "/setup/modules" sx= { active === 'modules' ? linkactive : link }
+                        onClick= { () => { setopen({ left: false }); setactive('modules'); localStorage.setItem('nav', 'modules'); } }>Modules</Typography>
                 </Stack>
             </Stack>
         </Stack>

@@ -9,8 +9,7 @@ import PropTypes from "prop-types";
 // Core
 import { FormCntxt } from "core/context/Form"; // Context
 
-// Constants
-import { btnicon, btntxt, download, logs, search, upload } from "../index.style"; // Styles
+import { btnicon, btntxt, download, logs, search, upload } from "../style";
 
 const Search = ({ request }) => {
     const { register, setValue, getValues } = useContext(FormCntxt);

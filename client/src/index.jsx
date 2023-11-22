@@ -17,8 +17,8 @@ const root = createRoot(container);
 
 root.render(
     <ThemeProvider theme= { Theme }>
-        <CssBaseline />
+        <CssBaseline /> {/* Para mawala yung default padding and margins sa page, kasi kapag tinanggal to magkakaroon ng default na spaces around the page. */}
         <App />
-        <ToastContainer />
+        <ToastContainer /> {/* Ito naman yung para sa mga toasters natin and mas prefer sya na ilagay  sa pinaka parent component para magamit natin kahit saan. */}
     </ThemeProvider>
 )

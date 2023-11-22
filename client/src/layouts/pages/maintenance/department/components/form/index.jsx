@@ -10,9 +10,9 @@ import { successToast, useGet, usePost } from "core/function/global"; // Functio
 import { save, specific, update } from "core/api"; // API
 
 // Constants
-import { cancelbtn, card, content, savebtn, title } from "./index.style"; // Styles
-import Department from "../../department"; // Fields
-import { validation } from "../../index.validation"; // Validation
+import { cancelbtn, card, content, savebtn, title } from "./style"; // Styles
+import Fields from "./fields"; // Fields
+import { validation } from "./validation"; // Validation
 
 const Index = () => {
     const { type, id } = useParams();
@@ -58,7 +58,7 @@ const Index = () => {
                 <form autoComplete= "off">
                     <FormBuilder 
                         fields= { 
-                            Department({ 
+                            Fields({ 
                                 register: register, 
                                 fetching: isFetching, 
                                 errors: errors, 

@@ -1,5 +1,5 @@
 // Libraries
-import { Box } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import { useContext, useEffect } from "react";
 
 // Core
@@ -7,11 +7,15 @@ import { ListCntxt } from "core/context/List"; // Context
 import { FormCntxt } from "core/context/Form"; // Context
 import { usePost } from "core/function/global"; // Function
 import { look, records } from "core/api"; // API
+import Loader from "core/components/loader/Screen"; // Loader
 
-// Screens
-import Desktop from "../../screens/desktop/List";
-import Tablet from "../../screens/tablet/List";
-import Mobile from "../../screens/mobile/List";
+import { content, history, loader } from "./style"; // Styles
+
+import Title from "./components/Title";
+import Search from "./components/Search";
+import Sort from "./components/Sort";
+import Items from "./components/Items";
+import Logs from "./components/Logs";
 
 const Index = () => {
     const { setlist } = useContext(ListCntxt);
@@ -34,17 +38,25 @@ const Index = () => {
     }, [ register, getValues, record ]);
 
     return (
-        <Box width= "100%">
-            <Box sx= {{ display: { xs: 'none', sm: 'none', md: 'none', lg: 'block' }, transition: 'all 0.2s ease-in-out' }}>
-                <Desktop find= { find } record= { record } fetching= { fetching } finding= { finding } />
-            </Box>
-            <Box sx= {{ display: { xs: 'none', sm: 'block', md: 'block', lg: 'none' }, transition: 'all 0.2s ease-in-out' }}>
-                <Tablet find= { find } record= { record } fetching= { fetching } finding= { finding } />
-            </Box>
-            <Box sx= {{ display: { xs: 'block', sm: 'none', md: 'none', lg: 'none' }, transition: 'all 0.2s ease-in-out' }}>
-                <Mobile find= { find } record= { record } fetching= { fetching } finding= { finding } />
-            </Box>
-        </Box>
+        <Stack direction= "row" justifyContent= "flex-start" alignItems= "flex-start" spacing= { 3 } sx= {{ width: '100%', height: '100%', overflow: 'hidden' }}>
+            <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" sx= { content } spacing= { 5 }>
+                <Title />
+                <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 } sx= {{ height: '100%', overflow: 'hidden' }}>
+                    <Search request= { find } />
+                    <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 } sx= {{ height: '100%', overflow: 'hidden' }}>
+                        <Sort refetch= { record } />
+                        { !fetching && !finding ? <Items /> : <Box sx= { loader }><Loader /></Box> }
+                    </Stack>
+                </Stack>
+            </Stack>
+            <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" sx= { history } spacing= { 1 }>
+                <Stack direction= "row" justifyContent= "space-between" alignItems= "center">
+                    <Typography color= "#9DB2BF" variant= "body2">Logs</Typography>
+                    <Typography color= "#9DB2BF" variant= "body2">View all</Typography>
+                </Stack>
+                <Logs />
+            </Stack>
+        </Stack>
     );
 }
 

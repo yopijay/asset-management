@@ -24,7 +24,7 @@ class Submodule {
                         .select(`sub.*, mdl.base_url AS module`)
                         .join({ table: `tbl_module AS mdl`, condition: `sub.module_id = mdl.id`, type: `LEFT` })
                         .condition(`WHERE sub.id= ${id}`)
-                        .build()).rows; 
+                        .build()).rows;
     }
 
     logs = async data => {

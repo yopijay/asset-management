@@ -3,14 +3,12 @@ import { useContext, useState } from "react";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Stack, Typography } from "@mui/material";
-import PropTypes from "prop-types";
 
 // Core
 import { ListCntxt } from "core/context/List"; // Context
 import { FormCntxt } from "core/context/Form"; // Context
 
-// Constants
-import { orderby } from "../index.style"; // Styles
+import { orderby } from "../style"; // Styles
 
 const Sort = ({ refetch }) => {
     const { sort, setsort, listing, setlisting } = useContext(ListCntxt);
@@ -37,7 +35,5 @@ const Sort = ({ refetch }) => {
         </Stack>
     );
 }
-
-Sort.propTypes = { refetch: PropTypes.func.isRequired }
 
 export default Sort;

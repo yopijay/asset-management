@@ -32,8 +32,8 @@ const Logs = () => {
                                 <Typography variant= "body2" color= "#9DB2BF">{ getdate(new Date(data.date)).day }</Typography>
                             </Stack>
                             { data.action === 'update' ? 
-                                <Typography color= "#526D82">{ (data.action).toUpperCase() } { (data.field).toUpperCase() } OF { data.name } FROM { data.previous } TO { data.current }</Typography> :
-                                <Typography color= "#526D82">{ (data.action).toUpperCase() } { (data.name).toUpperCase() }</Typography>}
+                                <Typography color= "#526D82">{ (data.action).toUpperCase() } { (data.field).toUpperCase() } OF { data.route } FROM { data.previous } TO { data.current }</Typography> :
+                                <Typography color= "#526D82">{ (data.action).toUpperCase() } { (data.route).toUpperCase() }</Typography>}
                         </Stack>
                     )) : <Typography textAlign= "center" variant= "body2" color= "#9DB2BF">No record/s found!</Typography> : '' }
         </Stack>
