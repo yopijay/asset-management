@@ -10,8 +10,8 @@ import React from "react";
 const Company = React.lazy(() => import('layouts/pages/maintenance/company'));
 const Department = React.lazy(() => import('layouts/pages/maintenance/department'));
 const Position = React.lazy(() => import('layouts/pages/maintenance/position'));
-// const Category = React.lazy(() => import('layouts/pages/maintenance/category'));
-// const Brand = React.lazy(() => import('layouts/pages/maintenance/brand'));
+const Category = React.lazy(() => import('layouts/pages/maintenance/category'));
+const Brand = React.lazy(() => import('layouts/pages/maintenance/brand'));
 
 // Setup
 const Users = React.lazy(() => import('layouts/pages/setup/users'));
@@ -31,9 +31,8 @@ export const Components = ([
     { path: '/maintenance/company', name: 'company', title: 'Company', component: <Company /> },
     { path: '/maintenance/department', name: 'department', title: 'Department', component: <Department /> },
     { path: '/maintenance/position', name: 'position', title: 'Position', component: <Position /> },
-    // { path: '/maintenance/employee', name: 'employee', title: 'Employee', component: <Employee /> },
-    // { path: '/maintenance/category', name: 'category', title: 'Category', component: <Category /> },
-    // { path: '/maintenance/brands', name: 'brands', title: 'Brands', component: <Brand /> },
+    { path: '/maintenance/category', name: 'category', title: 'Category', component: <Category /> },
+    { path: '/maintenance/brands', name: 'brands', title: 'Brands', component: <Brand /> },
 
     // Setup
     { path: '/setup/users', name: 'users', title: 'Users', component: <Users /> },

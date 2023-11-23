@@ -1,21 +1,19 @@
 // Libraries
 import { useParams } from "react-router-dom";
-import PropTypes from "prop-types";
 
 // Core
 import { formatter, useGet } from "core/function/global"; // Function
-import { dropdown, series } from "core/api"; // API
+import { series } from "core/api"; // API
 
-const Brand = props => {
+const Fields = props => {
     const { type } = useParams();
-    const { register, fetching, errors, control, setValue, setError, getValues } = props;
+    const { register, fetching, errors, control, setValue, getValues, setError } = props;
 
-    const { data: categories, isFetching: ctgfetching } = useGet({ key: ['ctg_dd'], request: dropdown({ table: 'tbl_category', data: {} }), options: { refetchOnWindowFocus: false } });
-    useGet({ key: ['brd_series'], request: series('tbl_brands'), options: {}, onSuccess: data => { if(type === 'new') setValue('series_no', `BRD-${formatter(parseInt(data.length) + 1, 7)}`) } });
+    useGet({ key: ['ctg_series'], request: series('tbl_category'), options: {}, onSuccess: data => { if(type === 'new') setValue('series_no', `CTG-${formatter(parseInt(data.length) + 1, 7)}`) } });
 
     return ([
         {
-            grid: { xs: 12, sm: 12, md: 4 },
+            grid: { xs: 12, md: 3 },
             props: {
                 register: register,
                 label: '*Series no.',
@@ -28,25 +26,25 @@ const Brand = props => {
             type: 'textfield'
         },
         {
-            grid: { xs: 12, sm: 6, md: 3 },
+            grid: { xs: 12, md: 3 },
             props: {
                 control: control,
-                name: 'category_id',
-                label: '*Category',
+                name: 'type',
+                label: '*Type',
                 disabled: type !== 'new',
                 fetching: fetching,
-                options: !ctgfetching ? categories : [],
-                onChange: (e, item) => { setError('category_id', { message: '' }); setValue('category_id', item.id); },
+                options: [{ id: '', name: '-- SELECT AN ITEM BELOW --' }, { id: 'assets', name: 'ASSETS' }, { id: 'products', name: 'PRODUCTS' }],
+                onChange: (e, item) => { setError('type', { message: '' }); setValue('type', item.id); },
                 errors: errors,
                 getValues: getValues
             },
             type: 'dropdown'
         },
         {
-            grid: { xs: 12, sm: 6, md: 5 },
+            grid: { xs: 12, md: 6 },
             props: {
                 register: register,
-                label: '*Brand',
+                label: '*Name',
                 fetching: fetching,
                 disabled: type === 'view',
                 name: 'name',
@@ -71,14 +69,4 @@ const Brand = props => {
     ]);
 }
 
-Brand.propTypes = {
-    register: PropTypes.func.isRequired,
-    fetching: PropTypes.bool.isRequired,
-    errors: PropTypes.object.isRequired,
-    control: PropTypes.node.isRequired,
-    getValues: PropTypes.array.isRequired,
-    setValue: PropTypes.func.isRequired,
-    setError: PropTypes.func.isRequired
-}
-
-export default Brand;
+export default Fields;

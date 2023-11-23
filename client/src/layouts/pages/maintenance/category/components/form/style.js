@@ -1,21 +1,13 @@
 export const content = {
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-    alignItems: 'stretch',
     width: '100%',
-    height: '100vh',
-    padding: {
-        xs: '90px 0 20px 0',
-        sm: '80px 0 20px 0',
-        lg: '100px 20px 20px 20px'
-    },
+    height: '100%',
     overflowY: 'scroll',
     '&::-webkit-scrollbar': { display: 'none' }
 }
 
 export const title = {
     fontFamily: 'Montserrat Black',
-    fontSize: '1.4rem',
+    fontSize: '1.17rem',
     color: '#394867',
 }
 

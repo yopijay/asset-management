@@ -38,7 +38,7 @@ class Category {
                 
                 return _count;
             default: return (await new Builder(`tbl_category AS ctg`)
-                                        .select(`ctg.id, ctg.series_no, ctg.name, ctg.status, CONCAT(cb.lname, ', ', cb.fname, ' ', cb.mname) AS created_by, ctg.date_created`)
+                                        .select(`ctg.id, ctg.series_no, ctg.type, ctg.name, ctg.status, CONCAT(cb.lname, ', ', cb.fname, ' ', cb.mname) AS created_by, ctg.date_created`)
                                         .join({ table: `tbl_employee AS cb`, condition: `cb.user_id = ctg.created_by`, type: `LEFT` })
                                         .condition(`${data.searchtxt !== '' ? `WHERE ctg.series_no LIKE '%${(data.searchtxt).toUpperCase()}%' OR ctg.name LIKE '%${(data.searchtxt).toUpperCase()}%'` : ''} 
                                                             ORDER BY ctg.${data.orderby} ${(data.sort).toUpperCase()}`)
@@ -48,7 +48,7 @@ class Category {
 
     search = async data => {
         return (await new Builder(`tbl_category AS ctg`)
-                        .select(`ctg.id, ctg.series_no, ctg.name, ctg.status, CONCAT(cb.lname, ', ', cb.fname, ' ', cb.mname) AS created_by, ctg.date_created`)
+                        .select(`ctg.id, ctg.series_no, ctg.type, ctg.name, ctg.status, CONCAT(cb.lname, ', ', cb.fname, ' ', cb.mname) AS created_by, ctg.date_created`)
                         .join({ table: `tbl_employee AS cb`, condition: `cb.user_id = ctg.created_by`, type: `LEFT` })
                         .condition(`${data.searchtxt !== '' ?
                                                 `WHERE ctg.series_no LIKE '%${(data.searchtxt).toUpperCase()}%' OR ctg.name LIKE '%${(data.searchtxt).toUpperCase()}%'` : ''} 
@@ -69,8 +69,8 @@ class Category {
 
         if(!(errors.length > 0)) {
             let ctg = (await new Builder(`tbl_category`)
-                            .insert({ columns: `series_no, name, status, created_by, date_created`, 
-                                            values: `'${(data.series_no).toUpperCase()}', '${(data.name).toUpperCase()}', ${data.status ? 1 : 0}, ${user.id}, '${date}'` })
+                            .insert({ columns: `series_no, type, name, status, created_by, date_created`, 
+                                            values: `'${(data.series_no).toUpperCase()}', '${data.type}', '${(data.name).toUpperCase()}', ${data.status ? 1 : 0}, ${user.id}, '${date}'` })
                             .condition(`RETURNING id`)
                             .build()).rows[0];
 

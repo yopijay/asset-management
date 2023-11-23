@@ -10,9 +10,9 @@ import { successToast, useGet, usePost } from "core/function/global"; // Functio
 import { save, specific, update } from "core/api"; // API
 
 // Constants
-import { cancelbtn, card, content, savebtn, title } from "./index.style"; // Styles
-import Category from "../../category"; // Fields
-import { validation } from "../../index.validation"; // Validation
+import { cancelbtn, card, content, savebtn, title } from "./style"; // Styles
+import Fields from "./fields"; // Fields
+import { validation } from "./validation"; // Validation
 
 const Index = () => {
     const { type, id } = useParams();
@@ -45,7 +45,11 @@ const Index = () => {
             }
         });
 
-    useEffect(() => { setValidation(validation()); reset(); if(id !== undefined) refetch() }, [ reset, setValidation, id, refetch ]);
+    useEffect(() => {
+        setValidation(validation()); 
+        reset(); 
+        if(id !== undefined) refetch() 
+    }, [ type, setValue, reset, setValidation, id, refetch ]);
 
     return (
         <Stack sx= { content } spacing= { 4 }>
@@ -58,13 +62,14 @@ const Index = () => {
                 <form autoComplete= "off">
                     <FormBuilder 
                         fields= { 
-                            Category({ 
+                            Fields({ 
                                 register: register, 
                                 fetching: isFetching, 
                                 errors: errors, 
                                 control: control, 
                                 setValue: setValue,
-                                getValues: getValues 
+                                getValues: getValues,
+                                setError: setError
                             }) 
                         } />
                 </form>
@@ -75,6 +80,7 @@ const Index = () => {
                     let errors = [];
                     data['token'] = (sessionStorage.getItem('token')).split('.')[1];
                     
+                    if(!data.type) { errors.push({ name: 'type', message: 'This field is required!' }); }
                     if(!(errors.length > 0)) {
                         if(type === 'new') { saving({ table: 'tbl_category', data: data }); }
                         else { updating({ table: 'tbl_category', data: data }); }

@@ -5,14 +5,11 @@ import { Stack, Typography } from "@mui/material";
 import { history } from "core/api"; // API
 import { getdate, useGet } from "core/function/global"; // Function
 
-// Constants
+// Styles
 const logs = {
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-    alignItems: 'stretch',
     backgroundColor: '#FFFFFF',
+    padding: '16px',
     borderRadius: '8px',
-    padding: '15px',
     border: 'solid 1px #F1F6F9',
     overflowY: 'scroll',
     '&::-webkit-scrollbar': { display: 'none' }

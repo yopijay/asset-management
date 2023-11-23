@@ -9,8 +9,7 @@ import PropTypes from "prop-types";
 import { ListCntxt } from "core/context/List"; // Context
 import { FormCntxt } from "core/context/Form"; // Context
 
-// Constants
-import { orderby } from "../index.style"; // Styles
+import { orderby } from "../style"; // Styles
 
 const Sort = ({ refetch }) => {
     const { sort, setsort, listing, setlisting } = useContext(ListCntxt);

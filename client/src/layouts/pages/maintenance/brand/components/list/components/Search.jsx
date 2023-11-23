@@ -4,13 +4,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
-import PropTypes from "prop-types";
 
 // Core
 import { FormCntxt } from "core/context/Form"; // Context
 
-// Constants
-import { btnicon, btntxt, download, logs, search, upload } from "../index.style"; // Styles
+import { btnicon, btntxt, download, logs, search, upload } from "../style";
 
 const Search = ({ request }) => {
     const { register, setValue, getValues } = useContext(FormCntxt);
@@ -34,7 +32,5 @@ const Search = ({ request }) => {
         </Stack>
     );
 }
-
-Search.propTypes = { request: PropTypes.func.isRequired }
 
 export default Search;

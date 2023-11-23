@@ -1,20 +1,20 @@
 // Libraries
 import { useParams } from "react-router-dom";
-import PropTypes from "prop-types";
 
 // Core
 import { formatter, useGet } from "core/function/global"; // Function
-import { series } from "core/api"; // API
+import { dropdown, series } from "core/api"; // API
 
-const Category = props => {
+const Fields = props => {
     const { type } = useParams();
-    const { register, fetching, errors, control, setValue, getValues } = props;
+    const { register, fetching, errors, control, setValue, setError, getValues } = props;
 
-    useGet({ key: ['ctg_series'], request: series('tbl_category'), options: {}, onSuccess: data => { if(type === 'new') setValue('series_no', `CTG-${formatter(parseInt(data.length) + 1, 7)}`) } });
+    const { data: categories, isFetching: ctgfetching } = useGet({ key: ['ctg_dd'], request: dropdown({ table: 'tbl_category', data: {} }), options: { refetchOnWindowFocus: false } });
+    useGet({ key: ['brd_series'], request: series('tbl_brands'), options: {}, onSuccess: data => { if(type === 'new') setValue('series_no', `BRD-${formatter(parseInt(data.length) + 1, 7)}`) } });
 
     return ([
         {
-            grid: { xs: 12, md: 4 },
+            grid: { xs: 12, sm: 12, md: 4 },
             props: {
                 register: register,
                 label: '*Series no.',
@@ -27,10 +27,25 @@ const Category = props => {
             type: 'textfield'
         },
         {
-            grid: { xs: 12, md: 8 },
+            grid: { xs: 12, sm: 6, md: 3 },
+            props: {
+                control: control,
+                name: 'category_id',
+                label: '*Category',
+                disabled: type !== 'new',
+                fetching: fetching,
+                options: !ctgfetching ? categories : [],
+                onChange: (e, item) => { setError('category_id', { message: '' }); setValue('category_id', item.id); },
+                errors: errors,
+                getValues: getValues
+            },
+            type: 'dropdown'
+        },
+        {
+            grid: { xs: 12, sm: 6, md: 5 },
             props: {
                 register: register,
-                label: '*Name',
+                label: '*Brand',
                 fetching: fetching,
                 disabled: type === 'view',
                 name: 'name',
@@ -55,13 +70,4 @@ const Category = props => {
     ]);
 }
 
-Category.propTypes = {
-    register: PropTypes.func.isRequired,
-    fetching: PropTypes.bool.isRequired,
-    errors: PropTypes.object.isRequired,
-    control: PropTypes.node.isRequired,
-    getValues: PropTypes.array.isRequired,
-    setValue: PropTypes.func.isRequired
-}
-
-export default Category;
+export default Fields;
