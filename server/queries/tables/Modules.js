@@ -26,7 +26,7 @@ class Modules {
                         .select(`mdl.id, mdl.series_no, rts.route, rts.base_url AS base_url, mdl.name, mdl.path, mdl.status,
                                         CONCAT(cb.lname, ', ', cb.fname, ' ', cb.mname) AS created_by, mdl.date_created`)
                         .join({ table: `tbl_routes AS rts`, condition: `mdl.route_id = rts.id`, type: `LEFT` })
-                        .join({ table: `tbl_employee AS cb`, condition: `cb.user_id = mdl.created_by`, type: `LEFT` })
+                        .join({ table: `tbl_users_info AS cb`, condition: `cb.user_id = mdl.created_by`, type: `LEFT` })
                         .condition(`${data.searchtxt !== '' ? `WHERE mdl.series_no LIKE '%${(data.searchtxt).toUpperCase()}%' OR mdl.name LIKE '%${(data.searchtxt).toUpperCase()}%'
                                                 OR mdl.name LIKE '%${(data.searchtxt).toUpperCase()}%'` : ''} ORDER BY mdl.${data.orderby} ${(data.sort).toUpperCase()}`)
                         .build()).rows;
@@ -37,7 +37,7 @@ class Modules {
                         .select(`mdl.id, mdl.series_no, rts.route, rts.base_url AS base_url, mdl.name, mdl.path, mdl.status,
                                         CONCAT(cb.lname, ', ', cb.fname, ' ', cb.mname) AS created_by, mdl.date_created`)
                         .join({ table: `tbl_routes AS rts`, condition: `mdl.route_id = rts.id`, type: `LEFT` })
-                        .join({ table: `tbl_employee AS cb`, condition: `cb.user_id = mdl.created_by`, type: `LEFT` })
+                        .join({ table: `tbl_users_info AS cb`, condition: `cb.user_id = mdl.created_by`, type: `LEFT` })
                         .condition(`${data.searchtxt !== '' ? `WHERE mdl.series_no LIKE '%${(data.searchtxt).toUpperCase()}%' OR mdl.name LIKE '%${(data.searchtxt).toUpperCase()}%'
                                                 OR mdl.name LIKE '%${(data.searchtxt).toUpperCase()}%'` : ''} ORDER BY mdl.${data.orderby} ${(data.sort).toUpperCase()}`)
                         .build()).rows;

@@ -1,8 +1,8 @@
 // Libraries
 import React from "react";
 
-// Assets & Supplies
-// const Stocks = React.lazy(() => import('layouts/pages/assets-supplies/stocks'));
+// Assets
+const Stocks = React.lazy(() => import('layouts/pages/assets/stocks'));
 // const Assets = React.lazy(() => import('layouts/pages/assets-supplies/assets'));
 // const Issuance = React.lazy(() => import('layouts/pages/assets-supplies/issuance'));
 
@@ -22,8 +22,8 @@ const Modules = React.lazy(() => import('layouts/pages/setup/modules'));
 export const Components = ([
     { path: '/', name: 'dashboard', title: 'Dashboard', component: 'DASHBOARD' },
     
-    // Assets & Supplies
-    // { path: '/assets-supplies/stocks', name: 'stocks', title: 'Stocks', component: <Stocks /> },
+    // Assets
+    { path: '/assets/stocks', name: 'stocks', title: 'Stocks', component: <Stocks /> },
     // { path: '/assets-supplies/assets', name: 'assets', title: 'Assets', component: <Assets /> },
     // { path: '/assets-supplies/issuance', name: 'issuance', title: 'Issuance', component: <Issuance /> },
 

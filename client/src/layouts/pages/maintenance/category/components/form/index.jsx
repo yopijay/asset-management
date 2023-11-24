@@ -46,9 +46,10 @@ const Index = () => {
         });
 
     useEffect(() => {
-        setValidation(validation()); 
-        reset(); 
-        if(id !== undefined) refetch() 
+        setValue('type', '');
+        setValidation(validation());
+        reset();
+        if(id !== undefined) refetch();
     }, [ type, setValue, reset, setValidation, id, refetch ]);
 
     return (

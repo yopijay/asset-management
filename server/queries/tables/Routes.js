@@ -17,7 +17,7 @@ class Routes {
     list = async data => {
         return (await new Builder(`tbl_routes AS rts`)
                         .select(`rts.id, rts.series_no, rts.route, rts.base_url, rts.description, rts.status, CONCAT(cb.lname, ', ', cb.fname, ' ', cb.mname) AS created_by, rts.date_created`)
-                        .join({ table: `tbl_employee AS cb`, condition: `cb.user_id = rts.created_by`, type: `LEFT` })
+                        .join({ table: `tbl_users_info AS cb`, condition: `cb.user_id = rts.created_by`, type: `LEFT` })
                         .condition(`${data.searchtxt !== '' ? `WHERE rts.series_no LIKE '%${(data.searchtxt).toUpperCase()}%' 
                                                 OR rts.route LIKE '%${(data.searchtxt).toUpperCase()}%'` : ''} ORDER BY rts.${data.orderby} ${(data.sort).toUpperCase()}`)
                         .build()).rows;
@@ -26,7 +26,7 @@ class Routes {
     search = async data => {
         return (await new Builder(`tbl_routes AS rts`)
                         .select(`rts.id, rts.series_no, rts.route, rts.base_url, rts.description, rts.status, CONCAT(cb.lname, ', ', cb.fname, ' ', cb.mname) AS created_by, rts.date_created`)
-                        .join({ table: `tbl_employee AS cb`, condition: `cb.user_id = rts.created_by`, type: `LEFT` })
+                        .join({ table: `tbl_users_info AS cb`, condition: `cb.user_id = rts.created_by`, type: `LEFT` })
                         .condition(`${data.searchtxt !== '' ? `WHERE rts.series_no LIKE '%${(data.searchtxt).toUpperCase()}%' 
                                                 OR rts.route LIKE '%${(data.searchtxt).toUpperCase()}%'` : ''} ORDER BY rts.${data.orderby} ${(data.sort).toUpperCase()}`)
                         .build()).rows;

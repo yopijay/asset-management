@@ -20,7 +20,7 @@ class Position {
                             CONCAT(cb.lname, ', ', cb.fname, ' ', cb.mname) AS created_by, pst.date_created`)
                         .join({ table: `tbl_company AS cmp`, condition: `cmp.id = pst.company_id`, type: `LEFT` })
                         .join({ table: `tbl_department AS dpt`, condition: `dpt.id = pst.department_id`, type: `LEFT` })
-                        .join({ table: `tbl_employee AS cb`, condition: `cb.user_id = pst.created_by`, type: `LEFT` })
+                        .join({ table: `tbl_users_info AS cb`, condition: `cb.user_id = pst.created_by`, type: `LEFT` })
                         .condition(`${data.searchtxt !== '' ? `WHERE pst.series_no LIKE '%${(data.searchtxt).toUpperCase()}%' or pst.name LIKE '%${(data.searchtxt).toUpperCase()}%'
                                                 OR cmp.name LIKE '%${(data.searchtxt).toUpperCase()}%' OR dpt.name LIKE '%${(data.searchtxt).toUpperCase()}%'` : ''} 
                                             ORDER BY pst.${data.orderby} ${(data.sort).toUpperCase()}`)
@@ -33,7 +33,7 @@ class Position {
                             CONCAT(cb.lname, ', ', cb.fname, ' ', cb.mname) AS created_by, pst.date_created`)
                         .join({ table: `tbl_company AS cmp`, condition: `cmp.id = pst.company_id`, type: `LEFT` })
                         .join({ table: `tbl_department AS dpt`, condition: `dpt.id = pst.department_id`, type: `LEFT` })
-                        .join({ table: `tbl_employee AS cb`, condition: `cb.user_id = pst.created_by`, type: `LEFT` })
+                        .join({ table: `tbl_users_info AS cb`, condition: `cb.user_id = pst.created_by`, type: `LEFT` })
                         .condition(`${data.searchtxt !== '' ? `WHERE pst.series_no LIKE '%${(data.searchtxt).toUpperCase()}%' or pst.name LIKE '%${(data.searchtxt).toUpperCase()}%'
                                                 OR cmp.name LIKE '%${(data.searchtxt).toUpperCase()}%' OR dpt.name LIKE '%${(data.searchtxt).toUpperCase()}%'` : ''} 
                                             ORDER BY pst.${data.orderby} ${(data.sort).toUpperCase()}`)
