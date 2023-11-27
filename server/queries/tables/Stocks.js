@@ -26,53 +26,46 @@ class Stocks {
 
     list = async data => {
         let stcks = [];
-        let ctg = (await new Builder(`tbl_category`).select().condition(`WHERE type= 'assets' AND status= 1`).build()).rows;
+        let ctg = [];
+        let brd = [];
+        
+        switch(data.type) {
+            case 'per-category':
+                ctg = (await new Builder(`tbl_category`).select().condition(`WHERE type= 'assets' AND name= '${data.category}'`).build()).rows;
+                brd = (await new Builder(`tbl_brands`).select().condition(`WHERE category_id= ${ctg[0].id} AND name= '${data.brand}'`).build()).rows;
+                
+                stcks = (await new Builder(`tbl_stocks AS stck`)
+                                .select()
+                                .condition(`WHERE stck.category_id= ${ctg[0].id} AND stck.brand_id= ${brd[0].id} 
+                                                    ${data.searchtxt !== '' ? `AND (stck.series_no LIKE '%${(data.searchtxt).toUpperCase()}%')) ` : ''}
+                                                    ORDER BY stck.${data.orderby} ${(data.sort).toUpperCase()}`)
+                                .build()).rows;
+                break;
 
-        for(let countctg = 0; countctg < ctg.length; countctg++) {
-            let perbrd = [];
+            default: 
+                ctg = (await new Builder(`tbl_category`).select().condition(`WHERE type= 'assets' AND status= 1`).build()).rows;
 
-            let brd = (await new Builder(`tbl_brands`).select().condition(`WHERE category_id= ${ctg[countctg].id} AND status= 1`).build()).rows;
-            
-            for(let countbrd = 0; countbrd < brd.length; countbrd++) {
-                let stck = (await new Builder(`tbl_stocks`).select().condition(`WHERE category_id= ${ctg[countctg].id} AND brand_id= ${brd[countbrd].id}`).build()).rows;
+                for(let countctg = 0; countctg < ctg.length; countctg++) {
+                    let perbrd = [];
 
-                perbrd.push({ brand: brd[countbrd].name, count: stck.length });
-            }
+                    let brd = (await new Builder(`tbl_brands`).select().condition(`WHERE category_id= ${ctg[countctg].id} AND status= 1`).build()).rows;
+                    
+                    for(let countbrd = 0; countbrd < brd.length; countbrd++) {
+                        let stck = (await new Builder(`tbl_stocks`).select().condition(`WHERE category_id= ${ctg[countctg].id} AND brand_id= ${brd[countbrd].id}`).build()).rows;
 
-            stcks.push({ category: ctg[countctg].name, brands: perbrd });
+                        perbrd.push({ brand: brd[countbrd].name, count: stck.length });
+                    }
+
+                    stcks.push({ category: ctg[countctg].name, brands: perbrd });
+                }
         }
+        // if(data.category) {
+        //     console.log(data);
+        // }
+        // else {
+        // }
 
         return(stcks);
-
-        // switch(data.type) {
-        //     case 'per-category':
-        //         let ctg = (await new Builder(`tbl_category`).select().condition(`WHERE name= '${((data.category).replace('-', ' ')).toUpperCase()}'`).build()).rows[0];
-
-        //         return (await new Builder(`tbl_stocks AS stck`)
-        //                         .select(`stck.id, stck.series_no, stck.status, info.serial_no, info.model, ctg.name AS category, brd.name AS brand, stck.date_created,
-        //                                         CONCAT(it.lname, ', ', it.fname) AS issued_to, stck.issued_date, CONCAT(ib.lname, ', ', ib.fname) AS issued_by`)
-        //                         .join({ table: `tbl_stocks_info AS info`, condition: `info.stock_id = stck.id`, type: `LEFT` })
-        //                         .join({ table: `tbl_category AS ctg`, condition: `stck.category_id = ctg.id`, type: `LEFT` })
-        //                         .join({ table: `tbl_brands AS brd`, condition: `stck.brand_id = brd.id`, type: `LEFT` })
-        //                         .join({ table: `tbl_users_info AS it`, condition: `stck.issued_to = it.user_id`, type: `LEFT` })
-        //                         .join({ table: `tbl_users_info AS ib`, condition: `stck.issued_by = ib.user_id`, type: `LEFT` })
-        //                         .condition(`WHERE stck.category_id= ${ctg.id} ${data.searchtxt !== '' ? 
-        //                                             `AND stck.series_no LIKE '%${(data.searchtxt).toUpperCase()}%' OR info.serial_no LIKE '%${(data.searchtxt).toUpperCase()}%'
-        //                                             OR info.model LIKE '%${(data.searchtxt).toUpperCase()}%'` : ''} ORDER BY stck.${(data.orderby).toUpperCase()} ${(data.sort).toUpperCase()}`)
-        //                         .build()).rows;
-        //     default: 
-        //         return (await new Builder(`tbl_stocks AS stck`)
-        //                         .select(`stck.id, stck.series_no, stck.status, info.serial_no, info.model, ctg.name AS category, brd.name AS brand, stck.date_created,
-        //                                         CONCAT(it.lname, ', ', it.fname) AS issued_to, stck.issued_date, CONCAT(ib.lname, ', ', ib.fname) AS issued_by`)
-        //                         .join({ table: `tbl_stocks_info AS info`, condition: `info.stock_id = stck.id`, type: `LEFT` })
-        //                         .join({ table: `tbl_category AS ctg`, condition: `stck.category_id = ctg.id`, type: `LEFT` })
-        //                         .join({ table: `tbl_brands AS brd`, condition: `stck.brand_id = brd.id`, type: `LEFT` })
-        //                         .join({ table: `tbl_users_info AS it`, condition: `stck.issued_to = it.user_id`, type: `LEFT` })
-        //                         .join({ table: `tbl_users_info AS ib`, condition: `stck.issued_by = ib.user_id`, type: `LEFT` })
-        //                         .condition(`${data.searchtxt !== '' ? `WHERE stck.series_no LIKE '%${(data.searchtxt).toUpperCase()}%' OR info.serial_no LIKE '%${(data.searchtxt).toUpperCase()}%'
-        //                                             OR info.model LIKE '%${(data.searchtxt).toUpperCase()}%'` : ''} ORDER BY stck.${(data.orderby).toUpperCase()} ${(data.sort).toUpperCase()}`)
-        //                         .build()).rows;
-        // }
     }
 
     search = async data => {

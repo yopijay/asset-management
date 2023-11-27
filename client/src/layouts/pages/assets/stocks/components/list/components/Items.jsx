@@ -6,6 +6,7 @@ import { useContext } from "react";
 import { ListCntxt } from "core/context/List";
 
 import { title } from "../style";
+import { Link } from "react-router-dom";
 
 const Items = () => {
     const { list } = useContext(ListCntxt);
@@ -19,8 +20,10 @@ const Items = () => {
                         <Box>
                             <Grid container direction= "row" justifyContent= "flex-start" alignItems= "center" spacing= { 3 }>
                                 { (data.brands).map((brd, index) => 
-                                    <Grid item xs= { 6 } sm= { 4 } md= { 3 } key= { index }>
-                                        <Stack direction= "row" justifyContent= "flex-start" alignItems= "stretch" sx= {{ backgroundColor: '#ffffff', overflow: 'hidden', borderRadius: '8px' }}>
+                                    <Grid item xs= { 12 } sm= { 4 } md= { 3 } key= { index }>
+                                        <Stack direction= "row" justifyContent= "flex-start" alignItems= "stretch" 
+                                            sx= {{ backgroundColor: '#ffffff', overflow: 'hidden', borderRadius: '8px', textDecoration: 'none', color: 'inherit' }}
+                                            component= { Link } to= { `/assets/stocks/${((data.category).toLowerCase()).replace(' ', '-')}/${((brd.brand).toLowerCase()).replace(' ', '-')}` }>
                                             <Typography sx= {{ flexGrow: 1, padding: '16px 8px' }}>{ brd.brand }</Typography>
                                             <Typography sx= {{ backgroundColor: '#DFDFDE', padding: '16px 20px', fontWeight: 'bold' }}>{ brd.count }</Typography>
                                         </Stack>

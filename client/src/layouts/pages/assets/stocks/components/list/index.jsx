@@ -20,9 +20,11 @@ const Index = () => {
     const { mutate: record, isLoading: fetching } = usePost({ request: records, onSuccess: data => setlist(data)});
 
     useEffect(() => {
+        register('type', { value: 'dashboard' });
         register('token', { value: (sessionStorage.getItem('token')).split('.')[1] });
 
         let data = getValues();
+        data['type'] = 'dashboard';
         data['token'] = (sessionStorage.getItem('token')).split('.')[1];
 
         record({ table: 'tbl_stocks', data: data });
