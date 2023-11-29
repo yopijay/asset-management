@@ -8,9 +8,12 @@ class Category {
     specific = async id => { return (await new Builder(`tbl_category`).select().condition(`WHERE id= ${id}`).build()).rows; }
 
     dropdown = async data => {
-        switch(data.type) {
-            case 'nav': return [];
-            default: return [{ id: 0, name: '-- SELECT AN ITEM BELOW --' }]
+        if(data.type) {
+            return [{ id: 0, name: '-- SELECT AN ITEM BELOW --' }]
+                            .concat((await new Builder(`tbl_category`).select(`id, name`).condition(`WHERE type= '${data.type}' AND status= 1 ORDER BY name ASC`).build()).rows);
+        }
+        else {
+            return [{ id: 0, name: '-- SELECT AN ITEM BELOW --' }]
                             .concat((await new Builder(`tbl_category`).select(`id, name`).condition(`WHERE status= 1 ORDER BY name ASC`).build()).rows);
         }
     }

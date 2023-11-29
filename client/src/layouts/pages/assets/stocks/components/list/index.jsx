@@ -1,5 +1,5 @@
 // Libraries
-import { Box, Stack } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import { useContext, useEffect } from "react";
 
 // Core
@@ -9,10 +9,13 @@ import { usePost } from "core/function/global"; // Functions
 import { records } from "core/api"; // API
 import Loader from "core/components/loader/Screen"; // Loader
 
-import { content, loader } from "./style"; // Styles
+import { btnicon, btntxt, content, loader } from "./style"; // Styles
 
 import Title from "./components/Title";
 import Items from "./components/Items";
+import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 
 const Index = () => {
     const { setlist } = useContext(ListCntxt);
@@ -20,11 +23,11 @@ const Index = () => {
     const { mutate: record, isLoading: fetching } = usePost({ request: records, onSuccess: data => setlist(data)});
 
     useEffect(() => {
-        register('type', { value: 'dashboard' });
+        register('mode', { value: 'dashboard' });
         register('token', { value: (sessionStorage.getItem('token')).split('.')[1] });
 
         let data = getValues();
-        data['type'] = 'dashboard';
+        data['mode'] = 'dashboard';
         data['token'] = (sessionStorage.getItem('token')).split('.')[1];
 
         record({ table: 'tbl_stocks', data: data });
@@ -35,7 +38,13 @@ const Index = () => {
             <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" sx= { content } spacing= { 5 }>
                 <Title />
                 <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 } sx= {{ height: '100%', overflow: 'hidden' }}>
-                    { !fetching ? <Items /> : <Box sx= { loader }><Loader /></Box> }
+                    <Stack direction= "row" justifyContent= "flex-end" alignItems= "center">
+                        <Typography component= { Link } to= "/assets/stocks/form/new" sx= { btnicon }><FontAwesomeIcon icon= { solid('plus') } /></Typography>
+                        <Typography component= { Link } to= "/assets/stocks/form/new" sx= { btntxt }>New Stocks</Typography>
+                    </Stack>
+                    <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 }  sx= {{ height: '100%', overflow: 'hidden' }}>
+                        { !fetching ? <Items /> : <Box sx= { loader }><Loader /></Box> }
+                    </Stack>
                 </Stack>
             </Stack>
         </Stack>

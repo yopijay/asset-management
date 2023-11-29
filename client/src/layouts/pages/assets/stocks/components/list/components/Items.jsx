@@ -13,8 +13,8 @@ const Items = () => {
 
     return (
         <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" sx= {{ overflowY: 'scroll', '&::-webkit-scrollbar': { display: 'none' } }} spacing= { 5 }>
-            { list.length > 0 ? 
-                list.map((data, index) => 
+            { list?.length > 0 ? 
+                list?.map((data, index) => 
                     <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 } key= { index }>
                         <Typography sx= { title }>{ data.category }</Typography>
                         <Box>
