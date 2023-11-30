@@ -150,7 +150,7 @@ class Stocks {
                 case 'laptop': resolve(await new Laptop(data).update(stck)); break;
                 case 'system_unit': resolve(await new SystemUnit(data).update(stck)); break;
                 case 'monitor': resolve(await new Monitor(data).update(stck)); break;
-                // case 'toner': resolve(await new Toner(data).update(stck)); break;
+                case 'toner': resolve(await new Toner(data).update(stck)); break;
                 // case 'mouse': resolve(await new Mouse(data).update(stck)); break;
                 // case 'keyboard': resolve(await new Keyboard(data).update(stck)); break;
             }
