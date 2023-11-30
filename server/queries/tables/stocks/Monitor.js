@@ -7,12 +7,11 @@ class Monitor {
 
     save = async id => {
         await new Builder(`tbl_stocks_info`)
-            .insert({ columns: `stock_id, serial_no, model, color, power_supply, warranty, hdmi, vga, dvi, date_received, panel, resolution`, 
+            .insert({ columns: `stocks_id, serial_no, model, power_supply, warranty, hdmi, vga, dvi, resolution, refresh_rate, panel`, 
                             values: `${id}, ${(this.data).serial_no !== '' ? `'${((this.data).serial_no).toUpperCase()}'` : null}, ${(this.data).model !== '' ? `'${((this.data).model).toUpperCase()}'` : null},
-                                            ${(this.data).color !== '' ? `'${((this.data).color).toUpperCase()}'` : null}, ${(this.data).power_supply !== '' ? `'${((this.data).power_supply).toUpperCase()}'` : null},
-                                            ${(this.data).warranty !== '' ? `'${((this.data).warranty).toUpperCase()}'` : null}, ${(this.data).hdmi ? 1 : 0}, ${(this.data).vga ? 1 : 0}, ${(this.data).dvi ? 1 : 0}, 
-                                            ${(this.data).date_received !== '' ? `'${(this.data).date_received}'` : null},
-                                            ${(this.data).panel !== '' ? `'${((this.data).panel).toUpperCase()}'` : null}, ${(this.data).resolution !== '' ? `'${((this.data).resolution).toUpperCase()}'` : null}` })
+                                            ${(this.data).power_supply !== '' ? `'${((this.data).power_supply).toUpperCase()}'` : null}, ${(this.data).warranty !== '' ? `'${((this.data).warranty).toUpperCase()}'` : null}, 
+                                            ${(this.data).hdmi ? 1 : 0}, ${(this.data).vga ? 1 : 0}, ${(this.data).dvi ? 1 : 0}, ${(this.data).resolution !== '' ? `'${((this.data).resolution).toUpperCase()}'` : null}, 
+                                            ${(this.data).refresh_rate !== '' ? `'${(this.data).refresh_rate}'` : null}, ${(this.data).panel !== '' ? `'${((this.data).panel).toUpperCase()}'` : null}` })
             .build();
     }
 
@@ -48,13 +47,13 @@ class Monitor {
                 current: curr.resolution !== '' && curr.resolution !== null ? (curr.resolution).toUpperCase() : null, action: 'update', user_id: user.id, date: date });
         }
 
-        if(Global.compare(prev.color, curr.color)) {
-            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks', item_id: prev.id, field: 'color', previous: prev.color,
-                current: curr.color !== '' && curr.color !== null ? (curr.color).toUpperCase() : null, action: 'update', user_id: user.id, date: date });
+        if(Global.compare(prev.refresh_rate, curr.refresh_rate)) {
+            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks', item_id: prev.id, field: 'refresh rate', previous: prev.refresh_rate,
+                current: curr.refresh_rate !== '' && curr.refresh_rate !== null ? (curr.refresh_rate).toUpperCase() : null, action: 'update', user_id: user.id, date: date });
         }
 
         if(Global.compare(prev.power_supply, curr.power_supply)) {
-            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks', item_id: prev.id, field: 'power_supply', previous: prev.power_supply,
+            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks', item_id: prev.id, field: 'power supply', previous: prev.power_supply,
                 current: curr.power_supply !== '' && curr.power_supply !== null ? (curr.power_supply).toUpperCase() : null, action: 'update', user_id: user.id, date: date });
         }
 
@@ -83,14 +82,13 @@ class Monitor {
 
             await new Builder(`tbl_stocks_info`)
                 .update(`serial_no= '${curr.serial_no}', model= ${curr.model !== '' && curr.model !== null ? `'${(curr.model).toUpperCase()}'` : null},
-                                panel= ${curr.panel !== '' && curr.panel !== null ? `'${(curr.panel).toUpperCase()}'` : null}, 
-                                resolution= ${curr.resolution !== '' && curr.resolution !== null ? `'${(curr.resolution).toUpperCase()}'` : null},
-                                color= ${curr.color !== '' && curr.color !== null ? `'${(curr.color).toUpperCase()}'` : null}, 
                                 power_supply= ${curr.power_supply !== '' && curr.power_supply !== null ? `'${(curr.power_supply).toUpperCase()}'` : null},
                                 warranty= ${curr.warranty !== '' && curr.warranty !== null ? `'${(curr.warranty).toUpperCase()}'` : null}, 
                                 hdmi= ${curr.hdmi ? 1 : 0}, vga= ${curr.vga ? 1 : 0}, dvi= ${curr.dvi ? 1 : 0}, 
-                                date_received= ${curr.date_received !== '' && curr.date_received !== null ? `'${curr.date_received}'` : null}`)
-                .condition(`WHERE stock_id= ${curr.id}`)
+                                resolution= ${curr.resolution !== '' && curr.resolution !== null ? `'${(curr.resolution).toUpperCase()}'` : null},
+                                refresh_rate= ${curr.refresh_rate !== '' && curr.refresh_rate !== null ? `'${(curr.refresh_rate).toUpperCase()}'` : null}, 
+                                panel= ${curr.panel !== '' && curr.panel !== null ? `'${(curr.panel).toUpperCase()}'` : null}`)
+                .condition(`WHERE stocks_id= ${curr.id}`)
                 .build();
 
             audits.forEach(data => Global.audit(data));

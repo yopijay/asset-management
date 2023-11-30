@@ -88,6 +88,7 @@ class Stocks {
         let user = JSON.parse(atob(data.token));
         let errors = [];
         let serial = {};
+        let model = {};
         let quantity = !data.quantity || data.quantity === '' || data.quantity === null;
 
         let series = await new Builder(`tbl_stocks`).select().condition(`WHERE series_no= '${(data.series_no).toUpperCase()}'`).build();
@@ -99,8 +100,17 @@ class Stocks {
                             .build();
         }
 
+        if(data.category === 'toner') {
+            model = await new Builder(`tbl_stocks AS stck`).select()
+                                .join({ table: `tbl_stocks_info AS info`, condition: `info.stocks_id = stck.id`, type: `LEFT` })
+                                .condition(`WHERE stck.category_id= ${data.category_id} AND info.model= '${(data.model).toUpperCase()}'
+                                                    AND info.type= '${data.type}' AND info.condition= '${data.condition}'`)
+                                .build();
+        }
+
         if(series.rowCount > 0) { errors.push({ name: 'series_no', message: 'Series number already exist!' }); }
         if(serial.rowCount > 0) { errors.push({ name: 'serial_no', message: 'Serial number already exist!' }); }
+        if(model.rowCount > 0) { errors.push({ name: 'model', message: 'Model already exist!' }); }
 
         if(!(errors.length > 0)) {
             let stck = (await new Builder(`tbl_stocks`)
@@ -112,8 +122,8 @@ class Stocks {
             switch(data.category) {
                 case 'laptop': await new Laptop(data).save(stck.id); break;
                 case 'system_unit': await new SystemUnit(data).save(stck.id); break;
-                // case 'toner': await new Toner(data).save(stck.id); break;
-                // case 'monitor': await new Monitor(data).save(stck.id); break;
+                case 'monitor': await new Monitor(data).save(stck.id); break;
+                case 'toner': await new Toner(data).save(stck.id); break;
                 // case 'mouse': await new Mouse(data).save(stck.id); break;
                 // case 'keyboard': await new Keyboard(data).save(stck.id); break;
             }
@@ -139,8 +149,8 @@ class Stocks {
             switch(data.category) {
                 case 'laptop': resolve(await new Laptop(data).update(stck)); break;
                 case 'system_unit': resolve(await new SystemUnit(data).update(stck)); break;
+                case 'monitor': resolve(await new Monitor(data).update(stck)); break;
                 // case 'toner': resolve(await new Toner(data).update(stck)); break;
-                // case 'monitor': resolve(await new Monitor(data).update(stck)); break;
                 // case 'mouse': resolve(await new Mouse(data).update(stck)); break;
                 // case 'keyboard': resolve(await new Keyboard(data).update(stck)); break;
             }

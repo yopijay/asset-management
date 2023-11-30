@@ -1,5 +1,5 @@
 const laptop = props => {
-    const { register, fetching, errors, control, setValue, getValues, setError, type } = props;
+    const { register, fetching, errors, control, setValue, getValues, type } = props;
 
     return [
         {
@@ -214,7 +214,7 @@ const laptop = props => {
 }
 
 const system_unit = props => {
-    const { register, fetching, errors, control, setValue, getValues, setError, type } = props;
+    const { register, fetching, errors, control, setValue, getValues, type } = props;
 
     return [
         {
@@ -475,10 +475,10 @@ const monitor = props => {
             grid: { xs: 12, sm: 3 },
             props: {
                 register: register,
-                label: 'Color',
+                label: 'Refresh rate',
                 fetching: fetching,
                 disabled: type === 'view',
-                name: 'color',
+                name: 'refresh_rate',
                 errors: errors,
                 InputProps: { disableUnderline: true }
             },
@@ -553,7 +553,7 @@ const monitor = props => {
 }
 
 const toner = props => {
-    const { register, fetching, errors, control, getValues, setValue, type } = props;
+    const { register, fetching, errors, control, getValues, setValue, setError, type } = props;
 
     return([
         {
@@ -578,7 +578,7 @@ const toner = props => {
                 disabled: type === 'view',
                 fetching: fetching,
                 options: [{ id: '', name: '-- SELECT AN ITEM BELOW --' }, { id: 'laser', name: 'LASER JET' }, { id: 'ink', name: 'INK JET' }, { id: 'ribbon', name: 'RIBBON' }],
-                onChange: (e, item) => { setValue('type', item.id); },
+                onChange: (e, item) => { setError('type', { message: '' }); setValue('type', item.id); },
                 errors: errors,
                 getValues: getValues
             },
@@ -593,24 +593,11 @@ const toner = props => {
                 disabled: type === 'view',
                 fetching: fetching,
                 options: [{ id: '', name: '-- SELECT AN ITEM BELOW --' }, { id: 'original', name: 'ORIGINAL' }, { id: 'rema', name: 'REMANUFACTURED' }],
-                onChange: (e, item) => { setValue('condition', item.id); },
+                onChange: (e, item) => { setError('condition', { message: '' }); setValue('condition', item.id); },
                 errors: errors,
                 getValues: getValues
             },
             type: 'dropdown'
-        },
-        {
-            grid: { xs: 12, sm: 3 },
-            props: {
-                register: register,
-                label: 'Color',
-                fetching: fetching,
-                disabled: type === 'view',
-                name: 'color',
-                errors: errors,
-                InputProps: { disableUnderline: true }
-            },
-            type: 'textfield'
         },
         {
             grid: { xs: 12, sm: 3 },

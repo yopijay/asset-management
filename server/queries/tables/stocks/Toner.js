@@ -7,10 +7,9 @@ class Toner {
 
     save = async id => {
         await new Builder(`tbl_stocks_info`)
-            .insert({ columns: `stock_id, model, type, condition, color, date_received`, 
+            .insert({ columns: `stocks_id, model, type, condition`, 
                             values: `${id}, ${(this.data).model !== '' ? `'${((this.data).model).toUpperCase()}'` : null}, ${(this.data).type ? `'${(this.data).type}'` : null},
-                                            ${(this.data).condition ? `'${(this.data).condition}'` : null}, ${(this.data).color !== '' ? `'${((this.data).color).toUpperCase()}'` : null}, 
-                                            ${(this.data).date_received !== '' ? `'${(this.data).date_received}'` : null}` })
+                                            ${(this.data).condition ? `'${(this.data).condition}'` : null}` })
             .build();
     }
 
