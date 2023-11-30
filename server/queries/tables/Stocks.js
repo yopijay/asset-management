@@ -50,7 +50,7 @@ class Stocks {
                 brd = (await new Builder(`tbl_brands`).select().condition(`WHERE category_id= ${ctg[0].id} AND name= '${data.brand}'`).build()).rows;
                 
                 stcks = (await new Builder(`tbl_stocks AS stck`)
-                                .select(`stck.id, stck.series_no, stck.status, info.serial_no, info.model`)
+                                .select(`stck.id, stck.series_no, stck.quantity, stck.status, info.serial_no, info.model`)
                                 .join({ table: 'tbl_stocks_info AS info', condition: `info.stocks_id = stck.id`, type: `LEFT` })
                                 .condition(`WHERE stck.category_id= ${ctg[0].id} AND stck.brand_id= ${brd[0].id} 
                                                     ${data.searchtxt !== '' ? `AND (stck.series_no LIKE '%${(data.searchtxt).toUpperCase()}%')) ` : ''}

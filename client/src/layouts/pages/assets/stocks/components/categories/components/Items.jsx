@@ -26,6 +26,7 @@ const Items = props => {
                                     <Typography variant= "caption" sx= { caption }>{ data.series_no }</Typography>
                                     <Typography sx= { listtitle }>{ data.serial_no }</Typography>
                                     <Typography sx= { subtitle } variant= "body2">{ data.model }</Typography>
+                                    { category === 'toner' ? <Typography sx= { subtitle } variant= "body2">Quantity: { data.quantity }</Typography> : '' }
                                 </Stack>
                                 <Stack direction= "row" justifyContent= "flex-start" alignItems= "center" spacing= { 2 } paddingLeft= "10px">
                                     <Box sx= {{ width: '10px', height: '10px', backgroundColor: `#${status[data.status]}`, borderRadius: '50px' }} />
@@ -49,6 +50,7 @@ const Items = props => {
                                         <Typography variant= "caption" sx= { caption }>{ data.series_no }</Typography>
                                         <Typography sx= { listtitle }>{ data.serial_no }</Typography>
                                         <Typography sx= { subtitle } variant= "body2">{ data.model }</Typography>
+                                        { category === 'toner' ? <Typography sx= { subtitle } variant= "body2">Quantity: { data.quantity }</Typography> : '' }
                                     </Stack>
                                     <Stack direction= "row" justifyContent= "flex-start" alignItems= "center" spacing= { 2 } paddingLeft= "10px">
                                         <Box sx= {{ width: '10px', height: '10px', backgroundColor: `#${status[data.status]}`, borderRadius: '50px' }} />
