@@ -20,6 +20,12 @@ class Toner {
         let audits = [];
         let errors = [];
 
+        let model = await new Builder(`tbl_stocks AS stck`).select()
+                                .join({ table: `tbl_stocks_info AS info`, condition: `info.stocks_id = stck.id`, type: `LEFT` })
+                                .condition(`WHERE stck.category_id= ${curr.category_id} AND info.model= '${(curr.model).toUpperCase()}'
+                                                    AND info.type= '${curr.type}' AND info.condition= '${curr.condition}'`)
+                                .build();
+
         if(Global.compare(prev.brand_id, curr.brand_id)) {
             audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks', item_id: prev.id, field: 'brand', previous: prev.brand_id,
                 current: curr.brand_id, action: 'update', user_id: user.id, date: date });
@@ -31,8 +37,11 @@ class Toner {
         }
 
         if(Global.compare(prev.model, curr.model)) {
-            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks', item_id: prev.id, field: 'model', previous: prev.model,
-                current: curr.model !== '' && curr.model !== null ? (curr.model).toUpperCase() : null, action: 'update', user_id: user.id, date: date });
+            if(!(model.rowCount > 0)) {
+                audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks', item_id: prev.id, field: 'model', previous: prev.model,
+                    current: curr.model !== '' && curr.model !== null ? (curr.model).toUpperCase() : null, action: 'update', user_id: user.id, date: date });
+            }
+            else { errors.push({ name: 'model', message: 'Model already exist!' }); }
         }
 
         if(Global.compare(prev.type, curr.type)) {
@@ -49,7 +58,7 @@ class Toner {
             audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks', item_id: prev.id, field: 'quantity', previous: prev.quantity,
                 current: curr.quantity !== '' && curr.quantity !== null ? curr.quantity : null, action: 'update', user_id: user.id, date: date });
         }
-
+        
         if(!(errors.length > 0)) {
             await new Builder(`tbl_stocks`).update(`brand_id= ${curr.brand_id}, quantity= ${curr.quantity}, updated_by= ${user.id}, date_updated= '${date}'`).condition(`WHERE id= ${curr.id}`).build();
 

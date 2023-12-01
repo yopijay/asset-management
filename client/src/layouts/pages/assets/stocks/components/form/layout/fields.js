@@ -617,9 +617,58 @@ const toner = props => {
     ]);
 }
 
+const printer = props => {
+    const { register, fetching, errors, control, getValues, setValue, setError, type } = props;
+
+    return([
+        {
+            grid: { xs: 12, sm: 6 },
+            props: {
+                register: register,
+                label: 'Serial no',
+                fetching: fetching,
+                disabled: type === 'view',
+                name: 'serial_no',
+                errors: errors,
+                InputProps: { disableUnderline: true }
+            },
+            type: 'textfield'
+        },
+        {
+            grid: { xs: 12, sm: 3 },
+            props: {
+                register: register,
+                label: 'Model',
+                fetching: fetching,
+                disabled: type === 'view',
+                name: 'model',
+                errors: errors,
+                InputProps: { disableUnderline: true }
+            },
+            type: 'textfield'
+        },
+        {
+            grid: { xs: 12, sm: 3 },
+            props: {
+                control: control,
+                name: 'type',
+                label: 'Type',
+                disabled: type === 'view',
+                fetching: fetching,
+                options: [{ id: '', name: '-- SELECT AN ITEM BELOW --' }, { id: 'laser', name: 'LASER JET' }, { id: 'ink', name: 'INK JET' }, { id: 'ribbon', name: 'RIBBON' }],
+                onChange: (e, item) => { setError('type', { message: '' }); setValue('type', item.id); },
+                errors: errors,
+                getValues: getValues
+            },
+            type: 'dropdown'
+        }
+    ]);
+}
+
 module.exports = {
     laptop,
     system_unit,
     monitor,
-    toner
+    toner,
+    printer
 }

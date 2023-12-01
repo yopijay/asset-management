@@ -24,8 +24,8 @@ const Items = props => {
                             <Stack direction= "row" justifyContent= "space-between" alignItems= "center" sx= { listview } key= { index }>
                                 <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" sx= {{ flexGrow: 1, overflow: 'hidden' }}>
                                     <Typography variant= "caption" sx= { caption }>{ data.series_no }</Typography>
-                                    <Typography sx= { listtitle }>{ data.serial_no }</Typography>
-                                    <Typography sx= { subtitle } variant= "body2">{ data.model }</Typography>
+                                    <Typography sx= { listtitle }>{ data.model } ({ category === 'toner' ? (data.condition).toUpperCase() : '' })</Typography>
+                                    <Typography sx= { subtitle } variant= "body2">{ data.serial_no }</Typography>
                                     { category === 'toner' ? <Typography sx= { subtitle } variant= "body2">Quantity: { data.quantity }</Typography> : '' }
                                 </Stack>
                                 <Stack direction= "row" justifyContent= "flex-start" alignItems= "center" spacing= { 2 } paddingLeft= "10px">
@@ -48,8 +48,8 @@ const Items = props => {
                                     to= { `/assets/stocks/${category}/${brand}/form/update/${data.id}` }>
                                     <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" sx= {{ flexGrow: 1, overflow: 'hidden' }}>
                                         <Typography variant= "caption" sx= { caption }>{ data.series_no }</Typography>
-                                        <Typography sx= { listtitle }>{ data.serial_no }</Typography>
-                                        <Typography sx= { subtitle } variant= "body2">{ data.model }</Typography>
+                                        <Typography sx= { listtitle }>{ data.model }</Typography>
+                                        <Typography sx= { subtitle } variant= "body2">{ data.serial_no }</Typography>
                                         { category === 'toner' ? <Typography sx= { subtitle } variant= "body2">Quantity: { data.quantity }</Typography> : '' }
                                     </Stack>
                                     <Stack direction= "row" justifyContent= "flex-start" alignItems= "center" spacing= { 2 } paddingLeft= "10px">

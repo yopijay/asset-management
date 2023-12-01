@@ -7,6 +7,7 @@ const Laptop = require("./stocks/Laptop");
 const SystemUnit = require("./stocks/SystemUnit");
 const Toner = require("./stocks/Toner");
 const Monitor = require("./stocks/Monitor");
+const Printer = require("./stocks/Printer");
 const Mouse = require("./stocks/Mouse");
 const Keyboard = require("./stocks/Keyboard");
 
@@ -50,7 +51,7 @@ class Stocks {
                 brd = (await new Builder(`tbl_brands`).select().condition(`WHERE category_id= ${ctg[0].id} AND name= '${data.brand}'`).build()).rows;
                 
                 stcks = (await new Builder(`tbl_stocks AS stck`)
-                                .select(`stck.id, stck.series_no, stck.quantity, stck.status, info.serial_no, info.model`)
+                                .select(`stck.id, stck.series_no, stck.quantity, stck.status, info.serial_no, info.model, info.condition`)
                                 .join({ table: 'tbl_stocks_info AS info', condition: `info.stocks_id = stck.id`, type: `LEFT` })
                                 .condition(`WHERE stck.category_id= ${ctg[0].id} AND stck.brand_id= ${brd[0].id} 
                                                     ${data.searchtxt !== '' ? `AND (stck.series_no LIKE '%${(data.searchtxt).toUpperCase()}%')) ` : ''}
@@ -93,7 +94,7 @@ class Stocks {
 
         let series = await new Builder(`tbl_stocks`).select().condition(`WHERE series_no= '${(data.series_no).toUpperCase()}'`).build();
 
-        if(data.category === 'laptop' || data.category === 'system_unit' || data.category === 'monitor') {
+        if(data.category === 'laptop' || data.category === 'system_unit' || data.category === 'monitor' || data.cateogry === 'printer') {
             serial = await new Builder(`tbl_stocks AS stck`).select()
                             .join({ table: `tbl_stocks_info AS info`, condition: `info.stocks_id = stck.id`, type: `LEFT` })
                             .condition(`WHERE stck.category_id= ${data.category_id} AND info.serial_no= '${(data.serial_no).toUpperCase()}'`)
@@ -124,18 +125,19 @@ class Stocks {
                 case 'system_unit': await new SystemUnit(data).save(stck.id); break;
                 case 'monitor': await new Monitor(data).save(stck.id); break;
                 case 'toner': await new Toner(data).save(stck.id); break;
+                case 'printer': await new Printer(data).save(stck.id); break;
                 // case 'mouse': await new Mouse(data).save(stck.id); break;
                 // case 'keyboard': await new Keyboard(data).save(stck.id); break;
             }
 
-            audit.series_no = Global.randomizer(7);
-            audit.field = 'all';
-            audit.item_id = stck.id;
-            audit.action = 'create';
-            audit.user_id = user.id;
-            audit.date = date;
+            // audit.series_no = Global.randomizer(7);
+            // audit.field = 'all';
+            // audit.item_id = stck.id;
+            // audit.action = 'create';
+            // audit.user_id = user.id;
+            // audit.date = date;
             
-            Global.audit(audit);
+            // Global.audit(audit);
             return { result: 'success', message: 'Successfully saved!' }
         }
         else{ return { result: 'error', error: errors } }
@@ -151,6 +153,7 @@ class Stocks {
                 case 'system_unit': resolve(await new SystemUnit(data).update(stck)); break;
                 case 'monitor': resolve(await new Monitor(data).update(stck)); break;
                 case 'toner': resolve(await new Toner(data).update(stck)); break;
+                case 'printer': resolve(await new Printer(data).update(stck)); break;
                 // case 'mouse': resolve(await new Mouse(data).update(stck)); break;
                 // case 'keyboard': resolve(await new Keyboard(data).update(stck)); break;
             }
