@@ -34,17 +34,17 @@ const Form = () => {
             <form autoComplete= "off">
                 <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 1 }>
                     <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch">
-                        <Typography gutterBottom variant= "body2" color= "#9BA4B5">*Email</Typography>
+                        <Typography gutterBottom variant= "body2" color= "#394867">*Email</Typography>
                         <TextField { ...register('email') } name= "email" variant= "standard" InputProps= {{ disableUnderline: true }} sx= { input } />
                         <Typography variant= "caption" color= "error.dark" sx= {{ textAlign: 'right' }}>{ errors.email?.message }</Typography>
                     </Stack>
                     <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch">
-                        <Typography gutterBottom variant= "body2" color= "#9BA4B5">*Password</Typography>
+                        <Typography gutterBottom variant= "body2" color= "#394867">*Password</Typography>
                         <TextField { ...register('password') } name= "password" type= { !show ? 'password' : 'text' } variant= "standard" 
                                 InputProps= {{ disableUnderline: true, 
                                     endAdornment: 
                                         <InputAdornment position= "end" sx= {{ cursor: 'pointer' }} onClick= { () => setshow(!show) }>
-                                            { !show ? <FontAwesomeIcon icon= { solid('eye-slash') } color= "#9BA4B5" /> : <FontAwesomeIcon icon= { solid('eye') } color= "#9BA4B5" /> }
+                                            { !show ? <FontAwesomeIcon icon= { solid('eye-slash') } color= "#394867" /> : <FontAwesomeIcon icon= { solid('eye') } color= "#394867" /> }
                                         </InputAdornment> }} sx= { input } />
                         <Typography variant= "caption" color= "error.dark" sx= {{ textAlign: 'right' }}>{ errors.password?.message }</Typography>
                     </Stack>

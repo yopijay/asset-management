@@ -38,27 +38,27 @@ const Index = props => {
             </Stack>
             <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 }  sx= {{ width: { xs: '100%', md: '65%', lg: '50%' } }}>
                 <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch">
-                    <Typography gutterBottom variant= "body2" color= "#9BA4B5">*Email</Typography>
+                    <Typography gutterBottom variant= "body2" color= "#394867">*Email</Typography>
                         <TextField { ...register('email') } name= "email" variant= "standard" InputProps= {{ disableUnderline: true }} sx= { input } disabled= { type === 'view' } />
                         <Typography variant= "caption" color= "error.dark" sx= {{ textAlign: 'right' }}>{ errors.email?.message }</Typography>
                 </Stack>
                 { !(role === 'superadmin' || role === 'admin') || type === 'new' ? <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch">
-                    <Typography gutterBottom variant= "body2" color= "#9BA4B5">*Password</Typography>
+                    <Typography gutterBottom variant= "body2" color= "#394867">*Password</Typography>
                     <TextField { ...register('password') } name= "password" type= { !showpass ? 'password' : 'text' } variant= "standard" 
                             InputProps= {{ disableUnderline: true, 
                                 endAdornment: 
                                     <InputAdornment position= "end" sx= {{ cursor: 'pointer' }} onClick= { () => setshowpass(!showpass) }>
-                                        { !showpass ? <FontAwesomeIcon icon= { solid('eye-slash') } color= "#9BA4B5" /> : <FontAwesomeIcon icon= { solid('eye') } color= "#9BA4B5" /> }
+                                        { !showpass ? <FontAwesomeIcon icon= { solid('eye-slash') } color= "#394867" /> : <FontAwesomeIcon icon= { solid('eye') } color= "#394867" /> }
                                     </InputAdornment> }} sx= { input } />
                     <Typography variant= "caption" color= "error.dark" sx= {{ textAlign: 'right' }}>{ errors.password?.message }</Typography>
                 </Stack> : '' }
                 { !(role === 'superadmin' || role === 'admin') || type === 'new' ? <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch">
-                    <Typography gutterBottom variant= "body2" color= "#9BA4B5">*Confirm Password</Typography>
+                    <Typography gutterBottom variant= "body2" color= "#394867">*Confirm Password</Typography>
                     <TextField { ...register('cpassword') } name= "cpassword" type= { !showcpass ? 'password' : 'text' } variant= "standard" 
                             InputProps= {{ disableUnderline: true, 
                                 endAdornment: 
                                     <InputAdornment position= "end" sx= {{ cursor: 'pointer' }} onClick= { () => setshowcpass(!showcpass) }>
-                                        { !showcpass ? <FontAwesomeIcon icon= { solid('eye-slash') } color= "#9BA4B5" /> : <FontAwesomeIcon icon= { solid('eye') } color= "#9BA4B5" /> }
+                                        { !showcpass ? <FontAwesomeIcon icon= { solid('eye-slash') } color= "#394867" /> : <FontAwesomeIcon icon= { solid('eye') } color= "#394867" /> }
                                     </InputAdornment> }} sx= { input } />
                     <Typography variant= "caption" color= "error.dark" sx= {{ textAlign: 'right' }}>{ errors.cpassword?.message }</Typography>
                 </Stack> : '' }
