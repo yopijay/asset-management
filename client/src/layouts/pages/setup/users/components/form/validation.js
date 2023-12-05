@@ -11,10 +11,10 @@ export const validation = () => (
     }) 
 );
 
-export const cvalidation = (data, errors) => {
+export const cvalidation = (data, errors, type) => {
     if(!(data.profile)) { errors.push({ name: 'profile', message: 'This field is required!' }); }
     if(!(/^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,})+$/).test(data.email)) { errors.push({ name: 'email', message: 'Invalid email format!' }); }
-    if(!(data.password === data.cpassword)) { errors.push({ name: 'cpassword', message: 'Password doesn`t match!' }); }
+    if(type === 'new') { if(!(data.password === data.cpassword)) { errors.push({ name: 'cpassword', message: 'Password doesn`t match!' }); } }
     if(!(data.branch)) { errors.push({ name: 'branch', message: 'This field is required!' }); }
     if(!(data.user_level)) { errors.push({ name: 'user_level', message: 'This field is required!' }); }
     if(!(data.employment_status)) { errors.push({ name: 'employment_status', message: 'This field is required!' }); }

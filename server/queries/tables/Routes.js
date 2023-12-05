@@ -15,12 +15,25 @@ class Routes {
     }
 
     list = async data => {
-        return (await new Builder(`tbl_routes AS rts`)
-                        .select(`rts.id, rts.series_no, rts.route, rts.base_url, rts.description, rts.status, CONCAT(cb.lname, ', ', cb.fname, ' ', cb.mname) AS created_by, rts.date_created`)
-                        .join({ table: `tbl_users_info AS cb`, condition: `cb.user_id = rts.created_by`, type: `LEFT` })
-                        .condition(`${data.searchtxt !== '' ? `WHERE rts.series_no LIKE '%${(data.searchtxt).toUpperCase()}%' 
-                                                OR rts.route LIKE '%${(data.searchtxt).toUpperCase()}%'` : ''} ORDER BY rts.${data.orderby} ${(data.sort).toUpperCase()}`)
-                        .build()).rows;
+        switch(data.type) {
+            case 'with-modules':
+                let mdls = [];
+                let mdl = (await new Builder(`tbl_routes`).select().build()).rows;
+
+                for(let count = 0; count < mdl.length; count++) {
+                    let sub = (await new Builder(`tbl_modules`).select().condition(`WHERE route_id= ${mdl[count].id}`).build()).rows;
+                    mdls.push({ name: mdl[count].route, modules: sub });
+                }
+
+                return mdls;
+            default: 
+                return (await new Builder(`tbl_routes AS rts`)
+                    .select(`rts.id, rts.series_no, rts.route, rts.base_url, rts.description, rts.status, CONCAT(cb.lname, ', ', cb.fname, ' ', cb.mname) AS created_by, rts.date_created`)
+                    .join({ table: `tbl_users_info AS cb`, condition: `cb.user_id = rts.created_by`, type: `LEFT` })
+                    .condition(`${data.searchtxt !== '' ? `WHERE rts.series_no LIKE '%${(data.searchtxt).toUpperCase()}%' 
+                                            OR rts.route LIKE '%${(data.searchtxt).toUpperCase()}%'` : ''} ORDER BY rts.${data.orderby} ${(data.sort).toUpperCase()}`)
+                    .build()).rows;
+        }
     }
 
     search = async data => {

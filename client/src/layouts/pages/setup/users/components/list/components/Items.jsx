@@ -34,6 +34,9 @@ const Items = () => {
                                         <Box sx= {{ width: '10px', height: '10px', backgroundColor: '#A0C49D', borderRadius: '50px' }} /> : 
                                         <Box sx= {{ width: '10px', height: '10px', backgroundColor: '#FF6666', borderRadius: '50px' }} /> }
                                     <Stack direction= "row" justifyContent= "flex-start" alignItems= "center" spacing= { 1.5 }>
+                                        <Typography color= "#9BA4B5" component= { Link } to= { `/setup/users/permission/${data.id}` }>
+                                            <FontAwesomeIcon icon= { solid('key') } size= "lg" />
+                                        </Typography>
                                         <Typography color= "#9BA4B5" component= { Link } to= { `/setup/users/form/update/${data.id}` }>
                                             <FontAwesomeIcon icon= { solid('pencil') } size= "lg" />
                                         </Typography>

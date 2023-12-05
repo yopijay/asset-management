@@ -83,7 +83,7 @@ const Index = () => {
                     let errors = [];
                     data['token'] = (sessionStorage.getItem('token')).split('.')[1];
 
-                    cvalidation(data, errors);
+                    cvalidation(data, errors, type);
                     if(!(errors.length > 0)) {
                         if(type === 'new') { saving({ table: 'tbl_users', data: data }); }
                         else { updating({ table: 'tbl_users', data: data }); }

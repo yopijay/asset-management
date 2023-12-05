@@ -10,9 +10,9 @@ import { ListPrvdr } from "core/context/List"; // Provider
 
 // Components
 import List from "./components/list";
-import Form from "./components/form";
-import Permisson from "./components/permission";
+// import Form from "./components/form";
 
+// Custom styles
 const container = {
     width: '100%',
     height: '100vh',
@@ -27,18 +27,17 @@ const Index = () => {
     const { setactive } = useContext(GlobalCntxt);
 
     useEffect(() => {
-        document.title = 'GAMS | Users';
-        setactive('users');
-        localStorage.setItem('nav', 'users');
+        document.title = 'GAMS | Request';
+        setactive('request');
+        localStorage.setItem('nav', 'request');
     }, [ setactive ]);
 
     return (
         <Stack direction= "row" justifyContent= "flex-start" alignItems= "flex-start" sx= { container }>
             <Routes>
                 <Route exact path= "/" element= { <FormPrvdr><ListPrvdr><List /></ListPrvdr></FormPrvdr> } />
-                <Route exact path= "/form/:type" element= { <FormPrvdr><Form /></FormPrvdr> } />
-                <Route exact path= "/form/:type/:id" element= { <FormPrvdr><Form /></FormPrvdr> } />
-                <Route exact path= "/permission/:id" element= { <FormPrvdr><Permisson /></FormPrvdr> } />
+                {/* <Route exact path= "/form/:type" element= { <FormPrvdr><Form /></FormPrvdr> } /> */}
+                {/* <Route exact path= "/form/:type/:id" element= { <FormPrvdr><Form /></FormPrvdr> } /> */}
             </Routes>
         </Stack>
     );

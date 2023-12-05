@@ -35,7 +35,6 @@ class Category {
                 
                 for(let count = 0; count < ctg.length; count++) {
                     let qty = (await new Builder(`tbl_stocks`).select().condition(`WHERE category_id= ${ctg[count].id}`).build()).rowCount;
-
                     _count.push({ name: ctg[count].name, count: qty });
                 }
                 

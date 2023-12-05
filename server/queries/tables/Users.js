@@ -70,7 +70,7 @@ class Users {
                         .join({ table: `tbl_department AS dpt`, condition: `info.department_id = dpt.id`, type: `LEFT` })
                         .join({ table: `tbl_position AS pst `, condition: `info.position_id = pst.id`, type: `LEFT` })
                         .join({ table: `tbl_users_info AS cb`, condition: `usr.created_by = cb.user_id`, type: `LEFT` })
-                        .condition(`WHERE ${data.searchtxt !== '' ? `info.fname LIKE '%${(data.searchtxt).toUpperCase()}%' OR info.lname LIKE '%${(data.searchtxt).toUpperCase()}%' ` : ''}
+                        .condition(`WHERE ${data.searchtxt !== '' ? `(info.fname LIKE '%${(data.searchtxt).toUpperCase()}%' OR info.lname LIKE '%${(data.searchtxt).toUpperCase()}%') AND ` : ''}
                                             usr.id != 1 ORDER BY ${data.orderby} ${(data.sort).toUpperCase()}`)
                         .build()).rows;
     }
@@ -124,6 +124,8 @@ class Users {
                                                 ${data.position_id !== undefined ? data.position_id : null}, '${(data.fname).toUpperCase()}', ${data.mname !== '' ? `'${(data.mname).toUpperCase()}'` : null}, 
                                                 '${(data.lname).toUpperCase()}', ${data.address !== '' ? `'${(data.address).toUpperCase()}'` : null}, '${data.employment_status}', '${data.profile}', '${data.gender}'` })
                 .build();
+
+            await new Builder(`tbl_users_permission`).insert({ columns: `user_id`, values: `${usr.id}` }).build();
 
             audit.series_no = Global.randomizer(7);
             audit.field = 'all';
