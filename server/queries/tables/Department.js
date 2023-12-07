@@ -84,7 +84,7 @@ class Department {
         let audits = [];
         let errors = [];
 
-        let name = await new Builder(`tbl_department`).select().condition(`WHERE name= '${(data.name).toUpperCase()}'`).build();
+        let name = await new Builder(`tbl_department`).select().condition(`WHERE name= '${(data.name).toUpperCase()}' AND company_id= ${data.company_id}`).build();
 
         if(Global.compare(dpt.name, data.name)) {
             if(!(name.rowCount > 0)) {

@@ -13,7 +13,7 @@ const Fields = props => {
 
     return ([
         {
-            grid: { xs: 12, md: 5 },
+            grid: { xs: 12, md: 3 },
             props: {
                 register: register,
                 label: '*Series no.',
@@ -26,7 +26,7 @@ const Fields = props => {
             type: 'textfield'
         },
         {
-            grid: { xs: 12, sm: 7, md: 5 },
+            grid: { xs: 12, sm: 4, md: 3 },
             props: {
                 register: register,
                 label: '*Name',
@@ -39,7 +39,21 @@ const Fields = props => {
             type: 'textfield'
         },
         {
-            grid: { xs: 12, sm: 5, md: 2 },
+            grid: { xs: 12, sm: 4, md: 3 },
+            props: {
+                register: register,
+                label: '*Email extension',
+                fetching: fetching,
+                disabled: type === 'view',
+                name: 'extension',
+                uppercase: false,
+                errors: errors,
+                InputProps: { disableUnderline: true }
+            },
+            type: 'textfield'
+        },
+        {
+            grid: { xs: 12, sm: 4, md: 3 },
             props: {
                 register: register,
                 label: 'Telephone',

@@ -13,6 +13,7 @@ import Account from "./layouts/account";
 import Employee from "./layouts/employee";
 import Personal from "./layouts/personal";
 import { cvalidation, validation } from "./validation";
+import { IMAGE } from "core/constants/Global";
 
 const Index = () => {
     const { type, id } = useParams();
@@ -46,10 +47,11 @@ const Index = () => {
         });
 
     useEffect(() => { 
+        register('profile'); 
         setValidation(validation()); 
         reset(); 
         if(id !== undefined) { refetch() }
-        else { setValue('branch', ''); setValue('user_level', ''); setValue('employment_status', ''); } 
+        else { setValue('branch', ''); setValue('gender', ''); setValue('user_level', ''); setValue('employment_status', ''); setValue('profile', JSON.stringify(IMAGE)) } 
     }, [ register, reset, setValidation, id, refetch, setValue ]);
 
     return (

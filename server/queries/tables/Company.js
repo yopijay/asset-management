@@ -10,7 +10,7 @@ class Company {
         switch(data.type) {
             case 'nav': return [];
             default: return [{ id: 0, name: '-- SELECT AN ITEM BELOW --' }]
-                            .concat((await new Builder(`tbl_company`).select(`id, name`).condition(`WHERE status= 1 ORDER BY name ASC`).build()).rows);
+                            .concat((await new Builder(`tbl_company`).select(`id, name, extension`).condition(`WHERE status= 1 ORDER BY name ASC`).build()).rows);
         }
     }
 
@@ -54,11 +54,11 @@ class Company {
 
         if(!(errors.length > 0)) {
             let cmp = (await new Builder(`tbl_company`)
-                                .insert({ columns: `series_no, name, telephone, description, address, status, created_by, date_created`, 
+                                .insert({ columns: `series_no, name, telephone, description, address, status, created_by, date_created, extension`, 
                                                 values: `'${(data.series_no).toUpperCase()}', '${(data.name).toUpperCase()}', '${data.telephone}',
                                                                 ${data.description !== '' ? `'${(data.description).toUpperCase()}'` : null}, 
                                                                 ${data.address !== '' ? `'${(data.address).toUpperCase()}'` : null}, ${data.status ? 1 : 0},
-                                                                ${user.id}, '${date}'` })
+                                                                ${user.id}, '${date}', '${(data.extension).toLowerCase()}'` })
                                 .condition(`RETURNING id`)
                                 .build()).rows[0];
 
@@ -92,6 +92,11 @@ class Company {
             else { errors.push({ name: 'name', message: 'Name already exist!' }); }
         }
 
+        if(Global.compare(cmp.extension, data.extension)) {
+            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_company', item_id: cmp.id, field: 'extension', previous: cmp.extension,
+                current: data.extension !== '' && data.extension !== null ? (data.extension).toLowerCase() : null, action: 'update', user_id: user.id, date: date });
+        }
+
         if(Global.compare(cmp.telephone, data.telephone)) {
             audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_company', item_id: cmp.id, field: 'telephone', previous: cmp.telephone,
                 current: data.telephone !== '' && data.telephone !== null ? data.telephone : null, action: 'update', user_id: user.id, date: date });
@@ -117,7 +122,7 @@ class Company {
                 .update(`name= '${(data.name).toUpperCase()}', telephone= ${data.telephone !== '' && data.telephone !== null ? `'${data.telephone}'` : null}, 
                     description= ${data.description !== '' && data.description !== null ? `'${(data.description).toUpperCase()}'` : null}, 
                     address= ${data.address !== '' && data.address !== null ? `'${(data.address).toUpperCase()}'` : null}, status= ${data.status ? 1 : 0}, 
-                    updated_by= ${user.id}, date_updated= '${date}'`)
+                    updated_by= ${user.id}, date_updated= '${date}', extension= '${data.extension}'`)
                 .condition(`WHERE id= ${data.id}`)
                 .build();
 

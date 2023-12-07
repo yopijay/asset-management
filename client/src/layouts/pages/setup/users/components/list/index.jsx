@@ -24,7 +24,7 @@ const Index = () => {
     const { mutate: record, isLoading: fetching } = usePost({ request: records, onSuccess: data => setlist(data) });
 
     useEffect(() => {
-        register('orderby', { value: 'date_created' });
+        register('orderby', { value: 'usr.date_created' });
         register('sort', { value: 'desc' });
         register('token', { value: (sessionStorage.getItem('token')).split('.')[1] });
 

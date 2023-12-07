@@ -14,6 +14,9 @@ const Fields = props => {
                 disabled: type === 'view',
                 name: 'fname',
                 errors: errors,
+                onChange: e => { 
+                    setValue('email', 
+                        `${(e.target.value).charAt(0).toLowerCase()}${(getValues().mname).charAt(0).toLowerCase()}${((getValues().lname).replace(/[^A-Z0-9]+/ig, "")).toLowerCase()}@${getValues().extension}`) },
                 InputProps: { disableUnderline: true }
             },
             type: 'textfield'
@@ -27,6 +30,9 @@ const Fields = props => {
                 disabled: type === 'view',
                 name: 'mname',
                 errors: errors,
+                onChange: e => { 
+                    setValue('email', 
+                        `${(getValues().fname).charAt(0).toLowerCase()}${(e.target.value).charAt(0).toLowerCase()}${((getValues().lname).replace(/[^A-Z0-9]+/ig, "")).toLowerCase()}@${getValues().extension}`) },
                 InputProps: { disableUnderline: true }
             },
             type: 'textfield'
@@ -40,6 +46,9 @@ const Fields = props => {
                 disabled: type === 'view',
                 name: 'lname',
                 errors: errors,
+                onChange: e => { 
+                    setValue('email', 
+                        `${(getValues().fname).charAt(0).toLowerCase()}${(getValues().mname).charAt(0).toLowerCase()}${((e.target.value).replace(/[^A-Z0-9]+/ig, "")).toLowerCase()}@${getValues().extension}`) },
                 InputProps: { disableUnderline: true }
             },
             type: 'textfield'

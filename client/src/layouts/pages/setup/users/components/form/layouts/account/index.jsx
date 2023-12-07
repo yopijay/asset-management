@@ -7,6 +7,7 @@ import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 
 // Core
 import { base64 } from "core/function/global"; // Function
+import { IMAGE } from "core/constants/Global"; // Constants
 
 import { btn, input } from "./style";
 
@@ -14,11 +15,13 @@ const Index = props => {
     const { register, fetching, errors, setValue, setError, getValues } = props;
     const role = JSON.parse(atob((sessionStorage.getItem('token')).split('.')[1])).role;
     const { type } = useParams();
-    const [ pic, setPic ] = useState('#');
+    const [ pic, setPic ] = useState(IMAGE);
     const [ showpass, setshowpass ] = useState(false);
     const [ showcpass, setshowcpass ] = useState(false);
     
-    useEffect(() => { register('profile'); if(!fetching) { setPic(getValues()?.profile !== undefined ? JSON.parse(getValues()?.profile) : '#'); } }, [ fetching, getValues, register ]);
+    useEffect(() => { 
+        if(!fetching) { setPic(getValues()?.profile !== undefined ? JSON.parse(getValues()?.profile) : IMAGE); } 
+    }, [ fetching, getValues, register ]);
 
     return (
         <Stack direction= {{ xs: 'column', md: 'row' }} justifyContent= "flex-start" alignItems= {{ xs: 'stretch', md: 'center' }} spacing= { 2 }>
@@ -39,7 +42,7 @@ const Index = props => {
             <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 }  sx= {{ width: { xs: '100%', md: '65%', lg: '50%' } }}>
                 <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch">
                     <Typography gutterBottom variant= "body2" color= "#394867">*Email</Typography>
-                        <TextField { ...register('email') } name= "email" variant= "standard" InputProps= {{ disableUnderline: true }} sx= { input } disabled= { type === 'view' } />
+                        <TextField { ...register('email') } name= "email" variant= "standard" sx= { input } disabled= { true } InputProps= {{ disableUnderline: true }} />
                         <Typography variant= "caption" color= "error.dark" sx= {{ textAlign: 'right' }}>{ errors.email?.message }</Typography>
                 </Stack>
                 { !(role === 'superadmin' || role === 'admin') || type === 'new' ? <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch">
