@@ -102,13 +102,12 @@ class Users {
         let email = await new Builder(`tbl_users`).select().condition(`WHERE email= '${data.email}'`).build();
         let employeeno = await new Builder(`tbl_users_info`).select().condition(`WHERE employee_no= '${data.employee_no}'`).build();
         let rfid = await new Builder(`tbl_users_info`).select().condition(`WHERE rfid= '${data.rfid}'`).build();
-        let fname = await new Builder(`tbl_users_info`).select().condition(`WHERE fname= '${(data.fname).toUpperCase()}'`).build(); 
-        let lname = await new Builder(`tbl_users_info`).select().condition(`WHERE lname= '${(data.lname).toUpperCase()}'`).build();
+        let name = await new Builder(`tbl_users_info`).select().condition(`WHERE fname= '${(data.fname).toUpperCase()}' AND lname= '${(data.lname).toUpperCase()}'`).build();
 
         if(email.rowCount > 0) { errors.push({ name: 'email', message: 'Email already used!' }); }
         if(employeeno.rowCount > 0) { errors.push({ name: 'employee_no', message: 'Employee no already used!' }); }
         if(data.rfid !== '' && rfid.rowCount > 0) { errors.push({ name: 'rfid', message: 'Employee no already used!' }); }
-        if(fname.rowCount > 0 && lname.rowCount > 0) { errors.push({ name: 'lname', message: 'Name already exist!' }); }
+        if(name.rowCount > 0) { errors.push({ name: 'lname', message: 'Name already exist!' }); }
 
         if(!(errors.length > 0)) {
             let pass = await encrypt.hash(data.password, 10);

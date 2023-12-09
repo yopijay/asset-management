@@ -91,7 +91,7 @@ const Fields = props => {
                 label: '*Employment status',
                 disabled: type === 'view',
                 fetching: fetching,
-                options: [{ id: '', name: '-- SELECT AN ITEM BELOW --' }, { id: 'intern', name: 'INTERN' }, { id: 'probation', name: 'PROBATION' }, 
+                options: [{ id: '', name: '-- SELECT AN ITEM BELOW --' }, { id: 'intern', name: 'INTERN' }, { id: 'probation', name: 'PROBATIONARY' }, 
                                 { id: 'regular', name: 'REGULAR' }, { id: 'retired', name: 'RETIRED' }, { id: 'resigned', name: 'RESIGNED' }],
                 onChange: (e, item) => { setError('employment_status', { message: '' }); setValue('employment_status', item.id); },
                 errors: errors,
