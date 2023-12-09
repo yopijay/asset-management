@@ -51,7 +51,7 @@ const Index = () => {
         setValidation(validation()); 
         reset(); 
         if(id !== undefined) { refetch() }
-        else { setValue('branch', ''); setValue('gender', ''); setValue('user_level', ''); setValue('employment_status', ''); setValue('profile', JSON.stringify(IMAGE)) } 
+        else { setValue('branch', ''); setValue('gender', ''); setValue('user_level', 'user'); setValue('employment_status', ''); setValue('profile', JSON.stringify(IMAGE)); setValue('password', '@KC12345'); setValue('cpassword', '@KC12345'); } 
     }, [ register, reset, setValidation, id, refetch, setValue ]);
 
     return (
