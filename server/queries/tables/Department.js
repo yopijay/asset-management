@@ -110,8 +110,8 @@ class Department {
         }
 
         if(Global.compare(dpt.status, data.status ? 1 : 0)) {
-            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_department', item_id: dpt.id, field: 'status', previous: dpt.status, 
-                                    current: data.status ? 1 : 0, action: 'update', user_id: user.id, date: date });
+            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_department', item_id: dpt.id, field: 'status', previous: dpt.status === 1 ? 'Active' : 'Inactive', 
+                                    current: data.status ? 'Active' : 'Inactive', action: 'update', user_id: user.id, date: date });
         }
 
         if(!(errors.length > 0)) {

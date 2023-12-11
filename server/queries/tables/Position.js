@@ -103,8 +103,8 @@ class Position {
         }
 
         if(Global.compare(pst.status, data.status ? 1 : 0)) {
-            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_position', item_id: pst.id, field: 'status', previous: pst.status, 
-                                    current: data.status ? 1 : 0, action: 'update', user_id: user.id, date: date });
+            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_position', item_id: pst.id, field: 'status', previous: pst.status === 1 ? 'Active' : 'Inactive', 
+                                    current: data.status ? 'Active' : 'Inactive', action: 'update', user_id: user.id, date: date });
         }
 
         if(!(errors.lengh > 0)) {

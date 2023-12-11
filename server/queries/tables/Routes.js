@@ -112,7 +112,7 @@ class Routes {
         }
 
         if(Global.compare(rts.status, data.status ? 1 : 0)) {
-            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_routes', item_id: rts.id, field: 'status', previous: rts.status ? 'Active' : 'Inactive', 
+            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_routes', item_id: rts.id, field: 'status', previous: rts.status === 1 ? 'Active' : 'Inactive', 
                                     current: data.status ? 'Active' : 'Inactive', action: 'update', user_id: user.id, date: date });
         }
 

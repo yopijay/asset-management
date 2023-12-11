@@ -11,8 +11,9 @@ class Users {
     series = async () =>{ return (await new Builder(`tbl_users`).select().except(`WHERE id= 1`).build()).rows; }
     specific = async id => { 
         return (await new Builder(`tbl_users AS usr`)
-                        .select(`usr.*, info.*`)
+                        .select(`usr.*, info.*, perm.permission`)
                         .join({ table: `tbl_users_info AS info`, condition: `info.user_id = usr.id`, type: `LEFT` })
+                        .join({ table: `tbl_users_permission AS perm`, condition: `perm.user_id = usr.id`, type: `LEFT` })
                         .condition(`WHERE usr.id= ${id}`)
                         .build()).rows;
     }
@@ -245,8 +246,8 @@ class Users {
         }
 
         if(Global.compare(usr.status, data.status ? 1 : 0)) {
-            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_users', item_id: usr.id, field: 'status', previous: usr.status, 
-                                    current: data.status ? 1 : 0, action: 'update', user_id: user.id, date: date });
+            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_users', item_id: usr.id, field: 'status', previous: usr.status === 1 ? 'Active' : 'Inactive', 
+                                    current: data.status ? 'Active' : 'Inactive', action: 'update', user_id: user.id, date: date });
         }
 
         if(!(errors.length > 0)) {

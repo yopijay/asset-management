@@ -50,7 +50,7 @@ const Index = () => {
                     <Typography color= "#9BA4B5">{getValues()?.fname} {getValues()?.lname}</Typography>
                     <Typography color= "#9BA4B5" variant= "body2">{getValues()?.employee_no}</Typography>
                 </Stack>
-                { modules.map((data, index) => <Modules key= { index } { ...data } form= {{ control: control, fetching: isFetching, setValue: setValue, getValues: getValues }} /> ) }
+                { modules.map((data, index) => <Modules key= { index } { ...data } control= { control } fetching= { isFetching } getValues= { getValues } setValue= { setValue } /> ) }
             </Stack>
             <Stack direction= "row" justifyContent= {{ xs: 'space-between', sm: 'flex-end' }} alignItems= "center" spacing= { 1 }>
                 <Typography sx= { cancelbtn } component= { Link } to= "/setup/users">Cancel</Typography>
