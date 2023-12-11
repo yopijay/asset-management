@@ -1,7 +1,7 @@
 // Libraries
 import axios from "axios";
 import { useMutation, useQuery } from "react-query";
-import { toast } from "react-toastify"; // Testing
+import { toast } from "react-toastify";
 
 export const api = ({ url, method, data= null }) => {
     const config = {
