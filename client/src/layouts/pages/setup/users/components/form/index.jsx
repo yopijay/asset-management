@@ -7,13 +7,14 @@ import { useContext, useEffect } from "react";
 import { FormCntxt } from "core/context/Form"; // Context
 import { save, specific, update } from "core/api"; // API
 import { successToast, useGet, usePost } from "core/function/global"; // Function
+import { IMAGE } from "core/constants/Global"; // Constants
 
 import { cancelbtn, card, content, savebtn, title } from "./style";
 import Account from "./layouts/account";
 import Employee from "./layouts/employee";
 import Personal from "./layouts/personal";
+
 import { cvalidation, validation } from "./validation";
-import { IMAGE } from "core/constants/Global";
 
 const Index = () => {
     const { type, id } = useParams();
@@ -47,11 +48,9 @@ const Index = () => {
         });
 
     useEffect(() => { 
-        register('profile'); 
-        setValidation(validation()); 
-        reset(); 
+        register('profile'); setValidation(validation()); reset(); 
         if(id !== undefined) { refetch() }
-        else { setValue('branch', ''); setValue('gender', ''); setValue('user_level', 'user'); setValue('employment_status', ''); setValue('profile', JSON.stringify(IMAGE)); setValue('password', '@KC12345'); setValue('cpassword', '@KC12345'); } 
+        else { setValue('branch', ''); setValue('gender', ''); setValue('user_level', 'user'); setValue('employment_status', ''); setValue('profile', JSON.stringify(IMAGE)); } 
     }, [ register, reset, setValidation, id, refetch, setValue ]);
 
     return (

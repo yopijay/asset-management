@@ -15,22 +15,22 @@ const Import = props => {
                     defaultValue= { form.getValues().permission !== undefined ? 
                                                 form.getValues().permission[route.toLowerCase()] !== undefined ? 
                                                     form.getValues().permission[route.toLowerCase()][module.toLowerCase()] !== undefined ?
-                                                        !form.getValues().permission[route.toLowerCase()][module.toLowerCase()].import ?? true
-                                                        : true
-                                                    : true
-                                                : true }
+                                                        !form.getValues().permission[route.toLowerCase()][module.toLowerCase()].import ?? false
+                                                        : false
+                                                    : false
+                                                : false }
                     render= { () => ( 
                         <IOSSwitch disabled= { false } 
                             checked= { form.getValues().permission !== undefined ? 
                                                 form.getValues().permission[route.toLowerCase()] !== undefined ? 
                                                     form.getValues().permission[route.toLowerCase()][module.toLowerCase()] !== undefined ?
-                                                        form.getValues().permission[route.toLowerCase()][module.toLowerCase()].import ?? true
-                                                        : true
-                                                    : true
-                                                : true }
+                                                        form.getValues().permission[route.toLowerCase()][module.toLowerCase()].import ?? false
+                                                        : false
+                                                    : false
+                                                : false }
 
                             onChange= { () => form.setValue(`permission.${route.toLowerCase()}.${module.toLowerCase()}.import`, 
-                                    !form.getValues().permission[route.toLowerCase()][module.toLowerCase()].import ?? true) } /> ) } /> }
+                                    !form.getValues().permission[route.toLowerCase()][module.toLowerCase()].import ?? false) } /> ) } /> }
         </Stack>
     );
 }

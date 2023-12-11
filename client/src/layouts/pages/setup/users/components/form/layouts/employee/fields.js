@@ -43,11 +43,12 @@ const Fields = props => {
             grid: { xs: 12, sm: 6 },
             props: {
                 register: register,
-                label: '*RFID',
+                label: 'RFID',
                 fetching: fetching,
                 disabled: type === 'view',
                 name: 'rfid',
                 errors: errors,
+                defaultValue: '000',
                 InputProps: { disableUnderline: true }
             },
             type: 'textfield'
@@ -110,6 +111,7 @@ const Fields = props => {
                 options: !cmpfetching ? company : [],
                 onChange: (e, item) => { 
                     setError('company_id', { message: '' }); 
+                    setError('email', { message: '' });
                     setValue('company_id', item.id); 
                     setValue('extension', (item.extension).toLowerCase());
                     setValue('email', `${(getValues().fname).charAt(0).toLowerCase()}${(getValues().mname).charAt(0).toLowerCase()}${((getValues().lname).replace(/[^A-Z0-9]+/ig, "")).toLowerCase()}@${(item.extension).toLowerCase()}`)

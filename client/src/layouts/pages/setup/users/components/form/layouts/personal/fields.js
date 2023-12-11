@@ -15,6 +15,8 @@ const Fields = props => {
                 name: 'fname',
                 errors: errors,
                 onChange: e => { 
+                    setError('fname', { message: '' });
+                    setError('email', { message: '' });
                     setValue('email', 
                         `${(e.target.value).charAt(0).toLowerCase()}${(getValues().mname).charAt(0).toLowerCase()}${((getValues().lname).replace(/[^A-Z0-9]+/ig, "")).toLowerCase()}@${getValues().extension}`) },
                 InputProps: { disableUnderline: true }
@@ -31,6 +33,7 @@ const Fields = props => {
                 name: 'mname',
                 errors: errors,
                 onChange: e => { 
+                    setError('email', { message: '' });
                     setValue('email', 
                         `${(getValues().fname).charAt(0).toLowerCase()}${(e.target.value).charAt(0).toLowerCase()}${((getValues().lname).replace(/[^A-Z0-9]+/ig, "")).toLowerCase()}@${getValues().extension}`) },
                 InputProps: { disableUnderline: true }
@@ -47,6 +50,8 @@ const Fields = props => {
                 name: 'lname',
                 errors: errors,
                 onChange: e => { 
+                    setError('lname', { message: '' });
+                    setError('email', { message: '' });
                     setValue('email', 
                         `${(getValues().fname).charAt(0).toLowerCase()}${(getValues().mname).charAt(0).toLowerCase()}${((e.target.value).replace(/[^A-Z0-9]+/ig, "")).toLowerCase()}@${getValues().extension}`) },
                 InputProps: { disableUnderline: true }

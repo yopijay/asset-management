@@ -15,22 +15,22 @@ const View = props => {
                     defaultValue= { form.getValues().permission !== undefined ? 
                                                 form.getValues().permission[route.toLowerCase()] !== undefined ? 
                                                     form.getValues().permission[route.toLowerCase()][module.toLowerCase()] !== undefined ?
-                                                        !form.getValues().permission[route.toLowerCase()][module.toLowerCase()].view ?? true
-                                                        : true
-                                                    : true
-                                                : true }
+                                                        !form.getValues().permission[route.toLowerCase()][module.toLowerCase()].view ?? false
+                                                        : false
+                                                    : false
+                                                : false }
                     render= { () => ( 
                         <IOSSwitch disabled= { false } 
                             checked= { form.getValues().permission !== undefined ? 
                                                 form.getValues().permission[route.toLowerCase()] !== undefined ? 
                                                     form.getValues().permission[route.toLowerCase()][module.toLowerCase()] !== undefined ?
-                                                        form.getValues().permission[route.toLowerCase()][module.toLowerCase()].view ?? true
-                                                        : true
-                                                    : true
-                                                : true }
+                                                        form.getValues().permission[route.toLowerCase()][module.toLowerCase()].view ?? false
+                                                        : false
+                                                    : false
+                                                : false }
 
                             onChange= { () => form.setValue(`permission.${route.toLowerCase()}.${module.toLowerCase()}.view`, 
-                                    !form.getValues().permission[route.toLowerCase()][module.toLowerCase()].view ?? true) } /> ) } /> }
+                                    !form.getValues().permission[route.toLowerCase()][module.toLowerCase()].view ?? false) } /> ) } /> }
         </Stack>
     );
 }
