@@ -14,7 +14,7 @@ import Export from "./components/Export";
 
 const Modules = props => {
     const { control, fetching, getValues, setValue, modules, name } = props;
-    const [ isdisabled, setDisabled ] = useState();
+    const [ isdisabled, setDisabled ] = useState({});
 
     return (
         <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 3 }>
@@ -26,7 +26,8 @@ const Modules = props => {
                             <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 5 } sx= { card }>
                                 <Stack direction= "row" justifyContent= "space-between" alignItems= "center">
                                     <Typography sx= { subtitle }>{ data.name }</Typography>
-                                    <List setDisabled= { setDisabled } control= { control } fetching= { fetching } getValues= { getValues } setValue= { setValue } route= { name } module= { data.name } />
+                                    <List disabled= { isdisabled } setDisabled= { setDisabled } control= { control } fetching= { fetching } getValues= { getValues } 
+                                        setValue= { setValue } route= { name } module= { data.name } />
                                 </Stack>
                                 <Box>
                                     <Grid container direction= "row" justifyContent= "flex-start" alignItems= "flex-start" spacing= { 2 }>

@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 // Core
 import { dropdown } from "core/api"; // API
 import { GlobalCntxt } from "core/context/Global"; // Context
+import { AccountCntxt } from "core/context/Account"; // Context
 import { usePost } from "core/function/global"; // Function
 
 // Custom styles
@@ -28,6 +29,7 @@ const linkactive = {
 
 const Subnavs = ({ id }) => {
     const { active, setactive, setopen } = useContext(GlobalCntxt);
+    const { data } = useContext(AccountCntxt);
     const [ subnav, setsubnav ] = useState([]);
     const { mutate: nav } = usePost({ request: dropdown, onSuccess: data => setsubnav(data) });
 
@@ -37,8 +39,9 @@ const Subnavs = ({ id }) => {
     return (
         <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch">
             { subnav?.map((mdl, index) => 
+                data.user_level === 'superadmin' || JSON.parse(data.permission)[(mdl.base_url).toLowerCase()][(mdl.name).toLowerCase()].list ?
                     <Typography key= { index } component= { Link } to= { `/${mdl.base_url}/${mdl.path} `} sx= { active === (mdl.name).toLowerCase() ? linkactive : link } 
-                        onClick= { () => navclick((mdl.name).toLowerCase()) }>{ (mdl.name).charAt(0) + (mdl.name).slice(1).toLowerCase() }</Typography> ) }
+                        onClick= { () => navclick((mdl.name).toLowerCase()) }>{ (mdl.name).charAt(0) + (mdl.name).slice(1).toLowerCase() }</Typography> : '' ) }
         </Stack>
     );
 }

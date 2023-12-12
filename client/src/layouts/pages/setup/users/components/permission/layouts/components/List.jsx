@@ -28,8 +28,9 @@ const List = props => {
                                                     : false
                                                 : false }
                             onChange= { () => {
-                                setDisabled([ ...disabled, { [module.toLowerCase()]: (getValues().permission[route.toLowerCase()][module.toLowerCase()].list !== null ?
-                                                        getValues().permission[route.toLowerCase()][module.toLowerCase()].list : false) } ]);
+                                setDisabled({ ...disabled, 
+                                                            [module.toLowerCase()]: (getValues().permission[route.toLowerCase()][module.toLowerCase()].list !== null ?
+                                                                getValues().permission[route.toLowerCase()][module.toLowerCase()].list : false) });
                                 setValue(`permission.${route.toLowerCase()}.${module.toLowerCase()}.list`, 
                                                     !(getValues().permission[route.toLowerCase()][module.toLowerCase()].list !== null ?
                                                         getValues().permission[route.toLowerCase()][module.toLowerCase()].list : false))

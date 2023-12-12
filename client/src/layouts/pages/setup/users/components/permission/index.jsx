@@ -1,19 +1,21 @@
 // Libraries
 import { Stack, Typography } from "@mui/material";
 import { Link, useNavigate, useParams } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+
+// Core
+import { FormCntxt } from "core/context/Form"; // Context
+import { successToast, useGet, usePost } from "core/function/global"; // Function
+import { permission, records, specific } from "core/api"; // API
 
 import { cancelbtn, card, content, savebtn, title } from "./style";
-import { useContext, useEffect, useState } from "react";
-import { FormCntxt } from "core/context/Form";
-import { useGet, usePost } from "core/function/global";
-import { records, specific } from "core/api";
 import Modules from "./layouts/Modules";
 
 const Index = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const [ modules, setmodules ] = useState([]);
-    const { handleSubmit, register, errors, control, setValue, getValues, setValidation, setError, reset } = useContext(FormCntxt);
+    const { handleSubmit, register, control, setValue, getValues, setError, reset } = useContext(FormCntxt);
     const { mutate: record } = usePost({ request: records, onSuccess: data => setmodules(data)});
     const { isFetching } = 
         useGet({ key: ['usr_specific'], request: specific({ table: 'tbl_users', id: id ?? null }), options: { enabled: true, refetchOnWindowFocus: false },
@@ -21,8 +23,16 @@ const Index = () => {
                 if(Array.isArray(data)) 
                     for(let count = 0; count < Object.keys(data[0]).length; count++) { 
                         let _name = Object.keys(data[0])[count];
-                        setValue(_name, _name === 'status' ? data[0][_name] === 1 : data[0][_name]);
+                        setValue(_name, _name === 'permission' ? JSON.parse(data[0][_name]) : data[0][_name]);
                     }
+            }
+        });
+
+    const { mutate: saving } = 
+        usePost({ request: permission,
+            onSuccess: data => {
+                if(data.result === 'error') { (data.error).forEach((err, index) => setError(err.name, { type: index === 0 ? 'focus' : '', message: err.message }, { shouldFocus: index === 0 })); }
+                else { successToast(data.message, 3000, navigate('/setup/users', { replace: true })); }
             }
         });
 
@@ -54,7 +64,11 @@ const Index = () => {
             </Stack>
             <Stack direction= "row" justifyContent= {{ xs: 'space-between', sm: 'flex-end' }} alignItems= "center" spacing= { 1 }>
                 <Typography sx= { cancelbtn } component= { Link } to= "/setup/users">Cancel</Typography>
-                <Typography sx= { savebtn } onClick= { handleSubmit(data => console.log(data)) }>Save</Typography>
+                <Typography sx= { savebtn } onClick= { handleSubmit(data => {
+                    data['token'] = (sessionStorage.getItem('token')).split('.')[1];
+
+                    saving(data);
+                }) }>Save</Typography>
             </Stack>
         </Stack>
     );

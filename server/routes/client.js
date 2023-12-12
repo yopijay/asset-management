@@ -18,5 +18,6 @@ router.post('/list/:table', validate, (req, res) => { query.list(req.params.tabl
 router.post('/search/:table', validate, (req, res) => { query.search(req.params.table, req.body).then(response => res.status(200).send(response)).catch(error => res.status(200).send(error)); });
 router.post('/logs/:table', validate, (req, res) => { query.logs(req.params.table, req.body).then(response => res.status(200).send(response)).catch(error => res.status(200).send(error)); });
 router.post('/dropdown/:table', validate, (req, res) => { query.dropdown(req.params.table, req.body).then(response => res.status(200).send(response)).catch(error => res.status(200).send(error)); });
+router.post('/permission', validate, (req, res) => query.permission(req.body).then(response => res.status(200).send(response)).catch(error => res.status(200).send(error)));
 
 module.exports = router;

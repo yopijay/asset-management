@@ -12,6 +12,7 @@ const Routes = require('./tables/Routes');
 
 const login = data => { return new Users().login(data); }
 const profile = id => { return new Users().profile(id); }
+const permission = data => { return new Users().permission(data); }
 
 const series = table => {
     return new Promise(async resolve => {
@@ -158,6 +159,7 @@ module.exports = {
     search,
     save,
     update,
-    dropdown
+    dropdown,
+    permission
     // testing
 }

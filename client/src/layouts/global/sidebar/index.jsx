@@ -22,7 +22,7 @@ const Index = () => {
                 onOpen= { drawerToggle(true) } open= { open.left } onClose={ drawerToggle(false) } sx= { swipe }>
                 <Stack sx= { swipable } spacing= { 2 }>
                     <Stack sx= { nav } spacing= { 6 }>
-                    <Stack sx= { accountswipe }><Account /></Stack>
+                        <Stack sx= { accountswipe }><Account /></Stack>
                         <Stack sx= { navswipe }><Navs /></Stack>
                     </Stack>
                     <Logout />
