@@ -48,7 +48,7 @@ const Navs = () => {
                         onClick= { () => { setopen({ left: false }); setactive('dashboard'); localStorage.setItem('nav', 'dashboard'); } }>Dashboard</Typography>
                 </Stack>
             </Stack>
-            { !fetching && routes.length > 0 ?
+            { (data.permission !== null || data.user_level === 'superadmin') && !fetching && routes.length > 0 ?
                 routes.map((rts, index) => 
                     data.user_level === 'superadmin' || checkValue(JSON.parse(data.permission)[(rts.route).toLowerCase()], true) ? 
                         <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 1 } key= { index }>

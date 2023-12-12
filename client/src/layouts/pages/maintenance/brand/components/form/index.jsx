@@ -4,6 +4,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { useContext, useEffect } from "react";
 
 // Core
+import { AccountCntxt } from "core/context/Account"; // Context
 import { FormCntxt } from "core/context/Form"; // Provider
 import FormBuilder from "core/components/form"; // Form Builder
 import { successToast, useGet, usePost } from "core/function/global"; // Function
@@ -16,6 +17,7 @@ import { validation } from "./validation"; // Validation
 
 const Index = () => {
     const { type, id } = useParams();
+    const { data } = useContext(AccountCntxt);
     const navigate = useNavigate();
     const { handleSubmit, setValue, setError, setValidation, reset, register, errors, control, getValues } = useContext(FormCntxt);
     const { isFetching, refetch } = 
@@ -45,7 +47,18 @@ const Index = () => {
             }
         });
 
-    useEffect(() => { setValidation(validation()); reset(); if(id !== undefined) refetch() }, [ reset, setValidation, id, refetch ]);
+    useEffect(() => {
+        if(data.user_level !== 'superadmin' && 
+            (data.permission === null || 
+                !(JSON.parse(data.permission).maintenance.brands.create || 
+                    JSON.parse(data.permission).maintenance.brands.update || 
+                    JSON.parse(data.permission).maintenance.brands.view))) { navigate('/'); }
+        else {
+            setValidation(validation()); 
+            reset(); 
+            if(id !== undefined) refetch();
+        }
+    }, [ data, navigate, reset, setValidation, id, refetch ]);
 
     return (
         <Stack sx= { content } spacing= { 4 }>
@@ -56,18 +69,7 @@ const Index = () => {
             </Stack>
             <Stack sx= { card }>
                 <form autoComplete= "off">
-                    <FormBuilder 
-                        fields= { 
-                            Fields({ 
-                                register: register, 
-                                fetching: isFetching, 
-                                errors: errors, 
-                                control: control, 
-                                setValue: setValue, 
-                                setError: setError, 
-                                getValues: getValues 
-                            }) 
-                        } />
+                    <FormBuilder fields= { Fields({ register: register, fetching: isFetching, errors: errors, control: control, setValue: setValue, setError: setError, getValues: getValues }) } />
                 </form>
             </Stack>
             <Stack direction= "row" justifyContent= {{ xs: 'space-between', sm: 'flex-end' }} alignItems= "center" spacing= { 1 }>

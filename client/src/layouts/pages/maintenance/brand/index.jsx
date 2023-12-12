@@ -1,7 +1,7 @@
 // Libraries
 import { useContext, useEffect } from "react";
 import { Stack } from "@mui/material";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 
 // Core
 import { GlobalCntxt } from "core/context/Global"; // Context
@@ -11,6 +11,7 @@ import { ListPrvdr } from "core/context/List"; // Provider
 // Components
 import List from "./components/list";
 import Form from "./components/form";
+import { AccountCntxt } from "core/context/Account";
 
 // Custom styles
 const container = {
@@ -24,13 +25,18 @@ const container = {
 }
 
 const Index = () => {
+    const navigate = useNavigate();
     const { setactive } = useContext(GlobalCntxt);
+    const { data } = useContext(AccountCntxt);
 
     useEffect(() => {
-        document.title = 'GAMS | Brand';
-        setactive('brands');
-        localStorage.setItem('nav', 'brands');
-    }, [ setactive ]);
+        if(data.user_level !== 'superadmin' && (data.permission === null || !JSON.parse(data.permission).maintenance.brands.list)) { navigate('/'); }
+        else {
+            document.title = 'GAMS | Brand';
+            setactive('brands');
+            localStorage.setItem('nav', 'brands');
+        }
+    }, [ setactive, data, navigate ]);
 
     return (
         <Stack direction= "row" justifyContent= "flex-start" alignItems= "flex-start" sx= { container }>
