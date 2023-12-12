@@ -4,6 +4,7 @@ import { Stack } from "@mui/material";
 import { Route, Routes, useNavigate } from "react-router-dom";
 
 // Core
+import { AccountCntxt } from "core/context/Account"; // Context
 import { GlobalCntxt } from "core/context/Global"; // Context
 import { FormPrvdr } from "core/context/Form"; // Provider
 import { ListPrvdr } from "core/context/List"; // Provider
@@ -11,7 +12,6 @@ import { ListPrvdr } from "core/context/List"; // Provider
 // Components
 import List from "./components/list";
 import Form from "./components/form";
-import { AccountCntxt } from "core/context/Account";
 
 // Custom styles
 const container = {
@@ -36,7 +36,7 @@ const Index = () => {
             setactive('brands');
             localStorage.setItem('nav', 'brands');
         }
-    }, [ setactive, data, navigate ]);
+    }, [ data, navigate, setactive ]);
 
     return (
         <Stack direction= "row" justifyContent= "flex-start" alignItems= "flex-start" sx= { container }>
