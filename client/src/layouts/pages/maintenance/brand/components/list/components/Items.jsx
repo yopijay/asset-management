@@ -36,11 +36,11 @@ const Items = () => {
                                         <Box sx= {{ width: '10px', height: '10px', backgroundColor: '#FF6666', borderRadius: '50px' }} /> }
                                     <Stack direction= "row" justifyContent= "flex-start" alignItems= "center" spacing= { 1.5 }>
                                         { authupdate ? <Typography color= "#9BA4B5" component= { Link } to= { `/maintenance/brands/form/update/${data.id}` }>
-                                            <FontAwesomeIcon icon= { solid('pencil') } size= "lg" />
-                                        </Typography> : '' }
+                                                <FontAwesomeIcon icon= { solid('pencil') } size= "lg" />
+                                            </Typography> : '' }
                                         { authview ? <Typography color= "#9BA4B5" component= { Link } to= { `/maintenance/brands/form/view/${data.id}` }>
-                                            <FontAwesomeIcon icon= { solid('eye') } size= "lg" />
-                                        </Typography> : '' }
+                                                <FontAwesomeIcon icon= { solid('eye') } size= "lg" />
+                                            </Typography> : '' }
                                     </Stack>
                                 </Stack>
                             </Stack> ) }
