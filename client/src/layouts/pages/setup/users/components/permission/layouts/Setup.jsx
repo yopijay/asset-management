@@ -10,22 +10,29 @@ import View from "./components/View";
 import Logs from "./components/Logs";
 import Import from "./components/Import";
 import Export from "./components/Export";
+import Permission from "./components/Permission";
 
-const Modules = props => {
-    const { control, fetching, getValues, setValue, modules, name, isdisabled, setDisabled } = props;
+const modules = [
+    { route: 'setup', module: 'users' },
+    { route: 'setup', module: 'route' },
+    { route: 'setup', module: 'modules' }
+]
+
+const Setup = props => {
+    const { control, fetching, getValues, setValue, isdisabled, setDisabled } = props;
 
     return (
         <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 3 }>
-            <Typography sx= { title }>{ name }</Typography>
+            <Typography sx= { title }>SETUP</Typography>
             <Box>
-                <Grid container direction= "row" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 }>
-                    { (modules).map((data, index) => 
-                        <Grid item xs= { 12 } sm= { 4 } md= { 3 } key= { index }>
+                <Grid container direction= "row" justifyContent= "flex-start" alignItems= "stretch" spacing= { 3 }>
+                    { modules.map((data, index) => 
+                        <Grid item xs= { 12 } sm= { 4 } key= { index } >
                             <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 5 } sx= { card }>
                                 <Stack direction= "row" justifyContent= "space-between" alignItems= "center">
-                                    <Typography sx= { subtitle }>{ data.name }</Typography>
+                                    <Typography sx= { subtitle }>{ (data.module).toUpperCase() }</Typography>
                                     <List disabled= { isdisabled } setDisabled= { setDisabled } control= { control } fetching= { fetching } getValues= { getValues } 
-                                        setValue= { setValue } route= { name } module= { data.name } />
+                                        setValue= { setValue } route= { data.route } module= { data.module } />
                                 </Stack>
                                 <Box>
                                     <Grid container direction= "row" justifyContent= "flex-start" alignItems= "flex-start" spacing= { 2 }>
@@ -35,8 +42,8 @@ const Modules = props => {
                                                 fetching= { fetching } 
                                                 getValues= { getValues } 
                                                 setValue= { setValue } 
-                                                route= { name } 
-                                                module= { data.name } />
+                                                route= { data.route } 
+                                                module= { data.module } />
                                         </Grid>
                                         <Grid item xs= { 6 }>
                                             <Update disabled= { isdisabled }
@@ -44,8 +51,8 @@ const Modules = props => {
                                                 fetching= { fetching } 
                                                 getValues= { getValues } 
                                                 setValue= { setValue }  
-                                                route= { name } 
-                                                module= { data.name } />
+                                                route= { data.route } 
+                                                module= { data.module } />
                                         </Grid>
                                         <Grid item xs= { 6 }>
                                             <View disabled= { isdisabled }
@@ -53,8 +60,8 @@ const Modules = props => {
                                                 fetching= { fetching } 
                                                 getValues= { getValues } 
                                                 setValue= { setValue }  
-                                                route= { name } 
-                                                module= { data.name } />
+                                                route= { data.route } 
+                                                module= { data.module } />
                                         </Grid>
                                         <Grid item xs= { 6 }>
                                             <Logs disabled= { isdisabled }
@@ -62,8 +69,8 @@ const Modules = props => {
                                                 fetching= { fetching } 
                                                 getValues= { getValues } 
                                                 setValue= { setValue }  
-                                                route= { name } 
-                                                module= { data.name } />
+                                                route= { data.route } 
+                                                module= { data.module } />
                                         </Grid>
                                         <Grid item xs= { 6 }>
                                             <Import disabled= { isdisabled }
@@ -71,8 +78,8 @@ const Modules = props => {
                                                 fetching= { fetching } 
                                                 getValues= { getValues } 
                                                 setValue= { setValue }  
-                                                route= { name } 
-                                                module= { data.name } />
+                                                route= { data.route } 
+                                                module= { data.module } />
                                         </Grid>
                                         <Grid item xs= { 6 }>
                                             <Export disabled= { isdisabled }
@@ -80,13 +87,22 @@ const Modules = props => {
                                                 fetching= { fetching } 
                                                 getValues= { getValues } 
                                                 setValue= { setValue }  
-                                                route= { name } 
-                                                module= { data.name } />
+                                                route= { data.route } 
+                                                module= { data.module } />
                                         </Grid>
+                                        { data.module === 'users' ? <Grid item xs= { 6 }>
+                                            <Permission disabled= { isdisabled }
+                                                control= { control } 
+                                                fetching= { fetching } 
+                                                getValues= { getValues } 
+                                                setValue= { setValue }  
+                                                route= { data.route } 
+                                                module= { data.module } />
+                                        </Grid> : '' }
                                     </Grid>
                                 </Box>
                             </Stack>
-                        </Grid>
+                        </Grid> 
                     ) }
                 </Grid>
             </Box>
@@ -94,4 +110,4 @@ const Modules = props => {
     );
 }
 
-export default Modules;
+export default Setup;

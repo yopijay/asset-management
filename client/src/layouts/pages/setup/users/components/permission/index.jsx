@@ -9,12 +9,15 @@ import { successToast, useGet, usePost } from "core/function/global"; // Functio
 import { permission, records, specific } from "core/api"; // API
 
 import { cancelbtn, card, content, savebtn, title } from "./style";
+
 import Modules from "./layouts/Modules";
+import Setup from "./layouts/Setup";
 
 const Index = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const [ modules, setmodules ] = useState([]);
+    const [ isdisabled, setDisabled ] = useState({});
     const { handleSubmit, register, control, setValue, getValues, setError, reset } = useContext(FormCntxt);
     const { mutate: record } = usePost({ request: records, onSuccess: data => setmodules(data)});
     const { isFetching } = 
@@ -60,7 +63,10 @@ const Index = () => {
                     <Typography color= "#9BA4B5">{getValues()?.fname} {getValues()?.lname}</Typography>
                     <Typography color= "#9BA4B5" variant= "body2">{getValues()?.employee_no}</Typography>
                 </Stack>
-                { modules.map((data, index) => <Modules key= { index } { ...data } control= { control } fetching= { isFetching } getValues= { getValues } setValue= { setValue } /> ) }
+                { modules.map((data, index) => 
+                    <Modules key= { index } { ...data } 
+                        control= { control } fetching= { isFetching } getValues= { getValues } setValue= { setValue } isdisabled= { isdisabled } setDisabled= { setDisabled } /> ) }
+                <Setup control= { control } fetching= { isFetching } getValues= { getValues } setValue= { setValue } isdisabled= { isdisabled } setDisabled= { setDisabled } />
             </Stack>
             <Stack direction= "row" justifyContent= {{ xs: 'space-between', sm: 'flex-end' }} alignItems= "center" spacing= { 1 }>
                 <Typography sx= { cancelbtn } component= { Link } to= "/setup/users">Cancel</Typography>
