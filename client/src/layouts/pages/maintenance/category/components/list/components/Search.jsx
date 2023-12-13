@@ -7,11 +7,18 @@ import { useContext } from "react";
 
 // Core
 import { FormCntxt } from "core/context/Form"; // Context
+import { AccountCntxt } from "core/context/Account"; // Context
 
 import { btnicon, btntxt, download, logs, search, upload } from "../style";
 
 const Search = ({ request }) => {
     const { register, setValue, getValues } = useContext(FormCntxt);
+    const { data } = useContext(AccountCntxt);
+
+    let authcreate = data.user_level === 'superadmin' || (data.permission === null || JSON.parse(data.permission).maintenance.category.create);
+    let authlogs = data.user_level === 'superadmin' || (data.permission === null || JSON.parse(data.permission).maintenance.category.logs);
+    let authimport = data.user_level === 'superadmin' || (data.permission === null || JSON.parse(data.permission).maintenance.category.import);
+    let authexport = data.user_level === 'superadmin' || (data.permission === null || JSON.parse(data.permission).maintenance.category.export);
 
     return (
         <Stack direction= "row" justifyContent= "space-between" alignItems= "center" spacing= { 1 }>
@@ -23,11 +30,11 @@ const Search = ({ request }) => {
                 </Box>
             </form>
             <Stack direction= "row" justifyContent= "flex-end" alignItems= "center" spacing= { 1 }>
-                <Typography sx= { logs }><FontAwesomeIcon icon= { solid('clock-rotate-left') } /></Typography>
-                <Typography sx= { download }><FontAwesomeIcon icon= { solid('download') } /></Typography>
-                <Typography sx= { upload }><FontAwesomeIcon icon= { solid('upload') } /></Typography>
-                <Typography component= { Link } to= "/maintenance/category/form/new" sx= { btnicon }><FontAwesomeIcon icon= { solid('plus') } /></Typography>
-                <Typography component= { Link } to= "/maintenance/category/form/new" sx= { btntxt }>New Category</Typography>
+                { authlogs ? <Typography sx= { logs }><FontAwesomeIcon icon= { solid('clock-rotate-left') } /></Typography> : '' }
+                { authexport ? <Typography sx= { download }><FontAwesomeIcon icon= { solid('download') } /></Typography> : '' }
+                { authimport ? <Typography sx= { upload }><FontAwesomeIcon icon= { solid('upload') } /></Typography> : '' }
+                { authcreate ? <Typography component= { Link } to= "/maintenance/category/form/new" sx= { btnicon }><FontAwesomeIcon icon= { solid('plus') } /></Typography> : '' }
+                { authcreate ? <Typography component= { Link } to= "/maintenance/category/form/new" sx= { btntxt }>New Category</Typography> : '' }
             </Stack>
         </Stack>
     );
