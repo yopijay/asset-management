@@ -11,6 +11,12 @@ import { dropdown } from "core/api"; // API
 
 import Subnavs from "./Subnavs";
 
+const setups = [
+    { name: 'users', label: 'Users' },
+    { name: 'route', label: 'Route' },
+    { name: 'modules', label: 'Modules' }
+]
+
 // Custom styles
 const link = {
     textDecoration: 'none',
@@ -48,23 +54,22 @@ const Navs = () => {
                         onClick= { () => { setopen({ left: false }); setactive('dashboard'); localStorage.setItem('nav', 'dashboard'); } }>Dashboard</Typography>
                 </Stack>
             </Stack>
-            { (data.permission !== null || data.user_level === 'superadmin') && !fetching && routes.length > 0 ?
+            { (data.user_level === 'superadmin' || data.permission !== null) && !fetching && routes.length > 0 ?
                 routes.map((rts, index) => 
                     data.user_level === 'superadmin' || checkValue(JSON.parse(data.permission)[(rts.route).toLowerCase()], true) ? 
                         <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 1 } key= { index }>
                             <Typography variant= "caption" color= "#9BA4B5">{ (rts.route).charAt(0) + (rts.route).slice(1).toLowerCase() }</Typography>
                             <Subnavs id= { rts.id } />
                         </Stack> : '' ) : '' }
-            { data.user_level === 'superadmin' ?
+            { data.user_level === 'superadmin' || JSON.parse(data.permission).setup ?
                 <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 1 }>
                     <Typography variant= "caption" color= "#9BA4B5">Setup</Typography>
                     <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch">
-                        <Typography component= { Link } to= "/setup/users" sx= { active === 'users' ? linkactive : link }
-                            onClick= { () => { setopen({ left: false }); setactive('users'); localStorage.setItem('nav', 'users'); } }>Users</Typography>
-                        <Typography component= { Link } to= "/setup/route" sx= { active === 'route' ? linkactive : link }
-                            onClick= { () => { setopen({ left: false }); setactive('route'); localStorage.setItem('nav', 'route'); } }>Route</Typography>
-                        <Typography component= { Link } to= "/setup/modules" sx= { active === 'modules' ? linkactive : link }
-                            onClick= { () => { setopen({ left: false }); setactive('modules'); localStorage.setItem('nav', 'modules'); } }>Modules</Typography>
+                        { setups.map((stp, index) => 
+                            data.user_level === 'superadmin' || JSON.parse(data.permission).setup[(stp.name).toLowerCase()].list ? 
+                                    <Typography component= { Link } to= { `/setup/${stp.name}` } sx= { active === stp.name ? linkactive : link } key= { index }
+                                        onClick= { () => { setopen({ left: false }); setactive(stp.name); localStorage.setItem('nav', stp.name); } }>{ stp.label }</Typography> : ''
+                        ) }
                     </Stack>
                 </Stack> : '' }
         </Stack>
