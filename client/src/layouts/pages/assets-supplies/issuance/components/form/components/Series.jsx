@@ -1,8 +1,10 @@
 // Libraries
 import { Grid, Skeleton, Stack, TextField, Typography } from "@mui/material";
-import { series } from "core/api";
-import { formatter, useGet } from "core/function/global";
 import { useParams } from "react-router-dom";
+
+// Core
+import { series } from "core/api"; // API
+import { formatter, useGet } from "core/function/global"; // Function
 
 // Custom styles
 const input = {

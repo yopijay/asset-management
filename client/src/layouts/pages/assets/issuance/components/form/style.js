@@ -24,6 +24,16 @@ export const card = {
     '&::-webkit-scrollbar': { display: 'none' }
 }
 
+export const input = {
+    border: 'solid 1px #ced6e0',
+    padding: {
+        xs: '10px 8px 8px 8px',
+        md: '6px 10px 5px 10px'
+    },
+    borderRadius: '5px',
+    transition: 'all 0.2s ease-in-out'
+}
+
 export const savebtn = {
     textAlign: 'center',
     width: '150px',
