@@ -5,6 +5,7 @@ import { useContext, useEffect } from "react";
 // Core
 import { ListCntxt } from "core/context/List"; // Context
 import { FormCntxt } from "core/context/Form"; // Context
+import { AccountCntxt } from "core/context/Account"; // Context
 import { usePost } from "core/function/global"; // Functions
 import { records } from "core/api"; // API
 import Loader from "core/components/loader/Screen"; // Loader
@@ -19,8 +20,11 @@ import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 
 const Index = () => {
     const { setlist } = useContext(ListCntxt);
+    const { data } = useContext(AccountCntxt);
     const { register, getValues } = useContext(FormCntxt);
     const { mutate: record, isLoading: fetching } = usePost({ request: records, onSuccess: data => setlist(data)});
+
+    let authcreate = data.user_level === 'superadmin' || (data.permission === null || JSON.parse(data.permission).assets.stocks.create);
 
     useEffect(() => {
         register('mode', { value: 'dashboard' });
@@ -39,8 +43,8 @@ const Index = () => {
                 <Title />
                 <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 } sx= {{ height: '100%', overflow: 'hidden' }}>
                     <Stack direction= "row" justifyContent= "flex-end" alignItems= "center">
-                        <Typography component= { Link } to= "/assets/stocks/form/new" sx= { btnicon }><FontAwesomeIcon icon= { solid('plus') } /></Typography>
-                        <Typography component= { Link } to= "/assets/stocks/form/new" sx= { btntxt }>New Stocks</Typography>
+                        { authcreate ? <Typography component= { Link } to= "/assets/stocks/form/new" sx= { btnicon }><FontAwesomeIcon icon= { solid('plus') } /></Typography> : '' }
+                        { authcreate ? <Typography component= { Link } to= "/assets/stocks/form/new" sx= { btntxt }>New Stocks</Typography> : '' }
                     </Stack>
                     <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 }  sx= {{ height: '100%', overflow: 'hidden' }}>
                         { !fetching ? <Items /> : <Box sx= { loader }><Loader /></Box> }

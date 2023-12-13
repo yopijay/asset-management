@@ -4,6 +4,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { useContext, useEffect } from "react";
 
 // Core
+import { AccountCntxt } from "core/context/Account"; // Context
 import { FormCntxt } from "core/context/Form"; // Context
 import { successToast, useGet, usePost } from "core/function/global"; // Function
 import { save, specific, update } from "core/api"; // API
@@ -17,6 +18,7 @@ import { validation } from "./validation";
 const Index = () => {
     const { type, category, brand, id } = useParams();
     const navigate = useNavigate();
+    const { data } = useContext(AccountCntxt);
     const { handleSubmit, setError, register, errors, control, setValue, getValues, reset } = useContext(FormCntxt);
     const { isFetching, refetch } = 
         useGet({ key: ['stck_specific'], request: specific({ table: 'tbl_stocks', id: id ?? null }), options: { enabled: type !== 'new', refetchOnWindowFocus: false },
@@ -47,7 +49,17 @@ const Index = () => {
             }
         });
     
-    useEffect(() => { reset(); if(id !== undefined) refetch() }, [ reset, id, refetch ]);
+    useEffect(() => { 
+        if(data.user_level !== 'superadmin' && 
+            (data.permission === null || 
+                !(JSON.parse(data.permission).assets.stocks.create || 
+                    JSON.parse(data.permission).assets.stocks.update || 
+                    JSON.parse(data.permission).assets.stocks.view))) { navigate('/'); }
+        else {
+            reset(); 
+            if(id !== undefined) refetch();
+        }
+    }, [ data, navigate, reset, id, refetch ]);
 
     return (
         <Stack sx= { content } spacing= { 4 }>
