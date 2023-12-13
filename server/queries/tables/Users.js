@@ -50,6 +50,7 @@ class Users {
     }
 
     list = async data => {
+        let user = JSON.parse(atob(data.token));
         return (await new Builder(`tbl_users AS usr`)
                         .select(`usr.id, usr.email, usr.user_level, usr.status, info.employee_no, info.rfid, info.fname, info.mname, info.lname, 
                                     cmp.name AS company, dpt.name AS department, pst.name AS position, info.profile`)
@@ -60,11 +61,12 @@ class Users {
                         .join({ table: `tbl_users_info AS cb`, condition: `usr.created_by = cb.user_id`, type: `LEFT` })
                         .condition(`WHERE ${data.searchtxt !== '' ? `(info.fname LIKE '%${(data.searchtxt).toUpperCase()}%' OR info.lname LIKE '%${(data.searchtxt).toUpperCase()}%'
                                             OR info.employee_no LIKE '%${data.searchtxt}%') AND ` : ''}
-                                            usr.id != 1 ORDER BY ${data.orderby} ${(data.sort).toUpperCase()}`)
+                                            (usr.id != 1 AND usr.id != ${user.id}) ORDER BY ${data.orderby} ${(data.sort).toUpperCase()}`)
                         .build()).rows;
     }
 
     search = async data => {
+        let user = JSON.parse(atob(data.token));
         return (await new Builder(`tbl_users AS usr`)
                         .select(`usr.id, usr.email, usr.user_level, usr.status, info.employee_no, info.rfid, info.fname, info.mname, info.lname, 
                                     cmp.name AS company, dpt.name AS department, pst.name AS position, info.profile`)
@@ -75,7 +77,7 @@ class Users {
                         .join({ table: `tbl_users_info AS cb`, condition: `usr.created_by = cb.user_id`, type: `LEFT` })
                         .condition(`WHERE ${data.searchtxt !== '' ? `(info.fname LIKE '%${(data.searchtxt).toUpperCase()}%' OR info.lname LIKE '%${(data.searchtxt).toUpperCase()}%'
                                             OR info.employee_no LIKE '%${data.searchtxt}%') AND ` : ''}
-                                            usr.id != 1 ORDER BY ${data.orderby} ${(data.sort).toUpperCase()}`)
+                                            (usr.id != 1 AND usr.id != ${user.id}) ORDER BY ${data.orderby} ${(data.sort).toUpperCase()}`)
                         .build()).rows;
     }
 

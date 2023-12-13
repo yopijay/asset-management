@@ -7,12 +7,17 @@ import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 
 // Core
 import { ListCntxt } from "core/context/List"; // Context
+import { AccountCntxt } from "core/context/Account"; // Context
 
 // Style
 import { caption, listview, subtitle, title } from "../style";
 
 const Items = () => {
     const { list, listing } = useContext(ListCntxt);
+    const { data } = useContext(AccountCntxt);
+
+    let authupdate = data.user_level === 'superadmin' || (data.permission === null || JSON.parse(data.permission).setup.modules.update);
+    let authview = data.user_level === 'superadmin' || (data.permission === null || JSON.parse(data.permission).setup.modules.view);
 
     return (
         <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" sx= {{ overflowY: 'scroll', '&::-webkit-scrollbar': { display: 'none' } }}>
@@ -31,12 +36,12 @@ const Items = () => {
                                         <Box sx= {{ width: '10px', height: '10px', backgroundColor: '#A0C49D', borderRadius: '50px' }} /> : 
                                         <Box sx= {{ width: '10px', height: '10px', backgroundColor: '#FF6666', borderRadius: '50px' }} /> }
                                     <Stack direction= "row" justifyContent= "flex-start" alignItems= "center" spacing= { 1.5 }>
-                                        <Typography color= "#9BA4B5" component= { Link } to= { `/setup/modules/form/update/${data.id}` }>
-                                            <FontAwesomeIcon icon= { solid('pencil') } size= "lg" />
-                                        </Typography>
-                                        <Typography color= "#9BA4B5" component= { Link } to= { `/setup/modules/form/view/${data.id}` }>
-                                            <FontAwesomeIcon icon= { solid('eye') } size= "lg" />
-                                        </Typography>
+                                        { authupdate ? <Typography color= "#9BA4B5" component= { Link } to= { `/setup/modules/form/update/${data.id}` }>
+                                                <FontAwesomeIcon icon= { solid('pencil') } size= "lg" />
+                                            </Typography> : '' }
+                                        { authview ? <Typography color= "#9BA4B5" component= { Link } to= { `/setup/modules/form/view/${data.id}` }>
+                                                <FontAwesomeIcon icon= { solid('eye') } size= "lg" />
+                                            </Typography> : '' }
                                     </Stack>
                                 </Stack>
                             </Stack> ) }
@@ -44,7 +49,8 @@ const Items = () => {
                     <Grid container direction= "row" justifyContent= "flex-start" alignItems= "flex-start" spacing= { 1 }>
                         { list.map((data, index) => 
                             <Grid item xs= { 12 } sm= { 6 } md= { 4 } key= { index }>
-                                <Stack direction= "row" justifyContent= "space-between" alignItems= "center" sx= { listview } component= { Link } to= { `/setup/route/form/update/${data.id}` }>
+                                <Stack direction= "row" justifyContent= "space-between" alignItems= "center" sx= { listview } 
+                                    component= { authupdate ? Link : Stack } to= { `/setup/route/form/update/${data.id}` }>
                                     <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" sx= {{ flexGrow: 1, overflow: 'hidden' }}>
                                         <Typography variant= "caption" sx= { caption }>{ data.series_no }</Typography>
                                         <Typography sx= { title }>{ data.name }</Typography>

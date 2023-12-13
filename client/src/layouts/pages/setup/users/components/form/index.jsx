@@ -4,6 +4,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { useContext, useEffect } from "react";
 
 // Core
+import { AccountCntxt } from "core/context/Account"; // Context
 import { FormCntxt } from "core/context/Form"; // Context
 import { save, specific, update } from "core/api"; // API
 import { successToast, useGet, usePost } from "core/function/global"; // Function
@@ -18,6 +19,7 @@ import { cvalidation, validation } from "./validation";
 
 const Index = () => {
     const { type, id } = useParams();
+    const { data } = useContext(AccountCntxt);
     const navigate = useNavigate();
     const { handleSubmit, register, errors, control, setValue, getValues, setValidation, setError, reset } = useContext(FormCntxt);
     const { isFetching, refetch } = 
@@ -48,10 +50,17 @@ const Index = () => {
         });
 
     useEffect(() => { 
-        register('profile'); setValidation(validation()); reset(); 
-        if(id !== undefined) { refetch() }
-        else { setValue('branch', ''); setValue('gender', ''); setValue('user_level', 'user'); setValue('employment_status', ''); setValue('profile', JSON.stringify(IMAGE)); } 
-    }, [ register, reset, setValidation, id, refetch, setValue ]);
+        if(data.user_level !== 'superadmin' && 
+            (data.permission === null || !JSON.parse(data.permission).setup ||
+                !(JSON.parse(data.permission).setup.users.create || 
+                    JSON.parse(data.permission).setup.users.update || 
+                    JSON.parse(data.permission).setup.users.view))) { navigate('/'); }
+        else { 
+            register('profile'); setValidation(validation()); reset(); 
+            if(id !== undefined) { refetch() }
+            else { setValue('branch', ''); setValue('gender', ''); setValue('user_level', 'user'); setValue('employment_status', ''); setValue('profile', JSON.stringify(IMAGE)); } 
+        }
+    }, [ data, navigate, register, reset, setValidation, id, refetch, setValue ]);
 
     return (
         <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 4 } sx= { content }>

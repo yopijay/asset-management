@@ -61,17 +61,18 @@ const Navs = () => {
                             <Typography variant= "caption" color= "#9BA4B5">{ (rts.route).charAt(0) + (rts.route).slice(1).toLowerCase() }</Typography>
                             <Subnavs id= { rts.id } />
                         </Stack> : '' ) : '' }
-            { data.user_level === 'superadmin' || JSON.parse(data.permission).setup ?
-                <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 1 }>
-                    <Typography variant= "caption" color= "#9BA4B5">Setup</Typography>
-                    <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch">
-                        { setups.map((stp, index) => 
-                            data.user_level === 'superadmin' || JSON.parse(data.permission).setup[(stp.name).toLowerCase()].list ? 
-                                    <Typography component= { Link } to= { `/setup/${stp.name}` } sx= { active === stp.name ? linkactive : link } key= { index }
-                                        onClick= { () => { setopen({ left: false }); setactive(stp.name); localStorage.setItem('nav', stp.name); } }>{ stp.label }</Typography> : ''
-                        ) }
-                    </Stack>
-                </Stack> : '' }
+            { data.user_level === 'superadmin' || data.permission !== null ?
+                data.user_level === 'superadmin' || JSON.parse(data.permission).setup ? 
+                    <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 1 }>
+                        <Typography variant= "caption" color= "#9BA4B5">Setup</Typography>
+                        <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch">
+                            { setups.map((stp, index) => 
+                                data.user_level === 'superadmin' || JSON.parse(data.permission).setup[(stp.name).toLowerCase()].list ? 
+                                        <Typography component= { Link } to= { `/setup/${stp.name}` } sx= { active === stp.name ? linkactive : link } key= { index }
+                                            onClick= { () => { setopen({ left: false }); setactive(stp.name); localStorage.setItem('nav', stp.name); } }>{ stp.label }</Typography> : ''
+                            ) }
+                        </Stack>
+                    </Stack> : '' : '' }
         </Stack>
     );
 }

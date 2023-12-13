@@ -7,11 +7,17 @@ import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 
 // Core
 import { ListCntxt } from "core/context/List"; // Context
+import { AccountCntxt } from "core/context/Account"; // Context
 
 import { caption, listview, subtitle, title } from "../style";
 
 const Items = () => {
     const { list, listing } = useContext(ListCntxt);
+    const { data } = useContext(AccountCntxt);
+
+    let authupdate = data.user_level === 'superadmin' || (data.permission === null || JSON.parse(data.permission).setup.users.update);
+    let authview = data.user_level === 'superadmin' || (data.permission === null || JSON.parse(data.permission).setup.users.view);
+    let authpermission = data.user_level === 'superadmin' || (data.permission === null || JSON.parse(data.permission).setup.users.permission);
 
     return (
         <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" sx= {{ overflowY: 'scroll', '&::-webkit-scrollbar': { display: 'none' } }}>
@@ -34,15 +40,15 @@ const Items = () => {
                                         <Box sx= {{ width: '10px', height: '10px', backgroundColor: '#A0C49D', borderRadius: '50px' }} /> : 
                                         <Box sx= {{ width: '10px', height: '10px', backgroundColor: '#FF6666', borderRadius: '50px' }} /> }
                                     <Stack direction= "row" justifyContent= "flex-start" alignItems= "center" spacing= { 1.5 }>
-                                        <Typography color= "#9BA4B5" component= { Link } to= { `/setup/users/permission/${data.id}` }>
-                                            <FontAwesomeIcon icon= { solid('key') } size= "lg" />
-                                        </Typography>
-                                        <Typography color= "#9BA4B5" component= { Link } to= { `/setup/users/form/update/${data.id}` }>
-                                            <FontAwesomeIcon icon= { solid('pencil') } size= "lg" />
-                                        </Typography>
-                                        <Typography color= "#9BA4B5" component= { Link } to= { `/setup/users/form/view/${data.id}` }>
-                                            <FontAwesomeIcon icon= { solid('eye') } size= "lg" />
-                                        </Typography>
+                                        { authpermission ? <Typography color= "#9BA4B5" component= { Link } to= { `/setup/users/permission/${data.id}` }>
+                                                <FontAwesomeIcon icon= { solid('key') } size= "lg" />
+                                            </Typography> : '' }
+                                        { authupdate ? <Typography color= "#9BA4B5" component= { Link } to= { `/setup/users/form/update/${data.id}` }>
+                                                <FontAwesomeIcon icon= { solid('pencil') } size= "lg" />
+                                            </Typography> : '' }
+                                        { authview ? <Typography color= "#9BA4B5" component= { Link } to= { `/setup/users/form/view/${data.id}` }>
+                                                <FontAwesomeIcon icon= { solid('eye') } size= "lg" />
+                                            </Typography> : '' }
                                     </Stack>
                                 </Stack>
                             </Stack> ) }
@@ -50,7 +56,8 @@ const Items = () => {
                     <Grid container direction= "row" justifyContent= "flex-start" alignItems= "flex-start" spacing= { 1 }>
                         { list.map((data, index) => 
                             <Grid item xs= { 12 } sm= { 6 } md= { 4 } key= { index }>
-                                <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 5 } sx= { listview } component= { Link } to= { `/setup/users/form/update/${data.id}` }>
+                                <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 5 } sx= { listview } 
+                                    component= { authupdate ? Link : Stack } to= { `/setup/users/form/update/${data.id}` }>
                                     <Stack direction= "column" justifyContent= "center" alignItems= "center" spacing= { 2 }>
                                         <Avatar variant= "rounded" src= { JSON.parse(data.profile) } sx= {{ border: 'solid 1px #F3F3F3', width: '80px', height: '80px' }} />
                                         { data.status === 1 ? 

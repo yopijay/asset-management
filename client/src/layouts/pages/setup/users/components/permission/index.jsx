@@ -4,6 +4,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 
 // Core
+import { AccountCntxt } from "core/context/Account"; // Context
 import { FormCntxt } from "core/context/Form"; // Context
 import { successToast, useGet, usePost } from "core/function/global"; // Function
 import { permission, records, specific } from "core/api"; // API
@@ -15,6 +16,7 @@ import Setup from "./layouts/Setup";
 
 const Index = () => {
     const { id } = useParams();
+    const { data } = useContext(AccountCntxt);
     const navigate = useNavigate();
     const [ modules, setmodules ] = useState([]);
     const [ isdisabled, setDisabled ] = useState({});
@@ -40,16 +42,21 @@ const Index = () => {
         });
 
     useEffect(() => { 
-        reset(); 
-        register('type', 'with-modules');
-        register('token', { value: (sessionStorage.getItem('token')).split('.')[1] });
-
-        let data = getValues();
-        data['type'] = 'with-modules';
-        data['token'] = (sessionStorage.getItem('token')).split('.')[1];
-
-        record({ table: 'tbl_routes', data: data });
-    }, [ reset, register, getValues, record ]);
+        if(data.user_level !== 'superadmin' && 
+            (data.permission === null || !JSON.parse(data.permission).setup ||
+                !(JSON.parse(data.permission).setup.users.permission))) { navigate('/'); }
+        else {
+            reset(); 
+            register('type', 'with-modules');
+            register('token', { value: (sessionStorage.getItem('token')).split('.')[1] });
+    
+            let data = getValues();
+            data['type'] = 'with-modules';
+            data['token'] = (sessionStorage.getItem('token')).split('.')[1];
+    
+            record({ table: 'tbl_routes', data: data });
+        }
+    }, [ data, navigate, reset, register, getValues, record ]);
 
     return (
         <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 4 } sx= { content }>

@@ -4,6 +4,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { useContext, useEffect } from "react";
 
 // Core
+import { AccountCntxt } from "core/context/Account"; // Context
 import { FormCntxt } from "core/context/Form"; // Context
 import FormBuilder from "core/components/form"; // Form Builder
 import { successToast, useGet, usePost } from "core/function/global"; // Function
@@ -15,6 +16,7 @@ import { validation } from "./validation"; // Form validation
 
 const Index = () => {
     const { type, id } = useParams();
+    const { data } = useContext(AccountCntxt);
     const navigate = useNavigate();
     const { handleSubmit, register, errors, control, setValue, getValues, setValidation, setError, reset } = useContext(FormCntxt);
     const { isFetching, refetch } = 
@@ -44,7 +46,18 @@ const Index = () => {
             }
         });
 
-    useEffect(() => { reset(); setValidation(validation()); if(id !== undefined) refetch() }, [ reset, setValidation, id, refetch ]);
+    useEffect(() => { 
+        if(data.user_level !== 'superadmin' && 
+            (data.permission === null || 
+                !(JSON.parse(data.permission).setup.route.create || 
+                    JSON.parse(data.permission).setup.route.update || 
+                    JSON.parse(data.permission).setup.route.view))) { navigate('/'); }
+        else {
+            reset(); 
+            setValidation(validation()); 
+            if(id !== undefined) refetch(); 
+        }
+    }, [ data, navigate, reset, setValidation, id, refetch ]);
 
     return (
         <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 4 } sx= { content }>
