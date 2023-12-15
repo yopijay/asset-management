@@ -9,6 +9,7 @@ import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { ListCntxt } from "core/context/List"; // Context
 
 import { caption, listview, subtitle, title } from "../style";
+const status = { received: '#A0C49D', pending: '#EE7214', failed: '#FF6666' }
 
 const Items = () => {
     const { list, listing } = useContext(ListCntxt);
@@ -20,18 +21,27 @@ const Items = () => {
                     <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 1 }>
                         { list.map((data, index) => 
                             <Stack direction= "row" justifyContent= "space-between" alignItems= "center" sx= { listview } key= { index }>
-                                <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" sx= {{ flexGrow: 1, overflow: 'hidden' }}>
-                                    <Typography variant= "caption" sx= { caption }>{ data.series_no }</Typography>
-                                    <Typography sx= { title }>{ data.name }</Typography>
-                                    <Typography variant= "body2" sx= { subtitle }>Telephone: { data.telephone }</Typography>
+                                <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" sx= {{ flexGrow: 1, overflow: 'hidden' }} spacing= { 2 }>
+                                    <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch">
+                                        <Typography variant= "caption" sx= { caption }>{ data.series_no }</Typography>
+                                        <Typography variant= "body2" sx= { subtitle }>{ data.category }</Typography>
+                                        <Typography variant= "body2" sx= { subtitle }>{ data.serial_no ?? data.model }</Typography>
+                                    </Stack>
+                                    <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch">
+                                        <Typography sx= { title }>Issued to: { data.issued_to }</Typography>
+                                        <Typography sx= { title }>Issued by: { data.issued_by }</Typography>
+                                        <Typography variant= "body2" sx= { subtitle }>Date issued: { data.date_issued }</Typography>
+                                    </Stack>
                                 </Stack>
                                 <Stack direction= "row" justifyContent= "flex-start" alignItems= "center" spacing= { 2 } paddingLeft= "10px">
-                                    { data.status === 1 ? 
-                                        <Box sx= {{ width: '10px', height: '10px', backgroundColor: '#A0C49D', borderRadius: '50px' }} /> : 
-                                        <Box sx= {{ width: '10px', height: '10px', backgroundColor: '#FF6666', borderRadius: '50px' }} /> }
+                                    <Box sx= {{ width: '10px', height: '10px', backgroundColor: status[data.status], borderRadius: '50px' }} />
                                     <Stack direction= "row" justifyContent= "flex-start" alignItems= "center" spacing= { 1.5 }>
-                                        <Typography color= "#9BA4B5" component= { Link } to= { `/maintenance/company/form/update/${data.id}` }><FontAwesomeIcon icon= { solid('pencil') } size= "lg" /></Typography>
-                                        <Typography color= "#9BA4B5" component= { Link } to= { `/maintenance/company/form/view/${data.id}` }><FontAwesomeIcon icon= { solid('eye') } size= "lg" /></Typography>
+                                        <Typography color= "#9BA4B5" component= { Link } to= { `/assets/issuance/form/update/${data.id}` }>
+                                            <FontAwesomeIcon icon= { solid('pencil') } size= "lg" />
+                                        </Typography>
+                                        <Typography color= "#9BA4B5" component= { Link } to= { `/assets/issuance/form/view/${data.id}` }>
+                                            <FontAwesomeIcon icon= { solid('eye') } size= "lg" />
+                                        </Typography>
                                     </Stack>
                                 </Stack>
                             </Stack> ) }
@@ -39,17 +49,20 @@ const Items = () => {
                     <Grid container direction= "row" justifyContent= "flex-start" alignItems= "flex-start" spacing= { 1 }>
                         { list.map((data, index) => 
                             <Grid item xs= { 12 } sm= { 6 } md= { 4 } key= { index }>
-                                <Stack direction= "row" justifyContent= "space-between" alignItems= "center" sx= { listview } component= { Link } to= { `/maintenance/company/form/update/${data.id}` }>
-                                    <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" sx= {{ flexGrow: 1, overflow: 'hidden' }}>
-                                        <Typography variant= "caption" sx= { caption }>{ data.series_no }</Typography>
-                                        <Typography sx= { title }>{ data.name }</Typography>
-                                        <Typography variant= "body2" sx= { subtitle }>Telephone: { data.telephone }</Typography>
+                                <Stack direction= "row" justifyContent= "space-between" alignItems= "center" sx= { listview } component= { Link } to= { `/assets/issuance/form/update/${data.id}` }>
+                                    <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" sx= {{ flexGrow: 1, overflow: 'hidden' }} spacing= { 2 }>
+                                        <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch">
+                                            <Typography variant= "caption" sx= { caption }>{ data.series_no }</Typography>
+                                            <Typography variant= "body2" sx= { subtitle }>{ data.category }</Typography>
+                                            <Typography variant= "body2" sx= { subtitle }>{ data.serial_no ?? data.model }</Typography>
+                                        </Stack>
+                                        <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch">
+                                            <Typography sx= { title }>Issued to: { data.issued_to }</Typography>
+                                            <Typography sx= { title }>Issued by: { data.issued_by }</Typography>
+                                            <Typography variant= "body2" sx= { subtitle }>Date issued: { data.date_issued }</Typography>
+                                        </Stack>
                                     </Stack>
-                                    <Box paddingLeft= "15px">
-                                        { data.status === 1 ? 
-                                            <Box sx= {{ width: '10px', height: '10px', backgroundColor: '#A0C49D', borderRadius: '50px' }} /> : 
-                                            <Box sx= {{ width: '10px', height: '10px', backgroundColor: '#FF6666', borderRadius: '50px' }} /> }
-                                    </Box>
+                                    <Box paddingLeft= "15px"><Box sx= {{ width: '10px', height: '10px', backgroundColor: status[data.status], borderRadius: '50px' }} /></Box>
                                 </Stack>
                             </Grid>) }
                     </Grid>

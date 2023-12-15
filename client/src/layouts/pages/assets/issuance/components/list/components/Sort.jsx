@@ -15,8 +15,8 @@ const Sort = ({ refetch }) => {
     const { getValues, setValue } = useContext(FormCntxt);
     const [ order, setorder ] = useState('date_created');
 
-    const onclick = name => { setValue('orderby', name); setorder(name); refetch({ table: 'tbl_company', data: getValues() }); }
-    const onsort = sort => { setsort(sort); setValue('sort', sort); refetch({ table: 'tbl_company', data: getValues() }); }
+    const onclick = name => { setValue('orderby', name); setorder(name); refetch({ table: 'tbl_stocks_issuance', data: getValues() }); }
+    const onsort = sort => { setsort(sort); setValue('sort', sort); refetch({ table: 'tbl_stocks_issuance', data: getValues() }); }
 
     return (
         <Stack direction= "row" justifyContent= "flex-end" alignItems= "center" spacing= { 1 }>

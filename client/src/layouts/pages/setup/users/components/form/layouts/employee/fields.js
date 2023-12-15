@@ -114,7 +114,10 @@ const Fields = props => {
                     setError('email', { message: '' });
                     setValue('company_id', item.id); 
                     setValue('extension', (item.extension).toLowerCase());
-                    setValue('email', `${(getValues().fname).charAt(0).toLowerCase()}${(getValues().mname).charAt(0).toLowerCase()}${((getValues().lname).replace(/[^A-Z0-9]+/ig, "")).toLowerCase()}@${(item.extension).toLowerCase()}`)
+                    setValue('email', 
+                        `${(getValues().fname).charAt(0).toLowerCase()}
+                            ${(getValues().mname).charAt(0).toLowerCase()}
+                            ${((getValues().lname).replace(/[^A-Z0-9]+/ig, "")).toLowerCase()}@${(item.extension).toLowerCase()}`)
                     dptmenu({ table: 'tbl_department', data: { type: 'per-company', company_id: item.id } }); 
                     pstmenu({ table: 'tbl_position', data: { type: 'per-department', company_id: item.id, department_id: getValues()?.department_id } });
                 },

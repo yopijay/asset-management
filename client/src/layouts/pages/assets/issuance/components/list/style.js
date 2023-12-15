@@ -1,11 +1,11 @@
-export const content = {
+export const content = ({ condition }) => ({
     width: {
         xs: '100%',
-        lg: '78%'
+        lg: condition ? '78%' : '100%'
     },
     height: '100%',
     overflow: 'hidden'
-}
+})
 
 export const history = {
     width: '22%',

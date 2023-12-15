@@ -15,7 +15,7 @@ const audit = { series_no: '', table_name: 'tbl_stocks',  item_id: 0, field: '',
 class Stocks {
     series = async () => { return (await new Builder(`tbl_stocks`).select().build()).rows; }
     specific = async id => { 
-        return (await new Builder(`tbl_stocks AS stck`).select(`stck.*, info.*, ctgy.name AS category`)
+        return (await new Builder(`tbl_stocks AS stck`).select(`stck.id, stck.series_no, stck.category_id, stck.brand_id, stck.quantity, stck.status, info.*, ctgy.name AS category`)
                         .join({ table: `tbl_stocks_info AS info`, condition: `info.stocks_id = stck.id`, type: `LEFT` })
                         .join({ table: `tbl_category AS ctgy`, condition: `stck.category_id = ctgy.id`, type: `LEFT` })
                         .condition(`WHERE stck.id= ${id}`).build()).rows; 
@@ -164,12 +164,13 @@ class Stocks {
         switch(data.type) {
             case 'per-brand': 
                 let stocks = (await new Builder(`tbl_stocks AS stck`)
-                                        .select(`stck.id, CASE WHEN info.serial_no IS NOT NULL AND info.serial_no <> '' THEN info.serial_no ELSE info.model END AS name`)
-                                        .join({ table: `tbl_stocks_info AS info`, condition: `info.stock_id = stck.id`, type: `LEFT` })
-                                        .join({ table: `tbl_stocks_issuance AS iss`, condition: `iss.stock_id = stck.id`, type: `LEFT` })
-                                        .condition(`WHERE stck.category_id= ${data.category_id} AND stck.brand_id= ${data.brand_id ?? null} 
-                                                            ${data.form === 'new' ? `AND stck.status= 1` : 
-                                                                `AND ((iss.issued_to= ${data.issued_to} AND iss.stock_id= ${data.stock_id}) OR stck.status= 1)`}`)
+                                        .select(`stck.id, 
+                                                        CONCAT(CASE WHEN info.serial_no IS NOT NULL AND info.serial_no <> '' THEN info.serial_no ELSE info.model END, 
+                                                                        CASE WHEN ctg.name = 'TONER' THEN CONCAT(' - ', UPPER(info.condition)) ELSE '' END) AS name`)
+                                        .join({ table: `tbl_stocks_info AS info`, condition: `info.stocks_id = stck.id`, type: `LEFT` })
+                                        .join({ table: `tbl_category AS ctg`, condition: `stck.category_id = ctg.id`, type: `LEFT` })
+                                        .condition(`WHERE stck.category_id= ${data.category_id} AND stck.brand_id= ${data.brand_id} AND stck.status= 'good' 
+                                                            ${data.form === 'new' ? `AND stck.quantity > 0` : ''}`)
                                         .build()).rows;
                                         
                 return [{ id: 0, name: '-- SELECT AN ITEM BELOW --' }].concat(stocks);

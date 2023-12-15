@@ -16,7 +16,7 @@ const logs = {
 }
 
 const Logs = () => {
-    const { data: log, isFetching: fetching } = useGet({ key: ['cmp_logs'], request: history({ table: 'tbl_company', data: {} }), options: { refetchOnWindowFocus: false } }); 
+    const { data: log, isFetching: fetching } = useGet({ key: ['iss_logs'], request: history({ table: 'tbl_stocks_issuance', data: {} }), options: { refetchOnWindowFocus: false } }); 
 
     return (
         <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 } sx= { logs }>
