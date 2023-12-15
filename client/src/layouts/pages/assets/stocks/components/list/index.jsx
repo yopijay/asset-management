@@ -27,14 +27,17 @@ const Index = () => {
     let authcreate = data.user_level === 'superadmin' || (data.permission === null || JSON.parse(data.permission).assets.stocks.create);
 
     useEffect(() => {
-        register('mode', { value: 'dashboard' });
+        register('orderby', { value: 'date_created' });
+        register('sort', { value: 'desc' });
         register('token', { value: (sessionStorage.getItem('token')).split('.')[1] });
 
         let data = getValues();
-        data['mode'] = 'dashboard';
+        data['orderby'] = 'date_created';
+        data['sort'] = 'desc';
+        data['searchtxt'] = '';
         data['token'] = (sessionStorage.getItem('token')).split('.')[1];
 
-        record({ table: 'tbl_stocks', data: data });
+        record({ table: 'tbl_category', data: data });
     }, [ register, getValues, record ]);
 
     return (

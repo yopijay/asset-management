@@ -1,5 +1,5 @@
 // Libraries
-import { Box, InputAdornment, Stack, TextField } from "@mui/material";
+import { Box, InputAdornment, Stack, TextField, Typography } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { useContext } from "react";
@@ -8,6 +8,7 @@ import { useContext } from "react";
 import { FormCntxt } from "core/context/Form"; // Context
 
 import { search } from "../style";
+import { download, logs, upload } from "../../list/style";
 
 const Search = ({ request }) => {
     const { register, setValue, getValues } = useContext(FormCntxt);
@@ -21,6 +22,11 @@ const Search = ({ request }) => {
                         placeholder= "Search..." sx= {{ padding: '' }} onChange= { e => { setValue('searchtxt', e.target.value); request({ table: 'tbl_stocks', data: getValues() }) } } />
                 </Box>
             </form>
+            <Stack direction= "row" justifyContent= "flex-end" alignItems= "center" spacing= { 1 }>
+                <Typography sx= { logs }><FontAwesomeIcon icon= { solid('clock-rotate-left') } /></Typography>
+                <Typography sx= { download }><FontAwesomeIcon icon= { solid('download') } /></Typography>
+                <Typography sx= { upload }><FontAwesomeIcon icon= { solid('upload') } /></Typography>
+            </Stack>
         </Stack>
     );
 }

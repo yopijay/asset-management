@@ -33,7 +33,7 @@ const Fields = props => {
     useEffect(() => {
         if(!fetching) {
             if(type !== 'new') {
-                brdmenu({ table: 'tbl_brands', data: { type: 'per-category', category_id: getValues()?.category_id } });
+                brdmenu({ table: 'tbl_brands', data: { type: 'per-category-id', category_id: getValues()?.category_id } });
                 itmmenu({ table: 'tbl_stocks', data: { type: 'per-brand', category_id: getValues()?.category_id, brand_id: getValues()?.brand_id, form: type } });
                 stocks({ table: 'tbl_stocks', id: getValues()?.item_id });
             }
@@ -104,7 +104,7 @@ const Fields = props => {
                     setError('category_id', { message: '' });
                     setValue('category_id', item.id);
                     setValue('category', ((item.name).replace(' ', '_')).toLowerCase());
-                    brdmenu({ table: 'tbl_brands', data: { type: 'per-category', category_id: item.id } });
+                    brdmenu({ table: 'tbl_brands', data: { type: 'per-category-id', category_id: item.id } });
                 },
                 errors: errors,
                 getValues: getValues

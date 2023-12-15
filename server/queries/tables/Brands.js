@@ -10,9 +10,13 @@ class Brands {
     dropdown = async data => {
         switch(data.type) {
             case 'nav': return [];
-            case 'per-category': return [{ id: 0, name: '-- SELECT AN ITEM BELOW --' }]
+            case 'per-category-id': return [{ id: 0, name: '-- SELECT AN ITEM BELOW --' }]
                                                 .concat((await new Builder(`tbl_brands`).select(`id, name`)
                                                                 .condition(`WHERE category_id= ${data.category_id} AND status= 1 ORDER BY name ASC`).build()).rows);
+            case 'per-category-name': return [{ id: 'all', name: 'ALL' }]
+                                                            .concat((await new Builder(`tbl_brands AS brd`).select(`brd.id, brd.name`)
+                                                                            .join({ table: `tbl_category AS ctg`, condition: `brd.category_id = ctg.id`, type: `LEFT` })
+                                                                            .condition(`WHERE ctg.name= '${(data.category).toUpperCase()}' AND brd.status= 1 ORDER BY brd.name ASC`).build()).rows);
             default: return [{ id: 0, name: '-- SELECT AN ITEM BELOW --' }]
                             .concat((await new Builder(`tbl_brands`).select(`id, name`).condition(`WHERE status= 1 ORDER BY name ASC`).build()).rows);
         }

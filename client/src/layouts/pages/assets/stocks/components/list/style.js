@@ -137,3 +137,13 @@ export const caption = {
     textOverflow: 'ellipsis',
     width: '100%'
 }
+
+export const card = {
+    backgroundColor: '#FFFFFF',
+    padding: '40px 0',
+    borderRadius: '8px',
+    '&:hover': { backgroundColor: '#F1F1F1' },
+    transition: 'all 0.2s ease-in-out',
+    textDecoration: 'none',
+    color: 'inherit'
+}

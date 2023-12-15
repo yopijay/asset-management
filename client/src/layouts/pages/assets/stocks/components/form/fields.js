@@ -16,7 +16,7 @@ const Field = props => {
     useGet({ key: ['stck_series'], request: series('tbl_stocks'), options: {}, onSuccess: data => { if(type === 'new') setValue('series_no', `STCK-${formatter(parseInt(data.length) + 1, 7)}`) } });
 
     useEffect(() => {
-        if(!fetching) { if(type !== 'new') brdmenu({ table: 'tbl_brands', data: { type: 'per-category', category_id: getValues()?.category_id } }); }
+        if(!fetching) { if(type !== 'new') brdmenu({ table: 'tbl_brands', data: { type: 'per-category-id', category_id: getValues()?.category_id } }); }
     }, [ fetching, type, brdmenu, getValues ]);
 
     return [
@@ -46,7 +46,7 @@ const Field = props => {
                     setError('category_id', { message: '' });
                     setValue('category_id', item.id);
                     setValue('category', ((item.name).replace(' ', '_')).toLowerCase());
-                    brdmenu({ table: 'tbl_brands', data: { type: 'per-category', category_id: item.id } });
+                    brdmenu({ table: 'tbl_brands', data: { type: 'per-category-id', category_id: item.id } });
                 },
                 errors: errors,
                 getValues: getValues
