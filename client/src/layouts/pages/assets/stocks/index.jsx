@@ -37,15 +37,15 @@ const Index = () => {
             setactive('stocks');
             localStorage.setItem('nav', 'stocks');
         }
-    }, [ data, navigate, setactive ]);
+    }, [ data, navigate, setactive ]);  
 
     return (
         <Stack direction= "row" justifyContent= "flex-start" alignItems= "flex-start" sx= { container }>
             <Routes>
                 <Route exact path= "/" element= { <FormPrvdr><ListPrvdr><List /></ListPrvdr></FormPrvdr> } />
                 <Route exact path= "/:category" element= { <FormPrvdr><ListPrvdr><Categories /></ListPrvdr></FormPrvdr> } />
-                <Route exact path= "/form/:type" element= { <FormPrvdr><Form /></FormPrvdr> } />
-                <Route exact path= "/:category/:brand/form/:type/:id" element= { <FormPrvdr><Form /></FormPrvdr> } />
+                <Route exact path= "/:category/form/:type" element= { <FormPrvdr><Form /></FormPrvdr> } />
+                <Route exact path= "/:category/form/:type/:id" element= { <FormPrvdr><Form /></FormPrvdr> } />
             </Routes>
         </Stack>
     );

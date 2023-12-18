@@ -11,7 +11,7 @@ class Brands {
         switch(data.type) {
             case 'nav': return [];
             case 'per-category-id': return [{ id: 0, name: '-- SELECT AN ITEM BELOW --' }]
-                                                .concat((await new Builder(`tbl_brands`).select(`id, name`)
+                                                    .concat((await new Builder(`tbl_brands`).select(`id, name`)
                                                                 .condition(`WHERE category_id= ${data.category_id} AND status= 1 ORDER BY name ASC`).build()).rows);
             case 'per-category-name': return [{ id: 'all', name: 'ALL' }]
                                                             .concat((await new Builder(`tbl_brands AS brd`).select(`brd.id, brd.name`)

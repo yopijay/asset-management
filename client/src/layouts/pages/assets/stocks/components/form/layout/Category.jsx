@@ -12,7 +12,7 @@ const Category = props => {
     return (
         <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 3 }>
             <Typography color= "#9BA4B5">Specifications:</Typography>
-            { getValues().category ? 
+            { getValues()?.category ? 
                 <Box><FormBuilder fields= { Categories[(getValues()?.category)?.toLowerCase()]({ ...props }) } /></Box> : 
                 <Typography color= "#9BA4B5" variant= "caption" sx= {{ textAlign: 'center' }}>Please choose a category first!</Typography> }
         </Stack>

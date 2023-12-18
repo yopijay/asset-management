@@ -15,20 +15,20 @@ import { dropdown } from "core/api"; // API
 // Constants
 import { lbl, orderby, select } from "../style"; // Styles
 
-const Sort = ({ request }) => {
+const Sort = ({ refetch }) => {
     const { category } = useParams();
     const { sort, setsort, listing, setlisting } = useContext(ListCntxt);
     const { getValues, setValue, control } = useContext(FormCntxt);
-    const [ order, setorder ] = useState('date_created');
+    const [ order, setorder ] = useState('serial_no');
 
     const { data: brands, isFetching: brdfetching } = 
         useGet({ key: ['brd_dd'], 
                         request: dropdown({ table: 'tbl_brands', 
-                                        data: { type: 'per-category-name', category: (category.charAt(0).toUpperCase() + category.slice(1)).replace('-', ' ') } }), 
+                                        data: { type: 'per-category-name', category: category.replace('-', ' ') } }), 
                         options: { refetchOnWindowFocus: false } });
 
-    const onclick = name => { setValue('orderby', name); setorder(name); request({ table: 'tbl_stocks', data: getValues() }); }
-    const onsort = sort => { setsort(sort); setValue('sort', sort); request({ table: 'tbl_stocks', data: getValues() }); }
+    const onclick = name => { setValue('orderby', name); setorder(name); refetch({ table: 'tbl_stocks', data: getValues() }); }
+    const onsort = sort => { setsort(sort); setValue('sort', sort); refetch({ table: 'tbl_stocks', data: getValues() }); }
 
     return (
         <Stack direction= "row" justifyContent= "space-between" alignItems= "center" spacing= { 1 }>
@@ -41,7 +41,11 @@ const Sort = ({ request }) => {
                                     getOptionLabel= { option => option.name || option.id } noOptionsText= "No results..." 
                                     getOptionDisabled= { option => option.id === 0 || option.id === '' }
                                     isOptionEqualToValue= { (option, value) => option.name === value.name || option.id === value.id }
-                                    onChange= { (e, item) => { setValue('brand', item.id); request({ table: 'tbl_stocks', data: getValues() }); } }
+                                    onChange= { (e, item) => { 
+                                        setValue('brand', item.id); 
+                                        setValue('orderby', order);
+                                        setValue('category', (category.replace('-', ' ')).toUpperCase()); 
+                                        refetch({ table: 'tbl_stocks', data: getValues() }); } }
                                     renderInput= { params => <TextField { ...params } variant= "standard" size= "small" fullWidth /> }
                                     value= { brands?.find(data => { return data.id === (getValues().brand !== undefined ? getValues().brand : value) }) !== undefined ?
                                                     brands?.find(data => { return data.id === (getValues().brand !== undefined ? getValues().brand : value) }) : brands?.length === 0 ?
@@ -51,9 +55,8 @@ const Sort = ({ request }) => {
             <Stack direction= "row" justifyContent= "flex-start" alignItems= "center" spacing= { 1 }>
                 <Stack direction= "row" justifyContent= "flex-start" alignItems= "center" spacing= { 1 }>
                     <Typography variant= "caption">Order by:</Typography>
-                    { order === 'date_created' ? <Typography variant= "caption" sx= { orderby } onClick= { () => onclick('name') }>Date created</Typography> :
-                        order === 'name' ? <Typography variant= "caption" sx= { orderby } onClick= { () => onclick('series_no') }>Name</Typography> :
-                            order === 'series_no' ? <Typography variant= "caption" sx= { orderby } onClick= { () => onclick('date_created') }>Series no.</Typography> : '' }
+                    { order === 'serial_no' ? <Typography variant= "caption" sx= { orderby } onClick= { () => onclick('model') }>Serial no.</Typography> :
+                        order === 'model' ? <Typography variant= "caption" sx= { orderby } onClick= { () => onclick('serial_no') }>Model</Typography> : '' }
                 </Stack>
                 { sort === 'desc' ? 
                     <Typography sx= {{ cursor: 'pointer' }} onClick= { () => onsort('asc') }><FontAwesomeIcon icon= { solid('arrow-down-z-a') } color= "#9DB2BF" /></Typography> :

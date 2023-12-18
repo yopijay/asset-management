@@ -16,7 +16,7 @@ import Category from "./layout/Category";
 import { validation } from "./validation";
 
 const Index = () => {
-    const { type, category, brand, id } = useParams();
+    const { type, category, id } = useParams();
     const navigate = useNavigate();
     const { data } = useContext(AccountCntxt);
     const { handleSubmit, setError, register, errors, control, setValue, getValues, reset } = useContext(FormCntxt);
@@ -37,7 +37,7 @@ const Index = () => {
         usePost({ request: save,
             onSuccess: data => {
                 if(data.result === 'error') { (data.error).forEach((err, index) => setError(err.name, { type: index === 0 ? 'focus' : '', message: err.message }, { shouldFocus: index === 0 })); }
-                else { successToast(data.message, 3000, navigate('/assets/stocks', { replace: true })); }
+                else { successToast(data.message, 3000, navigate(`/assets/stocks/${category}`, { replace: true })); }
             } 
         });
 
@@ -45,7 +45,7 @@ const Index = () => {
         usePost({ request: update,
             onSuccess: data => {
                 if(data.result === 'error') { (data.error).forEach((err, index) => setError(err.name, { type: index === 0 ? 'focus' : '', message: err.message }, { shouldFocus: index === 0 })); }
-                else { successToast(data.message, 3000, navigate(`/assets/stocks/${category}/${brand}`, { replace: true })); }
+                else { successToast(data.message, 3000, navigate(`/assets/stocks/${category}`, { replace: true })); }
             }
         });
     
@@ -59,48 +59,29 @@ const Index = () => {
             reset(); 
             if(id !== undefined) refetch();
         }
-    }, [ data, navigate, reset, id, refetch ]);
+    }, [ category, data, navigate, reset, id, refetch ]);
 
     return (
         <Stack sx= { content } spacing= { 4 }>
             <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch">
-                <Typography sx= { title }>{ type.charAt(0).toUpperCase() + type.slice(1) } Stocks</Typography>
+                <Typography sx= { title }>{ type.charAt(0).toUpperCase() + type.slice(1) } { (category?.charAt(0).toUpperCase() + category?.slice(1))?.replace('-', ' ') }</Typography>
                 <Typography variant= "caption" color= "#9BA4B5">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc non neque molestie, 
                     malesuada quam ut, vulputate massa.</Typography>
             </Stack>
             <Stack sx= { card } spacing= { 3 }>
                 <Box>
                     <form autoComplete= "off">
-                        <FormBuilder 
-                            fields= { 
-                                Fields({ 
-                                    register: register, 
-                                    fetching: isFetching, 
-                                    errors: errors, 
-                                    control: control, 
-                                    setValue: setValue, 
-                                    getValues: getValues, 
-                                    setError: setError 
-                                }) 
-                            } />
+                        <FormBuilder fields= { Fields({ register: register, fetching: isFetching, errors: errors, control: control, setValue: setValue, getValues: getValues, setError: setError }) } />
                     </form>
                 </Box>
                 <Box>
                     <form autoComplete= "off">
-                        <Category 
-                            register= { register } 
-                            fetching= { isFetching } 
-                            errors= { errors } 
-                            control= { control } 
-                            setValue= { setValue } 
-                            getValues= { getValues } 
-                            setError= { setError } 
-                            type= { type } />
+                        <Category register= { register } fetching= { isFetching } errors= { errors } control= { control } setValue= { setValue } getValues= { getValues } setError= { setError } type= { type } />
                     </form>
                 </Box>
             </Stack>
             <Stack direction= "row" justifyContent= {{ xs: 'space-between', sm: 'flex-end' }} alignItems= "center" spacing= { 1 }>
-                <Typography sx= { cancelbtn } component= { Link } to= { type === 'new' ? '/assets/stocks' : `/assets/stocks/${category}/${brand}` }>Cancel</Typography>
+                <Typography sx= { cancelbtn } component= { Link } to= { `/assets/stocks/${category}` }>Cancel</Typography>
                 { type !== 'view' ? <Typography sx= { savebtn } onClick= { handleSubmit(data => {
                     let errors = [];
                     data['token'] = (sessionStorage.getItem('token')).split('.')[1];

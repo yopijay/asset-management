@@ -35,37 +35,6 @@ export const search = {
     }
 }
 
-export const logs = {
-    backgroundColor: '#526D82',
-    color: '#FFFFFF',
-    padding: '7px 12px',
-    borderRadius: '7px',
-    transition: 'all 0.2s ease-in-out',
-    cursor: 'pointer',
-    display: { xs: 'block', lg: 'none' },
-    '&:hover': { backgroundColor: '#3f5465' }
-}
-
-export const download = {
-    backgroundColor: '#526D82',
-    color: '#FFFFFF',
-    padding: '7px 12px',
-    borderRadius: '7px',
-    transition: 'all 0.2s ease-in-out',
-    cursor: 'pointer',
-    '&:hover': { backgroundColor: '#3f5465' }
-}
-
-export const upload = {
-    backgroundColor: '#526D82',
-    color: '#FFFFFF',
-    padding: '7px 12px',
-    borderRadius: '7px',
-    transition: 'all 0.2s ease-in-out',
-    cursor: 'pointer',
-    '&:hover': { backgroundColor: '#3f5465' }
-}
-
 export const btnicon = { 
     display: {
         xs: 'block',

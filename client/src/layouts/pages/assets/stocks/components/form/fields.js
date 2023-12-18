@@ -7,17 +7,24 @@ import { dropdown, series } from "core/api"; // API
 import { formatter, useGet, usePost } from "core/function/global"; // Functions
 
 const Field = props => {
-    const { type } = useParams();
+    const { type, category } = useParams();
     const { register, fetching, errors, control, setValue, getValues, setError } = props;
 
-    const { data: category, isFetching: ctgfetching } = useGet({ key: ['ctg_dd'], request: dropdown({ table: 'tbl_category', data: { type: 'assets' } }), options: { refetchOnWindowFocus: false } });
+    const { data: categories, isFetching: ctgfetching } = useGet({ key: ['ctg_dd'], request: dropdown({ table: 'tbl_category', data: { type: 'assets' } }), options: { refetchOnWindowFocus: false } });
     const { data: brand, mutate: brdmenu, isLoading: brdloading } = usePost({ request: dropdown });
 
     useGet({ key: ['stck_series'], request: series('tbl_stocks'), options: {}, onSuccess: data => { if(type === 'new') setValue('series_no', `STCK-${formatter(parseInt(data.length) + 1, 7)}`) } });
 
     useEffect(() => {
-        if(!fetching) { if(type !== 'new') brdmenu({ table: 'tbl_brands', data: { type: 'per-category-id', category_id: getValues()?.category_id } }); }
-    }, [ fetching, type, brdmenu, getValues ]);
+        setValue('category_id', categories?.find(data => data.name === (category.replace('-', ' ')).toUpperCase()).id);
+        setValue('category', (category?.replace('-', '_'))?.toLowerCase())
+        if(!fetching) {
+            if(categories) { 
+                if(type !== 'new') { brdmenu({ table: 'tbl_brands', data: { type: 'per-category-id', category_id: getValues()?.category_id } }); } 
+                else { brdmenu({ table: 'tbl_brands', data: { type: 'per-category-id', category_id: categories?.find(data => data.name === (category.replace('-', ' ')).toUpperCase()).id } }); }
+            }
+        }
+    }, [ setValue, fetching, categories, getValues, category, type, brdmenu ]);
 
     return [
         {
@@ -41,7 +48,7 @@ const Field = props => {
                 label: '*Category',
                 disabled: type !== 'new',
                 fetching: fetching,
-                options: !ctgfetching ? category : [],
+                options: !ctgfetching ? categories : [],
                 onChange: (e, item) => { 
                     setError('category_id', { message: '' });
                     setValue('category_id', item.id);
