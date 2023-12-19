@@ -1,5 +1,5 @@
 // Libraries
-import { Box, Grid, Stack, Typography } from "@mui/material";
+import { Box, Chip, Grid, Stack, Typography } from "@mui/material";
 import { useContext } from "react";
 import { Link, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -34,6 +34,7 @@ const Items = () => {
                                     { (category.replace('-', ' ')).toLowerCase() === 'toner' ? <Typography sx= { subtitle } variant= "body2">Quantity: { data.quantity }</Typography> : '' }
                                 </Stack>
                                 <Stack direction= "row" justifyContent= "flex-start" alignItems= "center" spacing= { 2 } paddingLeft= "10px">
+                                    <Chip size= "small" color= { data.quantity > 0 ? 'success' : 'error' } label= { data.quantity > 0 ? `Available` : 'Not available'} />
                                     <Box sx= {{ width: '10px', height: '10px', backgroundColor: `#${status[data.status]}`, borderRadius: '50px' }} />
                                     <Stack direction= "row" justifyContent= "flex-start" alignItems= "center" spacing= { 1.5 }>
                                         { authupdate ? <Typography color= "#9BA4B5" component= { Link } to= { `/assets/stocks/${category}/form/update/${data.id}` }>
