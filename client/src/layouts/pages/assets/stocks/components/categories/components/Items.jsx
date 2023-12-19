@@ -1,5 +1,5 @@
 // Libraries
-import { Box, Chip, Grid, Stack, Typography } from "@mui/material";
+import { Chip, Grid, Stack, Typography } from "@mui/material";
 import { useContext } from "react";
 import { Link, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -10,7 +10,7 @@ import { ListCntxt } from "core/context/List"; // Context
 import { AccountCntxt } from "core/context/Account"; // Context
 
 import { caption, listview, subtitle, listtitle } from "../style";
-const status = { good: 'A0C49D', defect: 'FF6666' }
+// const status = { good: 'A0C49D', defect: 'FF6666' }
 
 const Items = () => {
     const { category } = useParams();
@@ -35,7 +35,7 @@ const Items = () => {
                                 </Stack>
                                 <Stack direction= "row" justifyContent= "flex-start" alignItems= "center" spacing= { 2 } paddingLeft= "10px">
                                     <Chip size= "small" color= { data.quantity > 0 ? 'success' : 'error' } label= { data.quantity > 0 ? `Available` : 'Not available'} />
-                                    <Box sx= {{ width: '10px', height: '10px', backgroundColor: `#${status[data.status]}`, borderRadius: '50px' }} />
+                                    {/* <Box sx= {{ width: '10px', height: '10px', backgroundColor: `#${status[data.status]}`, borderRadius: '50px' }} /> */}
                                     <Stack direction= "row" justifyContent= "flex-start" alignItems= "center" spacing= { 1.5 }>
                                         { authupdate ? <Typography color= "#9BA4B5" component= { Link } to= { `/assets/stocks/${category}/form/update/${data.id}` }>
                                                 <FontAwesomeIcon icon= { solid('pencil') } size= "lg" />
@@ -57,6 +57,7 @@ const Items = () => {
                                         <Typography sx= { subtitle } variant= "body2">{ data.serial_no }</Typography>
                                         { (category.replace('-', ' ')).toLowerCase() === 'toner' ? <Typography sx= { subtitle } variant= "body2">Quantity: { data.quantity }</Typography> : '' }
                                     </Stack>
+                                    <Chip size= "small" color= { data.quantity > 0 ? 'success' : 'error' } label= { data.quantity > 0 ? `Available` : 'Not available'} />
                                 </Stack>
                             </Grid> ) }
                     </Grid> 

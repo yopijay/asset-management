@@ -17,6 +17,7 @@ import { content, history, loader, title } from "./style";
 import Search from "./components/Search";
 import Sort from "./components/Sort";
 import Items from "./components/Items";
+import Logs from "./components/Logs";
 
 const Index = () => {
     const { category } = useParams();
@@ -67,7 +68,7 @@ const Index = () => {
                     <Typography color= "#9DB2BF" variant= "body2">Logs</Typography>
                     <Typography color= "#9DB2BF" variant= "body2">View all</Typography>
                 </Stack>
-                {/* <Logs /> */}
+                <Logs />
             </Stack> : '' }
         </Stack>
     );
