@@ -50,15 +50,13 @@ const Index = () => {
         });
     
     useEffect(() => { 
+        reset(); 
         if(data.user_level !== 'superadmin' && 
             (data.permission === null || 
                 !(JSON.parse(data.permission).assets.stocks.create || 
                     JSON.parse(data.permission).assets.stocks.update || 
                     JSON.parse(data.permission).assets.stocks.view))) { navigate('/'); }
-        else {
-            reset(); 
-            if(id !== undefined) refetch();
-        }
+        else { if(id !== undefined) refetch(); }
     }, [ category, data, navigate, reset, id, refetch ]);
 
     return (

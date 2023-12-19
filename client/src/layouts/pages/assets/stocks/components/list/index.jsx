@@ -19,11 +19,7 @@ const Index = () => {
     const { mutate: record, isLoading: fetching } = usePost({ request: records, onSuccess: data => setcategories(data)});
 
     useEffect(() => {
-        register('orderby', { value: 'date_created' });
-        register('sort', { value: 'desc' });
-        register('token', { value: (sessionStorage.getItem('token')).split('.')[1] });
-
-        let  data = getValues();
+        let  data = {};
         data['orderby'] = 'date_created';
         data['sort'] = 'desc';
         data['searchtxt'] = '';
