@@ -60,7 +60,10 @@ class Toner {
         }
         
         if(!(errors.length > 0)) {
-            await new Builder(`tbl_stocks`).update(`brand_id= ${curr.brand_id}, quantity= ${curr.quantity}, updated_by= ${user.id}, date_updated= '${date}'`).condition(`WHERE id= ${curr.id}`).build();
+            await new Builder(`tbl_stocks`)
+                .update(`brand_id= ${curr.brand_id}, quantity= ${curr.quantity}, updated_by= ${user.id}, date_updated= '${date}', branch= '${curr.branch}'`)
+                .condition(`WHERE id= ${curr.id}`)
+                .build();
 
             await new Builder(`tbl_stocks_info`)
                 .update(`model= ${curr.model !== '' && curr.model !== null ? `'${(curr.model).toUpperCase()}'` : null}, type= ${curr.type !== '' && curr.type !== null ? `'${curr.type}'` : null},

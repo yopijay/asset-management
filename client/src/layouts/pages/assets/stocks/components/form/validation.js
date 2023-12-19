@@ -1,5 +1,6 @@
 export const validation = (data, errors) => {
     if(!data.brand_id) { errors.push({ name: 'brand_id', message: 'This field is required!' }); }
+    if(!data.branch) { errors.push({ name: 'branch', message: 'This field is required!' }); }
 
     switch(data.category) {
         case 'laptop':

@@ -15,7 +15,7 @@ class Stocks {
     series = async () => { return (await new Builder(`tbl_stocks`).select().build()).rows; }
     specific = async id => { 
         return (await new Builder(`tbl_stocks AS stck`)
-                        .select(`stck.id, stck.series_no, stck.category_id, stck.brand_id, stck.quantity, stck.status, info.*, ctgy.name AS category`)
+                        .select(`stck.id, stck.series_no, stck.category_id, stck.brand_id, stck.quantity, stck.status, stck.branch, info.*, ctgy.name AS category`)
                         .join({ table: `tbl_stocks_info AS info`, condition: `info.stocks_id = stck.id`, type: `LEFT` })
                         .join({ table: `tbl_category AS ctgy`, condition: `stck.category_id = ctgy.id`, type: `LEFT` })
                         .condition(`WHERE stck.id= ${id}`)
@@ -87,8 +87,8 @@ class Stocks {
 
         if(!(errors.length > 0)) {
             let stck = (await new Builder(`tbl_stocks`)
-                                .insert({ columns: `series_no, category_id, brand_id, quantity, status, created_by, date_created`, 
-                                                values: `'${(data.series_no).toUpperCase()}', ${data.category_id}, ${data.brand_id}, ${!quantity ? data.quantity : 1}, 'good', ${user.id}, '${date}'` })
+                                .insert({ columns: `series_no, category_id, brand_id, quantity, status, created_by, date_created, branch`, 
+                                                values: `'${(data.series_no).toUpperCase()}', ${data.category_id}, ${data.brand_id}, ${!quantity ? data.quantity : 1}, 'good', ${user.id}, '${date}', '${data.branch}'` })
                                 .condition(`RETURNING id`)
                                 .build()).rows[0];
 

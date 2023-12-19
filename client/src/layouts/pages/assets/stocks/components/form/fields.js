@@ -28,7 +28,7 @@ const Field = props => {
 
     return [
         {
-            grid: { xs: 12, md: 6 },
+            grid: { xs: 12, md: 3 },
             props: {
                 register: register,
                 label: '*Series no.',
@@ -72,6 +72,25 @@ const Field = props => {
                 onChange: (e, item) => { 
                     setError('brand_id', { message: '' }); 
                     setValue('brand_id', item.id); 
+                },
+                errors: errors,
+                getValues: getValues
+            },
+            type: 'dropdown'
+        },
+        {
+            grid: { xs: 12, md: 3 },
+            props: {
+                control: control,
+                name: 'branch',
+                label: '*Branch',
+                disabled: type !== 'new',
+                fetching: fetching,
+                options: [{ id: '', name: '-- SELECT AN ITEM BELOW --' }, { id: 'quezon_ave', name: 'QUEZON AVE.' }, 
+                                    { id: 'sto_domingo', name: 'STO. DOMINGO' }, { id: 'manila', name: 'MANILA' }, { id: 'cavite', name: 'CAVITE' }],
+                onChange: (e, item) => { 
+                    setError('branch', { message: '' }); 
+                    setValue('branch', item.id); 
                 },
                 errors: errors,
                 getValues: getValues
