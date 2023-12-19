@@ -46,7 +46,7 @@ const Field = props => {
                 control: control,
                 name: 'category_id',
                 label: '*Category',
-                disabled: type !== 'new',
+                disabled: true,
                 fetching: fetching,
                 options: !ctgfetching ? categories : [],
                 onChange: (e, item) => { 

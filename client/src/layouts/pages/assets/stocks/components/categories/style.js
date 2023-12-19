@@ -1,7 +1,20 @@
-export const content = {
-    width: '100%',
+export const content = ({ condition }) => ({
+    width: {
+        xs: '100%',
+        lg: condition ? '78%' : '100%'
+    },
     height: '100%',
     overflow: 'hidden'
+})
+
+export const history = {
+    width: '22%',
+    height: '100%',
+    paddingTop: '70px',
+    display: {
+        xs: 'none',
+        lg: 'flex'
+    }
 }
 
 export const title = {

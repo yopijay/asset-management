@@ -8,8 +8,7 @@ const SystemUnit = require("./stocks/SystemUnit");
 const Toner = require("./stocks/Toner");
 const Monitor = require("./stocks/Monitor");
 const Printer = require("./stocks/Printer");
-const Mouse = require("./stocks/Mouse");
-const Keyboard = require("./stocks/Keyboard");
+const UPS = require("./stocks/UPS");
 
 const audit = { series_no: '', table_name: 'tbl_stocks',  item_id: 0, field: '', previous: null, current: null, action: '', user_id: 0, date: '' }; // Used for audit trail
 class Stocks {
@@ -99,18 +98,19 @@ class Stocks {
                 case 'monitor': await new Monitor(data).save(stck.id); break;
                 case 'toner': await new Toner(data).save(stck.id); break;
                 case 'printer': await new Printer(data).save(stck.id); break;
+                case 'ups': await new UPS(data).save(stck.id); break;
                 // case 'mouse': await new Mouse(data).save(stck.id); break;
                 // case 'keyboard': await new Keyboard(data).save(stck.id); break;
             }
 
-            // audit.series_no = Global.randomizer(7);
-            // audit.field = 'all';
-            // audit.item_id = stck.id;
-            // audit.action = 'create';
-            // audit.user_id = user.id;
-            // audit.date = date;
+            audit.series_no = Global.randomizer(7);
+            audit.field = 'all';
+            audit.item_id = stck.id;
+            audit.action = 'create';
+            audit.user_id = user.id;
+            audit.date = date;
             
-            // Global.audit(audit);
+            Global.audit(audit);
             return { result: 'success', message: 'Successfully saved!' }
         }
         else{ return { result: 'error', error: errors } }
@@ -127,6 +127,7 @@ class Stocks {
                 case 'monitor': resolve(await new Monitor(data).update(stck)); break;
                 case 'toner': resolve(await new Toner(data).update(stck)); break;
                 case 'printer': resolve(await new Printer(data).update(stck)); break;
+                case 'ups': resolve(await new UPS(data).update(stck)); break;
                 // case 'mouse': resolve(await new Mouse(data).update(stck)); break;
                 // case 'keyboard': resolve(await new Keyboard(data).update(stck)); break;
             }

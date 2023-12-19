@@ -8,22 +8,26 @@ import { useContext, useEffect } from "react";
 // Core
 import { FormCntxt } from "core/context/Form"; // Context
 import { usePost } from "core/function/global"; // Functions
+import { ListCntxt } from "core/context/List"; // Context
+import { AccountCntxt } from "core/context/Account"; // Context
 import { look, records } from "core/api"; // API
 import Loader from "core/components/loader/Screen"; // Loader
 
-import { content, loader, title } from "./style";
+import { content, history, loader, title } from "./style";
 import Search from "./components/Search";
 import Sort from "./components/Sort";
 import Items from "./components/Items";
-import { ListCntxt } from "core/context/List";
 
 const Index = () => {
     const { category } = useParams();
     const { setlist } = useContext(ListCntxt);
+    const { data } = useContext(AccountCntxt);
     const { register, getValues } = useContext(FormCntxt);
 
     const { mutate: find, isLoading: finding } = usePost({ request: look, onSuccess: data => setlist(data) });
     const { mutate: record, isLoading: fetching } = usePost({ request: records, onSuccess: data => setlist(data) });
+
+    let authlogs = data.user_level === 'superadmin' || (data.permission === null || JSON.parse(data.permission).maintenance.brands.logs);
 
     useEffect(() => {
         register('category', { value: (category.replace('-', ' ')).toUpperCase() });
@@ -45,7 +49,7 @@ const Index = () => {
 
     return (
         <Stack direction= "row" justifyContent= "flex-start" alignItems= "flex-start" spacing= { 3 } sx= {{ width: '100%', height: '100%' , overflow: 'hidden' }}>
-            <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" sx= { content } spacing= { 5 }>
+            <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" sx= { content({ condition: authlogs }) } spacing= { 5 }>
                 <Stack direction= "row" justifyContent= "flex-start" alignItems= "center" spacing= { 3 } component= { Link } to= { `/assets/stocks` } sx= {{ textDecoration: 'none' }}>
                     <FontAwesomeIcon icon= { solid('angle-left') } size= "lg" color= "#394867" />
                     <Typography sx= { title }>{ (category.charAt(0).toUpperCase() + category.slice(1)).replace('-', ' ') }</Typography>
@@ -58,6 +62,13 @@ const Index = () => {
                     </Stack>
                 </Stack>
             </Stack>
+            { authlogs ? <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" sx= { history } spacing= { 1 }>
+                <Stack direction= "row" justifyContent= "space-between" alignItems= "center">
+                    <Typography color= "#9DB2BF" variant= "body2">Logs</Typography>
+                    <Typography color= "#9DB2BF" variant= "body2">View all</Typography>
+                </Stack>
+                {/* <Logs /> */}
+            </Stack> : '' }
         </Stack>
     );
 }

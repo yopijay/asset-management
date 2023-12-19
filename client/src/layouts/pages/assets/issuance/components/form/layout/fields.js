@@ -665,10 +665,57 @@ const printer = props => {
     ]);
 }
 
+const ups = props => {
+    const { register, fetching, errors, type } = props;
+
+    return [
+        {
+            grid: { xs: 12, sm: 4 },
+            props: {
+                register: register,
+                label: 'Serial no',
+                fetching: fetching,
+                disabled: type === 'view',
+                name: 'serial_no',
+                errors: errors,
+                InputProps: { disableUnderline: true }
+            },
+            type: 'textfield'
+        },
+        {
+            grid: { xs: 12, sm: 4 },
+            props: {
+                register: register,
+                label: 'Model',
+                fetching: fetching,
+                disabled: type === 'view',
+                name: 'model',
+                errors: errors,
+                InputProps: { disableUnderline: true }
+            },
+            type: 'textfield'
+        },
+        {
+            grid: { xs: 12, sm: 4 },
+            props: {
+                register: register,
+                label: 'Output capacity',
+                fetching: fetching,
+                disabled: type === 'view',
+                name: 'output_capacity',
+                errors: errors,
+                InputProps: { disableUnderline: true }
+            },
+            type: 'textfield'
+        }
+    ];
+}
+
 module.exports = {
     laptop,
     system_unit,
     monitor,
     toner,
-    printer
+    printer,
+    ups
 }
