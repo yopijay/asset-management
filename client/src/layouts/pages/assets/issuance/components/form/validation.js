@@ -5,4 +5,5 @@ export const cvalidation = (data, errors, type) => {
     if(!data.category_id) { errors.push({ name: 'category_id', message: 'This field is required!' }); }
     if(!data.brand_id) { errors.push({ name: 'brand_id', message: 'This field is required!' }); }
     if(!data.item_id) { errors.push({ name: 'item_id', message: 'This field is required!' }); }
+    if(!data.branch) { errors.push({ name: 'branch', message: 'This field is required!' }); }
 }

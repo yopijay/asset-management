@@ -1,8 +1,10 @@
 // Libraries
-import { dropdown, specific } from "core/api";
-import { useGet, usePost } from "core/function/global";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
+
+// Core 
+import { dropdown, specific } from "core/api"; // API
+import { useGet, usePost } from "core/function/global"; // Function
 
 const Fields = props => {
     const { type } = useParams();
@@ -83,7 +85,7 @@ const Fields = props => {
                 register: register,
                 label: '*Issued date',
                 fetching: fetching,
-                disabled: false,
+                disabled: type === 'view',
                 name: 'date_issued',
                 errors: errors,
                 type: 'date',
@@ -92,12 +94,12 @@ const Fields = props => {
             type: 'textfield'
         },
         {
-            grid: { xs: 12, md: 4 },
+            grid: { xs: 12, md: 3 },
             props: {
                 control: control,
                 name: 'category_id',
                 label: '*Category',
-                disabled: type === 'view',
+                disabled: type !== 'new',
                 fetching: fetching,
                 options: !ctgfetching ? category : [],
                 onChange: (e, item) => { 
@@ -112,18 +114,17 @@ const Fields = props => {
             type: 'dropdown'
         },
         {
-            grid: { xs: 12, md: 4 },
+            grid: { xs: 12, md: 3 },
             props: {
                 control: control,
                 name: 'brand_id',
                 label: '*Brand',
-                disabled: type === 'view',
+                disabled: type !== 'new',
                 fetching: fetching,
                 options: !brdloading && brand ? brand : [],
                 onChange: (e, item) => { 
                     setError('brand_id', { message: '' }); 
-                    setValue('brand_id', item.id); 
-                    itmmenu({ table: 'tbl_stocks', data: { type: 'per-brand', category_id: getValues().category_id, brand_id: item.id, form: type } });
+                    setValue('brand_id', item.id);
                 },
                 errors: errors,
                 getValues: getValues
@@ -131,12 +132,32 @@ const Fields = props => {
             type: 'dropdown'
         },
         {
-            grid: { xs: 12, md: 4 },
+            grid: { xs: 12, md: 3 },
+            props: {
+                control: control,
+                name: 'branch',
+                label: '*Branch',
+                disabled: type !== 'new',
+                fetching: fetching,
+                options: !brdloading && brand ? [{ id: '', name: '-- SELECT AN ITEM BELOW --' }, { id: 'quezon_ave', name: 'QUEZON AVE.' }, 
+                                { id: 'sto_domingo', name: 'STO. DOMINGO' }, { id: 'manila', name: 'MANILA' }, { id: 'cavite', name: 'CAVITE' }] : [],
+                onChange: (e, item) => { 
+                    setError('branch', { message: '' }); 
+                    setValue('branch', item.id); 
+                    itmmenu({ table: 'tbl_stocks', data: { type: 'per-brand', category_id: getValues().category_id, brand_id: getValues().brand_id, form: type } });
+                },
+                errors: errors,
+                getValues: getValues
+            },
+            type: 'dropdown'
+        },
+        {
+            grid: { xs: 12, md: 3 },
             props: {
                 control: control,
                 name: 'item_id',
                 label: '*Item',
-                disabled: type === 'view',
+                disabled: type !== 'new',
                 fetching: fetching,
                 options: !itmloading && items ? items : [],
                 onChange: (e, item) => { 

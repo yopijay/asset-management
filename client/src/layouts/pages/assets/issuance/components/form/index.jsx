@@ -26,7 +26,6 @@ const Index = () => {
     const { isFetching, refetch } = 
         useGet({ key: ['iss_specific'], request: specific({ table: 'tbl_stocks_issuance', id: id ?? null }), options: { enabled: type !== 'new', refetchOnWindowFocus: false },
             onSuccess: data => {
-                console.log(data);
                 if(Array.isArray(data)) 
                     for(let count = 0; count < Object.keys(data[0]).length; count++) { 
                         let _name = Object.keys(data[0])[count];
@@ -59,10 +58,7 @@ const Index = () => {
                 !(JSON.parse(data.permission).assets.issuance.create || 
                     JSON.parse(data.permission).assets.issuance.update || 
                     JSON.parse(data.permission).assets.issuance.view))) { navigate('/'); }
-        else {
-            reset(); 
-            if(id !== undefined) refetch();
-        }
+        else { reset();  if(id !== undefined) refetch(); }
     }, [ data, navigate, reset, id, refetch ]);
 
     return (
@@ -77,10 +73,7 @@ const Index = () => {
                     <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 }>
                         <Box><Series fetching= { isFetching } register= { register } type= { type } errors= { errors } /></Box>
                         <Box><FormBuilder fields= { Fields({ register: register, fetching: isFetching, errors: errors, control: control, setValue: setValue, getValues: getValues, setError: setError }) } /></Box>
-                        <Box>
-                            <Category 
-                                register= { register } fetching= { isFetching } errors= { errors } control= { control } setValue= { setValue } getValues= { getValues } setError= { setError } />
-                        </Box>
+                        <Box><Category  register= { register } fetching= { isFetching } errors= { errors } control= { control } setValue= { setValue } getValues= { getValues } setError= { setError } /></Box>
                     </Stack>
                 </form>
             </Stack>
@@ -93,7 +86,7 @@ const Index = () => {
                     cvalidation(data, errors, type);
                     if(!(errors.length > 0)) {
                         if(type === 'new') { saving({ table: 'tbl_stocks_issuance', data: data }); }
-                        else { updating({ table: 'tbl_stocks_issuance', data: data }); }
+                        else { data['id'] = id; updating({ table: 'tbl_stocks_issuance', data: data }); }
                     }
                     else { errors.forEach(data => setError(data.name, { message: data.message })); }
                 }) }>Save</Typography> : '' }

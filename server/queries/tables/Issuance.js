@@ -66,9 +66,9 @@ class Issuance {
         if(!(errors.length > 0)) {
             let stck = (await new Builder(`tbl_stocks`).select(`id, quantity`).condition(`WHERE id= ${data.item_id}`).build()).rows[0];
             let iss = (await new Builder(`tbl_stocks_issuance`)
-                            .insert({ columns: `series_no, issued_to, issued_by, item_id, date_issued, note, status, created_by, date_created`, 
+                            .insert({ columns: `series_no, issued_to, issued_by, item_id, date_issued, note, status, created_by, date_created, branch`, 
                                             values: `'${(data.series_no).toUpperCase()}', ${data.issued_to}, ${data.issued_by}, ${data.item_id}, '${data.date_issued}', 
-                                                            ${data.note !== null && data.note !== '' ? `'${(data.note).toUpperCase()}'` : null}, 'pending', ${user.id}, '${date}'` })
+                                                            ${data.note !== null && data.note !== '' ? `'${(data.note).toUpperCase()}'` : null}, 'pending', ${user.id}, '${date}', '${data.branch}'` })
                             .condition(`RETURNING id`)
                             .build()).rows[0];
 
@@ -88,30 +88,32 @@ class Issuance {
     }
 
     update = async data => {
-        // let iss = (await new Builder(`tbl_stocks_issuance`).select().condition(`WHERE id= ${data.id}`).build()).rows[0];
-        // let date = Global.date(new Date());
-        // let user = JSON.parse(atob(data.token));
-        // let audits = [];
+        let iss = (await new Builder(`tbl_stocks_issuance`).select().condition(`WHERE id= ${data.id}`).build()).rows[0];
+        let date = Global.date(new Date());
+        let user = JSON.parse(atob(data.token));
+        let audits = [];
+        
+        if(Global.compare(iss.issued_to, data.issued_to)) {
+            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks_issuance', item_id: iss.id, field: 'issued_to', previous: iss.issued_to, 
+                                current: data.issued_to, action: 'update', user_id: user.id, date: date });
+        }
 
-        // if(Global.compare(iss.stock_id, data.stock_id)) {
-        //     audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks_issuance', item_id: iss.id, field: 'stock_id', previous: iss.stock_id, 
-        //                             current: data.stock_id, action: 'update', user_id: user.id, date: date });
+        if(Global.compare(iss.issued_by, data.issued_by)) {
+            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks_issuance', item_id: iss.id, field: 'issued_by', previous: iss.issued_by, 
+                                current: data.issued_by, action: 'update', user_id: user.id, date: date });
+        }
 
-        //     await new Builder(`tbl_stocks`).update(`status= 1`).condition(`WHERE id= ${iss.stock_id}`).build();
-        //     await new Builder(`tbl_stocks`).update(`status= 0`).condition(`WHERE id= ${data.stock_id}`).build();
-        // }
+        if(Global.compare(iss.issued_date, data.issued_date)) {
+            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks_issuance', item_id: iss.id, field: 'issued_date', previous: iss.issued_date, 
+                                current: `'${data.issued_date}'`, action: 'update', user_id: user.id, date: date });
+        }
 
-        // if(Global.compare(iss.remarks, data.remarks)) {
-        //     audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_company', item_id: iss.id, field: 'remarks', previous: iss.remarks,
-        //         current: data.remarks !== '' && data.remarks !== null ? (data.remarks).toUpperCase() : null, action: 'update', user_id: user.id, date: date });
-        // }
+        await new Builder(`tbl_stocks_issuance`)
+            .update(`issued_to= ${data.issued_to}, issued_by= ${data.issued_by}, date_issued= '${data.date_issued}'`)
+            .condition(`WHERE id= ${data.id}`)
+            .build();
 
-        // await new Builder(`tbl_stocks_issuance`)
-        //     .update(`stock_id= ${data.stock_id}, remarks= ${data.remarks !== '' && data.remarks !== null ? `'${(data.remarks).toUpperCase()}'` : null}`)
-        //     .condition(`WHERE id= ${data.id}`)
-        //     .build();
-
-        // audits.forEach(data => Global.audit(data));
+        audits.forEach(data => Global.audit(data));
         return { result: 'success', message: 'Successfully updated!' }
     }
 }
