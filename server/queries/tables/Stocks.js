@@ -141,15 +141,28 @@ class Stocks {
     }
 
     dropdown = async data => {
+        let stocks = null;
         switch(data.type) {
             case 'per-brand': 
-                let stocks = (await new Builder(`tbl_stocks AS stck`)
+                stocks = (await new Builder(`tbl_stocks AS stck`)
                                         .select(`stck.id, 
                                                         CONCAT(CASE WHEN info.serial_no IS NOT NULL AND info.serial_no <> '' THEN info.serial_no ELSE info.model END, 
                                                                         CASE WHEN ctg.name = 'TONER' THEN CONCAT(' - ', UPPER(info.condition)) ELSE '' END) AS name`)
                                         .join({ table: `tbl_stocks_info AS info`, condition: `info.stocks_id = stck.id`, type: `LEFT` })
                                         .join({ table: `tbl_category AS ctg`, condition: `stck.category_id = ctg.id`, type: `LEFT` })
                                         .condition(`WHERE stck.category_id= ${data.category_id} AND stck.brand_id= ${data.brand_id} AND stck.status= 'good' 
+                                                            ${data.form === 'new' ? `AND stck.quantity > 0` : ''}`)
+                                        .build()).rows;
+                                        
+                return [{ id: 0, name: '-- SELECT AN ITEM BELOW --' }].concat(stocks);
+            case 'per-branch':
+                stocks = (await new Builder(`tbl_stocks AS stck`)
+                                        .select(`stck.id, 
+                                                        CONCAT(CASE WHEN info.serial_no IS NOT NULL AND info.serial_no <> '' THEN info.serial_no ELSE info.model END, 
+                                                                        CASE WHEN ctg.name = 'TONER' THEN CONCAT(' - ', UPPER(info.condition)) ELSE '' END) AS name`)
+                                        .join({ table: `tbl_stocks_info AS info`, condition: `info.stocks_id = stck.id`, type: `LEFT` })
+                                        .join({ table: `tbl_category AS ctg`, condition: `stck.category_id = ctg.id`, type: `LEFT` })
+                                        .condition(`WHERE stck.category_id= ${data.category_id} AND stck.brand_id= ${data.brand_id} AND stck.status= 'good' AND stck.branch= '${data.branch}'
                                                             ${data.form === 'new' ? `AND stck.quantity > 0` : ''}`)
                                         .build()).rows;
                                         

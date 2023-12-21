@@ -108,8 +108,14 @@ class Issuance {
                                 current: `'${data.issued_date}'`, action: 'update', user_id: user.id, date: date });
         }
 
+        if(Global.compare(iss.note, data.note)) {
+            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks_issuance', item_id: iss.id, field: 'note', previous: iss.note, 
+                                current: data.note !== null && data.note !== '' ? data.note : null, action: 'update', user_id: user.id, date: date });
+        }
+
         await new Builder(`tbl_stocks_issuance`)
-            .update(`issued_to= ${data.issued_to}, issued_by= ${data.issued_by}, date_issued= '${data.date_issued}'`)
+            .update(`issued_to= ${data.issued_to}, issued_by= ${data.issued_by}, date_issued= '${data.date_issued}', 
+                            note= ${data.note !== '' && data.note !== null ? `'${(data.note).toUpperCase()}'` : null}`)
             .condition(`WHERE id= ${data.id}`)
             .build();
 

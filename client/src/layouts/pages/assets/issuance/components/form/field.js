@@ -144,7 +144,7 @@ const Fields = props => {
                 onChange: (e, item) => { 
                     setError('branch', { message: '' }); 
                     setValue('branch', item.id); 
-                    itmmenu({ table: 'tbl_stocks', data: { type: 'per-brand', category_id: getValues().category_id, brand_id: getValues().brand_id, form: type } });
+                    itmmenu({ table: 'tbl_stocks', data: { type: 'per-branch', category_id: getValues().category_id, brand_id: getValues().brand_id, branch: item.id, form: type } });
                 },
                 errors: errors,
                 getValues: getValues

@@ -666,7 +666,7 @@ const printer = props => {
 }
 
 const ups = props => {
-    const { register, fetching, errors, type } = props;
+    const { register, fetching, errors } = props;
 
     return [
         {
@@ -675,7 +675,7 @@ const ups = props => {
                 register: register,
                 label: 'Serial no',
                 fetching: fetching,
-                disabled: type === 'view',
+                disabled: true,
                 name: 'serial_no',
                 errors: errors,
                 InputProps: { disableUnderline: true }
@@ -688,7 +688,7 @@ const ups = props => {
                 register: register,
                 label: 'Model',
                 fetching: fetching,
-                disabled: type === 'view',
+                disabled: true,
                 name: 'model',
                 errors: errors,
                 InputProps: { disableUnderline: true }
@@ -701,7 +701,7 @@ const ups = props => {
                 register: register,
                 label: 'Output capacity',
                 fetching: fetching,
-                disabled: type === 'view',
+                disabled: true,
                 name: 'output_capacity',
                 errors: errors,
                 InputProps: { disableUnderline: true }
