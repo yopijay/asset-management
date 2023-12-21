@@ -39,7 +39,7 @@ class Stocks {
                         .join({ table: `tbl_stocks_info AS info`, condition: `info.stocks_id = stck.id`, type: `LEFT` })
                         .join({ table: `tbl_brands AS brd`, condition: `stck.brand_id = brd.id`, type: `LEFT` })
                         .condition(`WHERE stck.category_id = ${ctg.id} 
-                                            ${user.branch !== null && (user.user_level !== 'admin' || user.user_level !== 'superadmin') ? `AND stck.branch= '${user.branch}'` : ''}
+                                            ${user.branch !== null && user.user_level === 'user' ? `AND stck.branch= '${user.branch}'` : ''}
                                             ${data.searchtxt !== '' ? ` AND (stck.series_no LIKE '%${(data.searchtxt).toUpperCase()}%' OR info.serial_no LIKE '%${(data.searchtxt).toUpperCase()}%'
                                                                                         OR info.model LIKE '%${(data.searchtxt).toUpperCase()}%')` : ''}
                                             ${data.brand !== 'all' ? `AND stck.brand_id= ${data.brand}` : '' }
@@ -48,6 +48,11 @@ class Stocks {
     }
 
     search = async data => {
+        let user = (await new Builder(`tbl_users AS usr`)
+                            .select(`usr.*, info.branch`)
+                            .join({ table: `tbl_users_info AS info`, condition: `info.user_id = usr.id`, type: `LEFT` })
+                            .condition(`WHERE usr.id= ${JSON.parse(atob(data.token)).id}`)
+                            .build()).rows[0];
         let ctg = (await new Builder(`tbl_category`).select(`id`).condition(`WHERE name= '${data.category}'`).build()).rows[0];
         
         return (await new Builder(`tbl_stocks AS stck`)
@@ -55,6 +60,7 @@ class Stocks {
                         .join({ table: `tbl_stocks_info AS info`, condition: `info.stocks_id = stck.id`, type: `LEFT` })
                         .join({ table: `tbl_brands AS brd`, condition: `stck.brand_id = brd.id`, type: `LEFT` })
                         .condition(`WHERE stck.category_id = ${ctg.id} 
+                                            ${user.user_level === 'user' && user.branch !== null ? `AND stck.branch= '${user.branch}'` : ''}
                                             ${data.searchtxt !== '' ? ` AND (stck.series_no LIKE '%${(data.searchtxt).toUpperCase()}%' OR info.serial_no LIKE '%${(data.searchtxt).toUpperCase()}%'
                                                                                         OR info.model LIKE '%${(data.searchtxt).toUpperCase()}%')` : ''}
                                             ${data.brand !== 'all' ? `AND stck.brand_id= ${data.brand}` : '' }

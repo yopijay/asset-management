@@ -5,16 +5,15 @@ import { Box, Stack, Typography } from "@mui/material";
 import FormBuilder from "core/components/form"; // Form Builder
 
 import Categories from "./fields";
+import { useParams } from "react-router-dom";
 
 const Category = props => {
-    const { getValues } = props;
+    const { category } = useParams();
 
     return (
         <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 3 }>
             <Typography color= "#9BA4B5">Specifications:</Typography>
-            { getValues()?.category ? 
-                <Box><FormBuilder fields= { Categories[(getValues()?.category)?.toLowerCase()]({ ...props }) } /></Box> : 
-                <Typography color= "#9BA4B5" variant= "caption" sx= {{ textAlign: 'center' }}>Please choose a category first!</Typography> }
+            <Box><FormBuilder fields= { Categories[(category.replace('-', '_')).toLowerCase()]({ ...props }) } /></Box>
         </Stack>
     );
 }

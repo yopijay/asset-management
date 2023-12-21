@@ -105,6 +105,8 @@ const Fields = props => {
                 onChange: (e, item) => { 
                     setError('category_id', { message: '' });
                     setValue('category_id', item.id);
+                    setValue('branch', '');
+                    setValue('item_id', '');
                     setValue('category', ((item.name).replace(' ', '_')).toLowerCase());
                     brdmenu({ table: 'tbl_brands', data: { type: 'per-category-id', category_id: item.id } });
                 },
@@ -124,6 +126,8 @@ const Fields = props => {
                 options: !brdloading && brand ? brand : [],
                 onChange: (e, item) => { 
                     setError('brand_id', { message: '' }); 
+                    setValue('branch', '');
+                    setValue('item_id', '');
                     setValue('brand_id', item.id);
                 },
                 errors: errors,

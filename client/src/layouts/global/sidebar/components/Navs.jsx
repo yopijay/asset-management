@@ -62,7 +62,7 @@ const Navs = () => {
                             <Subnavs id= { rts.id } />
                         </Stack> : '' ) : '' }
             { data.user_level === 'superadmin' || data.permission !== null ?
-                data.user_level === 'superadmin' || JSON.parse(data.permission).setup ? 
+                data.user_level === 'superadmin' || checkValue(JSON.parse(data.permission).setup, true) ? 
                     <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 1 }>
                         <Typography variant= "caption" color= "#9BA4B5">Setup</Typography>
                         <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch">
