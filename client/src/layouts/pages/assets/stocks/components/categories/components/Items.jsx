@@ -10,7 +10,6 @@ import { ListCntxt } from "core/context/List"; // Context
 import { AccountCntxt } from "core/context/Account"; // Context
 
 import { caption, listview, subtitle, listtitle } from "../style";
-// const status = { good: 'A0C49D', defect: 'FF6666' }
 
 const Items = () => {
     const { category } = useParams();
@@ -35,7 +34,6 @@ const Items = () => {
                                 </Stack>
                                 <Stack direction= "row" justifyContent= "flex-start" alignItems= "center" spacing= { 2 } paddingLeft= "10px">
                                     <Chip size= "small" color= { data.quantity > 0 ? 'success' : 'error' } label= { data.quantity > 0 ? `Available` : 'Not available'} />
-                                    {/* <Box sx= {{ width: '10px', height: '10px', backgroundColor: `#${status[data.status]}`, borderRadius: '50px' }} /> */}
                                     <Stack direction= "row" justifyContent= "flex-start" alignItems= "center" spacing= { 1.5 }>
                                         { authupdate ? <Typography color= "#9BA4B5" component= { Link } to= { `/assets/stocks/${category}/form/update/${data.id}` }>
                                                 <FontAwesomeIcon icon= { solid('pencil') } size= "lg" />
@@ -50,7 +48,8 @@ const Items = () => {
                     : <Grid container direction= "row" justifyContent= "flex-start" alignItems= "flex-start" spacing= { 1 }>
                         { list?.map((data, index) => 
                             <Grid item xs= { 12 } sm= { 6 } md= { 4 } key= { index }>
-                                <Stack direction= "row" justifyContent= "space-between" alignItems= "center" sx= { listview }>
+                                <Stack direction= "row" justifyContent= "space-between" alignItems= "center" sx= { listview }
+                                    component= { authupdate ? Link : Stack } to= { `/assets/stocks/${category}/form/update/${data.id}` }>
                                     <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" sx= {{ flexGrow: 1, overflow: 'hidden' }}>
                                         <Typography variant= "caption" sx= { caption }>{ data.series_no }</Typography>
                                         <Typography sx= { listtitle }>{ data.model } { (category.replace('-', ' ')).toLowerCase() === 'toner' ? `(${(data.condition)?.toUpperCase()})` : '' }</Typography>

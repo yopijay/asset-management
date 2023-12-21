@@ -28,7 +28,7 @@ const Index = () => {
     const { mutate: find, isLoading: finding } = usePost({ request: look, onSuccess: data => setlist(data) });
     const { mutate: record, isLoading: fetching } = usePost({ request: records, onSuccess: data => setlist(data) });
 
-    let authlogs = data.user_level === 'superadmin' || (data.permission === null || JSON.parse(data.permission).maintenance.brands.logs);
+    let authlogs = data.user_level === 'superadmin' || (data.permission === null || JSON.parse(data.permission).assets.stocks.logs);
 
     useEffect(() => {
         register('category', { value: (category.replace('-', ' ')).toUpperCase() });

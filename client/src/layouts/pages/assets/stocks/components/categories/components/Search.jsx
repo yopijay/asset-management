@@ -17,6 +17,9 @@ const Search = ({ request }) => {
     const { data } = useContext(AccountCntxt);
 
     let authcreate = data.user_level === 'superadmin' || (data.permission === null || JSON.parse(data.permission).assets.stocks.create);
+    let authlogs = data.user_level === 'superadmin' || (data.permission === null || JSON.parse(data.permission).assets.stocks.logs);
+    let authexport = data.user_level === 'superadmin' || (data.permission === null || JSON.parse(data.permission).assets.stocks.export);
+    let authimport = data.user_level === 'superadmin' || (data.permission === null || JSON.parse(data.permission).assets.stocks.import);
 
     return (
         <Stack direction= "row" justifyContent= "space-between" alignItems= "center" spacing= { 1 }>
@@ -32,9 +35,9 @@ const Search = ({ request }) => {
                 </Box>
             </form>
             <Stack direction= "row" justifyContent= "flex-end" alignItems= "center" spacing= { 1 }>
-                <Typography sx= { logs }><FontAwesomeIcon icon= { solid('clock-rotate-left') } /></Typography>
-                <Typography sx= { download }><FontAwesomeIcon icon= { solid('download') } /></Typography>
-                <Typography sx= { upload }><FontAwesomeIcon icon= { solid('upload') } /></Typography>
+                { authlogs ? <Typography sx= { logs }><FontAwesomeIcon icon= { solid('clock-rotate-left') } /></Typography> : '' }
+                { authexport ? <Typography sx= { download }><FontAwesomeIcon icon= { solid('download') } /></Typography> : '' }
+                { authimport ? <Typography sx= { upload }><FontAwesomeIcon icon= { solid('upload') } /></Typography> : '' }
                 { authcreate ? 
                     <Typography component= { Link } to= { `/assets/stocks/${category}/form/new` } sx= { btnicon }><FontAwesomeIcon icon= { solid('plus') } /></Typography> : '' }
                 { authcreate ? 

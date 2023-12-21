@@ -25,7 +25,7 @@ const Index = () => {
     const { mutate: find, isLoading: finding } = usePost({ request: look, onSuccess: data => setlist(data) });
     const { mutate: record, isLoading: fetching } = usePost({ request: records, onSuccess: data => setlist(data) });
 
-    let authlogs = data.user_level === 'superadmin' || (data.permission === null || JSON.parse(data.permission).assets.stocks.logs);
+    let authlogs = data.user_level === 'superadmin' || (data.permission === null || JSON.parse(data.permission).assets.issuance.logs);
 
     useEffect(() => {
         register('orderby', { value: 'date_created' });

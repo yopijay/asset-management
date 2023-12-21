@@ -7,11 +7,18 @@ import { Link } from "react-router-dom";
 
 // Core
 import { FormCntxt } from "core/context/Form"; // Context
+import { AccountCntxt } from "core/context/Account"; // Context
 
 import { btnicon, btntxt, download, logs, search, upload } from "../style";
 
 const Search = ({ request }) => {
     const { register, setValue, getValues } = useContext(FormCntxt);
+    const { data } = useContext(AccountCntxt);
+
+    let authlogs = data.user_level === 'superadmin' || (data.permission === null || JSON.parse(data.permission).assets.issuance.logs);
+    let authcreate = data.user_level === 'superadmin' || (data.permission === null || JSON.parse(data.permission).assets.issuance.create);
+    let authexport = data.user_level === 'superadmin' || (data.permission === null || JSON.parse(data.permission).assets.issuance.export);
+    let authimport = data.user_level === 'superadmin' || (data.permission === null || JSON.parse(data.permission).assets.issuance.import);
 
     return (
         <Stack direction= "row" justifyContent= "space-between" alignItems= "center" spacing= { 1 }>
@@ -23,11 +30,11 @@ const Search = ({ request }) => {
                 </Box>
             </form>
             <Stack direction= "row" justifyContent= "flex-end" alignItems= "center" spacing= { 1 }>
-                <Typography sx= { logs }><FontAwesomeIcon icon= { solid('clock-rotate-left') } /></Typography>
-                <Typography sx= { download }><FontAwesomeIcon icon= { solid('download') } /></Typography>
-                <Typography sx= { upload }><FontAwesomeIcon icon= { solid('upload') } /></Typography>
-                <Typography component= { Link } to= "/assets/issuance/form/new" sx= { btnicon }><FontAwesomeIcon icon= { solid('plus') } /></Typography>
-                <Typography component= { Link } to= "/assets/issuance/form/new" sx= { btntxt }>Issue an item</Typography>
+                { authlogs ? <Typography sx= { logs }><FontAwesomeIcon icon= { solid('clock-rotate-left') } /></Typography> : '' }
+                { authexport ? <Typography sx= { download }><FontAwesomeIcon icon= { solid('download') } /></Typography> : '' }
+                { authimport ? <Typography sx= { upload }><FontAwesomeIcon icon= { solid('upload') } /></Typography> : '' }
+                { authcreate ? <Typography component= { Link } to= "/assets/issuance/form/new" sx= { btnicon }><FontAwesomeIcon icon= { solid('plus') } /></Typography> : '' }
+                { authcreate ? <Typography component= { Link } to= "/assets/issuance/form/new" sx= { btntxt }>Issue an item</Typography> : '' }
             </Stack>
         </Stack>
     );
