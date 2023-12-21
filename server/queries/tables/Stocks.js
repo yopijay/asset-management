@@ -33,8 +33,7 @@ class Stocks {
                             .condition(`WHERE usr.id= ${JSON.parse(atob(data.token)).id}`)
                             .build()).rows[0];
         let ctg = (await new Builder(`tbl_category`).select(`id`).condition(`WHERE name= '${data.category}'`).build()).rows[0];
-
-        console.log(user);
+        
         return (await new Builder(`tbl_stocks AS stck`)
                         .select(`stck.id, stck.series_no, stck.quantity, stck.status, info.serial_no, info.model, info.condition`)
                         .join({ table: `tbl_stocks_info AS info`, condition: `info.stocks_id = stck.id`, type: `LEFT` })
