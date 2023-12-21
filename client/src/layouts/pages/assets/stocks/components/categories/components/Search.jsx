@@ -27,7 +27,7 @@ const Search = ({ request }) => {
                         placeholder= "Search..." 
                         onChange= { e => { 
                             setValue('searchtxt', e.target.value); 
-                            setValue('category', (category).toUpperCase()); 
+                            setValue('category', (category.replace('-', ' ')).toUpperCase()); 
                             request({ table: 'tbl_stocks', data: getValues() }) } } />
                 </Box>
             </form>
