@@ -24,8 +24,10 @@ class Brands {
 
     logs = async data => {
         return (await new Builder(`tbl_audit_trail AS at`)
-                        .select(`at.id, at.series_no AS at_series, at.table_name, at.item_id, at.field, at.previous, at.current, at.action, at.user_id, at.date, brd.series_no AS brd_series, brd.name`)
+                        .select(`at.id, at.series_no AS at_series, at.table_name, at.item_id, at.field, at.previous, at.current, 
+                                        at.action, at.user_id, at.date, brd.series_no AS brd_series, brd.name, CONCAT(ubi.lname, ', ', ubi.fname) AS ub_name`)
                         .join({ table: `tbl_brands AS brd`, condition: `at.item_id = brd.id`, type: `LEFT` })
+                        .join({ table: `tbl_users_info AS ubi`, condition: `at.user_id = ubi.user_id`, type: `LEFT` })
                         .condition(`WHERE at.table_name= 'tbl_brands' ORDER BY at.date DESC LIMIT 3`)
                         .build()).rows;
     }
@@ -105,14 +107,9 @@ class Brands {
                                     current: data.status ? 'Active' : 'Inactive', action: 'update', user_id: user.id, date: date });
         }
 
-        if(Global.compare(brd.category_id, data.category_id)) {
-            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_brands', item_id: brd.id, field: 'category_id', previous: brd.category_id, 
-                                    current: data.category_id, action: 'update', user_id: user.id, date: date });
-        }
-
         if(!(errors.length >0)) {
             await new Builder(`tbl_brands`)
-                .update(`category_id= ${data.category_id}, name= '${(data.name).toUpperCase()}', status= ${data.status ? 1 : 0}, updated_by= ${user.id}, date_updated= '${date}'`)
+                .update(`name= '${(data.name).toUpperCase()}', status= ${data.status ? 1 : 0}, updated_by= ${user.id}, date_updated= '${date}'`)
                 .condition(`WHERE id= ${data.id}`)
                 .build();
 

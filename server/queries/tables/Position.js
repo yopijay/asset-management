@@ -8,8 +8,10 @@ class Position {
 
     logs = async data => {
         return (await new Builder(`tbl_audit_trail AS at`)
-                        .select(`at.id, at.series_no AS at_series, at.table_name, at.item_id, at.field, at.previous, at.current, at.action, at.user_id, at.date, pst.series_no AS pst_series, pst.name`)
+                        .select(`at.id, at.series_no AS at_series, at.table_name, at.item_id, at.field, at.previous, at.current, at.action, 
+                                    at.user_id, at.date, pst.series_no AS pst_series, pst.name, CONCAT(ubi.lname, ', ', ubi.fname) AS ub_name`)
                         .join({ table: `tbl_position AS pst`, condition: `at.item_id = pst.id`, type: `LEFT` })
+                        .join({ table: `tbl_users_info AS ubi`, condition: `at.user_id = ubi.user_id`, type: `LEFT` })
                         .condition(`WHERE at.table_name= 'tbl_position' ORDER BY at.date DESC LIMIT 3`)
                         .build()).rows;
     }
@@ -93,13 +95,19 @@ class Position {
         }
         
         if(Global.compare(pst.company_id, data.company_id)) {
-            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_position', item_id: pst.id, field: 'company_id', previous: pst.company_id,
-                current: data.company_id, action: 'update', user_id: user.id, date: date });
+            let prev = (await new Builder(`tbl_company`).select(`name`).condition(`WHERE id= ${pst.company_id}`).build()).rows[0];
+            let curr = (await new Builder(`tbl_company`).select(`name`).condition(`WHERE id= ${data.company_id}`).build()).rows[0];
+
+            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_position', item_id: pst.id, field: 'company', previous: prev.name,
+                current: curr.name, action: 'update', user_id: user.id, date: date });
         }
         
         if(Global.compare(pst.department_id, data.department_id)) {
-            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_position', item_id: pst.id, field: 'department_id', previous: pst.department_id,
-                current: data.department_id, action: 'update', user_id: user.id, date: date });
+            let prev = (await new Builder(`tbl_department`).select(`name`).condition(`WHERE id= ${pst.department_id}`).build()).rows[0];
+            let curr = (await new Builder(`tbl_department`).select(`name`).condition(`WHERE id= ${data.department_id}`).build()).rows[0];
+
+            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_position', item_id: pst.id, field: 'department', previous: prev.name,
+                current: curr.name, action: 'update', user_id: user.id, date: date });
         }
 
         if(Global.compare(pst.status, data.status ? 1 : 0)) {

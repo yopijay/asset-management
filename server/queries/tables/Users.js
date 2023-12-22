@@ -109,7 +109,7 @@ class Users {
                     .concat((await new Builder(`tbl_users AS usr`)
                                     .select(`usr.id, CONCAT(info.lname, ', ', info.fname) AS name`)
                                     .join({ table: `tbl_users_info AS info`, condition: 'info.user_id = usr.id', type: `LEFT` })
-                                    .condition(`WHERE usr.status= 1 AND (usr.user_level != 'superadmin' OR usr.user_level = 'admin') ORDER BY info.lname ASC`).build()).rows);
+                                    .condition(`WHERE usr.status= 1 ORDER BY info.lname ASC`).build()).rows);
         }
     }
 

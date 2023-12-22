@@ -19,8 +19,10 @@ class Department {
 
     logs = async data => {
         return (await new Builder(`tbl_audit_trail AS at`)
-                        .select(`at.id, at.series_no AS at_series, at.table_name, at.item_id, at.field, at.previous, at.current, at.action, at.user_id, at.date, dpt.series_no AS dpt_series, dpt.name`)
+                        .select(`at.id, at.series_no AS at_series, at.table_name, at.item_id, at.field, at.previous, at.current, at.action, 
+                                        at.user_id, at.date, dpt.series_no AS dpt_series, dpt.name, CONCAT(ubi.lname, ', ', ubi.fname) AS ub_name`)
                         .join({ table: `tbl_department AS dpt`, condition: `at.item_id = dpt.id`, type: `LEFT` })
+                        .join({ table: `tbl_users_info AS ubi`, condition: `at.user_id = ubi.user_id`, type: `LEFT` })
                         .condition(`WHERE at.table_name= 'tbl_department' ORDER BY at.date DESC LIMIT 3`)
                         .build()).rows;
     }
@@ -95,13 +97,19 @@ class Department {
         }
         
         if(Global.compare(dpt.company_id, data.company_id)) {
-            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_department', item_id: dpt.id, field: 'company_id', previous: dpt.company_id,
-                current: data.company_id, action: 'update', user_id: user.id, date: date });
+            let prev = (await new Builder(`tbl_company`).select(`name`).condition(`WHERE id= ${dpt.company_id}`).build()).rows[0];
+            let curr = (await new Builder(`tbl_company`).select(`name`).condition(`WHERE id= ${data.company_id}`).build()).rows[0];
+
+            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_department', item_id: dpt.id, field: 'company', previous: prev.name,
+                current: curr.name, action: 'update', user_id: user.id, date: date });
         }
         
         if(Global.compare(dpt.department_head_id, data.department_head_id)) {
-            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_department', item_id: dpt.id, field: 'department_head_id', previous: dpt.department_head_id,
-                current: data.department_head_id, action: 'update', user_id: user.id, date: date });
+            let prev = (await new Builder(`tbl_users_info`).select(`CONCAT(lname, ', ', fname) AS name`).condition(`WHERE user_id= ${dpt.department_head_id}`).build()).rows[0];
+            let curr = (await new Builder(`tbl_users_info`).select(`CONCAT(lname, ', ', fname) AS name`).condition(`WHERE user_id= ${data.department_head_id}`).build()).rows[0];
+
+            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_department', item_id: dpt.id, field: 'department head', previous: prev.name,
+                current: curr.name, action: 'update', user_id: user.id, date: date });
         }
 
         if(Global.compare(dpt.description, data.description)) {
