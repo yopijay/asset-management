@@ -26,10 +26,11 @@ const Index = () => {
         useGet({ key: ['usr_specific'], request: specific({ table: 'tbl_users', id: id ?? null }), options: { enabled: true, refetchOnWindowFocus: false },
             onSuccess: data => {
                 if(Array.isArray(data)) {
-                    for(let count = 0; count < Object.keys(data[0]).length; count++) { 
+                    for(let count = 0; count < Object.keys(data[0]).length; count++) {
                         let _name = Object.keys(data[0])[count];
                         setValue(_name, _name === 'permission' ? JSON.parse(data[0][_name]) : data[0][_name]);
                     }
+                    setDisabled({ ...isdisabled, ...data[0].disabled });
                 }
             }
         });

@@ -10,12 +10,22 @@ const audit = { series_no: '', table_name: 'tbl_users',  item_id: 0, field: '', 
 class Users {
     series = async () =>{ return (await new Builder(`tbl_users`).select().except(`WHERE id= 1`).build()).rows; }
     specific = async id => { 
-        return (await new Builder(`tbl_users AS usr`)
-                        .select(`usr.*, info.*, perm.permission`)
-                        .join({ table: `tbl_users_info AS info`, condition: `info.user_id = usr.id`, type: `LEFT` })
-                        .join({ table: `tbl_users_permission AS perm`, condition: `perm.user_id = usr.id`, type: `LEFT` })
-                        .condition(`WHERE usr.id= ${id}`)
-                        .build()).rows;
+        let disabled = {};
+        let data = (await new Builder(`tbl_users AS usr`)
+                            .select(`usr.*, info.*, perm.permission`)
+                            .join({ table: `tbl_users_info AS info`, condition: `info.user_id = usr.id`, type: `LEFT` })
+                            .join({ table: `tbl_users_permission AS perm`, condition: `perm.user_id = usr.id`, type: `LEFT` })
+                            .condition(`WHERE usr.id= ${id}`)
+                            .build()).rows;
+
+        for(let key1 in JSON.parse(data[0].permission)) {
+            for(let key2 in JSON.parse(data[0].permission)[key1]) {
+                disabled[key2] = !JSON.parse(data[0].permission)[key1][key2].list
+            }
+        }
+
+        data[0]['disabled'] = disabled;
+        return data;
     }
     
     logs = async data => {

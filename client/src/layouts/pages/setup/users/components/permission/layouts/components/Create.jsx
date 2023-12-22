@@ -10,7 +10,7 @@ const Create = props => {
     return (
         <Stack direction= "row" justifyContent= "space-between" alignItems= "center" spacing= { 2 }>
             <Typography variant= "body2" gutterBottom color= "#394867">Create</Typography>
-            { fetching ? <Skeleton variant= "rounded" height= "26px" width= "42px" sx= {{ borderRadius: '13px' }} /> :
+            { fetching && disabled ? <Skeleton variant= "rounded" height= "26px" width= "42px" sx= {{ borderRadius: '13px' }} /> :
                 <Controller control= { control } name= { `permission.${route.toLowerCase()}.${module.toLowerCase()}.create` } 
                     defaultValue= { getValues().permission !== null ? 
                                                 getValues().permission?.[route.toLowerCase()] ? 
@@ -19,7 +19,7 @@ const Create = props => {
                                                 : false }
                     render= { () => ( 
                         <IOSSwitch 
-                            disabled= { disabled?.[module.toLowerCase()] ?? true }
+                            disabled= { disabled[module.toLowerCase()] ?? true }
                             checked= { getValues().permission !== null ? 
                                                 getValues().permission?.[route.toLowerCase()] ? 
                                                     getValues().permission[route.toLowerCase()][module.toLowerCase()].create ?? false : 
