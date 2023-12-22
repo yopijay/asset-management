@@ -15,8 +15,10 @@ class Modules {
 
     logs = async data => {
         return (await new Builder(`tbl_audit_trail AS at`)
-                        .select(`at.id, at.series_no AS at_series, at.table_name, at.item_id, at.field, at.previous, at.current, at.action, at.user_id, at.date, mdl.series_no AS mdl_series, mdl.name`)
+                        .select(`at.id, at.series_no AS at_series, at.table_name, at.item_id, at.field, at.previous, at.current, at.action, 
+                                        at.user_id, at.date, mdl.series_no AS mdl_series, mdl.name, CONCAT(ubi.lname, ', ', ubi.fname) AS ub_name`)
                         .join({ table: `tbl_modules AS mdl`, condition: `at.item_id = mdl.id`, type: `LEFT` })
+                        .join({ table: `tbl_users_info AS ubi`, condition: `at.user_id = ubi.user_id`, type: `LEFT` })
                         .condition(`WHERE at.table_name= 'tbl_modules' ORDER BY at.date DESC LIMIT 3`)
                         .build()).rows;
     }
