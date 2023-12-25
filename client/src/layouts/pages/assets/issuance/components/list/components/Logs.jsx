@@ -28,9 +28,14 @@ const Logs = () => {
                                 <Typography variant= "body2" color= "#9DB2BF">{ getdate(new Date(data.date)).time } { getdate(new Date(data.date)).label }</Typography>
                                 <Typography variant= "body2" color= "#9DB2BF">{ getdate(new Date(data.date)).day }</Typography>
                             </Stack>
-                            { data.action === 'update' ? 
-                                <Typography color= "#526D82">{ (data.action).toUpperCase() } { (data.field).toUpperCase() } OF { data.field } FROM '{ data.previous }' TO '{ data.current }'</Typography> :
-                                <Typography color= "#526D82">{ (data.action).toUpperCase() } { (data.name).toUpperCase() }</Typography>}
+                            { data.action === 'update' ?
+                                <Typography color= "#526d82">
+                                    { `${(data.action).charAt(0).toUpperCase() + (data.action).slice(1)} ${(data.field).replace('_', ' ')} of
+                                        ${(data.model ?? data.serial_no).toUpperCase()} from '${data.previous !== null ? (data.previous).replace('_', ' ') : ''}'
+                                        to '${data.current !== null ? (data.current).replace('_', ' ') : ''}'.` }</Typography> :
+                                <Typography color= "#526d82">
+                                    { `${(data.model ?? data.serial_no).toUpperCase()} ${(data.action).toLowerCase()}d.` }</Typography> }
+                            <Typography variant= "body2" color= "#9DB2BF">{ `${(data.action).charAt(0).toUpperCase() + (data.action).slice(1)}d by: ${data.ub_name}` }</Typography>
                         </Stack>
                     )) : <Typography textAlign= "center" variant= "body2" color= "#9DB2BF">No record/s found!</Typography> : '' }
         </Stack>

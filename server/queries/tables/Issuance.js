@@ -53,7 +53,16 @@ class Issuance {
                         .build()).rows;
     }
 
-    logs = async data => { return []; }
+    logs = async data => {
+        return (await new Builder(`tbl_audit_trail AS at`)
+                        .select(`at.id, at.series_no AS at_series, at.table_name, at.item_id, at.field, at.previous, at.current, at.action,
+                                        at.user_id, at.date, iss.series_no AS iss_series, info.serial_no, info.model, CONCAT(ubi.lname, ', ', ubi.fname) AS ub_name`)
+                        .join({ table: `tbl_stocks_issuance AS iss`, condition: `at.item_id = iss.id`, type: `LEFT` })
+                        .join({ table: `tbl_stocks_info AS info`, condition: `iss.item_id = info.stocks_id`, type: `LEFT` })
+                        .join({ table: `tbl_users_info AS ubi`, condition: `at.user_id = ubi.user_id`, type: `LEFT` })
+                        .condition(`WHERE at.table_name= 'tbl_stocks_issuance' ORDER BY at.date DESC LIMIT 3`)
+                        .build()).rows;
+    }
 
     save = async data => {
         let date = Global.date(new Date());
@@ -94,22 +103,28 @@ class Issuance {
         let audits = [];
         
         if(Global.compare(iss.issued_to, data.issued_to)) {
-            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks_issuance', item_id: iss.id, field: 'issued_to', previous: iss.issued_to, 
-                                current: data.issued_to, action: 'update', user_id: user.id, date: date });
+            let curr = (await new Builder(`tbl_users_info`).select(`CONCAT(lname, ', ', fname) AS name`).condition(`WHERE user_id= ${data.issued_to}`).build()).rows[0];
+            let prev = (await new Builder(`tbl_users_info`).select(`CONCAT(lname, ', ', fname) AS name`).condition(`WHERE user_id= ${iss.issued_to}`).build()).rows[0];
+            
+            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks_issuance', item_id: iss.id, field: 'Issued to', previous: prev.name, 
+                                current: curr.name, action: 'update', user_id: user.id, date: date });
         }
 
         if(Global.compare(iss.issued_by, data.issued_by)) {
-            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks_issuance', item_id: iss.id, field: 'issued_by', previous: iss.issued_by, 
-                                current: data.issued_by, action: 'update', user_id: user.id, date: date });
+            let curr = (await new Builder(`tbl_users_info`).select(`CONCAT(lname, ', ', fname) AS name`).condition(`WHERE user_id= ${data.issued_by}`).build()).rows[0];
+            let prev = (await new Builder(`tbl_users_info`).select(`CONCAT(lname, ', ', fname) AS name`).condition(`WHERE user_id= ${iss.issued_by}`).build()).rows[0];
+
+            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks_issuance', item_id: iss.id, field: 'Issued by', previous: prev.name, 
+                                current: curr.name, action: 'update', user_id: user.id, date: date });
         }
 
         if(Global.compare(iss.issued_date, data.issued_date)) {
-            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks_issuance', item_id: iss.id, field: 'issued_date', previous: iss.issued_date, 
+            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks_issuance', item_id: iss.id, field: 'Issued date', previous: iss.issued_date, 
                                 current: `'${data.issued_date}'`, action: 'update', user_id: user.id, date: date });
         }
 
         if(Global.compare(iss.note, data.note)) {
-            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks_issuance', item_id: iss.id, field: 'note', previous: iss.note, 
+            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks_issuance', item_id: iss.id, field: 'Note', previous: iss.note, 
                                 current: data.note !== null && data.note !== '' ? data.note : null, action: 'update', user_id: user.id, date: date });
         }
 

@@ -33,10 +33,10 @@ const Logs = () => {
                             { data.action === 'update' ? 
                                 <Typography color= "#526d82">
                                     { `${(data.action).charAt(0).toUpperCase() + (data.action).slice(1)} ${(data.field).replace('_', ' ')} of 
-                                        ${(data.serial_no ?? data.model).toUpperCase()} from '${data.previous !== null ? (data.previous).replace('_', ' ') : ''}'
+                                        ${(data.model ?? data.serial_no).toUpperCase()} from '${data.previous !== null ? (data.previous).replace('_', ' ') : ''}'
                                         to '${data.current !== null ? (data.current).replace('_', ' ') : ''}'.` }</Typography> : 
                                 <Typography color= "#526d82">
-                                    { `${(data.serial_no ?? data.model).toUpperCase()} ${(data.action).toLowerCase()}d.` }</Typography> }
+                                    { `${(data.model ?? data.serial_no).toUpperCase()} ${(data.action).toLowerCase()}d.` }</Typography> }
                             <Typography variant= "body2" color= "#9DB2BF">{ `${(data.action).charAt(0).toUpperCase() + (data.action).slice(1)}d by: ${data.ub_name}` }</Typography>
                         </Stack>
                     )) : <Typography textAlign= "center" variant= "body2" color= "#9DB2BF">No record/s found!</Typography> : '' }
