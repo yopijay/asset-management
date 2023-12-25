@@ -23,6 +23,15 @@ class Stocks {
     }
 
     logs = async data => {
+        return (await new Builder(`tbl_audit_trail AS at`)
+                        .select(`at.id, at.series_no AS at_series, at.table_name, at.item_id, at.field, at.previous, at.current, at.action, 
+                                        at.user_id, at.date, stck.series_no AS stck_series, info.serial_no, info.model, CONCAT(ubi.lname, ', ', ubi.fname) AS ub_name`)
+                        .join({ table: `tbl_stocks AS stck`, condition: `at.item_id = stck.id`, type: `LEFT` })
+                        .join({ table: `tbl_stocks_info AS info`, condition: `info.stocks_id = at.item_id`, type: `LEFT` })
+                        .join({ table: `tbl_users_info AS ubi`, condition: `at.user_id = ubi.user_id`, type: `LEFT` })
+                        .join({ table: `tbl_category AS ctg`, condition: `stck.category_id = ctg.id`, type: `LEFT` })
+                        .condition(`WHERE at.table_name= 'tbl_stocks' AND ctg.name= '${((data.category).replace('-', ' ')).toUpperCase()}' ORDER BY at.date DESC LIMIT 3`)
+                        .build()).rows;
         return [];
     }
 

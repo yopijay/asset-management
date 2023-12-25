@@ -4,6 +4,7 @@ import { Stack, Typography } from "@mui/material";
 // Core
 import { history } from "core/api"; // API
 import { getdate, useGet } from "core/function/global"; // Function
+import { useParams } from "react-router-dom";
 
 // Styles
 const logs = {
@@ -16,7 +17,8 @@ const logs = {
 }
 
 const Logs = () => {
-    const { data: log, isFetching: fetching } = useGet({ key: ['assts_logs'], request: history({ table: 'tbl_stocks', data: {} }), options: { refetchOnWindowFocus: false } }); 
+    const { category } = useParams();
+    const { data: log, isFetching: fetching } = useGet({ key: ['assts_logs'], request: history({ table: 'tbl_stocks', data: { category: category } }), options: { refetchOnWindowFocus: false } });
 
     return (
         <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 } sx= { logs }>
@@ -29,8 +31,13 @@ const Logs = () => {
                                 <Typography variant= "body2" color= "#9DB2BF">{ getdate(new Date(data.date)).day }</Typography>
                             </Stack>
                             { data.action === 'update' ? 
-                                <Typography color= "#526D82">{ (data.action).toUpperCase() } { (data.field).toUpperCase() } OF { data.field } FROM '{ data.previous }' TO '{ data.current }'</Typography> :
-                                <Typography color= "#526D82">{ (data.action).toUpperCase() } { (data.name).toUpperCase() }</Typography>}
+                                <Typography color= "#526d82">
+                                    { `${(data.action).charAt(0).toUpperCase() + (data.action).slice(1)} ${(data.field).replace('_', ' ')} of 
+                                        ${(data.serial_no ?? data.model).toUpperCase()} from '${data.previous !== null ? (data.previous).replace('_', ' ') : ''}'
+                                        to '${data.current !== null ? (data.current).replace('_', ' ') : ''}'.` }</Typography> : 
+                                <Typography color= "#526d82">
+                                    { `${(data.serial_no ?? data.model).toUpperCase()} ${(data.action).toLowerCase()}d.` }</Typography> }
+                            <Typography variant= "body2" color= "#9DB2BF">{ `${(data.action).charAt(0).toUpperCase() + (data.action).slice(1)}d by: ${data.ub_name}` }</Typography>
                         </Stack>
                     )) : <Typography textAlign= "center" variant= "body2" color= "#9DB2BF">No record/s found!</Typography> : '' }
         </Stack>

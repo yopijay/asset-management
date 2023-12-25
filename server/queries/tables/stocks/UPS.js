@@ -28,27 +28,27 @@ class UPS {
         
         if(Global.compare(prev.serial_no, curr.serial_no)) {
             if(!(serial.rowCount > 0)) {
-                audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks', item_id: prev.id, field: 'serial_no', previous: prev.serial_no,
+                audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks', item_id: prev.id, field: 'Serial no.', previous: prev.serial_no,
                     current: (curr.serial_no).toUpperCase(), action: 'update', user_id: user.id, date: date });
             }
             else { errors.push({ name: 'serial_no', message: 'Serial number already exist!' }); }
         }
 
         if(Global.compare(prev.brand_id, curr.brand_id)) {
-            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks', item_id: prev.id, field: 'brand', previous: prev.brand_id,
+            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks', item_id: prev.id, field: 'Brand', previous: prev.brand_id,
                 current: curr.brand_id, action: 'update', user_id: user.id, date: date });
         }
 
         if(Global.compare(prev.model, curr.model)) {
             if(!(model.rowCount > 0)) {
-                audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks', item_id: prev.id, field: 'model', previous: prev.model,
+                audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks', item_id: prev.id, field: 'Model', previous: prev.model,
                     current: curr.model !== '' && curr.model !== null ? (curr.model).toUpperCase() : null, action: 'update', user_id: user.id, date: date });
             }
             else { errors.push({ name: 'model', message: 'Model already exist!' }); }
         }
 
         if(Global.compare(prev.output_capacity, curr.output_capacity)) {
-            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks', item_id: prev.id, field: 'output_capacity', previous: prev.output_capacity,
+            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks', item_id: prev.id, field: 'Output capacity', previous: prev.output_capacity,
                 current: curr.output_capacity !== '' && curr.output_capacity !== null ? (curr.output_capacity).toUpperCase() : null, action: 'update', user_id: user.id, date: date });
         }
 

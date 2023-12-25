@@ -25,56 +25,56 @@ class Monitor {
         let serial = await new Builder(`tbl_stocks_info`).select().condition(`WHERE serial_no= '${(curr.serial_no).toUpperCase()}'`).build();
 
         if(Global.compare(prev.brand_id, curr.brand_id)) {
-            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks', item_id: prev.id, field: 'brand', previous: prev.brand_id,
+            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks', item_id: prev.id, field: 'Brand', previous: prev.brand_id,
                 current: curr.brand_id, action: 'update', user_id: user.id, date: date });
         }
         
         if(Global.compare(prev.serial_no, curr.serial_no)) {
             if(!(serial.rowCount > 0)) {
-                audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks', item_id: prev.id, field: 'serial_no', previous: prev.serial_no,
+                audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks', item_id: prev.id, field: 'Serial no.', previous: prev.serial_no,
                     current: (curr.serial_no).toUpperCase(), action: 'update', user_id: user.id, date: date });
             }
             else { errors.push({ name: 'serial_no', message: 'Serial number already exist!' }); }
         }
 
         if(Global.compare(prev.panel, curr.panel)) {
-            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks', item_id: prev.id, field: 'panel', previous: prev.panel,
+            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks', item_id: prev.id, field: 'Panel', previous: prev.panel,
                 current: curr.panel !== '' && curr.panel !== null ? (curr.panel).toUpperCase() : null, action: 'update', user_id: user.id, date: date });
         }
 
         if(Global.compare(prev.resolution, curr.resolution)) {
-            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks', item_id: prev.id, field: 'resolution', previous: prev.resolution,
+            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks', item_id: prev.id, field: 'Resolution', previous: prev.resolution,
                 current: curr.resolution !== '' && curr.resolution !== null ? (curr.resolution).toUpperCase() : null, action: 'update', user_id: user.id, date: date });
         }
 
         if(Global.compare(prev.refresh_rate, curr.refresh_rate)) {
-            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks', item_id: prev.id, field: 'refresh rate', previous: prev.refresh_rate,
+            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks', item_id: prev.id, field: 'Refresh rate', previous: prev.refresh_rate,
                 current: curr.refresh_rate !== '' && curr.refresh_rate !== null ? (curr.refresh_rate).toUpperCase() : null, action: 'update', user_id: user.id, date: date });
         }
 
         if(Global.compare(prev.power_supply, curr.power_supply)) {
-            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks', item_id: prev.id, field: 'power supply', previous: prev.power_supply,
+            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks', item_id: prev.id, field: 'Power supply', previous: prev.power_supply,
                 current: curr.power_supply !== '' && curr.power_supply !== null ? (curr.power_supply).toUpperCase() : null, action: 'update', user_id: user.id, date: date });
         }
 
         if(Global.compare(prev.warranty, curr.warranty)) {
-            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks', item_id: prev.id, field: 'warranty', previous: prev.warranty,
+            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks', item_id: prev.id, field: 'Warranty', previous: prev.warranty,
                 current: curr.warranty !== '' && curr.warranty !== null ? (curr.warranty).toUpperCase() : null, action: 'update', user_id: user.id, date: date });
         }
         
         if(Global.compare(parseInt(prev.hdmi), curr.hdmi ? 1 : 0)) {
-            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks', item_id: prev.id, field: 'hdmi', previous: prev.hdmi,
-                current: curr.hdmi ? 1 : 0, action: 'update', user_id: user.id, date: date });
+            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks', item_id: prev.id, field: 'HDMI', previous: prev.hdmi === 1 ? 'Yes' : 'No',
+                current: curr.hdmi ? 'Yes' : 'No', action: 'update', user_id: user.id, date: date });
         }
         
         if(Global.compare(prev.vga, curr.vga ? 1 : 0)) {
-            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks', item_id: prev.id, field: 'vga', previous: prev.vga,
-                current: curr.vga ? 1 : 0, action: 'update', user_id: user.id, date: date });
+            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks', item_id: prev.id, field: 'VGA', previous: prev.vga === 1 ? 'Yes' : 'No',
+                current: curr.vga ? 'Yes' : 'No', action: 'update', user_id: user.id, date: date });
         }
         
         if(Global.compare(prev.dvi, curr.dvi ? 1 : 0)) {
-            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks', item_id: prev.id, field: 'dvi', previous: prev.dvi,
-                current: curr.dvi ? 1 : 0, action: 'update', user_id: user.id, date: date });
+            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks', item_id: prev.id, field: 'DVI', previous: prev.dvi === 1 ? 'Yes' : 'No',
+                current: curr.dvi ? 'Yes' : 'No', action: 'update', user_id: user.id, date: date });
         }
 
         if(!(errors.length > 0)) {

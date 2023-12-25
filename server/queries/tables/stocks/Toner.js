@@ -27,36 +27,31 @@ class Toner {
                                 .build();
 
         if(Global.compare(prev.brand_id, curr.brand_id)) {
-            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks', item_id: prev.id, field: 'brand', previous: prev.brand_id,
+            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks', item_id: prev.id, field: 'Brand', previous: prev.brand_id,
                 current: curr.brand_id, action: 'update', user_id: user.id, date: date });
         }
 
         if(Global.compare(prev.quantity, curr.quantity)) {
-            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks', item_id: prev.id, field: 'quantity', previous: prev.quantity,
+            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks', item_id: prev.id, field: 'Quantity', previous: prev.quantity,
                 current: curr.quantity !== '' && curr.quantity !== null ? curr.quantity : null, action: 'update', user_id: user.id, date: date });
         }
 
         if(Global.compare(prev.model, curr.model)) {
             if(!(model.rowCount > 0)) {
-                audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks', item_id: prev.id, field: 'model', previous: prev.model,
+                audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks', item_id: prev.id, field: 'Model', previous: prev.model,
                     current: curr.model !== '' && curr.model !== null ? (curr.model).toUpperCase() : null, action: 'update', user_id: user.id, date: date });
             }
             else { errors.push({ name: 'model', message: 'Model already exist!' }); }
         }
 
         if(Global.compare(prev.type, curr.type)) {
-            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks', item_id: prev.id, field: 'type', previous: prev.type,
+            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks', item_id: prev.id, field: 'Type', previous: prev.type,
                 current: curr.type !== '' && curr.type !== null ? curr.type : null, action: 'update', user_id: user.id, date: date });
         }
 
         if(Global.compare(prev.condition, curr.condition)) {
-            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks', item_id: prev.id, field: 'condition', previous: prev.condition,
+            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks', item_id: prev.id, field: 'Condition', previous: prev.condition,
                 current: curr.condition !== '' && curr.condition !== null ? curr.condition : null, action: 'update', user_id: user.id, date: date });
-        }
-
-        if(Global.compare(prev.quantity, curr.quantity)) {
-            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks', item_id: prev.id, field: 'quantity', previous: prev.quantity,
-                current: curr.quantity !== '' && curr.quantity !== null ? curr.quantity : null, action: 'update', user_id: user.id, date: date });
         }
         
         if(!(errors.length > 0)) {

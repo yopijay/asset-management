@@ -30,7 +30,7 @@ const Index = () => {
                     for(let count = 0; count < Object.keys(data[0]).length; count++) { 
                         let _name = Object.keys(data[0])[count];
                         setValue(_name, _name === 'status' ? 
-                                        data[0][_name] === 1 : 
+                                        data[0][_name] === 1 :    
                                         _name === 'category' ? ((data[0][_name]).replace(' ', '_')).toLowerCase() : data[0][_name]);
                     }
             } 

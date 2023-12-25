@@ -30,9 +30,9 @@ const Logs = () => {
                             </Stack>
                             { data.action === 'update' ? 
                                 <Typography color= "#526D82">
-                                    { `${(data.action).charAt(0).toUpperCase() + (data.action).slice(1)} ${data.field} of 
-                                        ${(data.name).toLowerCase()} from '${data.previous !== null ? ((data.previous).replace('_', ' ')).toLowerCase() : ''}' to 
-                                        '${data.current !== null ? ((data.current).replace('_', ' ')).toLowerCase() : ''}'.` }</Typography> :
+                                    { `${(data.action).charAt(0).toUpperCase() + (data.action).slice(1)} ${(data.field).replace('_', ' ')} of 
+                                        ${(data.name).toLowerCase()} from '${data.previous !== null ? (data.previous).replace('_', ' ') : ''}' to 
+                                        '${data.current !== null ? (data.current).replace('_', ' ') : ''}'.` }</Typography> :
                                 <Typography color= "#526D82">
                                 { `${(data.name).charAt(0).toUpperCase() + ((data.name).slice(1)).toLowerCase()} ${(data.action).toLowerCase()}d.` }</Typography> }
                             <Typography variant= "body2" color= "#9DB2BF">{ `${(data.action).charAt(0).toUpperCase() + (data.action).slice(1)}d by: ${data.ub_name}` }</Typography>
