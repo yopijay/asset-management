@@ -13,7 +13,6 @@ import { btn, input } from "./style";
 
 const Index = props => {
     const { register, fetching, errors, setValue, setError, getValues } = props;
-    const role = JSON.parse(atob((sessionStorage.getItem('token')).split('.')[1])).role;
     const { type } = useParams();
     const [ pic, setPic ] = useState(IMAGE);
     const [ showpass, setshowpass ] = useState(false);

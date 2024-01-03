@@ -1,6 +1,6 @@
 // Libraries
 import { useContext } from "react";
-import { Box, Grid, Skeleton, Stack, Typography } from "@mui/material";
+import { Box, Grid, Stack, Typography } from "@mui/material";
 
 // Core
 import { AccountCntxt } from "core/context/Account"; // Context
@@ -56,12 +56,7 @@ const Summary = () => {
                                     <Typography sx= { subtitle }>{ data.quantity }</Typography>
                                 </Stack>
                             </Grid> ) }
-                    </Grid>
-                    : ''
-                : 
-                <Grid container direction= "row" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 }>
-                    { [0, 1, 2, 3].map(index => <Grid item xs= { 12 } sm= { 6 } md= { 3 } key= { index }><Skeleton variant= "rounded" height= "100px" width= "100%" /></Grid> ) }
-                </Grid> }
+                    </Grid> : '' : '' }
         </Box>
     );
 }
