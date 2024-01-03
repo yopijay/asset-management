@@ -11,7 +11,7 @@ import { GlobalCntxt } from "core/context/Global"; // Context
 import Brand from "./components/Brand";
 
 // Constants
-import { container, menu } from "./index.style"; // Styles
+import { container, menu } from "./style"; // Styles
 
 const Index = () => {
     const { drawerToggle, open } = useContext(GlobalCntxt);

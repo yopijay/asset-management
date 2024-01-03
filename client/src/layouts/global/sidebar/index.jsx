@@ -11,7 +11,7 @@ import Account from "./components/Account";
 import Logout from "./components/Logout";
 
 // Constants
-import { accountfix, accountswipe, fix, nav, navfix, navswipe, sidebar, swipable, swipe } from "./index.style"; // Styles
+import { accountfix, accountswipe, fix, nav, navfix, navswipe, sidebar, swipable, swipe } from "./style"; // Styles
 
 const Index = () => {
     const { container, drawerToggle, open } = useContext(GlobalCntxt);

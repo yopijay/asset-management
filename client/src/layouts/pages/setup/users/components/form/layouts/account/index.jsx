@@ -42,10 +42,10 @@ const Index = props => {
             <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 }  sx= {{ width: { xs: '100%', md: '65%', lg: '50%' } }}>
                 <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch">
                     <Typography gutterBottom variant= "body2" color= "#394867">*Email</Typography>
-                        <TextField { ...register('email') } name= "email" variant= "standard" sx= { input } InputProps= {{ disableUnderline: true }} />
+                        <TextField { ...register('email') } name= "email" variant= "standard" sx= { input } InputProps= {{ disableUnderline: true }} disabled= { type === 'view' } />
                         <Typography variant= "caption" color= "error.dark" sx= {{ textAlign: 'right' }}>{ errors.email?.message }</Typography>
                 </Stack>
-                { !(role === 'superadmin' || role === 'admin') || type === 'new' ? <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch">
+                { type === 'new' ? <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch">
                     <Typography gutterBottom variant= "body2" color= "#394867">*Password</Typography>
                     <TextField { ...register('password') } name= "password" type= { !showpass ? 'password' : 'text' } variant= "standard" defaultValue= "@KC12345"
                             InputProps= {{ disableUnderline: true, 
@@ -55,7 +55,7 @@ const Index = props => {
                                     </InputAdornment> }} sx= { input } />
                     <Typography variant= "caption" color= "error.dark" sx= {{ textAlign: 'right' }}>{ errors.password?.message }</Typography>
                 </Stack> : '' }
-                { !(role === 'superadmin' || role === 'admin') || type === 'new' ? <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch">
+                { type === 'new' ? <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch">
                     <Typography gutterBottom variant= "body2" color= "#394867">*Confirm Password</Typography>
                     <TextField { ...register('cpassword') } name= "cpassword" type= { !showcpass ? 'password' : 'text' } variant= "standard" defaultValue= "@KC12345"
                             InputProps= {{ disableUnderline: true, 

@@ -1,6 +1,9 @@
 // Libraries
 import React from "react";
 
+// Dashboard
+const Dashboard = React.lazy(() => import('layouts/pages/dashboard'));
+
 // Assets
 const Stocks = React.lazy(() => import('layouts/pages/assets/stocks'));
 const Request = React.lazy(() => import('layouts/pages/assets/request'));
@@ -21,7 +24,7 @@ const Route = React.lazy(() => import('layouts/pages/setup/route'));
 const Modules = React.lazy(() => import('layouts/pages/setup/modules'));
 
 export const Components = ([
-    { path: '/', name: 'dashboard', title: 'Dashboard', component: 'DASHBOARD' },
+    { path: '/', name: 'dashboard', title: 'Dashboard', component: <Dashboard /> },
     
     // Assets
     { path: '/assets/stocks', name: 'stocks', title: 'Stocks', component: <Stocks /> },

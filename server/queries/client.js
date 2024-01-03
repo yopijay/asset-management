@@ -9,10 +9,22 @@ const Brands = require('./tables/Brands');
 const Stocks = require('./tables/Stocks');
 const Issuance = require('./tables/Issuance');
 const Routes = require('./tables/Routes');
+const Dashboard = require('./tables/Dashboard');
 
 const login = data => { return new Users().login(data); }
 const profile = id => { return new Users().profile(id); }
 const permission = data => { return new Users().permission(data); }
+// const dashboard = data => { return new Dashboard().main(data); }
+// const userperbranch = data => { return new Dashboard().main(data); }
+
+const dashboard = (type, data) => {
+    return new Promise(async resolve => {
+        switch(type) {
+            case 'main': resolve(await new Dashboard().main(data)); break;
+            case 'userperbranch': resolve(await new Dashboard().userperbranch(data)); break;
+        }
+    });
+}
 
 const series = table => {
     return new Promise(async resolve => {
@@ -150,6 +162,7 @@ const dropdown = async (table, data) => {
 }
 
 module.exports = {
+    dashboard,
     login,
     profile,
     series,

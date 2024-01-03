@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 
 // Constants
-import { btn } from "../index.style"; // Styles
+import { btn } from "../style"; // Styles
 
 const Logout = () => {
     return (

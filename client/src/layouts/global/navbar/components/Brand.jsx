@@ -3,7 +3,7 @@ import { Stack, Typography } from "@mui/material";
 
 // Constants
 import Logo from "assets/images/logo.png"; // Assets
-import { title } from "../index.style"; // Styles
+import { title } from "../style"; // Styles
 
 const Brand = () => {
     return (
