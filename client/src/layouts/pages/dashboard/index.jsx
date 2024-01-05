@@ -9,6 +9,7 @@ import { AccountCntxt } from "core/context/Account"; // Context
 import Welcome from "./components/Welcome";
 import Summary from "./components/Summary";
 import Stocks from "./components/Stocks";
+import Users from "./components/Users";
 
 // Custom styles
 const container = {
@@ -25,12 +26,13 @@ const Index = () => {
     const { data } = useContext(AccountCntxt);
 
     return (
-        <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" sx= { container } spacing= { 4 }>
+        <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" sx= { container } spacing= { 3 }>
             <Welcome />
             { data.user_level === 'superadmin' || (data.user_level !== 'superadmin' && data.permission !== null) ? 
-                <Stack direction= "column" justifyContent= "flex-start" alignItems ="stretch" spacing= { 2 }>
-                    <Summary />
-                    <Stocks />
+                <Stack direction= "column" justifyContent= "flex-start" alignItems ="stretch" spacing= { 5 }>
+                    {/* <Summary /> */}
+                    {/* <Stocks /> */}
+                    {/* <Users /> */}
                 </Stack> : '' }
         </Stack>
     );

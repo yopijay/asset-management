@@ -48,7 +48,7 @@ class Dashboard {
                     qty = parseInt((await new Builder(`tbl_stocks`).select().condition(`WHERE category_id= ${categories[count].id}`).build()).rowCount);
                     onhand = parseInt((await new Builder(`tbl_stocks`).select(`SUM(quantity) AS quantity`).condition(`WHERE category_id= ${categories[count].id}`).build()).rows[0].quantity);
                 }
-                stocks.push({ name: (categories[count].name).toLowerCase(), quantity: qty, onhand: (onhand/qty) * 100, issued: ((qty - onhand)/qty) * 100 });
+                stocks.push({ name: (categories[count].name).toLowerCase(), quantity: qty, onhand: onhand, issued: qty - onhand });
             }
         }
         else {

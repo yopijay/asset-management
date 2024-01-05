@@ -47,3 +47,9 @@ export const qty = {
     fontWeight: 'bold',
     fontSize: '117%'
 }
+
+export const label = {
+    color: '#9BA4B5',
+    fontFamily: 'Montserrat ExtraBold',
+    fontSize: '120%'
+}
