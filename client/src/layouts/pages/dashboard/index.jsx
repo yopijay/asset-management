@@ -8,6 +8,7 @@ import { AccountCntxt } from "core/context/Account"; // Context
 // Components
 import Welcome from "./components/Welcome";
 import Summary from "./components/Summary";
+import Stocks from "./components/Stocks";
 
 // Custom styles
 const container = {
@@ -29,6 +30,7 @@ const Index = () => {
             { data.user_level === 'superadmin' || (data.user_level !== 'superadmin' && data.permission !== null) ? 
                 <Stack direction= "column" justifyContent= "flex-start" alignItems ="stretch" spacing= { 2 }>
                     <Summary />
+                    <Stocks />
                 </Stack> : '' }
         </Stack>
     );

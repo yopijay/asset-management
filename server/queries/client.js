@@ -14,14 +14,13 @@ const Dashboard = require('./tables/Dashboard');
 const login = data => { return new Users().login(data); }
 const profile = id => { return new Users().profile(id); }
 const permission = data => { return new Users().permission(data); }
-// const dashboard = data => { return new Dashboard().main(data); }
-// const userperbranch = data => { return new Dashboard().main(data); }
 
 const dashboard = (type, data) => {
     return new Promise(async resolve => {
         switch(type) {
             case 'main': resolve(await new Dashboard().main(data)); break;
             case 'userperbranch': resolve(await new Dashboard().userperbranch(data)); break;
+            case 'stocks': resolve(await new Dashboard().stocks(data)); break;
         }
     });
 }
