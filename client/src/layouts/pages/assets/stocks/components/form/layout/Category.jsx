@@ -12,7 +12,7 @@ const Category = props => {
 
     return (
         <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 3 }>
-            <Typography color= "#9BA4B5">Specifications:</Typography>
+            <Typography color= "#b2bec3">Specifications:</Typography>
             <Box><FormBuilder fields= { Categories[(category.replace('-', '_')).toLowerCase()]({ ...props }) } /></Box>
         </Stack>
     );

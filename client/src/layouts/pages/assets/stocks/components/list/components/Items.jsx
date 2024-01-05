@@ -16,7 +16,7 @@ const Items = ({ data }) => {
                                 <Typography textAlign= "center" variant= "h6" sx= { title }>{ ctg.name }</Typography>        
                             </Stack>
                         </Grid> )
-                    : <Typography variant= "body2" color= "#9DB2BF" bgcolor= "#FFFFFF" textAlign= "center" paddingY= "10px" borderRadius= { 4 }>No record/s found!</Typography> }
+                    : <Typography variant= "body2" color= "#636e72" bgcolor= "#FFFFFF" textAlign= "center" paddingY= "10px" borderRadius= { 4 }>No record/s found!</Typography> }
             </Grid>
         </Stack>
     );

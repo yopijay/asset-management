@@ -63,7 +63,7 @@ const Index = () => {
         <Stack sx= { content } spacing= { 4 }>
             <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch">
                 <Typography sx= { title }>{ type.charAt(0).toUpperCase() + type.slice(1) } { (category?.charAt(0).toUpperCase() + category?.slice(1))?.replace('-', ' ') }</Typography>
-                <Typography variant= "caption" color= "#9BA4B5">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc non neque molestie, 
+                <Typography variant= "caption" color= "#b2bec3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc non neque molestie, 
                     malesuada quam ut, vulputate massa.</Typography>
             </Stack>
             <Stack sx= { card } spacing= { 3 }>

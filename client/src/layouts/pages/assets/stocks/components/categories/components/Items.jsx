@@ -33,12 +33,12 @@ const Items = () => {
                                     { (category.replace('-', ' ')).toLowerCase() === 'toner' ? <Typography sx= { subtitle } variant= "body2">Quantity: { data.quantity }</Typography> : '' }
                                 </Stack>
                                 <Stack direction= "row" justifyContent= "flex-start" alignItems= "center" spacing= { 2 } paddingLeft= "10px">
-                                    <Chip size= "small" color= { data.quantity > 0 ? 'success' : 'error' } label= { data.quantity > 0 ? `Available` : 'Not available'} />
+                                    <Chip size= "small" sx= {{ backgroundColor: data.quantity > 0 ? '#27ae60' : '#e74c3c', color: '#ffffff' }} label= { data.quantity > 0 ? `Available` : 'Not available'} />
                                     <Stack direction= "row" justifyContent= "flex-start" alignItems= "center" spacing= { 1.5 }>
-                                        { authupdate ? <Typography color= "#9BA4B5" component= { Link } to= { `/assets/stocks/${category}/form/update/${data.id}` }>
+                                        { authupdate ? <Typography color= "#636e72" component= { Link } to= { `/assets/stocks/${category}/form/update/${data.id}` }>
                                                 <FontAwesomeIcon icon= { solid('pencil') } size= "lg" />
                                             </Typography> : '' }
-                                        { authview ? <Typography color= "#9BA4B5" component= { Link } to= { `/assets/stocks/${category}/form/view/${data.id}` }>
+                                        { authview ? <Typography color= "#636e72" component= { Link } to= { `/assets/stocks/${category}/form/view/${data.id}` }>
                                                 <FontAwesomeIcon icon= { solid('eye') } size= "lg" />
                                             </Typography> : '' }
                                     </Stack>
@@ -60,7 +60,7 @@ const Items = () => {
                                 </Stack>
                             </Grid> ) }
                     </Grid> 
-                : <Typography variant= "body2" color= "#9DB2BF" bgcolor= "#FFFFFF" textAlign= "center" paddingY= "10px" borderRadius= { 2 }>No record/s found!</Typography> }
+                : <Typography variant= "body2" color= "#636e72" bgcolor= "#FFFFFF" textAlign= "center" paddingY= "10px" borderRadius= { 2 }>No record/s found!</Typography> }
         </Stack>
     );
 }

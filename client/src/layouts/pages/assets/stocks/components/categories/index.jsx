@@ -52,7 +52,7 @@ const Index = () => {
         <Stack direction= "row" justifyContent= "flex-start" alignItems= "flex-start" spacing= { 3 } sx= {{ width: '100%', height: '100%' , overflow: 'hidden' }}>
             <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" sx= { content({ condition: authlogs }) } spacing= { 5 }>
                 <Stack direction= "row" justifyContent= "flex-start" alignItems= "center" spacing= { 3 } component= { Link } to= { `/assets/stocks` } sx= {{ textDecoration: 'none' }}>
-                    <FontAwesomeIcon icon= { solid('angle-left') } size= "lg" color= "#394867" />
+                    <FontAwesomeIcon icon= { solid('angle-left') } size= "lg" color= "#636e72" />
                     <Typography sx= { title }>{ (category.charAt(0).toUpperCase() + category.slice(1)).replace('-', ' ') }</Typography>
                 </Stack>
                 <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 } sx= {{ height: '100%', overflow: 'hidden' }}>
@@ -65,8 +65,8 @@ const Index = () => {
             </Stack>
             { authlogs ? <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" sx= { history } spacing= { 1 }>
                 <Stack direction= "row" justifyContent= "space-between" alignItems= "center">
-                    <Typography color= "#9DB2BF" variant= "body2">Logs</Typography>
-                    <Typography color= "#9DB2BF" variant= "body2">View all</Typography>
+                    <Typography color= "#b2bec3" variant= "body2">Logs</Typography>
+                    <Typography color= "#b2bec3" variant= "body2">View all</Typography>
                 </Stack>
                 <Logs />
             </Stack> : '' }

@@ -20,7 +20,7 @@ export const history = {
 export const title = {
     fontFamily: 'Montserrat Black',
     fontSize: '1.17rem',
-    color: '#394867',
+    color: '#636e72',
 }
 
 export const loader = {
@@ -37,7 +37,7 @@ export const search = {
     flexDirection: 'row',
     justifyContent: 'flex-start',
     alignItems: 'center',
-    border: 'solid 1px #F3F3F3',
+    border: 'solid 1px #dfe6e9',
     borderRadius: '50px',
     padding: '5px 15px 5px 15px',
     width: {
@@ -49,9 +49,9 @@ export const search = {
 
 export const orderby = {
     padding: '5px 15px',
-    backgroundColor: '#DDE6ED',
-    borderRadius: '20px',
-    color: '#526D82',
+    backgroundColor: '#dfe6e9',
+    borderRadius: '8px',
+    color: '#636e72',
     cursor: 'pointer'
 }
 
@@ -64,7 +64,7 @@ export const listview = {
 }
 
 export const listtitle = {
-    color: '#27374D',
+    color: '#2d3436',
     whiteSpace: 'nowrap',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
@@ -72,7 +72,7 @@ export const listtitle = {
 }
 
 export const subtitle = {
-    color: '#526D82',
+    color: '#636e72',
     whiteSpace: 'nowrap',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
@@ -80,7 +80,7 @@ export const subtitle = {
 }
 
 export const caption = {
-    color: '#9DB2BF',
+    color: '#b2bec3',
     whiteSpace: 'nowrap',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
@@ -114,34 +114,34 @@ export const lbl = {
 }
 
 export const logs = {
-    backgroundColor: '#526D82',
-    color: '#FFFFFF',
+    backgroundColor: '#40739e',
+    color: '#f5f6fa',
     padding: '7px 12px',
     borderRadius: '7px',
     transition: 'all 0.2s ease-in-out',
     cursor: 'pointer',
     display: { xs: 'block', lg: 'none' },
-    '&:hover': { backgroundColor: '#3f5465' }
+    '&:hover': { backgroundColor: '#487eb0' }
 }
 
 export const download = {
-    backgroundColor: '#526D82',
-    color: '#FFFFFF',
+    backgroundColor: '#40739e',
+    color: '#f5f6fa',
     padding: '7px 12px',
     borderRadius: '7px',
     transition: 'all 0.2s ease-in-out',
     cursor: 'pointer',
-    '&:hover': { backgroundColor: '#3f5465' }
+    '&:hover': { backgroundColor: '#487eb0' }
 }
 
 export const upload = {
-    backgroundColor: '#526D82',
-    color: '#FFFFFF',
+    backgroundColor: '#40739e',
+    color: '#f5f6fa',
     padding: '7px 12px',
     borderRadius: '7px',
     transition: 'all 0.2s ease-in-out',
     cursor: 'pointer',
-    '&:hover': { backgroundColor: '#3f5465' }
+    '&:hover': { backgroundColor: '#487eb0' }
 }
 
 export const btnicon = { 
@@ -151,12 +151,12 @@ export const btnicon = {
     }, 
     textDecoration: 'none',
     cursor: 'pointer',
-    backgroundColor: '#A0C49D',
-    color: '#ffffff',
+    backgroundColor: '#40739e',
+    color: '#f5f6fa',
     borderRadius: '7px',
     padding: '7px 15px',
     transition: 'all 0.2s ease-in-out',
-    '&:hover': { backgroundColor: '#86a583' }
+    '&:hover': { backgroundColor: '#487eb0' }
 }
 
 export const btntxt = { 
@@ -166,10 +166,10 @@ export const btntxt = {
     }, 
     textDecoration: 'none',
     cursor: 'pointer',
-    backgroundColor: '#A0C49D',
-    color: '#ffffff',
+    backgroundColor: '#40739e',
+    color: '#f5f6fa',
     borderRadius: '7px',
     padding: '7px 15px',
     transition: 'all 0.2s ease-in-out',
-    '&:hover': { backgroundColor: '#86a583' }
+    '&:hover': { backgroundColor: '#487eb0' }
 }

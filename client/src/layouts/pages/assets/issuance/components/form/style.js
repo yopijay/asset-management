@@ -8,7 +8,7 @@ export const content = {
 export const title = {
     fontFamily: 'Montserrat Black',
     fontSize: '1.17rem',
-    color: '#394867',
+    color: '#636e72',
 }
 
 export const card = {
@@ -37,13 +37,13 @@ export const input = {
 export const savebtn = {
     textAlign: 'center',
     width: '150px',
-    color: '#FFFFFF',
+    color: '#f5f6fa',
     transition: 'all 0.2s ease-in-out',
     cursor: 'pointer',
-    backgroundColor: '#A0C49D',
+    backgroundColor: '#40739e',
     padding: '8px 0',
     borderRadius: '7px',
-    '&:hover': { backgroundColor: '#86a583' }
+    '&:hover': { backgroundColor: '#487eb0' }
 }
 
 export const cancelbtn = {
@@ -53,8 +53,8 @@ export const cancelbtn = {
     cursor: 'pointer',
     transition: 'all 0.2s ease-in-out',
     borderRadius: '7px',
-    backgroundColor: '#DDE6ED',
+    backgroundColor: '#ced6e0',
     textDecoration: 'none',
-    color: '#394867',
-    '&:hover': { backgroundColor: '#cdd6dd' }
+    color: '#636e72',
+    '&:hover': { backgroundColor: '#dfe4ea' }
 }

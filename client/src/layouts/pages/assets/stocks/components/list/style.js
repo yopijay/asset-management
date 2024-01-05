@@ -82,7 +82,7 @@ export const listview = {
 }
 
 export const title = {
-    color: '#394867',
+    color: '#636e72',
     whiteSpace: 'nowrap',
     overflow: 'hidden',
     textOverflow: 'ellipsis',

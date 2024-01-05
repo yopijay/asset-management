@@ -27,19 +27,19 @@ const Logs = () => {
                     log?.map((data, index) => (
                         <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" padding= "10px 12px" spacing= { 1 } key= { index }>
                             <Stack direction= "row" justifyContent= "space-between" alignItems= "center">
-                                <Typography variant= "body2" color= "#9DB2BF">{ getdate(new Date(data.date)).time } { getdate(new Date(data.date)).label }</Typography>
-                                <Typography variant= "body2" color= "#9DB2BF">{ getdate(new Date(data.date)).day }</Typography>
+                                <Typography variant= "body2" color= "#b2bec3">{ getdate(new Date(data.date)).time } { getdate(new Date(data.date)).label }</Typography>
+                                <Typography variant= "body2" color= "#b2bec3">{ getdate(new Date(data.date)).day }</Typography>
                             </Stack>
                             { data.action === 'update' ? 
-                                <Typography color= "#526d82">
+                                <Typography color= "#636e72">
                                     { `${(data.action).charAt(0).toUpperCase() + (data.action).slice(1)} ${(data.field).replace('_', ' ')} of 
                                         ${(data.model ?? data.serial_no).toUpperCase()} from '${data.previous !== null ? (data.previous).replace('_', ' ') : ''}'
                                         to '${data.current !== null ? (data.current).replace('_', ' ') : ''}'.` }</Typography> : 
-                                <Typography color= "#526d82">
+                                <Typography color= "#636e72">
                                     { `${(data.model ?? data.serial_no).toUpperCase()} ${(data.action).toLowerCase()}d.` }</Typography> }
-                            <Typography variant= "body2" color= "#9DB2BF">{ `${(data.action).charAt(0).toUpperCase() + (data.action).slice(1)}d by: ${data.ub_name}` }</Typography>
+                            <Typography variant= "body2" color= "#b2bec3">{ `${(data.action).charAt(0).toUpperCase() + (data.action).slice(1)}d by: ${data.ub_name}` }</Typography>
                         </Stack>
-                    )) : <Typography textAlign= "center" variant= "body2" color= "#9DB2BF">No record/s found!</Typography> : '' }
+                    )) : <Typography textAlign= "center" variant= "body2" color= "#b2bec3">No record/s found!</Typography> : '' }
         </Stack>
     );
 }
