@@ -20,16 +20,16 @@ const setups = [
 // Custom styles
 const link = {
     textDecoration: 'none',
-    color: '#394867',
+    color: '#636e72',
     transition: 'all 0.2s ease-in-out',
     borderRadius: '4px',
     padding: '8px 10px',
-    '&:hover': { color: '#A0C49D' }
+    '&:hover': { color: '#e17055' }
 }
 
 const linkactive = {
     textDecoration: 'none',
-    color: '#A0C49D',
+    color: '#e17055',
     transition: 'all 0.2s ease-in-out',
     borderRadius: '4px',
     padding: '8px 10px'
@@ -48,7 +48,7 @@ const Navs = () => {
     return (
         <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 }>
             <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 1 }>
-                <Typography variant= "caption" color= "#9BA4B5">Overview</Typography>
+                <Typography variant= "caption" color= "#b2bec3">Overview</Typography>
                 <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch">
                     <Typography component= { Link } to= "/" sx= { active === 'dashboard' ? linkactive : link }
                         onClick= { () => { setopen({ left: false }); setactive('dashboard'); localStorage.setItem('nav', 'dashboard'); } }>Dashboard</Typography>
@@ -58,13 +58,13 @@ const Navs = () => {
                 routes.map((rts, index) => 
                     data.user_level === 'superadmin' || checkValue(JSON.parse(data.permission)[(rts.route).toLowerCase()], true) ? 
                         <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 1 } key= { index }>
-                            <Typography variant= "caption" color= "#9BA4B5">{ (rts.route).charAt(0) + (rts.route).slice(1).toLowerCase() }</Typography>
+                            <Typography variant= "caption" color= "#b2bec3">{ (rts.route).charAt(0) + (rts.route).slice(1).toLowerCase() }</Typography>
                             <Subnavs id= { rts.id } />
                         </Stack> : '' ) : '' }
             { data.user_level === 'superadmin' || data.permission !== null ?
                 data.user_level === 'superadmin' || checkValue(JSON.parse(data.permission).setup, true) ? 
                     <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 1 }>
-                        <Typography variant= "caption" color= "#9BA4B5">Setup</Typography>
+                        <Typography variant= "caption" color= "#b2bec3">Setup</Typography>
                         <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch">
                             { setups.map((stp, index) => 
                                 data.user_level === 'superadmin' || JSON.parse(data.permission).setup[(stp.name).toLowerCase()].list ? 

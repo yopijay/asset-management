@@ -12,16 +12,16 @@ import { usePost } from "core/function/global"; // Function
 // Custom styles
 const link = {
     textDecoration: 'none',
-    color: '#394867',
+    color: '#636e72',
     transition: 'all 0.2s ease-in-out',
     borderRadius: '4px',
     padding: '8px 10px',
-    '&:hover': { color: '#A0C49D' }
+    '&:hover': { color: '#e17055' }
 }
 
 const linkactive = {
     textDecoration: 'none',
-    color: '#A0C49D',
+    color: '#e17055',
     transition: 'all 0.2s ease-in-out',
     borderRadius: '4px',
     padding: '8px 10px'

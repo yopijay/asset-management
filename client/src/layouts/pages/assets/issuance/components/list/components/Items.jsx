@@ -10,7 +10,7 @@ import { ListCntxt } from "core/context/List"; // Context
 import { AccountCntxt } from "core/context/Account"; // Context
 
 import { caption, listview, subtitle, title } from "../style";
-const status = { received: '#A0C49D', pending: '#EE7214', failed: '#FF6666' }
+const status = { received: '#27ae60', pending: '#e67e22', failed: '#e74c3c' }
 
 const Items = () => {
     const { list, listing } = useContext(ListCntxt);
@@ -41,10 +41,10 @@ const Items = () => {
                                 <Stack direction= "row" justifyContent= "flex-start" alignItems= "center" spacing= { 2 } paddingLeft= "10px">
                                     <Box sx= {{ width: '10px', height: '10px', backgroundColor: status[data.status], borderRadius: '50px' }} />
                                     <Stack direction= "row" justifyContent= "flex-start" alignItems= "center" spacing= { 1.5 }>
-                                        { authupdate ? <Typography color= "#9BA4B5" component= { Link } to= { `/assets/issuance/form/update/${data.id}` }>
+                                        { authupdate ? <Typography color= "#636e72" component= { Link } to= { `/assets/issuance/form/update/${data.id}` }>
                                                 <FontAwesomeIcon icon= { solid('pencil') } size= "lg" />
                                             </Typography> : '' }
-                                        { authview ? <Typography color= "#9BA4B5" component= { Link } to= { `/assets/issuance/form/view/${data.id}` }>
+                                        { authview ? <Typography color= "#636e72" component= { Link } to= { `/assets/issuance/form/view/${data.id}` }>
                                                 <FontAwesomeIcon icon= { solid('eye') } size= "lg" />
                                             </Typography> : '' }
                                     </Stack>

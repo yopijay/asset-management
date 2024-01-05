@@ -1,11 +1,11 @@
 export const title = {
     fontSize: '1.4rem',
     fontFamily: 'Montserrat Black',
-    color: '#A0C49D'
+    color: '#e17055'
 }
 
 export const input = {
-    border: 'solid 1px #ced6e0',
+    border: 'solid 1px #dfe6e9',
     padding: {
         xs: '6px 8px',
         md: '8px 10px'
@@ -15,11 +15,11 @@ export const input = {
 
 export const btn = { 
     textAlign: 'center', 
-    backgroundColor: '#A0C49D', 
+    backgroundColor: '#e17055', 
     padding: '10px 40px', 
     borderRadius: '8px', 
     transition: 'all 0.2s ease-in-out',
-    '&:hover': { backgroundColor: '#82a17f' },
+    '&:hover': { backgroundColor: '#fab1a0' },
     color: '#F1F6F9',
     cursor: 'pointer'
 }
@@ -27,10 +27,10 @@ export const btn = {
 export const cncl = { 
     textAlign: 'center', 
     padding: '10px 40px', 
-    border: 'solid 1px #A0C49D',
+    border: 'solid 1px #e17055',
     borderRadius: '8px', 
     transition: 'all 0.2s ease-in-out',
-    color: '#A0C49D',
+    color: '#e17055',
     cursor: 'pointer'
 }
 

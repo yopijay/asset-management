@@ -12,41 +12,44 @@ import { card, subtitle, title } from "../style";
 
 const Summary = () => {
     const { data } = useContext(AccountCntxt);
-    const { data: summary, isFetching: fetching } = useGet({ key: ['summary'], request: dashboard({ type: 'main', data: data }), options: { refetchInterval: 1000 } });
+    // const { data: summary, isFetching: fetching } = useGet({ key: ['summary'], request: dashboard({ type: 'main', data: data }), options: { refetchInterval: 1000 } });
 
-    const sizes = (size, length) => {
-        let xs= 0;
-        let sm= 0;
-        let md= 0;
+    // const sizes = (size, length) => {
+    //     let xs= 0;
+    //     let sm= 0;
+    //     let md= 0;
 
-        switch(size) {
-            case 'xs':
-                if(length > 1) { xs= 6; }
-                else { xs= 12; }
+    //     switch(size) {
+    //         case 'xs':
+    //             if(length > 1) { xs= 6; }
+    //             else { xs= 12; }
 
-                break;
-            case 'sm':
-                if(length === 1) { sm= 12; }
-                if(length === 2) { sm= 6; }
-                if(length === 3) { sm= 4; }
-                if(length > 3) { sm= 3; }
+    //             break;
+    //         case 'sm':
+    //             if(length === 1) { sm= 12; }
+    //             if(length === 2) { sm= 6; }
+    //             if(length === 3) { sm= 4; }
+    //             if(length > 3) { sm= 3; }
                 
-                break;
-            case 'md':
-                if(length === 1) { md= 4; }
-                if(length === 2) { md= 4; }
-                if(length > 3) { md= 3; }
+    //             break;
+    //         case 'md':
+    //             if(length === 1) { md= 4; }
+    //             if(length === 2) { md= 4; }
+    //             if(length > 3) { md= 3; }
 
-                break;
-            default: 
-        }
+    //             break;
+    //         default: 
+    //     }
 
-        return { xs, sm, md }
-    }
+    //     return { xs, sm, md }
+    // }
 
     return (
         <Box>
-            { !fetching ?
+            <Grid container direction= "row" justifyContent= "flex-start" alignItems= "flex-start">
+                
+            </Grid>
+            {/* { !fetching ?
                 summary.length > 0 ?
                     <Grid container direction= "row" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 }>
                         { summary.map((data, index) => 
@@ -56,7 +59,7 @@ const Summary = () => {
                                     <Typography sx= { subtitle }>{ data.quantity }</Typography>
                                 </Stack>
                             </Grid> ) }
-                    </Grid> : '' : '' }
+                    </Grid> : '' : '' } */}
         </Box>
     );
 }

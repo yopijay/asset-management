@@ -10,8 +10,8 @@ import { usePost } from "core/function/global"; // Function
 import { authentication } from "core/api"; // API
 
 // Constants
-import { input, btn, title } from "../index.style"; // Styles
-import { validation } from "./form.validation"; // Validation
+import { input, btn, title } from "../style"; // Styles
+import { validation } from "./validation"; // Validation
 
 const Form = () => {
     const [ show, setshow ] = useState();
@@ -29,22 +29,22 @@ const Form = () => {
         <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 5 }>
             <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch">
                 <Typography sx= { title }>Welcome!</Typography>
-                <Typography variant= "body2" color= "#C4D7B2">Login to continue using the app.</Typography>
+                <Typography variant= "body2" color= "#fab1a0">Login to continue using the app.</Typography>
             </Stack>
             <form autoComplete= "off">
                 <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 1 }>
                     <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch">
-                        <Typography gutterBottom variant= "body2" color= "#394867">*Email</Typography>
+                        <Typography gutterBottom variant= "body2" color= "#636e72">*Email</Typography>
                         <TextField { ...register('email') } name= "email" variant= "standard" InputProps= {{ disableUnderline: true }} sx= { input } />
                         <Typography variant= "caption" color= "error.dark" sx= {{ textAlign: 'right' }}>{ errors.email?.message }</Typography>
                     </Stack>
                     <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch">
-                        <Typography gutterBottom variant= "body2" color= "#394867">*Password</Typography>
+                        <Typography gutterBottom variant= "body2" color= "#636e72">*Password</Typography>
                         <TextField { ...register('password') } name= "password" type= { !show ? 'password' : 'text' } variant= "standard" 
                                 InputProps= {{ disableUnderline: true, 
                                     endAdornment: 
                                         <InputAdornment position= "end" sx= {{ cursor: 'pointer' }} onClick= { () => setshow(!show) }>
-                                            { !show ? <FontAwesomeIcon icon= { solid('eye-slash') } color= "#394867" /> : <FontAwesomeIcon icon= { solid('eye') } color= "#394867" /> }
+                                            { !show ? <FontAwesomeIcon icon= { solid('eye-slash') } color= "#636e72" /> : <FontAwesomeIcon icon= { solid('eye') } color= "#636e72" /> }
                                         </InputAdornment> }} sx= { input } />
                         <Typography variant= "caption" color= "error.dark" sx= {{ textAlign: 'right' }}>{ errors.password?.message }</Typography>
                     </Stack>

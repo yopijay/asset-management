@@ -14,7 +14,7 @@ export const menu = {
 }
 
 export const title = {
-    color: '#394867',
+    color: '#636e72',
     fontFamily: 'Montserrat Black',
     fontSize: '1.5rem',
     lineHeight: 1,
@@ -22,7 +22,7 @@ export const title = {
 }
 
 export const subtitle = {
-    color: '#9BA4B5',
+    color: '#b2bec3',
     fontWeight: 'bold',
     display: { xs: 'none', sm: 'block' }
 }

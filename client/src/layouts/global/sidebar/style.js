@@ -85,9 +85,9 @@ export const btn = {
     alignItems: 'center',
     padding: '10px 17px',
     borderRadius: '7px',
-    color: '#FFFFFF',
-    backgroundColor: '#A0C49D',
+    color: '#f5f6fa',
+    backgroundColor: '#e17055',
     transition: 'all 0.2s ease-in-out',
     cursor: 'pointer',
-    '&:hover': { backgroundColor: '#86a583' }
+    '&:hover': { backgroundColor: '#fab1a0' }
 }

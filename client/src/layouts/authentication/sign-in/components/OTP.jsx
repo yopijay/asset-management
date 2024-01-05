@@ -5,7 +5,7 @@ import { Box, Grid, Stack, TextField, ThemeProvider, Typography } from "@mui/mat
 import { Components } from "core/theme"; // Theme
 
 // Constants
-import { btn, cncl, code, input, title } from "../index.style"; // Styles
+import { btn, cncl, code, input, title } from "../style"; // Styles
 
 const OTP = () => {
     return (

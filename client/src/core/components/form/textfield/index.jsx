@@ -10,7 +10,7 @@ const Index = props => {
 
     // Custom styles
     const input = {
-        border: 'solid 1px #ced6e0',
+        border: 'solid 1px #dfe6e9',
         padding: {
             xs: '10px 8px 8px 8px',
             md: '6px 10px 5px 10px'
@@ -21,7 +21,7 @@ const Index = props => {
 
     return (
         <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch">
-            <Typography variant= "body2" gutterBottom color= "#394867">{ label }</Typography>
+            <Typography variant= "body2" gutterBottom color= "#636e72">{ label }</Typography>
             <ThemeProvider theme= { Components({
                 MuiInput: {
                     styleOverrides: {

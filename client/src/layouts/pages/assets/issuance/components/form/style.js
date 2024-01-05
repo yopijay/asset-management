@@ -25,7 +25,7 @@ export const card = {
 }
 
 export const input = {
-    border: 'solid 1px #ced6e0',
+    border: 'solid 1px #dfe6e9',
     padding: {
         xs: '10px 8px 8px 8px',
         md: '6px 10px 5px 10px'

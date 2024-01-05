@@ -7,7 +7,7 @@ const Index = props => {
 
     // Custom style
     const textarea = {
-        border: 'solid 1px #ced6e0',
+        border: 'solid 1px #dfe6e9',
         borderRadius: '5px',
         fontFamily: 'Montserrat',
         fontSize: '105%',
@@ -20,7 +20,7 @@ const Index = props => {
 
     return (
         <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch">
-            <Typography variant= "body2" gutterBottom color= "#394867">{ label }</Typography>
+            <Typography variant= "body2" gutterBottom color= "#636e72">{ label }</Typography>
             { fetching ? <Skeleton variant= "rounded" height= "100px" /> : 
                 <TextareaAutosize name= { name } minRows= { 4 } maxRows= { 4 } disabled= { disabled } style= { textarea } { ...register(name) } { ...others } /> }
             <Typography variant= "body2" color= "error.dark">{ errors[name]?.message }</Typography>
