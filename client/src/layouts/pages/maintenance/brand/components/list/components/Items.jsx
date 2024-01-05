@@ -31,14 +31,12 @@ const Items = () => {
                                     <Typography sx= { subtitle } variant= "body2">{ (data.category).toUpperCase() }</Typography>
                                 </Stack>
                                 <Stack direction= "row" justifyContent= "flex-start" alignItems= "center" spacing= { 2 } paddingLeft= "10px">
-                                    { data.status === 1 ? 
-                                        <Box sx= {{ width: '10px', height: '10px', backgroundColor: '#A0C49D', borderRadius: '50px' }} /> : 
-                                        <Box sx= {{ width: '10px', height: '10px', backgroundColor: '#FF6666', borderRadius: '50px' }} /> }
+                                    <Box sx= {{ width: '10px', height: '10px', backgroundColor: data.status === 1 ? '#27ae60' : '#e74c3c', borderRadius: '50px' }} />
                                     <Stack direction= "row" justifyContent= "flex-start" alignItems= "center" spacing= { 1.5 }>
-                                        { authupdate ? <Typography color= "#9BA4B5" component= { Link } to= { `/maintenance/brands/form/update/${data.id}` }>
+                                        { authupdate ? <Typography color= "#636e72" component= { Link } to= { `/maintenance/brands/form/update/${data.id}` }>
                                                 <FontAwesomeIcon icon= { solid('pencil') } size= "lg" />
                                             </Typography> : '' }
-                                        { authview ? <Typography color= "#9BA4B5" component= { Link } to= { `/maintenance/brands/form/view/${data.id}` }>
+                                        { authview ? <Typography color= "#636e72" component= { Link } to= { `/maintenance/brands/form/view/${data.id}` }>
                                                 <FontAwesomeIcon icon= { solid('eye') } size= "lg" />
                                             </Typography> : '' }
                                     </Stack>
@@ -55,11 +53,7 @@ const Items = () => {
                                         <Typography sx= { title }>{ data.name }</Typography>
                                         <Typography sx= { subtitle } variant= "body2">{ (data.category).toUpperCase() }</Typography>
                                     </Stack>
-                                    <Box paddingLeft= "15px">
-                                        { data.status === 1 ? 
-                                            <Box sx= {{ width: '10px', height: '10px', backgroundColor: '#A0C49D', borderRadius: '50px' }} /> : 
-                                            <Box sx= {{ width: '10px', height: '10px', backgroundColor: '#FF6666', borderRadius: '50px' }} /> }
-                                    </Box>
+                                    <Box paddingLeft= "15px"><Box sx= {{ width: '10px', height: '10px', backgroundColor: data.status === 1 ? '#27ae60' : '#e74c3c', borderRadius: '50px' }} /></Box>
                                 </Stack>
                             </Grid>) }
                     </Grid>
