@@ -56,8 +56,8 @@ const Index = () => {
             </Stack>
             { authlogs ? <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" sx= { history } spacing= { 1 }>
                 <Stack direction= "row" justifyContent= "space-between" alignItems= "center">
-                    <Typography color= "#9DB2BF" variant= "body2">Logs</Typography>
-                    <Typography color= "#9DB2BF" variant= "body2">View all</Typography>
+                    <Typography color= "#b2bec3" variant= "body2">Logs</Typography>
+                    <Typography color= "#b2bec3" variant= "body2">View all</Typography>
                 </Stack>
                 <Logs />
             </Stack> : '' }
