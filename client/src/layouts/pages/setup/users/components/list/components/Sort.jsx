@@ -21,17 +21,17 @@ const Sort = ({ refetch }) => {
     return (
         <Stack direction= "row" justifyContent= "flex-end" alignItems= "center" spacing= { 1 }>
             <Stack direction= "row" justifyContent= "flex-start" alignItems= "center" spacing= { 1 }>
-                <Typography variant= "caption">Order by:</Typography>
+                <Typography variant= "caption" color= "#636e72">Order by:</Typography>
                 { order === 'usr.date_created' ? <Typography variant= "caption" sx= { orderby } onClick= { () => onclick('info.lname') }>Date created</Typography> :
                     order === 'info.lname' ? <Typography variant= "caption" sx= { orderby } onClick= { () => onclick('info.employee_no') }>Last name</Typography> :
                         order === 'info.employee_no' ? <Typography variant= "caption" sx= { orderby } onClick= { () => onclick('usr.date_created') }>Employee no.</Typography> : '' }
             </Stack>
             { sort === 'desc' ? 
-                <Typography sx= {{ cursor: 'pointer' }} onClick= { () => onsort('asc') }><FontAwesomeIcon icon= { solid('arrow-down-z-a') } color= "#9DB2BF" /></Typography> :
-                <Typography sx= {{ cursor: 'pointer' }} onClick= { () => onsort('desc') }><FontAwesomeIcon icon= { solid('arrow-down-a-z') } color= "#9DB2BF" /></Typography> }
+                <Typography sx= {{ cursor: 'pointer' }} onClick= { () => onsort('asc') }><FontAwesomeIcon icon= { solid('arrow-down-z-a') } color= "#636e72" /></Typography> :
+                <Typography sx= {{ cursor: 'pointer' }} onClick= { () => onsort('desc') }><FontAwesomeIcon icon= { solid('arrow-down-a-z') } color= "#636e72" /></Typography> }
             { listing === 'list' ?
-                <Typography sx= {{ cursor: 'pointer' }} onClick= { () => setlisting('grid') }><FontAwesomeIcon icon= { solid('grip') } color= "#9DB2BF" /></Typography> :
-                <Typography sx= {{ cursor: 'pointer' }} onClick= { () => setlisting('list') }><FontAwesomeIcon icon= { solid('list') } color= "#9DB2BF" /></Typography> }
+                <Typography sx= {{ cursor: 'pointer' }} onClick= { () => setlisting('grid') }><FontAwesomeIcon icon= { solid('grip') } color= "#636e72" /></Typography> :
+                <Typography sx= {{ cursor: 'pointer' }} onClick= { () => setlisting('list') }><FontAwesomeIcon icon= { solid('list') } color= "#636e72" /></Typography> }
         </Stack>
     );
 }

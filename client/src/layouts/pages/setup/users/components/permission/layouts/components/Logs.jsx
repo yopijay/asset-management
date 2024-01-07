@@ -9,7 +9,7 @@ const Logs = props => {
     
     return (
         <Stack direction= "row" justifyContent= "space-between" alignItems= "center" spacing= { 2 }>
-            <Typography variant= "body2" gutterBottom color= "#394867">Logs</Typography>
+            <Typography variant= "body2" gutterBottom color= "#636e72">Logs</Typography>
             { fetching ? <Skeleton variant= "rounded" height= "26px" width= "42px" sx= {{ borderRadius: '13px' }} /> :
                 <Controller control= { control } name= { `permission.${route.toLowerCase()}.${module.toLowerCase()}.logs` } 
                     defaultValue= { getValues().permission !== null ? 

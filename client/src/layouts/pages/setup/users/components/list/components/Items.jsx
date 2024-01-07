@@ -36,17 +36,15 @@ const Items = () => {
                                     </Stack>
                                 </Stack>
                                 <Stack direction= "row" justifyContent= "flex-start" alignItems= "center" spacing= { 2 } paddingLeft= "10px">
-                                    { data.status === 1 ? 
-                                        <Box sx= {{ width: '10px', height: '10px', backgroundColor: '#A0C49D', borderRadius: '50px' }} /> : 
-                                        <Box sx= {{ width: '10px', height: '10px', backgroundColor: '#FF6666', borderRadius: '50px' }} /> }
+                                    <Box sx= {{ width: '10px', height: '10px', backgroundColor: data.status === 1 ? '#27ae60' : '#e74c3c', borderRadius: '50px' }} />
                                     <Stack direction= "row" justifyContent= "flex-start" alignItems= "center" spacing= { 1.5 }>
-                                        { authpermission ? <Typography color= "#9BA4B5" component= { Link } to= { `/setup/users/permission/${data.id}` }>
+                                        { authpermission ? <Typography color= "#636e72" component= { Link } to= { `/setup/users/permission/${data.id}` }>
                                                 <FontAwesomeIcon icon= { solid('key') } size= "lg" />
                                             </Typography> : '' }
-                                        { authupdate ? <Typography color= "#9BA4B5" component= { Link } to= { `/setup/users/form/update/${data.id}` }>
+                                        { authupdate ? <Typography color= "#636e72" component= { Link } to= { `/setup/users/form/update/${data.id}` }>
                                                 <FontAwesomeIcon icon= { solid('pencil') } size= "lg" />
                                             </Typography> : '' }
-                                        { authview ? <Typography color= "#9BA4B5" component= { Link } to= { `/setup/users/form/view/${data.id}` }>
+                                        { authview ? <Typography color= "#636e72" component= { Link } to= { `/setup/users/form/view/${data.id}` }>
                                                 <FontAwesomeIcon icon= { solid('eye') } size= "lg" />
                                             </Typography> : '' }
                                     </Stack>
@@ -60,9 +58,7 @@ const Items = () => {
                                     component= { authupdate ? Link : Stack } to= { `/setup/users/form/update/${data.id}` }>
                                     <Stack direction= "column" justifyContent= "center" alignItems= "center" spacing= { 2 }>
                                         <Avatar variant= "rounded" src= { JSON.parse(data.profile) } sx= {{ border: 'solid 1px #F3F3F3', width: '80px', height: '80px' }} />
-                                        { data.status === 1 ? 
-                                            <Box sx= {{ padding: '3px 10px', fontSize: '75%', color: '#A0C49D', border: 'solid 1px #A0C49D' , borderRadius: '50px' }}>Active</Box> : 
-                                            <Box sx= {{ padding: '3px 10px', fontSize: '75%', color: '#FF6666', border: 'solid 1px #FF6666' , borderRadius: '50px' }}>Inactive</Box> }
+                                        <Box sx= {{ width: '10px', height: '10px', backgroundColor: data.status === 1 ? '#27ae60' : '#e74c3c', borderRadius: '50px' }} />
                                     </Stack>
                                     <Stack direction= "row" justifyContent= "space-between" alignItems= "center">
                                         <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" sx= {{ flexGrow: 1, overflow: 'hidden' }}>
@@ -75,7 +71,7 @@ const Items = () => {
                                 </Stack>
                             </Grid>) }
                     </Grid>
-                : <Typography variant= "body2" color= "#9DB2BF" bgcolor= "#FFFFFF" textAlign= "center" paddingY= "10px" borderRadius= { 2 }>No record/s found!</Typography> }
+                : <Typography variant= "body2" color= "#636e72" bgcolor= "#FFFFFF" textAlign= "center" paddingY= "10px" borderRadius= { 2 }>No record/s found!</Typography> }
         </Stack>
     );
 }

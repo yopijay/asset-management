@@ -64,13 +64,13 @@ const Index = () => {
         <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 4 } sx= { content }>
             <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch">
                 <Typography sx= { title }>User Permission</Typography>
-                <Typography variant= "caption" color= "#9BA4B5">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc non neque molestie, 
+                <Typography variant= "caption" color= "#b2bec3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc non neque molestie, 
                     malesuada quam ut, vulputate massa.</Typography>
             </Stack>
             <Stack sx= { card } spacing= { 4 }>
                 <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch">
-                    <Typography color= "#9BA4B5">{getValues()?.fname} {getValues()?.lname}</Typography>
-                    <Typography color= "#9BA4B5" variant= "body2">{getValues()?.employee_no}</Typography>
+                    <Typography color= "#b2bec3">{getValues()?.fname} {getValues()?.lname}</Typography>
+                    <Typography color= "#b2bec3" variant= "body2">{getValues()?.employee_no}</Typography>
                 </Stack>
                 { modules.map((data, index) => 
                     <Modules key= { index } { ...data } 

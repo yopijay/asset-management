@@ -3,7 +3,7 @@ import styled from "@emotion/styled";
 import { Switch } from "@mui/material";
 
 export const title = {
-    color: '#394867',
+    color: '#636e72',
     whiteSpace: 'nowrap',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
@@ -13,7 +13,7 @@ export const title = {
 }
 
 export const subtitle = {
-    color: '#212121',
+    color: '#636e72',
     whiteSpace: 'nowrap',
     overflow: 'hidden',
     textOverflow: 'ellipsis',

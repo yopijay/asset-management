@@ -66,22 +66,22 @@ const Index = () => {
         <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 4 } sx= { content }>
             <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch">
                 <Typography sx= { title }>{ type.charAt(0).toUpperCase() + type.slice(1) } User</Typography>
-                <Typography variant= "caption" color= "#9BA4B5">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc non neque molestie, 
+                <Typography variant= "caption" color= "#b2bec3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc non neque molestie, 
                     malesuada quam ut, vulputate massa.</Typography>
             </Stack>
             <Stack sx= { card }>
                 <form autoComplete= "off">
                     <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 4 }>
                         <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 1 }>
-                            <Typography color= "#9BA4B5">Account details</Typography>
+                            <Typography color= "#b2bec3">Account details</Typography>
                             <Account register= { register } fetching= { isFetching } errors= { errors } setValue= { setValue } setError= { setError } getValues= { getValues } />
                         </Stack>
                         <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 1 }>
-                            <Typography color= "#9BA4B5">Employee details</Typography>
+                            <Typography color= "#b2bec3">Employee details</Typography>
                             <Employee register= { register } control= { control } fetching= { isFetching } errors= { errors } setValue= { setValue } setError= { setError } getValues= { getValues } />
                         </Stack>
                         <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 1 }>
-                            <Typography color= "#9BA4B5">Personal details</Typography>
+                            <Typography color= "#b2bec3">Personal details</Typography>
                             <Personal register= { register } control= { control } fetching= { isFetching } errors= { errors } setValue= { setValue } setError= { setError } getValues= { getValues } />
                         </Stack>
                     </Stack>

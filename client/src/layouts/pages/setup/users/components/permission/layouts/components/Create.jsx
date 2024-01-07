@@ -9,7 +9,7 @@ const Create = props => {
     
     return (
         <Stack direction= "row" justifyContent= "space-between" alignItems= "center" spacing= { 2 }>
-            <Typography variant= "body2" gutterBottom color= "#394867">Create</Typography>
+            <Typography variant= "body2" gutterBottom color= "#636e72">Create</Typography>
             { fetching && disabled ? <Skeleton variant= "rounded" height= "26px" width= "42px" sx= {{ borderRadius: '13px' }} /> :
                 <Controller control= { control } name= { `permission.${route.toLowerCase()}.${module.toLowerCase()}.create` } 
                     defaultValue= { getValues().permission !== null ? 

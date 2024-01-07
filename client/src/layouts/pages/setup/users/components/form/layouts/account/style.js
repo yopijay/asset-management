@@ -8,7 +8,7 @@ export const btn = {
 }
 
 export const input = {
-    border: 'solid 1px #ced6e0',
+    border: 'solid 1px #dfe6e9',
     padding: {
         xs: '6px 8px',
         md: '8px 10px'
