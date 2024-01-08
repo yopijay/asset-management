@@ -1,5 +1,6 @@
-export const card = {
+export const panel = {
     backgroundColor: '#FFFFFF',
+    height: '100%',
     padding: {
         xs: '20px',
         sm: '28px',
@@ -53,3 +54,9 @@ export const label = {
     fontFamily: 'Montserrat ExtraBold',
     fontSize: '120%'
 }
+
+export const bars = percentage => ({
+    backgroundColor: '#2980b9',
+    width: percentage,
+    padding: '8px'
+})

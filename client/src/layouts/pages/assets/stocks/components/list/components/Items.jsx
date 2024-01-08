@@ -8,7 +8,7 @@ const Items = ({ data }) => {
 
     return (
         <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" sx= {{ overflowY: 'scroll', '&::-webkit-scrollbar': { display: 'none' } }} spacing= { 5 }>
-            <Grid container direction= "row" justifyContent= "flex-start" alignItems= "flex-start" spacing= { 2 }>
+            <Grid container direction= "row" justifyContent= "flex-start" alignItems= "flex-start" spacing= { 1 }>
                 { data?.length > 0 ?
                     data.map((ctg, index) => 
                         <Grid item xs= { 6 } sm= { 4 } md= { 3 } key= { index }>
