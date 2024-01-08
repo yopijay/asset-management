@@ -40,7 +40,7 @@ const Summary = () => {
                                 </Stack> : '' }
                         </Stack>
                     </Grid>
-                    <Grid item xs= { 12 } sm= { 5 }>
+                    { summary.length > 1 ? <Grid item xs= { 12 } sm= { 5 }>
                         <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 } height= "100%">
                             <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" sx= { panel }>
                                 <Stack direction= "row" justifyContent= "space-between" alignItems= "center">
@@ -56,7 +56,7 @@ const Summary = () => {
                                     </Stack>
                                 </Stack> : '' }
                         </Stack>
-                    </Grid>
+                    </Grid> : '' }
                 </Grid> :
                 '' }
         </Box>
