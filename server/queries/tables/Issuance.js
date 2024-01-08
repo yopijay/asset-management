@@ -24,12 +24,15 @@ class Issuance {
                         .join({ table: `tbl_category AS ctg`, condition: `stck.category_id = ctg.id`, type: `LEFT` })
                         .join({ table: `tbl_users_info AS it`, condition: `iss.issued_to = it.user_id`, type: `LEFT` })
                         .join({ table: `tbl_users_info AS ib`, condition: `iss.issued_by = ib.user_id`, type: `LEFT` })
-                        .condition(`${data.searchtxt !== '' ? `WHERE iss.series_no LIKE '%${(data.searchtxt).toUpperCase()}%' OR ctg.name LIKE '%${(data.searchtxt).toUpperCase()}%'
+                        .condition(`${data.searchtxt !== '' || JSON.parse(atob(data.token)).role === 'user' ? `WHERE ` : ''}
+                                            ${data.searchtxt !== '' ? ` (iss.series_no LIKE '%${(data.searchtxt).toUpperCase()}%' OR ctg.name LIKE '%${(data.searchtxt).toUpperCase()}%'
                                             OR info.serial_no LIKE '%${(data.searchtxt).toUpperCase()}%' OR info.model LIKE '%${(data.searchtxt).toUpperCase()}%'
                                             OR it.lname LIKE '%${(data.searchtxt).toUpperCase()}%' OR it.fname LIKE '%${(data.searchtxt).toUpperCase()}%' 
                                             OR it.employee_no LIKE '%${(data.searchtxt).toUpperCase()}%'
                                             OR ib.lname LIKE '%${(data.searchtxt).toUpperCase()}%' OR ib.fname LIKE '%${(data.searchtxt).toUpperCase()}%'
-                                            OR it.employee_no LIKE '%${(data.searchtxt).toUpperCase()}%'` : ''}
+                                            OR it.employee_no LIKE '%${(data.searchtxt).toUpperCase()}%')` : ''}
+                                            ${data.searchtxt !== '' && JSON.parse(atob(data.token)).role === 'user' ? `AND ` : ''}
+                                            ${JSON.parse(atob(data.token)).role === 'user' ? `iss.issued_by= ${JSON.parse(atob(data.token)).id}` : ''}
                                             ORDER BY iss.${data.orderby} ${(data.sort).toUpperCase()}`)
                         .build()).rows;
     }
@@ -43,12 +46,15 @@ class Issuance {
                         .join({ table: `tbl_category AS ctg`, condition: `stck.category_id = ctg.id`, type: `LEFT` })
                         .join({ table: `tbl_users_info AS it`, condition: `iss.issued_to = it.user_id`, type: `LEFT` })
                         .join({ table: `tbl_users_info AS ib`, condition: `iss.issued_by = ib.user_id`, type: `LEFT` })
-                        .condition(`${data.searchtxt !== '' ? `WHERE iss.series_no LIKE '%${(data.searchtxt).toUpperCase()}%' OR ctg.name LIKE '%${(data.searchtxt).toUpperCase()}%'
+                        .condition(`${data.searchtxt !== '' || JSON.parse(atob(data.token)).role === 'user' ? `WHERE ` : ''}
+                                            ${data.searchtxt !== '' ? ` (iss.series_no LIKE '%${(data.searchtxt).toUpperCase()}%' OR ctg.name LIKE '%${(data.searchtxt).toUpperCase()}%'
                                             OR info.serial_no LIKE '%${(data.searchtxt).toUpperCase()}%' OR info.model LIKE '%${(data.searchtxt).toUpperCase()}%'
                                             OR it.lname LIKE '%${(data.searchtxt).toUpperCase()}%' OR it.fname LIKE '%${(data.searchtxt).toUpperCase()}%' 
                                             OR it.employee_no LIKE '%${(data.searchtxt).toUpperCase()}%'
                                             OR ib.lname LIKE '%${(data.searchtxt).toUpperCase()}%' OR ib.fname LIKE '%${(data.searchtxt).toUpperCase()}%'
-                                            OR it.employee_no LIKE '%${(data.searchtxt).toUpperCase()}%'` : ''}
+                                            OR it.employee_no LIKE '%${(data.searchtxt).toUpperCase()}%')` : ''}
+                                            ${data.searchtxt !== '' && JSON.parse(atob(data.token)).role === 'user' ? `AND ` : ''}
+                                            ${JSON.parse(atob(data.token)).role === 'user' ? `iss.issued_by= ${JSON.parse(atob(data.token)).id}` : ''}
                                             ORDER BY iss.${data.orderby} ${(data.sort).toUpperCase()}`)
                         .build()).rows;
     }
