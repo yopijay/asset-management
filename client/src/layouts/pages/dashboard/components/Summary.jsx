@@ -12,12 +12,12 @@ import { bars, panel, subtitle, title } from "../style";
 
 const Summary = () => {
     const { data } = useContext(AccountCntxt);
-    const { data: summary, isFetching: summfetching } = useGet({ key: ['summary'], request: dashboard({ type: 'main', data: data }), options: { refetchInterval: 1000 } });
-    const { data: users, isFetching: usrfetching } = useGet({ key: ['per-branch'], request: dashboard({ type: 'userperbranch', data: data }), options: { refetchInterval: 1000 } });
+    const { data: summary, isFetching: summfetching } = useGet({ key: ['summary'], request: dashboard({ type: 'main', data: data }), options: { refetchOnWindowFocus: true } });
+    const { data: users, isFetching: usrfetching } = useGet({ key: ['per-branch'], request: dashboard({ type: 'userperbranch', data: data }), options: { refetchOnWindowFocus: true } });
 
     return (
         <Box>
-            { !summfetching ?
+            { !summfetching && !usrfetching ?
                 <Grid container direction= "row" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 }>
                     <Grid item xs= { 12 } sm= { 7 }>
                         <Stack direction= "column" justifyContent= "space-between" alignItems= "stretch" spacing= { 2 } sx= { panel }>
@@ -26,21 +26,18 @@ const Summary = () => {
                                 <Typography sx= { subtitle }>{ summary[0].quantity }</Typography>
                             </Stack>
                             { data.user_level === 'superadmin' ? 
-                                !usrfetching ? 
-                                    <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 1 }>
-                                        { users.map((usr, index) => 
-                                            <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" key= { index }>
-                                                <Typography>{ usr.name }</Typography>
-                                                <Stack direction= "row" justifyContent= "space-between" alignItems= "center" spacing= { 1 }>
-                                                    <Box sx= {{ backgroundColor: '#dfe6e9', overflow: 'hidden', borderRadius: '8px', flexGrow: 1 }}>
-                                                        <Box sx= { bars(`${((parseInt(usr.quantity)/parseInt(summary[0].quantity)) * 100).toFixed(2)}%`) } />
-                                                    </Box>
-                                                    <Typography variant= "caption">{ parseInt(usr.quantity) }</Typography>
-                                                </Stack>
-                                            </Stack> ) }
-                                    </Stack>
-                                    : '' 
-                                : '' }
+                                <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 1 }>
+                                    { users.map((usr, index) => 
+                                        <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" key= { index }>
+                                            <Typography>{ usr.name }</Typography>
+                                            <Stack direction= "row" justifyContent= "space-between" alignItems= "center" spacing= { 1 }>
+                                                <Box sx= {{ backgroundColor: '#dfe6e9', overflow: 'hidden', borderRadius: '8px', flexGrow: 1 }}>
+                                                    <Box sx= { bars(`${((parseInt(usr.quantity)/parseInt(summary[0].quantity)) * 100).toFixed(2)}%`) } />
+                                                </Box>
+                                                <Typography variant= "caption">{ parseInt(usr.quantity) }</Typography>
+                                            </Stack>
+                                        </Stack> ) }
+                                </Stack> : '' }
                         </Stack>
                     </Grid>
                     <Grid item xs= { 12 } sm= { 5 }>
