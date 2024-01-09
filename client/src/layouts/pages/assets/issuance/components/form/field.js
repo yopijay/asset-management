@@ -1,12 +1,14 @@
 // Libraries
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 // Core 
 import { dropdown, specific } from "core/api"; // API
 import { useGet, usePost } from "core/function/global"; // Function
+import { AccountCntxt } from "core/context/Account"; // Context
 
 const Fields = props => {
+    const { data } = useContext(AccountCntxt);
     const { type } = useParams();
     const { register, fetching, errors, control, setValue, getValues, setError } = props;
 
@@ -39,8 +41,9 @@ const Fields = props => {
                 itmmenu({ table: 'tbl_stocks', data: { type: 'per-brand', category_id: getValues()?.category_id, brand_id: getValues()?.brand_id, form: type } });
                 stocks({ table: 'tbl_stocks', id: getValues()?.item_id });
             }
+            else { if(data.user_level === 'user') setValue('issued_by', data.id); }
         }
-    }, [ fetching, type, brdmenu, itmmenu, stocks, getValues ]);
+    }, [ setValue, data, fetching, type, brdmenu, itmmenu, stocks, getValues ]);
 
     return ([
         {
@@ -67,7 +70,7 @@ const Fields = props => {
                 control: control,
                 name: 'issued_by',
                 label: '*Issued by',
-                disabled: type === 'view',
+                disabled: data.user_level === 'user',
                 fetching: fetching,
                 options: !ibfetching ? issuedby : [],
                 onChange: (e, item) => { 

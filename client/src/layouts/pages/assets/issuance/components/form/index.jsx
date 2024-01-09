@@ -6,8 +6,8 @@ import { useContext, useEffect } from "react";
 // Core
 import { AccountCntxt } from "core/context/Account"; // Context
 import { FormCntxt } from "core/context/Form"; // Provider
-import { formatter, successToast, useGet, usePost } from "core/function/global"; // Function
-import { save, series, specific, update } from "core/api"; // API
+import { successToast, useGet, usePost } from "core/function/global"; // Function
+import { save, specific, update } from "core/api"; // API
 import FormBuilder from "core/components/form"; // Form Builder
 
 // Constants
@@ -22,7 +22,6 @@ const Index = () => {
     const navigate = useNavigate();
     const { data } = useContext(AccountCntxt);
     const { handleSubmit, control, setValue, setError, reset, register, errors, getValues } = useContext(FormCntxt);
-    useGet({ key: ['stck_series'], request: series('tbl_stocks_issuance'), options: {}, onSuccess: data => { if(type === 'new') setValue('series_no', `ISS-${formatter(parseInt(data.length) + 1, 7)}`) } });
     const { isFetching, refetch } = 
         useGet({ key: ['iss_specific'], request: specific({ table: 'tbl_stocks_issuance', id: id ?? null }), options: { enabled: type !== 'new', refetchOnWindowFocus: false },
             onSuccess: data => {
@@ -71,7 +70,7 @@ const Index = () => {
             <Stack sx= { card }>
                 <form autoComplete= "off">
                     <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 }>
-                        <Box><Series fetching= { isFetching } register= { register } type= { type } errors= { errors } /></Box>
+                        <Box><Series fetching= { isFetching } register= { register } type= { type } errors= { errors } setValue= { setValue } /></Box>
                         <Box><FormBuilder fields= { Fields({ register: register, fetching: isFetching, errors: errors, control: control, setValue: setValue, getValues: getValues, setError: setError }) } /></Box>
                         <Box><Category  register= { register } fetching= { isFetching } errors= { errors } control= { control } setValue= { setValue } getValues= { getValues } setError= { setError } /></Box>
                     </Stack>

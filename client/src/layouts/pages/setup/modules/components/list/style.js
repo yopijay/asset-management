@@ -111,9 +111,9 @@ export const btntxt = {
 
 export const orderby = {
     padding: '5px 15px',
-    backgroundColor: '#DDE6ED',
-    borderRadius: '20px',
-    color: '#526D82',
+    backgroundColor: '#dfe6e9',
+    borderRadius: '8px',
+    color: '#636e72',
     cursor: 'pointer'
 }
 
