@@ -711,11 +711,79 @@ const ups = props => {
     ];
 }
 
+const scanner = props => {
+    const { register, fetching, errors, type } = props;
+
+    return [
+        {
+            grid: { xs: 12, sm: 6 },
+            props: {
+                register: register,
+                label: 'Serial no',
+                fetching: fetching,
+                disabled: type === 'view',
+                name: 'serial_no',
+                errors: errors,
+                InputProps: { disableUnderline: true }
+            },
+            type: 'textfield'
+        },
+        {
+            grid: { xs: 12, sm: 6 },
+            props: {
+                register: register,
+                label: 'Model',
+                fetching: fetching,
+                disabled: type === 'view',
+                name: 'model',
+                errors: errors,
+                InputProps: { disableUnderline: true }
+            },
+            type: 'textfield'
+        }
+    ];
+}
+
+const telephone = props => {
+    const { register, fetching, errors, type } = props;
+
+    return [
+        {
+            grid: { xs: 12, sm: 6 },
+            props: {
+                register: register,
+                label: 'Serial no',
+                fetching: fetching,
+                disabled: type === 'view',
+                name: 'serial_no',
+                errors: errors,
+                InputProps: { disableUnderline: true }
+            },
+            type: 'textfield'
+        },
+        {
+            grid: { xs: 12, sm: 6 },
+            props: {
+                register: register,
+                label: 'Model',
+                fetching: fetching,
+                disabled: type === 'view',
+                name: 'model',
+                errors: errors,
+                InputProps: { disableUnderline: true }
+            },
+            type: 'textfield'
+        }
+    ];
+}
+
 module.exports = {
     laptop,
     system_unit,
     monitor,
     toner,
     printer,
-    ups
+    ups,
+    scanner,
+    telephone
 }

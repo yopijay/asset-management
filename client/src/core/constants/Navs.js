@@ -43,5 +43,5 @@ export const Components = ([
     // Setup
     { path: '/setup/users', name: 'users', title: 'Users', component: <Users /> },
     { path: '/setup/route', name: 'route', title: 'Route', component: <Route /> },
-    { path: '/setup/modules', name: 'modules', title: 'Modules', component: <Modules /> },
+    { path: '/setup/modules', name: 'modules', title: 'Modules', component: <Modules /> }
 ]);

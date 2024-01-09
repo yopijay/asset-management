@@ -22,5 +22,6 @@ export const cvalidation = (data, errors, type) => {
     if(!(data.company_id)) { errors.push({ name: 'company_id', message: 'This field is required!' }); }
     if(!(data.department_id)) { errors.push({ name: 'department_id', message: 'This field is required!' }); }
     if(!(data.position_id)) { errors.push({ name: 'position_id', message: 'This field is required!' }); }
+    if(!(data.head_id)) { errors.push({ name: 'head_id', message: 'This field is required!' }); }
     if(!(data.gender)) { errors.push({ name: 'gender', message: 'This field is required!' }); }
 }

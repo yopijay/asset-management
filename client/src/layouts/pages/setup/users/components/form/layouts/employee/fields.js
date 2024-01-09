@@ -11,6 +11,7 @@ const Fields = props => {
     const { register, fetching, errors, control, setValue, setError, getValues } = props;
 
     const { data: company, isFetching: cmpfetching } = useGet({ key: ['cmp_dd'], request: dropdown({ table: 'tbl_company', data: {} }), options: { refetchOnWindowFocus: false } });
+    const { data: users, isFetching: usrfetching } = useGet({ key: ['usr_dd'], request: dropdown({ table: 'tbl_users', data: {} }), options: { refetchOnWindowFocus: false } });
     const { data: department, mutate: dptmenu, isLoading: dptloading } = usePost({ request: dropdown });
     const { data: position, mutate: pstmenu, isLoading: pstloading } = usePost({ request: dropdown });
 
@@ -155,6 +156,21 @@ const Fields = props => {
                 fetching: fetching,
                 options: !pstloading && position ? position : [],
                 onChange: (e, item) => { setError('position_id', { message: '' }); setValue('position_id', item.id); },
+                errors: errors,
+                getValues: getValues
+            },
+            type: 'dropdown'
+        },
+        {
+            grid: { xs: 12, md: 4 },
+            props: {
+                control: control,
+                name: 'head_id',
+                label: '*Head',
+                disabled: type === 'view',
+                fetching: fetching,
+                options: !usrfetching ? users : [],
+                onChange: (e, item) => { setError('head_id', { message: '' }); setValue('head_id', item.id); },
                 errors: errors,
                 getValues: getValues
             },

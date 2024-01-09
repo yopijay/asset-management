@@ -75,7 +75,8 @@ class Users {
                         .join({ table: `tbl_department AS dpt`, condition: `info.department_id = dpt.id`, type: `LEFT` })
                         .join({ table: `tbl_position AS pst `, condition: `info.position_id = pst.id`, type: `LEFT` })
                         .join({ table: `tbl_users_info AS cb`, condition: `usr.created_by = cb.user_id`, type: `LEFT` })
-                        .condition(`WHERE ${user.role !== 'superadmin' ? `info.branch= '${branch}' AND` : ''} ${data.searchtxt !== '' ? `(info.fname LIKE '%${(data.searchtxt).toUpperCase()}%' OR info.lname LIKE '%${(data.searchtxt).toUpperCase()}%'
+                        .condition(`WHERE ${user.role !== 'superadmin' ? `info.branch= '${branch}' AND` : ''} 
+                                            ${data.searchtxt !== '' ? `(info.fname LIKE '%${(data.searchtxt).toUpperCase()}%' OR info.lname LIKE '%${(data.searchtxt).toUpperCase()}%'
                                             OR info.employee_no LIKE '%${data.searchtxt}%') AND ` : ''}
                                             (usr.id != 1 AND usr.id != ${user.id}) ORDER BY ${data.orderby} ${(data.sort).toUpperCase()}`)
                         .build()).rows;
@@ -93,7 +94,8 @@ class Users {
                         .join({ table: `tbl_department AS dpt`, condition: `info.department_id = dpt.id`, type: `LEFT` })
                         .join({ table: `tbl_position AS pst `, condition: `info.position_id = pst.id`, type: `LEFT` })
                         .join({ table: `tbl_users_info AS cb`, condition: `usr.created_by = cb.user_id`, type: `LEFT` })
-                        .condition(`WHERE ${user.role !== 'superadmin' ? `info.branch= '${branch}' AND` : ''} ${data.searchtxt !== '' ? `(info.fname LIKE '%${(data.searchtxt).toUpperCase()}%' OR info.lname LIKE '%${(data.searchtxt).toUpperCase()}%'
+                        .condition(`WHERE ${user.role !== 'superadmin' ? `info.branch= '${branch}' AND` : ''} 
+                                            ${data.searchtxt !== '' ? `(info.fname LIKE '%${(data.searchtxt).toUpperCase()}%' OR info.lname LIKE '%${(data.searchtxt).toUpperCase()}%'
                                             OR info.employee_no LIKE '%${data.searchtxt}%') AND ` : ''}
                                             (usr.id != 1 AND usr.id != ${user.id}) ORDER BY ${data.orderby} ${(data.sort).toUpperCase()}`)
                         .build()).rows;
@@ -142,10 +144,11 @@ class Users {
                             .build()).rows[0];
                             
             await new Builder(`tbl_users_info`)
-                .insert({ columns: `user_id, employee_no, rfid, branch, company_id, department_id, position_id, fname, mname, lname, address, employment_status, profile, gender`, 
+                .insert({ columns: `user_id, employee_no, rfid, branch, company_id, department_id, position_id, fname, mname, lname, address, employment_status, profile, gender, head_id`, 
                                 values: `${usr.id}, '${data.employee_no}', ${data.rfid !== '' ? `'${data.rfid}'` : null}, '${data.branch}', ${data.company_id}, ${data.department_id}, 
-                                                ${data.position_id !== undefined ? data.position_id : null}, '${(data.fname).toUpperCase()}', ${data.mname !== '' ? `'${(data.mname).toUpperCase()}'` : null}, 
-                                                '${(data.lname).toUpperCase()}', ${data.address !== '' ? `'${(data.address).toUpperCase()}'` : null}, '${data.employment_status}', '${data.profile}', '${data.gender}'` })
+                                                ${data.position_id !== undefined ? data.position_id : null}, '${(data.fname).toUpperCase()}', 
+                                                ${data.mname !== '' ? `'${(data.mname).toUpperCase()}'` : null}, '${(data.lname).toUpperCase()}', 
+                                                ${data.address !== '' ? `'${(data.address).toUpperCase()}'` : null}, '${data.employment_status}', '${data.profile}', '${data.gender}', ${data.head_id}` })
                 .build();
 
             await new Builder(`tbl_users_permission`).insert({ columns: `user_id`, values: `${usr.id}` }).build();
@@ -275,6 +278,15 @@ class Users {
                 current: curr.name, action: 'update', user_id: user.id, date: date });
         }
 
+        if(Global.compare(usr.head_id, data.head_id)) {
+            let prev = (await new Builder(`tbl_users_info`).select(`CONCAT(lname, ', ', fname) AS name`).condition(`WHERE user_id= ${usr.head_id}`).build()).rows[0];
+            let curr = (await new Builder(`tbl_users_info`).select(`CONCAT(lname, ', ', fname) AS name`).condition(`WHERE user_id= ${data.head_id}`).build()).rows[0];
+            
+            console.log(prev);
+            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_users', item_id: usr.id, field: 'head', previous: prev.name,
+                current: curr.name, action: 'update', user_id: user.id, date: date });
+        }
+
         if(Global.compare(usr.status, data.status ? 1 : 0)) {
             audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_users', item_id: usr.id, field: 'status', previous: usr.status === 1 ? 'Active' : 'Inactive', 
                                     current: data.status ? 'Active' : 'Inactive', action: 'update', user_id: user.id, date: date });
@@ -291,7 +303,7 @@ class Users {
                                 company_id= ${data.company_id}, department_id= ${data.department_id}, position_id= ${data.position_id}, 
                                 fname= '${(data.fname).toUpperCase()}', mname= ${data.mname !== null && data.mname !== '' ? `'${(data.mname).toUpperCase()}'` : null},
                                 lname= '${(data.lname).toUpperCase()}', address= ${data.address !== '' && data.address !== null ? `'${(data.address).toUpperCase()}'` : null},
-                                employment_status= '${data.employment_status}', profile= '${data.profile}', gender= '${data.gender}'`)
+                                employment_status= '${data.employment_status}', profile= '${data.profile}', gender= '${data.gender}', head_id= ${data.head_id}`)
                 .condition(`WHERE user_id= ${data.id}`)
                 .build();
 

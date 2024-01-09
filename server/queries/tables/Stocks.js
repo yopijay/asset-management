@@ -9,6 +9,8 @@ const Toner = require("./stocks/Toner");
 const Monitor = require("./stocks/Monitor");
 const Printer = require("./stocks/Printer");
 const UPS = require("./stocks/UPS");
+const Scanner = require("./stocks/Scanner");
+const Telephone = require("./stocks/Telephone");
 
 const audit = { series_no: '', table_name: 'tbl_stocks',  item_id: 0, field: '', previous: null, current: null, action: '', user_id: 0, date: '' }; // Used for audit trail
 class Stocks {
@@ -120,6 +122,8 @@ class Stocks {
                 case 'toner': await new Toner(data).save(stck.id); break;
                 case 'printer': await new Printer(data).save(stck.id); break;
                 case 'ups': await new UPS(data).save(stck.id); break;
+                case 'scanner': await new Scanner(data).save(stck.id); break;
+                case 'telephone': await new Telephone(data).save(stck.id); break;
                 // case 'mouse': await new Mouse(data).save(stck.id); break;
                 // case 'keyboard': await new Keyboard(data).save(stck.id); break;
             }
@@ -149,6 +153,8 @@ class Stocks {
                 case 'toner': resolve(await new Toner(data).update(stck)); break;
                 case 'printer': resolve(await new Printer(data).update(stck)); break;
                 case 'ups': resolve(await new UPS(data).update(stck)); break;
+                case 'scanner': resolve(await new Scanner(data).update(stck)); break;
+                case 'telephone': await new Telephone(data).save(stck.id); break;
                 // case 'mouse': resolve(await new Mouse(data).update(stck)); break;
                 // case 'keyboard': resolve(await new Keyboard(data).update(stck)); break;
             }
