@@ -8,7 +8,7 @@ import Tablet from "./screens/tablet";
 import Desktop from "./screens/desktop";
 
 const Index = () => {
-    useEffect(() => { document.title = 'GAMS | Products' }, []);
+    useEffect(() => { document.title = 'KC | Products' }, []);
 
     return (
         <Box>

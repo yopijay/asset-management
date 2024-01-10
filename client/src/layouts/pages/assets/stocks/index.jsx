@@ -33,7 +33,7 @@ const Index = () => {
     useEffect(() => {
         if(data.user_level !== 'superadmin' && (data.permission === null || !JSON.parse(data.permission).assets.stocks.list)) { navigate('/'); }
         else {
-            document.title = 'GAMS | Stocks';
+            document.title = 'KC | Stocks';
             setactive('stocks');
             localStorage.setItem('nav', 'stocks');
         }

@@ -32,7 +32,7 @@ const Index = () => {
     useEffect(() => {
         if(data.user_level !== 'superadmin' && (data.permission === null || !JSON.parse(data.permission).maintenance.position.list)) { navigate('/'); }
         else {
-            document.title = 'GAMS | Position';
+            document.title = 'KC | Position';
             setactive('position');
             localStorage.setItem('nav', 'position');
 

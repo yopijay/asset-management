@@ -31,7 +31,7 @@ const Index = () => {
     useEffect(() => {
         if(data.user_level !== 'superadmin' && (data.permission === null || !JSON.parse(data.permission).setup.route.list)) { navigate('/'); }
         else {
-            document.title = 'GAMS | Route';
+            document.title = 'KC | Route';
             setactive('route');
             localStorage.setItem('nav', 'route'); 
         }

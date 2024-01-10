@@ -8,7 +8,7 @@ import Tablet from "./screens/tablet";
 import Desktop from "./screens/desktop";
 
 const Index = () => {
-    useEffect(() => { document.title = 'GAMS | Physical Count' }, []);
+    useEffect(() => { document.title = 'KC | Physical Count' }, []);
 
     return (
         <Box>

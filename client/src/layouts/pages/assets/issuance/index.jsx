@@ -32,7 +32,7 @@ const Index = () => {
     useEffect(() => {
         if(data.user_level !== 'superadmin' && (data.permission === null || !JSON.parse(data.permission).assets.issuance.list)) { navigate('/'); }
         else {
-            document.title = 'GAMS | Issuance';
+            document.title = 'KC | Issuance';
             setactive('issuance');
             localStorage.setItem('nav', 'issuance');
 

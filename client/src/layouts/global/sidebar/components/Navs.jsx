@@ -38,7 +38,7 @@ const linkactive = {
 const Navs = () => {
     const { active, setactive, setopen } = useContext(GlobalCntxt);
     const { data } = useContext(AccountCntxt);
-    const { data: routes, isFetching: fetching } = useGet({ key: ['rts_nav'], request: dropdown({ table: 'tbl_routes', data: { type: 'nav' } }), options: { refetchInterval: 1000 } });
+    const { data: routes, isFetching: fetching } = useGet({ key: ['rts_nav'], request: dropdown({ table: 'tbl_routes', data: { type: 'nav' } }), options: { refetchOnWindowFocus: false } });
 
     const checkValue = (obj, val) => {
         for (let key in obj) { if(obj[key].list === val) return true; }

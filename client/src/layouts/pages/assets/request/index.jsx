@@ -27,7 +27,7 @@ const Index = () => {
     const { setactive } = useContext(GlobalCntxt);
 
     useEffect(() => {
-        document.title = 'GAMS | Request';
+        document.title = 'KC | Request';
         setactive('request');
         localStorage.setItem('nav', 'request');
     }, [ setactive ]);

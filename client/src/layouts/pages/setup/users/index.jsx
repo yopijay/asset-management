@@ -35,7 +35,7 @@ const Index = () => {
                 !JSON.parse(data.permission).setup || 
                 !JSON.parse(data.permission).setup.users.list)) { navigate('/'); }
         else {
-            document.title = 'GAMS | Users';
+            document.title = 'KC | Users';
             setactive('users');
             localStorage.setItem('nav', 'users');
         }
