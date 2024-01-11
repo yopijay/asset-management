@@ -30,7 +30,7 @@ const Search = ({ request }) => {
                         placeholder= "Search..." sx= {{ padding: '' }} onChange= { e => { setValue('searchtxt', e.target.value); request({ table: 'tbl_position', data: getValues() }) } } />
                 </Box>
             </form>
-            <Stack direction= "row" justifyContent= "flex-end" alignItems= "center" spacing= { 1 }>
+            <Stack direction= "row" justifyContent= "flex-end" alignItems= "center" spacing= { .5 }>
                 { authlogs ? <Typography sx= { logs }><FontAwesomeIcon icon= { solid('clock-rotate-left') } /></Typography> : '' }
                 { authexport ? <Typography sx= { download }><FontAwesomeIcon icon= { solid('download') } /></Typography> : '' }
                 { authimport ? <Typography sx= { upload }><FontAwesomeIcon icon= { solid('upload') } /></Typography> : '' }
