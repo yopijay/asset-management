@@ -24,7 +24,7 @@ const Fields = props => {
                     for(let count = 0; count < Object.keys(data[0]).length; count++) {
                         let _name = Object.keys(data[0])[count];
 
-                        if(!(['series_no', 'category_id', 'brand_id'].includes(_name))) {
+                        if(!(['series_no', 'category_id', 'brand_id', 'status'].includes(_name))) {
                             setValue(_name, _name === 'hdmi' || _name === 'vga' || _name === 'dvi' || _name === 'bluetooth' || _name === 'wifi' ||
                                                 _name === 'fingerprint' || _name === 'camera' ? 
                                                 data[0][_name] === 1 : _name === 'category' ? ((data[0][_name]).replace(' ', '_')).toLowerCase() : data[0][_name])
@@ -52,7 +52,7 @@ const Fields = props => {
                 control: control,
                 name: 'issued_to',
                 label: '*Issued to',
-                disabled: type === 'view',
+                disabled: type === 'view' || getValues().status === 'received',
                 fetching: fetching,
                 options: !itfetching ? issuedto : [],
                 onChange: (e, item) => { 
@@ -88,7 +88,7 @@ const Fields = props => {
                 register: register,
                 label: '*Issued date',
                 fetching: fetching,
-                disabled: type === 'view',
+                disabled: type === 'view' || getValues().status === 'received',
                 name: 'date_issued',
                 errors: errors,
                 type: 'date',
