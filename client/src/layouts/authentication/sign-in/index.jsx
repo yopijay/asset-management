@@ -20,7 +20,7 @@ const Index = () => {
                         <Route exact path= "/otp" element= { <OTP /> } />
                     </Routes>
                 </Stack>
-                <Typography variant= "caption" textAlign= "center" color= "#fab1a0">Developed by Paul John Judan</Typography>
+                <Typography variant= "caption" textAlign= "center" color= "#fab1a091">Developed by Paul John Judan</Typography>
             </Stack>
         </Container>
     );

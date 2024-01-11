@@ -1,7 +1,7 @@
 export const title = {
     fontSize: '1.4rem',
     fontFamily: 'Montserrat Black',
-    color: '#e17055'
+    color: '#e1705591'
 }
 
 export const input = {
@@ -15,11 +15,11 @@ export const input = {
 
 export const btn = { 
     textAlign: 'center', 
-    backgroundColor: '#e17055', 
+    backgroundColor: '#e1705591', 
     padding: '10px 40px', 
     borderRadius: '8px', 
     transition: 'all 0.2s ease-in-out',
-    '&:hover': { backgroundColor: '#fab1a0' },
+    '&:hover': { backgroundColor: '#fab1a091' },
     color: '#F1F6F9',
     cursor: 'pointer'
 }
@@ -27,10 +27,10 @@ export const btn = {
 export const cncl = { 
     textAlign: 'center', 
     padding: '10px 40px', 
-    border: 'solid 1px #e17055',
+    border: 'solid 1px #e1705591',
     borderRadius: '8px', 
     transition: 'all 0.2s ease-in-out',
-    color: '#e17055',
+    color: '#e1705591',
     cursor: 'pointer'
 }
 

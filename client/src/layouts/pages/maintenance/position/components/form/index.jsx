@@ -72,7 +72,7 @@ const Index = () => {
                     <FormBuilder fields= { Fields({ register: register, fetching: isFetching, errors: errors, control: control, setValue: setValue, setError: setError, getValues: getValues }) } />
                 </form>
             </Stack>
-            <Stack direction= "row" justifyContent= {{ xs: 'space-between', sm: 'flex-end' }} alignItems= "center" spacing= { 1 }>
+            <Stack direction= "row" justifyContent= {{ xs: type === 'view' ? 'flex-end' : 'space-between', sm: 'flex-end' }} alignItems= "center" spacing= { 1 }>
                 <Typography sx= { cancelbtn } component= { Link } to= "/maintenance/position">Cancel</Typography>
                 { type !== 'view' ? <Typography sx= { savebtn } onClick= { handleSubmit(data => {
                     let errors = [];

@@ -29,7 +29,7 @@ const Form = () => {
         <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 5 }>
             <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch">
                 <Typography sx= { title }>Welcome!</Typography>
-                <Typography variant= "body2" color= "#fab1a0">Login to continue using the app.</Typography>
+                <Typography variant= "body2" color= "#fab1a091">Login to continue using the app.</Typography>
             </Stack>
             <form autoComplete= "off">
                 <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 1 }>

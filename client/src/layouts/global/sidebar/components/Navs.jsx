@@ -24,12 +24,12 @@ const link = {
     transition: 'all 0.2s ease-in-out',
     borderRadius: '4px',
     padding: '8px 10px',
-    '&:hover': { color: '#e17055' }
+    '&:hover': { color: '#e1705591' }
 }
 
 const linkactive = {
     textDecoration: 'none',
-    color: '#e17055',
+    color: '#e1705591',
     transition: 'all 0.2s ease-in-out',
     borderRadius: '4px',
     padding: '8px 10px'

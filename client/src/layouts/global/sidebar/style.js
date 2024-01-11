@@ -29,8 +29,8 @@ export const accountfix = {
     alignItems: 'center',
     backgroundColor: '#FFFFFF',
     overflow: 'hidden',
-    padding: '15px 10px',
-    borderRadius: '6px'
+    padding: '8px',
+    borderRadius: '4px',
 }
 
 export const navfix = {
@@ -59,8 +59,9 @@ export const accountswipe = {
     justifyContent: 'flex-start',
     alignItems: 'center',
     overflow: 'hidden',
-    padding: '15px 10px',
-    borderRadius: '6px'
+    padding: '8px',
+    borderRadius: '4px',
+    border: 'solid 1px #dfe6e9'
 }
 
 export const navswipe = {
@@ -86,8 +87,8 @@ export const btn = {
     padding: '10px 17px',
     borderRadius: '7px',
     color: '#f5f6fa',
-    backgroundColor: '#e17055',
+    backgroundColor: '#e1705591',
     transition: 'all 0.2s ease-in-out',
     cursor: 'pointer',
-    '&:hover': { backgroundColor: '#fab1a0' }
+    '&:hover': { backgroundColor: '#fab1a091' }
 }

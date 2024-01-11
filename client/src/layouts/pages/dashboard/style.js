@@ -10,7 +10,7 @@ export const panel = {
 }
 
 export const title = {
-    color: '#394867',
+    color: '#636e72',
     fontSize: '120%',
     fontFamily: 'Montserrat ExtraBold'
 }
@@ -56,7 +56,7 @@ export const label = {
 }
 
 export const bars = percentage => ({
-    backgroundColor: '#2980b9',
+    backgroundColor: '#2980b991',
     width: percentage,
     padding: '8px'
 })

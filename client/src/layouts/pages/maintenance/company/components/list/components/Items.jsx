@@ -9,7 +9,7 @@ import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { AccountCntxt } from "core/context/Account"; // Context
 import { ListCntxt } from "core/context/List"; // Context
 
-import { caption, listview, subtitle, title } from "../style";
+import { caption, listview, menu, status, subtitle, title } from "../style";
 
 const Items = () => {
     const { list, listing } = useContext(ListCntxt);
@@ -24,20 +24,20 @@ const Items = () => {
                 listing === 'list' ?
                     <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 1 }>
                         { list.map((data, index) => 
-                            <Stack direction= "row" justifyContent= "space-between" alignItems= "center" sx= { listview } key= { index }>
+                            <Stack direction= "row" justifyContent= "space-between" alignItems= "flex-start" sx= { listview } key= { index } spacing= { 4 }>
                                 <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" sx= {{ flexGrow: 1, overflow: 'hidden' }}>
                                     <Typography variant= "caption" sx= { caption }>{ data.series_no }</Typography>
                                     <Typography sx= { title }>{ data.name }</Typography>
                                     <Typography variant= "body2" sx= { subtitle }>Telephone: { data.telephone }</Typography>
                                 </Stack>
-                                <Stack direction= "row" justifyContent= "flex-start" alignItems= "center" spacing= { 2 } paddingLeft= "10px">
-                                    <Box sx= {{ width: '10px', height: '10px', backgroundColor: data.status === 1 ? '#27ae60' : '#e74c3c', borderRadius: '50px' }} />
-                                    <Stack direction= "row" justifyContent= "flex-start" alignItems= "center" spacing= { 1.5 }>
-                                        { authupdate ? <Typography color= "#636e72" component= { Link } to= { `/maintenance/company/form/update/${data.id}` }>
-                                                <FontAwesomeIcon icon= { solid('pencil') } size= "lg" />
+                                <Stack direction= "row" justifyContent= "flex-start" alignItems= "center" spacing= { 1 } paddingLeft= "10px">
+                                    <Box sx= { status(data.status) }>{ data.status === 1 ? `Active` : `Inactive` }</Box>
+                                    <Stack direction= "row" justifyContent= "flex-start" alignItems= "center" spacing= { .5 }>
+                                        { authupdate ? <Typography sx= { menu } component= { Link } to= { `/maintenance/company/form/update/${data.id}` }>
+                                                <FontAwesomeIcon icon= { solid('pencil') } />
                                             </Typography> : '' }
-                                        { authview ? <Typography color= "#636e72" component= { Link } to= { `/maintenance/company/form/view/${data.id}` }>
-                                                <FontAwesomeIcon icon= { solid('eye') } size= "lg" />
+                                        { authview ? <Typography sx= { menu } component= { Link } to= { `/maintenance/company/form/view/${data.id}` }>
+                                                <FontAwesomeIcon icon= { solid('eye') } />
                                             </Typography> : '' }
                                     </Stack>
                                 </Stack>
@@ -46,14 +46,14 @@ const Items = () => {
                     <Grid container direction= "row" justifyContent= "flex-start" alignItems= "flex-start" spacing= { 1 }>
                         { list.map((data, index) => 
                             <Grid item xs= { 12 } sm= { 6 } md= { 4 } key= { index }>
-                                <Stack direction= "row" justifyContent= "space-between" alignItems= "center" sx= { listview } 
-                                    component= { authupdate ? Link : Stack } to= { `/maintenance/company/form/update/${data.id}` }>
+                                <Stack direction= "row" justifyContent= "space-between" alignItems= "flex-start" sx= { listview } 
+                                    component= { authupdate ? Link : Stack } to= { `/maintenance/company/form/update/${data.id}` } spacing= { 4 }>
                                     <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" sx= {{ flexGrow: 1, overflow: 'hidden' }}>
                                         <Typography variant= "caption" sx= { caption }>{ data.series_no }</Typography>
                                         <Typography sx= { title }>{ data.name }</Typography>
                                         <Typography variant= "body2" sx= { subtitle }>Telephone: { data.telephone }</Typography>
                                     </Stack>
-                                    <Box paddingLeft= "15px"><Box sx= {{ width: '10px', height: '10px', backgroundColor: data.status === 1 ? '#27ae60' : '#e74c3c', borderRadius: '50px' }} /></Box>
+                                    <Box sx= { status(data.status) }>{ data.status === 1 ? `Active` : `Inactive` }</Box>
                                 </Stack>
                             </Grid>) }
                     </Grid>
