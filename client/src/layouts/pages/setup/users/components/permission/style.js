@@ -13,7 +13,7 @@ export const title = {
 
 export const card = {
     backgroundColor: '#FFFFFF',
-    borderRadius: '7px',
+    borderRadius: '8px',
     flexGrow: 1,
     padding: {
         xs: '20px',
@@ -30,10 +30,10 @@ export const savebtn = {
     color: '#f5f6fa',
     transition: 'all 0.2s ease-in-out',
     cursor: 'pointer',
-    backgroundColor: '#40739e',
+    backgroundColor: '#40739e91',
     padding: '8px 0',
-    borderRadius: '7px',
-    '&:hover': { backgroundColor: '#487eb0' }
+    borderRadius: '8px',
+    '&:hover': { backgroundColor: '#487eb091' }
 }
 
 export const cancelbtn = {
@@ -42,9 +42,9 @@ export const cancelbtn = {
     padding: '8px 0',
     cursor: 'pointer',
     transition: 'all 0.2s ease-in-out',
-    borderRadius: '7px',
-    backgroundColor: '#ced6e0',
+    borderRadius: '8px',
+    backgroundColor: '#ced6e091',
     textDecoration: 'none',
     color: '#636e72',
-    '&:hover': { backgroundColor: '#dfe4ea' }
+    '&:hover': { backgroundColor: '#dfe4ea91' }
 }
