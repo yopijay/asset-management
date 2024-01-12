@@ -36,7 +36,7 @@ class Issuance {
                                     .join({ table: `tbl_category AS ctg`, condition: `stck.category_id = ctg.id`, type: `LEFT` })
                                     .join({ table: `tbl_users_info AS it`, condition: `iss.issued_to = it.user_id`, type: `LEFT` })
                                     .join({ table: `tbl_users_info AS ib`, condition: `iss.issued_by = ib.user_id`, type: `LEFT` })
-                                    .condition(`WHERE iss.issued_by= ${JSON.parse(atob(data.token)).id} ${ data.searchtxt !== '' ? `AND ${searchtxt}` : '' } 
+                                    .condition(`WHERE iss.issued_by= ${JSON.parse(atob(data.token)).id} ${data.searchtxt !== '' ? `AND ${searchtxt}` : '' } 
                                                         ORDER BY iss.${data.orderby} ${(data.sort).toUpperCase()}`)
                                     .build()).rows;
                 break;
@@ -49,7 +49,7 @@ class Issuance {
                                     .join({ table: `tbl_users_info AS it`, condition: `iss.issued_to = it.user_id`, type: `LEFT` })
                                     .join({ table: `tbl_users_info AS ib`, condition: `iss.issued_by = ib.user_id`, type: `LEFT` })
                                     .condition(`WHERE (ib.head_id= ${JSON.parse(atob(data.token)).id} OR iss.issued_by= ${JSON.parse(atob(data.token)).id})
-                                                        ${ data.searchtxt !== '' ? `AND ${searchtxt}` : '' } ORDER BY iss.${data.orderby} ${(data.sort).toUpperCase()}`)
+                                                        ${data.searchtxt !== '' ? `AND ${searchtxt}` : '' } ORDER BY iss.${data.orderby} ${(data.sort).toUpperCase()}`)
                                     .build()).rows;
                 break;
             default:
@@ -90,7 +90,7 @@ class Issuance {
                                     .join({ table: `tbl_category AS ctg`, condition: `stck.category_id = ctg.id`, type: `LEFT` })
                                     .join({ table: `tbl_users_info AS it`, condition: `iss.issued_to = it.user_id`, type: `LEFT` })
                                     .join({ table: `tbl_users_info AS ib`, condition: `iss.issued_by = ib.user_id`, type: `LEFT` })
-                                    .condition(`WHERE iss.issued_by= ${JSON.parse(atob(data.token)).id} ${ data.searchtxt !== '' ? `AND ${searchtxt}` : '' } 
+                                    .condition(`WHERE iss.issued_by= ${JSON.parse(atob(data.token)).id} ${data.searchtxt !== '' ? `AND ${searchtxt}` : '' } 
                                                         ORDER BY iss.${data.orderby} ${(data.sort).toUpperCase()}`)
                                     .build()).rows;
                 break;
@@ -103,7 +103,7 @@ class Issuance {
                                     .join({ table: `tbl_users_info AS it`, condition: `iss.issued_to = it.user_id`, type: `LEFT` })
                                     .join({ table: `tbl_users_info AS ib`, condition: `iss.issued_by = ib.user_id`, type: `LEFT` })
                                     .condition(`WHERE (ib.head_id= ${JSON.parse(atob(data.token)).id} OR iss.issued_by= ${JSON.parse(atob(data.token)).id})
-                                                        ${ data.searchtxt !== '' ? `AND ${searchtxt}` : '' } ORDER BY iss.${data.orderby} ${(data.sort).toUpperCase()}`)
+                                                        ${data.searchtxt !== '' ? `AND ${searchtxt}` : '' } ORDER BY iss.${data.orderby} ${(data.sort).toUpperCase()}`)
                                     .build()).rows;
                 break;
             default:

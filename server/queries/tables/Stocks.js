@@ -34,28 +34,46 @@ class Stocks {
                         .join({ table: `tbl_category AS ctg`, condition: `stck.category_id = ctg.id`, type: `LEFT` })
                         .condition(`WHERE at.table_name= 'tbl_stocks' AND ctg.name= '${((data.category).replace('-', ' ')).toUpperCase()}' ORDER BY at.date DESC LIMIT 3`)
                         .build()).rows;
-        return [];
     }
 
     list = async data => {
+        let stocks = [];
         let user = (await new Builder(`tbl_users AS usr`)
-                            .select(`usr.*, info.branch`)
+                            .select(`usr.id, info.branch`)
                             .join({ table: `tbl_users_info AS info`, condition: `info.user_id = usr.id`, type: `LEFT` })
                             .condition(`WHERE usr.id= ${JSON.parse(atob(data.token)).id}`)
                             .build()).rows[0];
-        let ctg = (await new Builder(`tbl_category`).select(`id`).condition(`WHERE name= '${data.category}'`).build()).rows[0];
-        
-        return (await new Builder(`tbl_stocks AS stck`)
-                        .select(`stck.id, stck.series_no, stck.quantity, stck.status, info.serial_no, info.model, info.condition`)
-                        .join({ table: `tbl_stocks_info AS info`, condition: `info.stocks_id = stck.id`, type: `LEFT` })
-                        .join({ table: `tbl_brands AS brd`, condition: `stck.brand_id = brd.id`, type: `LEFT` })
-                        .condition(`WHERE stck.category_id = ${ctg.id} 
-                                            ${user.branch !== null && user.user_level === 'user' ? `AND stck.branch= '${user.branch}'` : ''}
-                                            ${data.searchtxt !== '' ? ` AND (stck.series_no LIKE '%${(data.searchtxt).toUpperCase()}%' OR info.serial_no LIKE '%${(data.searchtxt).toUpperCase()}%'
-                                                                                        OR info.model LIKE '%${(data.searchtxt).toUpperCase()}%')` : ''}
-                                            ${data.brand !== 'all' ? `AND stck.brand_id= ${data.brand}` : '' }
-                                            ORDER BY info.${data.orderby} ${(data.sort).toUpperCase()}`)
-                        .build()).rows;
+
+        const columns = `stck.id, stck.series_no, stck.quantity, stck.status, info.serial_no, info.model, info.condition`;
+        const searchtxt = `(stck.series_no LIKE '%${(data.searchtxt).toUpperCase()}%' OR info.serial_no LIKE '%${(data.searchtxt).toUpperCase()}%'
+                                        OR info.model LIKE '%${(data.searchtxt).toUpperCase()}%')`;
+
+        switch(JSON.parse(atob(data.token)).role) {
+            case 'user':
+                stocks = (await new Builder(`tbl_stocks AS stck`)
+                                    .select(columns)
+                                    .join({ table: `tbl_stocks_info AS info`, condition: `info.stocks_id = stck.id`, type: `LEFT` })
+                                    .join({ table: `tbl_category AS ctg`, condition: `stck.category_id = ctg.id`, type: `LEFT` })
+                                    .join({ table: `tbl_brands AS brd`, condition: `stck.brand_id = brd.id`, type: `LEFT` })
+                                    .condition(`WHERE ctg.name= '${data.category}' AND stck.branch= '${user.branch}'
+                                                        ${data.searchtxt !== '' ? `AND ${searchtxt}` : ''}
+                                                        ${data.brand !== 'all' ? `AND stck.brand_id= ${data.brand}` : ''}
+                                                        ORDER BY info.${data.orderby} ${(data.sort).toUpperCase()}`)
+                                    .build()).rows;
+                break;
+            default:
+                stocks = (await new Builder(`tbl_stocks AS stck`)
+                                    .select(columns)
+                                    .join({ table: `tbl_stocks_info AS info`, condition: `info.stocks_id = stck.id`, type: `LEFT` })
+                                    .join({ table: `tbl_category AS ctg`, condition: `stck.category_id = ctg.id`, type: `LEFT` })
+                                    .join({ table: `tbl_brands AS brd`, condition: `stck.brand_id = brd.id`, type: `LEFT` })
+                                    .condition(`WHERE ctg.name= '${data.category}' ${data.searchtxt !== '' ? `AND ${searchtxt}` : ''}
+                                                        ${data.brand !== 'all' ? `AND stck.brand_id= ${data.brand}` : ''}
+                                                        ORDER BY info.${data.orderby} ${(data.sort).toUpperCase()}`)
+                                    .build()).rows;
+        }
+
+        return stocks;
     }
 
     search = async data => {
@@ -124,8 +142,6 @@ class Stocks {
                 case 'ups': await new UPS(data).save(stck.id); break;
                 case 'scanner': await new Scanner(data).save(stck.id); break;
                 case 'telephone': await new Telephone(data).save(stck.id); break;
-                // case 'mouse': await new Mouse(data).save(stck.id); break;
-                // case 'keyboard': await new Keyboard(data).save(stck.id); break;
             }
 
             audit.series_no = Global.randomizer(7);
@@ -155,8 +171,6 @@ class Stocks {
                 case 'ups': resolve(await new UPS(data).update(stck)); break;
                 case 'scanner': resolve(await new Scanner(data).update(stck)); break;
                 case 'telephone': await new Telephone(data).save(stck.id); break;
-                // case 'mouse': resolve(await new Mouse(data).update(stck)); break;
-                // case 'keyboard': resolve(await new Keyboard(data).update(stck)); break;
             }
         });
     }
