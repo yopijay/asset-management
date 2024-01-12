@@ -41,7 +41,7 @@ const Items = () => {
                                 <Stack direction= "row" justifyContent= "flex-start" alignItems= "center" spacing= { 1 } paddingLeft= "10px">
                                     <Box sx= { status(stats[iss.status]) }>{ (iss.status).charAt(0).toUpperCase() + (iss.status).slice(1) }</Box>
                                     <Stack direction= "row" justifyContent= "flex-start" alignItems= "center" spacing= { .5 }>
-                                        { authupdate ? <Typography sx= { menu } component= { Link } to= { `/assets/issuance/form/update/${iss.id}` }>
+                                        { authupdate && iss.status !== 'received' ? <Typography sx= { menu } component= { Link } to= { `/assets/issuance/form/update/${iss.id}` }>
                                                 <FontAwesomeIcon icon= { solid('pencil') } />
                                             </Typography> : '' }
                                         { authview ? <Typography sx= { menu } component= { Link } to= { `/assets/issuance/form/view/${iss.id}` }>

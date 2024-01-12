@@ -41,7 +41,7 @@ const Fields = props => {
                 itmmenu({ table: 'tbl_stocks', data: { type: 'per-brand', category_id: getValues()?.category_id, brand_id: getValues()?.brand_id, form: type } });
                 stocks({ table: 'tbl_stocks', id: getValues()?.item_id });
             }
-            else { if(data.user_level === 'user') setValue('issued_by', data.id); }
+            else { if(data.user_level !== 'superadmin') setValue('issued_by', data.id); }
         }
     }, [ setValue, data, fetching, type, brdmenu, itmmenu, stocks, getValues ]);
 

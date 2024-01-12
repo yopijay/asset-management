@@ -20,7 +20,7 @@ class Issuance {
         const columns = `iss.id, iss.series_no, ctg.name AS category, info.serial_no, info.model, CONCAT(it.lname, ', ', it.fname) AS issued_to, 
                                         CONCAT(ib.lname, ', ', ib.fname) AS issued_by, it.employee_no AS it_employee_no, ib.employee_no AS ib_employee_no, 
                                         iss.date_issued, iss.status`;
-        const searchtxt = `AND (iss.series_no LIKE '%${(data.searchtxt).toUpperCase()}%' OR ctg.name LIKE '%${(data.searchtxt).toUpperCase()}%'
+        const searchtxt = `(iss.series_no LIKE '%${(data.searchtxt).toUpperCase()}%' OR ctg.name LIKE '%${(data.searchtxt).toUpperCase()}%'
                                         OR info.serial_no LIKE '%${(data.searchtxt).toUpperCase()}%' OR info.model LIKE '%${(data.searchtxt).toUpperCase()}%'
                                         OR it.lname LIKE '%${(data.searchtxt).toUpperCase()}%' OR it.fname LIKE '%${(data.searchtxt).toUpperCase()}%' 
                                         OR it.employee_no LIKE '%${(data.searchtxt).toUpperCase()}%'
@@ -36,31 +36,37 @@ class Issuance {
                                     .join({ table: `tbl_category AS ctg`, condition: `stck.category_id = ctg.id`, type: `LEFT` })
                                     .join({ table: `tbl_users_info AS it`, condition: `iss.issued_to = it.user_id`, type: `LEFT` })
                                     .join({ table: `tbl_users_info AS ib`, condition: `iss.issued_by = ib.user_id`, type: `LEFT` })
-                                    .condition(`WHERE iss.issued_by= ${JSON.parse(atob(data.token)).id} ${ data.searchtxt !== '' ? searchtxt : '' } ORDER BY iss.${data.orderby} ${(data.sort).toUpperCase()}`)
+                                    .condition(`WHERE iss.issued_by= ${JSON.parse(atob(data.token)).id} ${ data.searchtxt !== '' ? `AND ${searchtxt}` : '' } 
+                                                        ORDER BY iss.${data.orderby} ${(data.sort).toUpperCase()}`)
                                     .build()).rows;
                 break;
+            case 'admin':
+                issued = (await new Builder(`tbl_stocks_issuance AS iss`)
+                                    .select(columns)
+                                    .join({ table: `tbl_stocks AS stck`, condition: `iss.item_id = stck.id`, type: `LEFT` })
+                                    .join({ table: `tbl_stocks_info AS info`, condition: `iss.item_id = info.stocks_id`, type: `LEFT` })
+                                    .join({ table: `tbl_category AS ctg`, condition: `stck.category_id = ctg.id`, type: `LEFT` })
+                                    .join({ table: `tbl_users_info AS it`, condition: `iss.issued_to = it.user_id`, type: `LEFT` })
+                                    .join({ table: `tbl_users_info AS ib`, condition: `iss.issued_by = ib.user_id`, type: `LEFT` })
+                                    .condition(`WHERE (ib.head_id= ${JSON.parse(atob(data.token)).id} OR iss.issued_by= ${JSON.parse(atob(data.token)).id})
+                                                        ${ data.searchtxt !== '' ? `AND ${searchtxt}` : '' } ORDER BY iss.${data.orderby} ${(data.sort).toUpperCase()}`)
+                                    .build()).rows;
+                break;
+            default:
+                issued = (await new Builder(`tbl_stocks_issuance AS iss`)
+                                    .select(columns)
+                                    .join({ table: `tbl_stocks AS stck`, condition: `iss.item_id = stck.id`, type: `LEFT` })
+                                    .join({ table: `tbl_stocks_info AS info`, condition: `iss.item_id = info.stocks_id`, type: `LEFT` })
+                                    .join({ table: `tbl_category AS ctg`, condition: `stck.category_id = ctg.id`, type: `LEFT` })
+                                    .join({ table: `tbl_users_info AS it`, condition: `iss.issued_to = it.user_id`, type: `LEFT` })
+                                    .join({ table: `tbl_users_info AS ib`, condition: `iss.issued_by = ib.user_id`, type: `LEFT` })
+                                    .condition(`${data.searchtxt !== '' ? `WHERE ${searchtxt}` : '' } 
+                                                        ORDER BY iss.${data.orderby} ${(data.sort).toUpperCase()}`)
+                                    .build()).rows;
+
         }
 
-        return issued
-        // return (await new Builder(`tbl_stocks_issuance AS iss`)
-        //                 .select(`iss.id, iss.series_no, ctg.name AS category, info.serial_no, info.model, CONCAT(it.lname, ', ', it.fname) AS issued_to, CONCAT(ib.lname, ', ', ib.fname) AS issued_by,
-        //                                 it.employee_no AS it_employee_no, ib.employee_no AS ib_employee_no, iss.date_issued, iss.status`)
-        //                 .join({ table: `tbl_stocks AS stck`, condition: `iss.item_id = stck.id`, type: `LEFT` })
-        //                 .join({ table: `tbl_stocks_info AS info`, condition: `iss.item_id = info.stocks_id`, type: `LEFT` })
-        //                 .join({ table: `tbl_category AS ctg`, condition: `stck.category_id = ctg.id`, type: `LEFT` })
-        //                 .join({ table: `tbl_users_info AS it`, condition: `iss.issued_to = it.user_id`, type: `LEFT` })
-        //                 .join({ table: `tbl_users_info AS ib`, condition: `iss.issued_by = ib.user_id`, type: `LEFT` })
-        //                 .condition(`${data.searchtxt !== '' || JSON.parse(atob(data.token)).role === 'user' ? `WHERE ` : ''}
-        //                                     ${data.searchtxt !== '' ? ` (iss.series_no LIKE '%${(data.searchtxt).toUpperCase()}%' OR ctg.name LIKE '%${(data.searchtxt).toUpperCase()}%'
-        //                                     OR info.serial_no LIKE '%${(data.searchtxt).toUpperCase()}%' OR info.model LIKE '%${(data.searchtxt).toUpperCase()}%'
-        //                                     OR it.lname LIKE '%${(data.searchtxt).toUpperCase()}%' OR it.fname LIKE '%${(data.searchtxt).toUpperCase()}%' 
-        //                                     OR it.employee_no LIKE '%${(data.searchtxt).toUpperCase()}%'
-        //                                     OR ib.lname LIKE '%${(data.searchtxt).toUpperCase()}%' OR ib.fname LIKE '%${(data.searchtxt).toUpperCase()}%'
-        //                                     OR it.employee_no LIKE '%${(data.searchtxt).toUpperCase()}%')` : ''}
-        //                                     ${data.searchtxt !== '' && JSON.parse(atob(data.token)).role === 'user' ? `AND ` : ''}
-        //                                     ${JSON.parse(atob(data.token)).role === 'user' ? `iss.issued_by= ${JSON.parse(atob(data.token)).id}` : ''}
-        //                                     ORDER BY iss.${data.orderby} ${(data.sort).toUpperCase()}`)
-        //                 .build()).rows;
+        return issued;
     }
 
     search = async data => {
@@ -68,7 +74,7 @@ class Issuance {
         const columns = `iss.id, iss.series_no, ctg.name AS category, info.serial_no, info.model, CONCAT(it.lname, ', ', it.fname) AS issued_to, 
                                         CONCAT(ib.lname, ', ', ib.fname) AS issued_by, it.employee_no AS it_employee_no, ib.employee_no AS ib_employee_no, 
                                         iss.date_issued, iss.status`;
-        const searchtxt = `AND (iss.series_no LIKE '%${(data.searchtxt).toUpperCase()}%' OR ctg.name LIKE '%${(data.searchtxt).toUpperCase()}%'
+        const searchtxt = `(iss.series_no LIKE '%${(data.searchtxt).toUpperCase()}%' OR ctg.name LIKE '%${(data.searchtxt).toUpperCase()}%'
                                         OR info.serial_no LIKE '%${(data.searchtxt).toUpperCase()}%' OR info.model LIKE '%${(data.searchtxt).toUpperCase()}%'
                                         OR it.lname LIKE '%${(data.searchtxt).toUpperCase()}%' OR it.fname LIKE '%${(data.searchtxt).toUpperCase()}%' 
                                         OR it.employee_no LIKE '%${(data.searchtxt).toUpperCase()}%'
@@ -84,31 +90,36 @@ class Issuance {
                                     .join({ table: `tbl_category AS ctg`, condition: `stck.category_id = ctg.id`, type: `LEFT` })
                                     .join({ table: `tbl_users_info AS it`, condition: `iss.issued_to = it.user_id`, type: `LEFT` })
                                     .join({ table: `tbl_users_info AS ib`, condition: `iss.issued_by = ib.user_id`, type: `LEFT` })
-                                    .condition(`WHERE iss.issued_by= ${JSON.parse(atob(data.token)).id} ${ data.searchtxt !== '' ? searchtxt : '' } ORDER BY iss.${data.orderby} ${(data.sort).toUpperCase()}`)
+                                    .condition(`WHERE iss.issued_by= ${JSON.parse(atob(data.token)).id} ${ data.searchtxt !== '' ? `AND ${searchtxt}` : '' } 
+                                                        ORDER BY iss.${data.orderby} ${(data.sort).toUpperCase()}`)
                                     .build()).rows;
                 break;
+            case 'admin':
+                issued = (await new Builder(`tbl_stocks_issuance AS iss`)
+                                    .select(columns)
+                                    .join({ table: `tbl_stocks AS stck`, condition: `iss.item_id = stck.id`, type: `LEFT` })
+                                    .join({ table: `tbl_stocks_info AS info`, condition: `iss.item_id = info.stocks_id`, type: `LEFT` })
+                                    .join({ table: `tbl_category AS ctg`, condition: `stck.category_id = ctg.id`, type: `LEFT` })
+                                    .join({ table: `tbl_users_info AS it`, condition: `iss.issued_to = it.user_id`, type: `LEFT` })
+                                    .join({ table: `tbl_users_info AS ib`, condition: `iss.issued_by = ib.user_id`, type: `LEFT` })
+                                    .condition(`WHERE (ib.head_id= ${JSON.parse(atob(data.token)).id} OR iss.issued_by= ${JSON.parse(atob(data.token)).id})
+                                                        ${ data.searchtxt !== '' ? `AND ${searchtxt}` : '' } ORDER BY iss.${data.orderby} ${(data.sort).toUpperCase()}`)
+                                    .build()).rows;
+                break;
+            default:
+                issued = (await new Builder(`tbl_stocks_issuance AS iss`)
+                                    .select(columns)
+                                    .join({ table: `tbl_stocks AS stck`, condition: `iss.item_id = stck.id`, type: `LEFT` })
+                                    .join({ table: `tbl_stocks_info AS info`, condition: `iss.item_id = info.stocks_id`, type: `LEFT` })
+                                    .join({ table: `tbl_category AS ctg`, condition: `stck.category_id = ctg.id`, type: `LEFT` })
+                                    .join({ table: `tbl_users_info AS it`, condition: `iss.issued_to = it.user_id`, type: `LEFT` })
+                                    .join({ table: `tbl_users_info AS ib`, condition: `iss.issued_by = ib.user_id`, type: `LEFT` })
+                                    .condition(`${data.searchtxt !== '' ? `WHERE ${searchtxt}` : '' } 
+                                                        ORDER BY iss.${data.orderby} ${(data.sort).toUpperCase()}`)
+                                    .build()).rows;
         }
 
         return issued;
-        // return (await new Builder(`tbl_stocks_issuance AS iss`)
-        //                 .select(`iss.id, iss.series_no, ctg.name AS category, info.serial_no, info.model, CONCAT(it.lname, ', ', it.fname) AS issued_to, CONCAT(ib.lname, ', ', ib.fname) AS issued_by,
-        //                                 it.employee_no AS it_employee_no, ib.employee_no AS ib_employee_no, iss.date_issued`)
-        //                 .join({ table: `tbl_stocks AS stck`, condition: `iss.item_id = stck.id`, type: `LEFT` })
-        //                 .join({ table: `tbl_stocks_info AS info`, condition: `iss.item_id = info.stocks_id`, type: `LEFT` })
-        //                 .join({ table: `tbl_category AS ctg`, condition: `stck.category_id = ctg.id`, type: `LEFT` })
-        //                 .join({ table: `tbl_users_info AS it`, condition: `iss.issued_to = it.user_id`, type: `LEFT` })
-        //                 .join({ table: `tbl_users_info AS ib`, condition: `iss.issued_by = ib.user_id`, type: `LEFT` })
-        //                 .condition(`${data.searchtxt !== '' || JSON.parse(atob(data.token)).role === 'user' ? `WHERE ` : ''}
-        //                                     ${data.searchtxt !== '' ? ` (iss.series_no LIKE '%${(data.searchtxt).toUpperCase()}%' OR ctg.name LIKE '%${(data.searchtxt).toUpperCase()}%'
-        //                                     OR info.serial_no LIKE '%${(data.searchtxt).toUpperCase()}%' OR info.model LIKE '%${(data.searchtxt).toUpperCase()}%'
-        //                                     OR it.lname LIKE '%${(data.searchtxt).toUpperCase()}%' OR it.fname LIKE '%${(data.searchtxt).toUpperCase()}%' 
-        //                                     OR it.employee_no LIKE '%${(data.searchtxt).toUpperCase()}%'
-        //                                     OR ib.lname LIKE '%${(data.searchtxt).toUpperCase()}%' OR ib.fname LIKE '%${(data.searchtxt).toUpperCase()}%'
-        //                                     OR it.employee_no LIKE '%${(data.searchtxt).toUpperCase()}%')` : ''}
-        //                                     ${data.searchtxt !== '' && JSON.parse(atob(data.token)).role === 'user' ? `AND ` : ''}
-        //                                     ${JSON.parse(atob(data.token)).role === 'user' ? `iss.issued_by= ${JSON.parse(atob(data.token)).id}` : ''}
-        //                                     ORDER BY iss.${data.orderby} ${(data.sort).toUpperCase()}`)
-        //                 .build()).rows;
     }
 
     logs = async data => {
