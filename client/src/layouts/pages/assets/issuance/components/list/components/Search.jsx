@@ -30,7 +30,7 @@ const Search = ({ request }) => {
                 </Box>
             </form>
             <Stack direction= "row" justifyContent= "flex-end" alignItems= "center" spacing= { .5 }>
-                { authlogs ? <Typography sx= { logs }><FontAwesomeIcon icon= { solid('clock-rotate-left') } /></Typography> : '' }
+                { authlogs ? <Typography sx= { logs } component= { Link } to= "/assets/issuance/logs"><FontAwesomeIcon icon= { solid('clock-rotate-left') } /></Typography> : '' }
                 { authexport ? <Typography sx= { download }><FontAwesomeIcon icon= { solid('download') } /></Typography> : '' }
                 { authimport ? <Typography sx= { upload }><FontAwesomeIcon icon= { solid('upload') } /></Typography> : '' }
                 { authcreate ? <Typography component= { Link } to= "/assets/issuance/form/new" sx= { btnicon }><FontAwesomeIcon icon= { solid('plus') } /></Typography> : '' }

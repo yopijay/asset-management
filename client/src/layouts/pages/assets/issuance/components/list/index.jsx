@@ -17,6 +17,7 @@ import Search from "./components/Search";
 import Sort from "./components/Sort";
 import Items from "./components/Items";
 import Logs from "./components/Logs";
+import { Link } from "react-router-dom";
 
 const Index = () => {
     const { setlist } = useContext(ListCntxt);
@@ -56,7 +57,7 @@ const Index = () => {
             { authlogs ? <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" sx= { history } spacing= { 1 }>
                 <Stack direction= "row" justifyContent= "space-between" alignItems= "center">
                     <Typography color= "#b2bec3" variant= "body2">Logs</Typography>
-                    <Typography color= "#b2bec3" variant= "body2">View all</Typography>
+                    <Typography color= "#b2bec3" variant= "body2" component= { Link } to= "/assets/issuance/logs">View all</Typography>
                 </Stack>
                 <Logs />
             </Stack> : '' }
