@@ -1,29 +1,26 @@
 // Libraries
-import { Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 
 // Core
-import { history } from "core/api"; // API
-import { getdate, useGet } from "core/function/global"; // Function
+import { getdate } from "core/function/global"; // Function
+import Loader from "core/components/loader/Screen"; // Loader
 
-// Styles
-const logs = {
-    backgroundColor: '#FFFFFF',
-    padding: '16px',
-    borderRadius: '8px',
-    border: 'solid 1px #F1F6F9',
-    overflowY: 'scroll',
-    '&::-webkit-scrollbar': { display: 'none' }
-}
+import { loader } from "../style";
 
-const Logs = () => {
-    const { data: log, isFetching: fetching } = useGet({ key: ['iss_logs'], request: history({ table: 'tbl_stocks_issuance', data: { limit: '3' } }), options: { refetchOnWindowFocus: false } }); 
+const Items = ({ records, fetching }) => {
 
     return (
-        <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 } sx= { logs }>
-            { !fetching ? 
-                log?.length > 0 ? 
-                    log?.map((data, index) => (
+        <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" sx= {{ overflowY: 'scroll', '&::-webkit-scrollbar': { display: 'none' } }}>
+            { !fetching ?
+                records.length > 0 ?
+                '' :
+                <Typography variant= "body2" color= "#636e72" bgcolor= "#FFFFFF" textAlign= "center" paddingY= "10px" borderRadius= { 2 }>No record/s found!</Typography> :
+                <Box sx= { loader }><Loader /></Box> }
+            {/* { records.length > 0 ?
+                <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" sx= {{ overflowY: 'scroll', '&::-webkit-scrollbar': { display: 'none' } }}>
+                    { records?.map((data, index) => (
                         <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" padding= "10px 12px" spacing= { 1 } key= { index }>
+                            { console.log(data) }
                             <Stack direction= "row" justifyContent= "space-between" alignItems= "center">
                                 <Typography variant= "body2" color= "#b2bec3">{ getdate(new Date(data.date)).time } { getdate(new Date(data.date)).label }</Typography>
                                 <Typography variant= "body2" color= "#b2bec3">{ getdate(new Date(data.date)).day }</Typography>
@@ -37,9 +34,11 @@ const Logs = () => {
                                     { `${(data.iss_series).toUpperCase()} ${(data.action).toLowerCase()}d.` }</Typography> }
                             <Typography variant= "body2" color= "#b2bec3">{ `${(data.action).charAt(0).toUpperCase() + (data.action).slice(1)}d by: ${data.ub_name}` }</Typography>
                         </Stack>
-                    )) : <Typography textAlign= "center" variant= "body2" color= "#b2bec3">No record/s found!</Typography> : '' }
+                    )) }
+                </Stack> :
+                <Typography variant= "body2" color= "#636e72" bgcolor= "#FFFFFF" textAlign= "center" paddingY= "10px" borderRadius= { 2 }>No record/s found!</Typography> } */}
         </Stack>
     );
 }
 
-export default Logs;
+export default Items;
