@@ -1,7 +1,7 @@
 // Libraries
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Box, Stack, Typography } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 
@@ -19,7 +19,7 @@ import { title } from "./style"; // Styles
 
 const Index = () => {
     const [ logs, setlogs ] = useState([]);
-    const { register, getValues } = useContext(FormCntxt);
+    const { register, getValues, setValue } = useContext(FormCntxt);
     const { mutate: record, isLoading: fetching } = usePost({ request: history, onSuccess: data => setlogs(data) });
 
     useEffect(() => {
@@ -45,9 +45,9 @@ const Index = () => {
                 <Typography sx= { title }>Logs</Typography>
             </Stack>
             <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 } sx= {{ height: '100%', overflow: 'hidden' }}>
-                <Search records= { record } />
+                <Search find= { record } register= { register } getValues= { getValues } setValue= { setValue } />
                 <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 } sx= {{ height: '100%', overflow: 'hidden' }}>
-                    <Sort record= { record } />
+                    <Sort records= { record } setValue= { setValue } getValues= { getValues } />
                     <Items records= { logs } fetching= { fetching } />
                 </Stack>
             </Stack>

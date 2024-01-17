@@ -64,7 +64,7 @@ const Items = () => {
                                         </Stack>
                                         <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch">
                                             <Typography sx= { title }>Issued to: { iss.issued_to }</Typography>
-                                            <Typography sx= { title }>Issued by: { iss.issued_by }</Typography>
+                                            { data.user_level !== 'user' ? <Typography sx= { title }>Issued by: { iss.issued_by }</Typography> : '' }
                                             <Typography variant= "body2" sx= { subtitle }>Date issued: { iss.date_issued }</Typography>
                                         </Stack>
                                     </Stack>

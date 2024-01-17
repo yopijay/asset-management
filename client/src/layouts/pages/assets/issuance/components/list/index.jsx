@@ -47,9 +47,9 @@ const Index = () => {
             <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" sx= { content({ condition: authlogs }) } spacing= { 5 }>
                 <Title />
                 <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 } sx= {{ height: '100%', overflow: 'hidden' }}>
-                    <Search request= { record } />
+                    <Search find= { record } />
                     <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 } sx= {{ height: '100%', overflow: 'hidden' }}>
-                        <Sort refetch= { record } />
+                        <Sort records= { record } />
                         { !fetching ? <Items /> : <Box sx= { loader }><Loader /></Box> }
                     </Stack>
                 </Stack>

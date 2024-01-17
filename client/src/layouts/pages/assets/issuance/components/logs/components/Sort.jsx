@@ -1,21 +1,32 @@
 // Libraries
 import { Stack, Typography } from "@mui/material";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 
-// Core
-import { FormCntxt } from "core/context/Form"; // Context
-
 import { orderby } from "../style"; // Styles
 
-const Sort = () => {
+const Sort = props => {
+    const { records, setValue, getValues } = props;
     const [ order, setorder ] = useState('date');
     const [ sort, setsort ] = useState('desc');
-    const { setValue } = useContext(FormCntxt);
 
-    const onclick = name => { setValue('orderby', name); setorder(name); }
-    const onsort = sort => { setsort(sort); setValue('sort', sort); }
+    let data = getValues();
+    data['token'] = sessionStorage.getItem('token').split('.')[1];
+
+    const onclick = name => { 
+        setorder(name);
+        setValue('orderby', name);
+        data['orderby'] = name;
+        records({ table: 'tbl_stocks_issuance', data: data });
+    }
+
+    const onsort = sort => { 
+        setsort(sort);
+        setValue('sort', sort);
+        data['sort'] = sort;
+        records({ table: 'tbl_stocks_issuance', data: data });
+    }
 
     return (
         <Stack direction= "row" justifyContent= "flex-end" alignItems= "center" spacing= { 1 }>

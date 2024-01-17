@@ -35,3 +35,19 @@ export const loader = {
     alignItems: 'center', 
     width: '100%',
 }
+
+export const download = {
+    backgroundColor: '#40739e91',
+    color: '#f5f6fa',
+    padding: '8px 12px',
+    borderRadius: '8px',
+    transition: 'all 0.2s ease-in-out',
+    cursor: 'pointer',
+    '&:hover': { backgroundColor: '#487eb091' }
+}
+
+export const card = {
+    backgroundColor: '#FFFFFF',
+    padding: '12px 20px',
+    borderRadius: '8px'
+}

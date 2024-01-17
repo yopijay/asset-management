@@ -16,7 +16,11 @@ const logs = {
 }
 
 const Logs = () => {
-    const { data: log, isFetching: fetching } = useGet({ key: ['iss_logs'], request: history({ table: 'tbl_stocks_issuance', data: { limit: '3' } }), options: { refetchOnWindowFocus: false } }); 
+    const { data: log, isFetching: fetching } = 
+        useGet({ key: ['iss_logs'], 
+                        request: history({ table: 'tbl_stocks_issuance', 
+                                                        data: { orderby: 'date', sort: 'desc', limit: '3', token: (sessionStorage.getItem('token')).split('.')[1], searchtxt: '' } }), 
+                        options: { refetchOnWindowFocus: false } }); 
 
     return (
         <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 } sx= { logs }>

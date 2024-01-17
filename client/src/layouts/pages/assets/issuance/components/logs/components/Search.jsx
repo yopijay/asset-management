@@ -1,16 +1,12 @@
 // Libraries
-import { Box, InputAdornment, Stack, TextField } from "@mui/material";
-import { useContext } from "react";
-
-// Core
-import { FormCntxt } from "core/context/Form"; // Context
-
-import { search } from "../style"; // Styles
+import { Box, InputAdornment, Stack, TextField, Typography } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 
-const Search = record => {
-    const { register, setValue, getValues } = useContext(FormCntxt);
+import { download, search } from "../style"; // Styles
+
+const Search = props => {
+    const { find, register, getValues, setValue } = props;
 
     return (
         <Stack direction= "row" justifyContent= "space-between" alignItems= "center" spacing= { 1 }>
@@ -18,9 +14,20 @@ const Search = record => {
                 <Box sx= { search }>
                     <TextField { ...register('searchtxt') } variant= "standard" size= "small" fullWidth InputProps= {{ disableUnderline: true, 
                         startAdornment: <InputAdornment position= "start"><FontAwesomeIcon icon= { solid('magnifying-glass') } /></InputAdornment> }}
-                        placeholder= "Search..." onChange= { e => { setValue('searchtxt', e.target.value); record({ table: 'tbl_stocks_issuance', data: getValues() }); } } />
+                        placeholder= "Search..." 
+                        onChange= { e => { 
+                            setValue('searchtxt', e.target.value); 
+
+                            let data = getValues();
+                            data['token'] = (sessionStorage.getItem('token')).split('.')[1];
+                            
+                            find({ table: 'tbl_stocks_issuance', data: data });
+                        } } />
                 </Box>
             </form>
+            <Stack direction= "row" justifyContent= "flex-end" alignItems= "center" spacing= { .5 }>
+                <Typography sx= { download }><FontAwesomeIcon icon= { solid('download') } /></Typography>
+            </Stack>
         </Stack>
     );
 }

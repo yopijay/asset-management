@@ -139,7 +139,7 @@ const search = (table, data) => {
             case 'tbl_category': resolve(await new Category().search(data)); break;
             case 'tbl_brands': resolve(await new Brands().search(data)); break;
             case 'tbl_stocks': resolve(await new Stocks().search(data)); break;
-            case 'tbl_stocks_issuance': resolve(await new Issuance().search(data)); break;
+            // case 'tbl_stocks_issuance': resolve(await new Issuance().search(data)); break;
         }
     });
 }
