@@ -11,11 +11,12 @@ const Items = ({ data }) => {
             <Grid container direction= "row" justifyContent= "flex-start" alignItems= "flex-start" spacing= { 1 }>
                 { data?.length > 0 ?
                     data.map((ctg, index) => 
-                        <Grid item xs= { 6 } sm= { 4 } md= { 3 } key= { index }>
-                            <Stack  sx= { card } component= { Link } to= { `/assets/stocks/${((ctg.name).toLowerCase()).replace(' ', '-')}` }>
-                                <Typography textAlign= "center" variant= "h6" sx= { title }>{ ctg.name }</Typography>        
-                            </Stack>
-                        </Grid> )
+                        ctg.status === 1 ?
+                            <Grid item xs= { 6 } sm= { 4 } md= { 3 } key= { index }>
+                                <Stack  sx= { card } component= { Link } to= { `/assets/stocks/${((ctg.name).toLowerCase()).replace(' ', '-')}` }>
+                                    <Typography textAlign= "center" variant= "h6" sx= { title }>{ ctg.name }</Typography>        
+                                </Stack>
+                            </Grid> : '' )
                     : <Typography variant= "body2" color= "#636e72" bgcolor= "#FFFFFF" textAlign= "center" paddingY= "10px" borderRadius= { 4 }>No record/s found!</Typography> }
             </Grid>
         </Stack>
