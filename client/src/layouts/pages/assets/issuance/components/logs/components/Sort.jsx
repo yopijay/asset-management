@@ -16,15 +16,15 @@ const Sort = props => {
 
     const onclick = name => { 
         setorder(name);
-        setValue('orderby', name);
-        data['orderby'] = name;
+        setValue('logsorderby', name);
+        data['logsorderby'] = name;
         records({ table: 'tbl_stocks_issuance', data: data });
     }
 
     const onsort = sort => { 
         setsort(sort);
-        setValue('sort', sort);
-        data['sort'] = sort;
+        setValue('logssort', sort);
+        data['logssort'] = sort;
         records({ table: 'tbl_stocks_issuance', data: data });
     }
 

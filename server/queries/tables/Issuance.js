@@ -52,12 +52,11 @@ class Issuance {
 
     logs = async data => {
         let condition = '';
-        let search = `AND iss.series_no LIKE '%${(data.searchtxt).toUpperCase()}%'`;
+        let search = `AND iss.series_no LIKE '%${(data.logssearchtxt).toUpperCase()}%'`;
 
         switch(JSON.parse(atob(data.token)).role) {
             case 'user': condition = `AND at.user_id= ${JSON.parse(atob(data.token)).id}`; break;
-            case 'admin':
-                break;
+            case 'admin': condition = `AND (at.user_id= ${JSON.parse(atob(data.token)).id} OR ubi.head_id= ${JSON.parse(atob(data.token)).id})`; break;
             default: 
         }
 
@@ -68,8 +67,8 @@ class Issuance {
                         .join({ table: `tbl_stocks_info AS info`, condition: `iss.item_id = info.stocks_id`, type: `LEFT` })
                         .join({ table: `tbl_users_info AS ubi`, condition: `at.user_id = ubi.user_id`, type: `LEFT` })
                         .condition(`WHERE at.table_name= 'tbl_stocks_issuance' ${condition} 
-                                            ${data.searchtxt !== '' ? search : ''}
-                                            ORDER BY at.${data.orderby} ${(data.sort).toUpperCase()} ${data.limit !== '' ? `LIMIT ${data.limit}` : ''}`)
+                                            ${data.logssearchtxt !== '' ? search : ''}
+                                            ORDER BY at.${data.logsorderby} ${(data.logssort).toUpperCase()} ${data.limit !== '' ? `LIMIT ${data.limit}` : ''}`)
                         .build()).rows;
     }
 

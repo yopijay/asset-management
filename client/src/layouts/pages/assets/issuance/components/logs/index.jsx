@@ -23,16 +23,16 @@ const Index = () => {
     const { mutate: record, isLoading: fetching } = usePost({ request: history, onSuccess: data => setlogs(data) });
 
     useEffect(() => {
-        register('orderby', { value: 'date' });
-        register('sort', { value: 'desc' });
+        register('logsorderby', { value: 'date' });
+        register('logssort', { value: 'desc' });
         register('limit', { value: '' });
         register('token', { value: sessionStorage.getItem });
 
         let _data = getValues();
-        _data['orderby'] = 'date';
-        _data['sort'] = 'desc';
+        _data['logsorderby'] = 'date';
+        _data['logssort'] = 'desc';
         _data['limit'] = '';
-        _data['searchtxt'] = '';
+        _data['logssearchtxt'] = '';
         _data['token'] = (sessionStorage.getItem('token')).split('.')[1];
 
         record({ table: 'tbl_stocks_issuance', data: _data });

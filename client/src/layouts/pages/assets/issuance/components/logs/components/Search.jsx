@@ -12,11 +12,11 @@ const Search = props => {
         <Stack direction= "row" justifyContent= "space-between" alignItems= "center" spacing= { 1 }>
             <form autoComplete= "off">
                 <Box sx= { search }>
-                    <TextField { ...register('searchtxt') } variant= "standard" size= "small" fullWidth InputProps= {{ disableUnderline: true, 
+                    <TextField { ...register('logssearchtxt') } variant= "standard" size= "small" fullWidth InputProps= {{ disableUnderline: true, 
                         startAdornment: <InputAdornment position= "start"><FontAwesomeIcon icon= { solid('magnifying-glass') } /></InputAdornment> }}
-                        placeholder= "Search..." 
+                        placeholder= "Search series no." 
                         onChange= { e => { 
-                            setValue('searchtxt', e.target.value); 
+                            setValue('logssearchtxt', e.target.value); 
 
                             let data = getValues();
                             data['token'] = (sessionStorage.getItem('token')).split('.')[1];
