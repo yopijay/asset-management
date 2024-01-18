@@ -15,12 +15,23 @@ class Company {
     }
 
     logs = async data => {
+        let condition = '';
+        let search = `AND (at.field LIKE '%${(data.logssearchtxt).toLowerCase()}%' OR cmp.name LIKE '%${(data.logssearchtxt).toUpperCase()}%'
+                                OR cmp.series_no LIKE '%${(data.logssearchtxt).toUpperCase()}%' OR at.series_no LIKE '%${(data.logssearchtxt).toUpperCase()}%')`;
+
+        switch(JSON.parse(atob(data.token)).role) {
+            case 'user': condition = `AND at.user_id= ${JSON.parse(atob(data.token)).id}`; break;
+            case 'admin': condition= `AND (at.user_id= ${JSON.parse(atob(data.token)).id} OR ubi.head_id= ${JSON.parse(atob(data.token)).id})`; break;
+            default:
+        }
+
         return (await new Builder(`tbl_audit_trail AS at`)
                         .select(`at.id, at.series_no AS at_series, at.table_name, at.item_id, at.field, at.previous, at.current, at.action, 
                                         at.user_id, at.date, cmp.series_no AS cmp_series, cmp.name, CONCAT(ubi.lname, ', ', ubi.fname) AS ub_name`)
                         .join({ table: `tbl_company AS cmp`, condition: `at.item_id = cmp.id`, type: `LEFT` })
                         .join({ table: `tbl_users_info AS ubi`, condition: `at.user_id = ubi.user_id`, type: `LEFT` })
-                        .condition(`WHERE at.table_name= 'tbl_company' ORDER BY at.date DESC LIMIT 3`)
+                        .condition(`WHERE at.table_name= 'tbl_company' ${condition} ${data.logssearchtxt !== '' ? search : ''}
+                                            ORDER BY at.${data.logsorderby} ${(data.logssort).toUpperCase()} ${data.limit !== '' ? `LIMIT ${data.limit}` : ''}`)
                         .build()).rows;
     }
 
