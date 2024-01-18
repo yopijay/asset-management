@@ -136,7 +136,6 @@ const search = (table, data) => {
             case 'tbl_company': resolve(await new Company().search(data)); break;
             case 'tbl_department': resolve(await new Department().search(data)); break;
             case 'tbl_position': resolve(await new Position().search(data)); break;
-            case 'tbl_category': resolve(await new Category().search(data)); break;
         }
     });
 }

@@ -88,27 +88,6 @@ class Stocks {
         return stocks;
     }
 
-    search = async data => {
-        let user = (await new Builder(`tbl_users AS usr`)
-                            .select(`usr.*, info.branch`)
-                            .join({ table: `tbl_users_info AS info`, condition: `info.user_id = usr.id`, type: `LEFT` })
-                            .condition(`WHERE usr.id= ${JSON.parse(atob(data.token)).id}`)
-                            .build()).rows[0];
-        let ctg = (await new Builder(`tbl_category`).select(`id`).condition(`WHERE name= '${data.category}'`).build()).rows[0];
-        
-        return (await new Builder(`tbl_stocks AS stck`)
-                        .select(`stck.id, stck.series_no, stck.quantity, stck.status, info.serial_no, info.model, info.condition`)
-                        .join({ table: `tbl_stocks_info AS info`, condition: `info.stocks_id = stck.id`, type: `LEFT` })
-                        .join({ table: `tbl_brands AS brd`, condition: `stck.brand_id = brd.id`, type: `LEFT` })
-                        .condition(`WHERE stck.category_id = ${ctg.id} 
-                                            ${user.user_level === 'user' && user.branch !== null ? `AND stck.branch= '${user.branch}'` : ''}
-                                            ${data.searchtxt !== '' ? ` AND (stck.series_no LIKE '%${(data.searchtxt).toUpperCase()}%' OR info.serial_no LIKE '%${(data.searchtxt).toUpperCase()}%'
-                                                                                        OR info.model LIKE '%${(data.searchtxt).toUpperCase()}%')` : ''}
-                                            ${data.brand !== 'all' ? `AND stck.brand_id= ${data.brand}` : '' }
-                                            ORDER BY info.${data.orderby} ${(data.sort).toUpperCase()}`)
-                        .build()).rows;
-    }
-
     save = async data => {
         let date = Global.date(new Date());
         let user = JSON.parse(atob(data.token));

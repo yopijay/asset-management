@@ -54,17 +54,6 @@ class Brands {
                         .build()).rows;
     }
 
-    search = async data => {
-        return (await new Builder(`tbl_brands AS brd`)
-                        .select(`brd.id, brd.series_no, ctg.name AS category, brd.name, brd.status, CONCAT(cb.lname, ', ', cb.fname, ' ', cb.mname) AS created_by, brd.date_created`)
-                        .join({ table: `tbl_category AS ctg`, condition: `brd.category_id = ctg.id`, type: `LEFT` })
-                        .join({ table: `tbl_users_info AS cb`, condition: `cb.user_id = brd.created_by`, type: `LEFT` })
-                        .condition(`${data.searchtxt !== '' ?
-                                                `WHERE brd.series_no LIKE '%${(data.searchtxt).toUpperCase()}%' OR brd.name LIKE '%${(data.searchtxt).toUpperCase()}%'` : ''} 
-                                                ORDER BY brd.${data.orderby} ${(data.sort).toUpperCase()}`)
-                        .build()).rows;
-    }
-
     save = async data => {
         let date = Global.date(new Date());
         let user = JSON.parse(atob(data.token));
