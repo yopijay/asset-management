@@ -102,7 +102,7 @@ class Routes {
 
         if(Global.compare(rts.base_url, data.base_url)) {
             if(!(url.rowCount > 0)) {
-                audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_routes', item_id: rts.id, field: 'base_url', previous: rts.base_url,
+                audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_routes', item_id: rts.id, field: 'base url', previous: rts.base_url,
                     current: (data.base_url).toLowerCase(), action: 'update', user_id: user.id, date: date });
             }
             else { errors.push({ name: 'base_url', message: 'Base URL already exist!' }); }

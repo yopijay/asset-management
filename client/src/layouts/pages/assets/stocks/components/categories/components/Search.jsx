@@ -11,7 +11,7 @@ import { AccountCntxt } from "core/context/Account"; // Context
 
 import { btnicon, btntxt, download, logs, search, upload } from "../style";
 
-const Search = ({ request }) => {
+const Search = ({ find }) => {
     const { category } = useParams();
     const { register, setValue, getValues } = useContext(FormCntxt);
     const { data } = useContext(AccountCntxt);
@@ -31,11 +31,11 @@ const Search = ({ request }) => {
                         onChange= { e => { 
                             setValue('searchtxt', e.target.value); 
                             setValue('category', (category.replace('-', ' ')).toUpperCase()); 
-                            request({ table: 'tbl_stocks', data: getValues() }) } } />
+                            find({ table: 'tbl_stocks', data: getValues() }) } } />
                 </Box>
             </form>
             <Stack direction= "row" justifyContent= "flex-end" alignItems= "center" spacing= { .5 }>
-                { authlogs ? <Typography sx= { logs }><FontAwesomeIcon icon= { solid('clock-rotate-left') } /></Typography> : '' }
+                { authlogs ? <Typography sx= { logs } component= { Link } to= { `/assets/stocks/${category}/logs` }><FontAwesomeIcon icon= { solid('clock-rotate-left') } /></Typography> : '' }
                 { authexport ? <Typography sx= { download }><FontAwesomeIcon icon= { solid('download') } /></Typography> : '' }
                 { authimport ? <Typography sx= { upload }><FontAwesomeIcon icon= { solid('upload') } /></Typography> : '' }
                 { authcreate ? 

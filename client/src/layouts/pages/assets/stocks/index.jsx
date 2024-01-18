@@ -13,6 +13,7 @@ import { ListPrvdr } from "core/context/List"; // Provider
 import List from "./components/list";
 import Categories from "./components/categories";
 import Form from "./components/form";
+import Logs from "./components/logs";
 
 // Custom styles
 const container = {
@@ -44,6 +45,7 @@ const Index = () => {
             <Routes>
                 <Route exact path= "/" element= { <FormPrvdr><ListPrvdr><List /></ListPrvdr></FormPrvdr> } />
                 <Route exact path= "/:category" element= { <FormPrvdr><ListPrvdr><Categories /></ListPrvdr></FormPrvdr> } />
+                <Route exact path= "/:category/logs" element= { <FormPrvdr><ListPrvdr><Logs /></ListPrvdr></FormPrvdr> } />
                 <Route exact path= "/:category/form/:type" element= { <FormPrvdr><Form /></FormPrvdr> } />
                 <Route exact path= "/:category/form/:type/:id" element= { <FormPrvdr><Form /></FormPrvdr> } />
             </Routes>

@@ -15,7 +15,7 @@ import { dropdown } from "core/api"; // API
 // Constants
 import { lbl, orderby, select } from "../style"; // Styles
 
-const Sort = ({ refetch }) => {
+const Sort = ({ records }) => {
     const { category } = useParams();
     const { sort, setsort, listing, setlisting } = useContext(ListCntxt);
     const { getValues, setValue, control } = useContext(FormCntxt);
@@ -27,8 +27,8 @@ const Sort = ({ refetch }) => {
                                         data: { type: 'per-category-name', category: category.replace('-', ' ') } }), 
                         options: { refetchOnWindowFocus: false } });
 
-    const onclick = name => { setValue('orderby', name); setorder(name); refetch({ table: 'tbl_stocks', data: getValues() }); }
-    const onsort = sort => { setsort(sort); setValue('sort', sort); refetch({ table: 'tbl_stocks', data: getValues() }); }
+    const onclick = name => { setValue('orderby', name); setorder(name); records({ table: 'tbl_stocks', data: getValues() }); }
+    const onsort = sort => { setsort(sort); setValue('sort', sort); records({ table: 'tbl_stocks', data: getValues() }); }
 
     return (
         <Stack direction= "row" justifyContent= "space-between" alignItems= "center" spacing= { 1 }>
@@ -45,7 +45,7 @@ const Sort = ({ refetch }) => {
                                         setValue('brand', item.id); 
                                         setValue('orderby', order);
                                         setValue('category', (category.replace('-', ' ')).toUpperCase()); 
-                                        refetch({ table: 'tbl_stocks', data: getValues() }); } }
+                                        records({ table: 'tbl_stocks', data: getValues() }); } }
                                     renderInput= { params => <TextField { ...params } variant= "standard" size= "small" fullWidth /> }
                                     value= { brands?.find(data => { return data.id === (getValues().brand !== undefined ? getValues().brand : value) }) !== undefined ?
                                                     brands?.find(data => { return data.id === (getValues().brand !== undefined ? getValues().brand : value) }) : brands?.length === 0 ?

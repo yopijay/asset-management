@@ -114,7 +114,7 @@ class Issuance {
             let curr = (await new Builder(`tbl_users_info`).select(`CONCAT(lname, ', ', fname) AS name`).condition(`WHERE user_id= ${data.issued_to}`).build()).rows[0];
             let prev = (await new Builder(`tbl_users_info`).select(`CONCAT(lname, ', ', fname) AS name`).condition(`WHERE user_id= ${iss.issued_to}`).build()).rows[0];
             
-            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks_issuance', item_id: iss.id, field: 'Issued to', previous: prev.name, 
+            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks_issuance', item_id: iss.id, field: 'issued to', previous: prev.name, 
                                 current: curr.name, action: 'update', user_id: user.id, date: date });
         }
 
@@ -122,17 +122,17 @@ class Issuance {
             let curr = (await new Builder(`tbl_users_info`).select(`CONCAT(lname, ', ', fname) AS name`).condition(`WHERE user_id= ${data.issued_by}`).build()).rows[0];
             let prev = (await new Builder(`tbl_users_info`).select(`CONCAT(lname, ', ', fname) AS name`).condition(`WHERE user_id= ${iss.issued_by}`).build()).rows[0];
 
-            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks_issuance', item_id: iss.id, field: 'Issued by', previous: prev.name, 
+            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks_issuance', item_id: iss.id, field: 'issued by', previous: prev.name, 
                                 current: curr.name, action: 'update', user_id: user.id, date: date });
         }
 
         if(Global.compare(iss.issued_date, data.issued_date)) {
-            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks_issuance', item_id: iss.id, field: 'Issued date', previous: iss.issued_date, 
+            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks_issuance', item_id: iss.id, field: 'issued date', previous: iss.issued_date, 
                                 current: `'${data.issued_date}'`, action: 'update', user_id: user.id, date: date });
         }
 
         if(Global.compare(iss.note, data.note)) {
-            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks_issuance', item_id: iss.id, field: 'Note', previous: iss.note, 
+            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks_issuance', item_id: iss.id, field: 'note', previous: iss.note, 
                                 current: data.note !== null && data.note !== '' ? data.note : null, action: 'update', user_id: user.id, date: date });
         }
 
