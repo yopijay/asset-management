@@ -11,13 +11,13 @@ import { FormCntxt } from "core/context/Form"; // Context
 
 import { orderby } from "../style"; // Styles
 
-const Sort = ({ refetch }) => {
+const Sort = ({ records }) => {
     const { sort, setsort, listing, setlisting } = useContext(ListCntxt);
     const { getValues, setValue } = useContext(FormCntxt);
     const [ order, setorder ] = useState('date_created');
 
-    const onclick = name => { setValue('orderby', name); setorder(name); refetch({ table: 'tbl_brands', data: getValues() }); }
-    const onsort = sort => { setsort(sort); setValue('sort', sort); refetch({ table: 'tbl_brands', data: getValues() }); }
+    const onclick = name => { setValue('orderby', name); setorder(name); records({ table: 'tbl_brands', data: getValues() }); }
+    const onsort = sort => { setsort(sort); setValue('sort', sort); records({ table: 'tbl_brands', data: getValues() }); }
 
     return (
         <Stack direction= "row" justifyContent= "flex-end" alignItems= "center" spacing= { 1 }>
@@ -37,6 +37,6 @@ const Sort = ({ refetch }) => {
     );
 }
 
-Sort.propTypes = { refetch: PropTypes.func.isRequired }
+Sort.propTypes = { records: PropTypes.func.isRequired }
 
 export default Sort;
