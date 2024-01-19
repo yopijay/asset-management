@@ -127,15 +127,6 @@ const update = (table, data) => {
     });
 }
 
-const search = (table, data) => {
-    return new Promise(async resolve => {
-        switch(table) {
-            case 'tbl_routes': resolve(await new Routes().search(data)); break;
-            case 'tbl_modules': resolve(await new Modules().search(data)); break;
-        }
-    });
-}
-
 const dropdown = async (table, data) => {
     return new Promise(async resolve => {
         switch(table) {
@@ -160,7 +151,6 @@ module.exports = {
     specific,
     list,
     logs,
-    search,
     save,
     update,
     dropdown,

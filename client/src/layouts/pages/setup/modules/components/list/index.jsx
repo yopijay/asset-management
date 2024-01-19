@@ -7,7 +7,7 @@ import { ListCntxt } from "core/context/List"; // Context
 import { FormCntxt } from "core/context/Form"; // Context
 import { AccountCntxt } from "core/context/Account"; // Context
 import { usePost } from "core/function/global"; // Functions
-import { look, records } from "core/api"; // APIs
+import { records } from "core/api"; // APIs
 import Loader from "core/components/loader/Screen"; // Loader
 
 // Constants
@@ -19,12 +19,12 @@ import Search from "./components/Search";
 import Sort from "./components/Sort";
 import Logs from "./components/Logs";
 import Items from "./components/Items";
+import { Link } from "react-router-dom";
 
 const Index = () => {
     const { setlist } = useContext(ListCntxt);
     const { data } = useContext(AccountCntxt);
     const { register, getValues } = useContext(FormCntxt);
-    const { mutate: find, isLoading: finding } = usePost({ request: look, onSuccess: data => setlist(data) });
     const { mutate: record, isLoading: fetching } = usePost({ request: records, onSuccess: data => setlist(data) });
 
     let authlogs = data.user_level === 'superadmin' || (data.permission === null || JSON.parse(data.permission).setup.modules.logs);
@@ -48,17 +48,17 @@ const Index = () => {
             <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" sx= { content({ condition: authlogs }) } spacing= { 5 }>
                 <Title />
                 <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 } sx= {{ height: '100%', overflow: 'hidden' }}>
-                    <Search request= { find } />
+                    <Search find= { record } />
                     <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 } sx= {{ height: '100%', overflow: 'hidden' }}>
-                        <Sort refetch= { record } />
-                        { !fetching && !finding ? <Items /> : <Box sx= { loader }><Loader /></Box> }
+                        <Sort records= { record } />
+                        { !fetching ? <Items /> : <Box sx= { loader }><Loader /></Box> }
                     </Stack>
                 </Stack>
             </Stack>
             { authlogs ? <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" sx= { history } spacing= { 1 }>
                 <Stack direction= "row" justifyContent= "space-between" alignItems= "center">
                     <Typography color= "#b2bec3" variant= "body2">Logs</Typography>
-                    <Typography color= "#b2bec3" variant= "body2">View all</Typography>
+                    <Typography sx= {{ textDecoration: 'none', color: '#b2bec3' }} variant= "body2" component= { Link } to= "/setup/modules/logs">View all</Typography>
                 </Stack>
                 <Logs />
             </Stack> : '' }

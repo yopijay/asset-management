@@ -6,12 +6,13 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 // Core
 import { AccountCntxt } from "core/context/Account"; // Context
 import { GlobalCntxt } from "core/context/Global"; // Context
+import { FormPrvdr } from "core/context/Form"; // Provider
+import { ListPrvdr } from "core/context/List"; // Provider
 
 // Components
 import List from "./components/list";
+import Logs from "./components/logs";
 import Form from "./components/form";
-import { FormPrvdr } from "core/context/Form";
-import { ListPrvdr } from "core/context/List";
 
 // Styles
 const container = {
@@ -42,6 +43,7 @@ const Index = () => {
         <Stack direction= "row" justifyContent= "flex-start" alignItems= "flex-start" sx= { container }>
             <Routes>
                 <Route exact path= "/" element= { <FormPrvdr><ListPrvdr><List /></ListPrvdr></FormPrvdr> } />
+                <Route exact path= "/logs" element= { <FormPrvdr><ListPrvdr><Logs /></ListPrvdr></FormPrvdr> } />
                 <Route exact path= "/form/:type" element= { <FormPrvdr><Form /></FormPrvdr> } />
                 <Route exact path= "/form/:type/:id" element= { <FormPrvdr><Form /></FormPrvdr> } />
             </Routes>
