@@ -76,6 +76,14 @@ const list = (table, data) => {
     });
 }
 
+const excel = (table, data) => {
+    return new Promise(async resolve => {
+        switch(table) {
+            case 'tbl_stocks_issuance': resolve(await new Issuance().excel(data)); break;
+        }
+    });
+}
+
 const logs = (table, data) => {
     return new Promise(async resolve => {
         switch(table) {
@@ -154,6 +162,7 @@ module.exports = {
     save,
     update,
     dropdown,
-    permission
+    permission,
+    excel
     // testing
 }

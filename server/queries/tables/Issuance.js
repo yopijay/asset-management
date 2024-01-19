@@ -15,6 +15,16 @@ class Issuance {
                         .build()).rows;
     }
 
+    excel = async data => {
+        switch(data.type) {
+            case 'logs': 
+                return [];
+            default: 
+                console.log(data);
+                return [];
+        }
+    }
+
     list = async data => {
         const columns = `iss.id, iss.series_no, ctg.name AS category, info.serial_no, info.model, CONCAT(it.lname, ', ', it.fname) AS issued_to, 
                                         CONCAT(ib.lname, ', ', ib.fname) AS issued_by, it.employee_no AS it_employee_no, ib.employee_no AS ib_employee_no, 

@@ -2,6 +2,7 @@
 import axios from "axios";
 import { useMutation, useQuery } from "react-query";
 import { toast } from "react-toastify";
+import * as XLSX from 'xlsx';
 
 export const api = ({ url, method, data= null }) => {
     const config = {
@@ -68,4 +69,12 @@ export const getdate = date => {
 export const pad = (num, size) => {
     let s = `0000000${num}`;
     return s.substr(s.length-size);
+}
+
+export const exporttoexcel = (json, sheet_name, file_name) => {
+    const wb = XLSX.utils.book_new();
+    const ws = XLSX.utils.json_to_sheet(json);
+
+    XLSX.utils.book_append_sheet(wb, ws, sheet_name);
+    XLSX.writeFile(wb, `${file_name}.xlsx`);
 }
