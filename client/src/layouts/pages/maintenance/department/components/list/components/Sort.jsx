@@ -3,7 +3,6 @@ import { useContext, useState } from "react";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Stack, Typography } from "@mui/material";
-import PropTypes from "prop-types";
 
 // Core
 import { ListCntxt } from "core/context/List"; // Context
@@ -11,13 +10,13 @@ import { FormCntxt } from "core/context/Form"; // Context
 
 import { orderby } from "../style"; // Styles
 
-const Sort = ({ refetch }) => {
+const Sort = ({ records }) => {
     const { sort, setsort, listing, setlisting } = useContext(ListCntxt);
     const { getValues, setValue } = useContext(FormCntxt);
     const [ order, setorder ] = useState('date_created');
 
-    const onclick = name => { setValue('orderby', name); setorder(name); refetch({ table: 'tbl_department', data: getValues() }); }
-    const onsort = sort => { setsort(sort); setValue('sort', sort); refetch({ table: 'tbl_department', data: getValues() }); }
+    const onclick = name => { setValue('orderby', name); setorder(name); records({ table: 'tbl_department', data: getValues() }); }
+    const onsort = sort => { setsort(sort); setValue('sort', sort); records({ table: 'tbl_department', data: getValues() }); }
 
     return (
         <Stack direction= "row" justifyContent= "flex-end" alignItems= "center" spacing= { 1 }>
@@ -36,7 +35,5 @@ const Sort = ({ refetch }) => {
         </Stack>
     );
 }
-
-Sort.propTypes = { refetch: PropTypes.func.isRequired }
 
 export default Sort;

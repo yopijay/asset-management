@@ -133,7 +133,6 @@ const search = (table, data) => {
             case 'tbl_users': resolve(await new Users().search(data)); break;
             case 'tbl_routes': resolve(await new Routes().search(data)); break;
             case 'tbl_modules': resolve(await new Modules().search(data)); break;
-            case 'tbl_department': resolve(await new Department().search(data)); break;
             case 'tbl_position': resolve(await new Position().search(data)); break;
         }
     });
