@@ -4,7 +4,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
-import PropTypes from "prop-types";
 
 // Core
 import { AccountCntxt } from "core/context/Account"; // Context
@@ -12,7 +11,7 @@ import { FormCntxt } from "core/context/Form"; // Context
 
 import { btnicon, btntxt, download, logs, search, upload } from "../style";
 
-const Search = ({ request }) => {
+const Search = ({ find }) => {
     const { register, setValue, getValues } = useContext(FormCntxt);
     const { data } = useContext(AccountCntxt);
 
@@ -27,11 +26,11 @@ const Search = ({ request }) => {
                 <Box sx= { search }>
                     <TextField { ...register('searchtxt') } variant= "standard" size= "small" fullWidth InputProps= {{ disableUnderline: true, 
                         startAdornment: <InputAdornment position= "start"><FontAwesomeIcon icon= { solid('magnifying-glass') } /></InputAdornment> }}
-                        placeholder= "Search..." sx= {{ padding: '' }} onChange= { e => { setValue('searchtxt', e.target.value); request({ table: 'tbl_position', data: getValues() }) } } />
+                        placeholder= "Search..." sx= {{ padding: '' }} onChange= { e => { setValue('searchtxt', e.target.value); find({ table: 'tbl_position', data: getValues() }) } } />
                 </Box>
             </form>
             <Stack direction= "row" justifyContent= "flex-end" alignItems= "center" spacing= { .5 }>
-                { authlogs ? <Typography sx= { logs }><FontAwesomeIcon icon= { solid('clock-rotate-left') } /></Typography> : '' }
+                { authlogs ? <Typography sx= { logs } component= { Link } to= "/maintenance/position/logs"><FontAwesomeIcon icon= { solid('clock-rotate-left') } /></Typography> : '' }
                 { authexport ? <Typography sx= { download }><FontAwesomeIcon icon= { solid('download') } /></Typography> : '' }
                 { authimport ? <Typography sx= { upload }><FontAwesomeIcon icon= { solid('upload') } /></Typography> : '' }
                 { authcreate ? <Typography component= { Link } to= "/maintenance/position/form/new" sx= { btnicon }><FontAwesomeIcon icon= { solid('plus') } /></Typography> : '' }
@@ -40,7 +39,5 @@ const Search = ({ request }) => {
         </Stack>
     );
 }
-
-Search.propTypes = { request: PropTypes.func.isRequired }
 
 export default Search;
