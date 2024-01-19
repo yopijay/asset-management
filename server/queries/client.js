@@ -130,10 +130,8 @@ const update = (table, data) => {
 const search = (table, data) => {
     return new Promise(async resolve => {
         switch(table) {
-            case 'tbl_users': resolve(await new Users().search(data)); break;
             case 'tbl_routes': resolve(await new Routes().search(data)); break;
             case 'tbl_modules': resolve(await new Modules().search(data)); break;
-            case 'tbl_position': resolve(await new Position().search(data)); break;
         }
     });
 }

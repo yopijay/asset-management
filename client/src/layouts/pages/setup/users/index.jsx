@@ -11,6 +11,7 @@ import { ListPrvdr } from "core/context/List"; // Provider
 
 // Components
 import List from "./components/list";
+import Logs from "./components/logs";
 import Form from "./components/form";
 import Permisson from "./components/permission";
 
@@ -45,6 +46,7 @@ const Index = () => {
         <Stack direction= "row" justifyContent= "flex-start" alignItems= "flex-start" sx= { container }>
             <Routes>
                 <Route exact path= "/" element= { <FormPrvdr><ListPrvdr><List /></ListPrvdr></FormPrvdr> } />
+                <Route exact path= "/logs" element= { <FormPrvdr><ListPrvdr><Logs /></ListPrvdr></FormPrvdr> } />
                 <Route exact path= "/form/:type" element= { <FormPrvdr><Form /></FormPrvdr> } />
                 <Route exact path= "/form/:type/:id" element= { <FormPrvdr><Form /></FormPrvdr> } />
                 <Route exact path= "/permission/:id" element= { <FormPrvdr><Permisson /></FormPrvdr> } />
