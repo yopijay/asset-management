@@ -35,7 +35,7 @@ const Search = ({ find, xlsx }) => {
                     <Typography sx= { download } 
                         onClick= { () => { 
                             let data = getValues(); 
-                            data['type'] = 'list'; 
+                            data['type'] = 'list';
                             xlsx({ table: 'tbl_stocks_issuance', data: data }); 
                         } }><FontAwesomeIcon icon= { solid('download') } /></Typography> : '' }
                 { authimport ? <Typography sx= { upload }><FontAwesomeIcon icon= { solid('upload') } /></Typography> : '' }

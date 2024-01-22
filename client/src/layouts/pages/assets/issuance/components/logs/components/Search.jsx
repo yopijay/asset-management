@@ -6,7 +6,7 @@ import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { download, search } from "../style"; // Styles
 
 const Search = props => {
-    const { find, register, getValues, setValue } = props;
+    const { find, register, getValues, setValue, xlsx } = props;
 
     return (
         <Stack direction= "row" justifyContent= "space-between" alignItems= "center" spacing= { 1 }>
@@ -26,7 +26,13 @@ const Search = props => {
                 </Box>
             </form>
             <Stack direction= "row" justifyContent= "flex-end" alignItems= "center" spacing= { .5 }>
-                <Typography sx= { download }><FontAwesomeIcon icon= { solid('download') } /></Typography>
+                <Typography sx= { download }
+                    onClick= { () => {
+                        let data = getValues();
+                        data['token'] = (sessionStorage.getItem('token')).split('.')[1];
+                        data['type'] = 'logs';
+                        xlsx({ table: 'tbl_stocks_issuance', data: data });
+                    } }><FontAwesomeIcon icon= { solid('download') } /></Typography>
             </Stack>
         </Stack>
     );
