@@ -15,6 +15,7 @@ const Telephone = require("./stocks/Telephone");
 const audit = { series_no: '', table_name: 'tbl_stocks',  item_id: 0, field: '', previous: null, current: null, action: '', user_id: 0, date: '' }; // Used for audit trail
 class Stocks {
     series = async () => { return (await new Builder(`tbl_stocks`).select().build()).rows; }
+
     specific = async id => { 
         return (await new Builder(`tbl_stocks AS stck`)
                         .select(`stck.id, stck.series_no, stck.category_id, stck.brand_id, stck.quantity, stck.status, stck.branch, info.*, ctgy.name AS category`)
@@ -22,6 +23,89 @@ class Stocks {
                         .join({ table: `tbl_category AS ctgy`, condition: `stck.category_id = ctgy.id`, type: `LEFT` })
                         .condition(`WHERE stck.id= ${id}`)
                         .build()).rows;
+    }
+
+    excel = async data => {
+        let columns = '';
+        let searchtxt = '';
+        let condition = '';
+
+        switch(data.type) {
+            case 'logs':
+                columns= `at.id AS "ID", at.series_no AS "Series no.", CONCAT(CASE WHEN info.serial_no IS NOT NULL AND info.serial_no <> '' THEN info.serial_no ELSE info.model END, 
+                                    CASE WHEN ctg.name = 'TONER' THEN CONCAT(' - ', UPPER(info.condition)) ELSE '' END) AS "Item", at.field AS "Field affected", 
+                                    UPPER(at.previous) AS "Previous", UPPER(at.current) AS "Current", UPPER(at.action) AS "Action", CONCAT(ubi.lname, ', ', ubi.fname) AS "Accountable",
+                                    at.date AS "Date"`;
+                searchtxt = `AND (at.field LIKE '%${(data.logssearchtxt).toLowerCase()}%' OR info.serial_no LIKE '%${(data.logssearchtxt).toUpperCase()}%' 
+                                        OR info.model LIKE '%${(data.logssearchtxt).toUpperCase()}%') `;
+        
+                switch(JSON.parse(atob(data.token)).role) {
+                    case 'user': condition = `AND at.user_id= ${JSON.parse(atob(data.token)).id}`; break;
+                    case 'admin': condition = `AND (at.user_id= ${JSON.parse(atob(data.token)).id} OR ubi.head_id= ${JSON.parse(atob(data.token)).id})`; break;
+                    default:  
+                }
+                
+                return (await new Builder(`tbl_audit_trail AS at`)
+                                .select(columns)
+                                .join({ table: `tbl_stocks AS stck`, condition: `at.item_id = stck.id`, type: `LEFT` })
+                                .join({ table: `tbl_stocks_info AS info`, condition: `info.stocks_id = at.item_id`, type: `LEFT` })
+                                .join({ table: `tbl_category AS ctg`, condition: `stck.category_id = ctg.id`, type: `LEFT` })
+                                .join({ table: `tbl_users_info AS ubi`, condition: `at.user_id = ubi.user_id`, type: `LEFT` })
+                                .condition(`WHERE at.table_name= 'tbl_stocks' AND ctg.name= '${data.category}' ${condition} ${data.logssearchtxt !== '' ? searchtxt : ''}
+                                                    ORDER BY at.${data.logsorderby} ${(data.logssort).toUpperCase()} ${data.limit !== '' ? `LIMIT ${data.limit}` : ''}`)
+                                .build()).rows;
+
+            default: 
+                searchtxt= `(stck.series_no LIKE '%${(data.searchtxt).toUpperCase()}%' OR info.serial_no LIKE '%${(data.searchtxt).toUpperCase()}%'
+                                    OR info.model LIKE '%${(data.searchtxt).toUpperCase()}%')`;
+
+                switch(((data.category).toLowerCase()).replace(' ', '_')) {
+                    case 'telephone': columns= `info.serial_no AS "Serial no.", info.model AS "Model"`; break;
+                    case 'scanner': columns= `info.serial_no AS "Serial no.", info.model AS "Model"`; break;
+                    case 'ups': columns= `info.serial_no AS "Serial no.", info.model AS "Model", info.output_capacity AS "Output capacity"`; break;
+                    case 'printer': columns= `info.serial_no AS "Serial no.", info.model AS "Model", UPPER(info.type) AS "Type"`; break;
+                    case 'toner': columns= `info.model AS "Model", UPPER(info.type) AS "Type", UPPER(info.condition) AS "Condition"`; break;
+                    case 'monitor': 
+                        columns= `info.serial_no AS "Serial no.", info.model AS "Model", info.panel AS "Panel", info.resolution AS "Resolution",
+                                            info.refresh_rate AS "Refresh rate", info.power_supply AS "Power supply", info.warranty AS "Warranty",
+                                            CASE WHEN info.hdmi > 0 THEN 'ON' ELSE 'OFF' END AS "HDMI", CASE WHEN info.vga > 0 THEN 'ON' ELSE 'OFF' END AS "VGA",
+                                            CASE WHEN info.dvi > 0 THEN 'ON' ELSE 'OFF' END AS "DVI"`; 
+                        break;
+                    case 'system_unit': 
+                        columns= `info.serial_no AS "Serial no.", info.model AS "Model", info.cpu AS "CPU", info.gpu AS "GPU", info.hdd AS "HDD", info.ssd AS "SSD",
+                                            info.ram AS "RAM", info.os AS "Operating system", info.power_supply AS "Power supply", info.warranty AS "Warranty",
+                                            CASE WHEN info.hdmi > 0 THEN 'ON' ELSE 'OFF' END AS "HDMI", CASE WHEN info.vga > 0 THEN 'ON' ELSE 'OFF' END AS "VGA",
+                                            CASE WHEN info.dvi > 0 THEN 'ON' ELSE 'OFF' END AS "DVI", CASE WHEN info.bluetooth > 0 THEN 'ON' ELSE 'OFF' END AS "Bluetooth",
+                                            CASE WHEN info.wifi > 0 THEN 'ON' ELSE 'OFF' END AS "WIFI"`; 
+                        break;
+                    case 'laptop': 
+                        columns= `info.serial_no AS "Serial no.", info.model AS "Model", info.cpu AS "CPU", info.gpu AS "GPU", info.hdd AS "HDD", info.ssd AS "SSD",
+                                            info.ram AS "RAM", info.os AS "Operating system", info.power_supply AS "Power supply", info.warranty AS "Warranty",
+                                            CASE WHEN info.hdmi > 0 THEN 'ON' ELSE 'OFF' END AS "HDMI", CASE WHEN info.vga > 0 THEN 'ON' ELSE 'OFF' END AS "VGA",
+                                            CASE WHEN info.dvi > 0 THEN 'ON' ELSE 'OFF' END AS "DVI", CASE WHEN info.bluetooth > 0 THEN 'ON' ELSE 'OFF' END AS "Bluetooth",
+                                            CASE WHEN info.fingerprint > 0 THEN 'ON' ELSE 'OFF' END AS "Fingerprint", CASE WHEN info.camera > 0 THEN 'ON' ELSE 'OFF' END AS "Camera"`; 
+                        break;
+                }
+                
+                return (await new Builder(`tbl_stocks AS stck`)
+                                .select(`stck.id AS "ID", stck.series_no AS "Series no.", brd.name AS "Brand", ${columns}, stck.quantity AS "Quantity", 
+                                            UPPER(stck.status) AS "Status", UPPER(REPLACE(stck.branch, '_', ' ')) AS "Branch",
+                                            CONCAT(cb.lname, ', ', cb.fname) AS "Created by", stck.date_created AS "Date created", 
+                                            CONCAT(ub.lname, ', ', ub.fname) AS "Updated by", stck.date_updated AS "Date updated",
+                                            CONCAT(db.lname, ', ', db.fname) AS "Deleted by", stck.date_deleted AS "Date deleted"`)
+                                .join({ table: `tbl_stocks_info AS info`, condition: `info.stocks_id = stck.id`, type: `LEFT` })
+                                .join({ table: `tbl_category AS ctg`, condition: `stck.category_id = ctg.id`, type: `LEFT` })
+                                .join({ table: `tbl_brands AS brd`, condition: `stck.brand_id = brd.id`, type: `LEFT` })
+                                .join({ table: `tbl_users_info AS cb`, condition: `stck.created_by = cb.user_id`, type: `LEFT` })
+                                .join({ table: `tbl_users_info AS ub`, condition: `stck.updated_by = ub.user_id`, type: `LEFT` })
+                                .join({ table: `tbl_users_info AS db`, condition: `stck.deleted_by = db.user_id`, type: `LEFT` })
+                                .condition(`WHERE ctg.name= '${data.category}' 
+                                                    ${JSON.parse(atob(data.token)).role === 'user' ? `AND stck.branch= '${JSON.parse(atob(data.token)).branch}'` : ''} 
+                                                    ${data.searchtxt !== '' ? `AND ${searchtxt}` : ''}
+                                                    ${data.brand !== 'all' ? `AND stck.brand_id= ${data.brand}` : ''}
+                                                    ORDER BY info.${data.orderby} ${(data.sort).toUpperCase()}`)
+                                .build()).rows
+        }
     }
 
     logs = async data => {

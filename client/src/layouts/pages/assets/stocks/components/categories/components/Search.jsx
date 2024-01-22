@@ -11,7 +11,7 @@ import { AccountCntxt } from "core/context/Account"; // Context
 
 import { btnicon, btntxt, download, logs, search, upload } from "../style";
 
-const Search = ({ find }) => {
+const Search = ({ find, xlsx }) => {
     const { category } = useParams();
     const { register, setValue, getValues } = useContext(FormCntxt);
     const { data } = useContext(AccountCntxt);
@@ -36,7 +36,14 @@ const Search = ({ find }) => {
             </form>
             <Stack direction= "row" justifyContent= "flex-end" alignItems= "center" spacing= { .5 }>
                 { authlogs ? <Typography sx= { logs } component= { Link } to= { `/assets/stocks/${category}/logs` }><FontAwesomeIcon icon= { solid('clock-rotate-left') } /></Typography> : '' }
-                { authexport ? <Typography sx= { download }><FontAwesomeIcon icon= { solid('download') } /></Typography> : '' }
+                { authexport ? 
+                    <Typography sx= { download } 
+                        onClick= { () => { 
+                            let data = getValues(); 
+                            data['category'] = (category.replace('-', ' ')).toUpperCase();
+                            data['type'] = 'list';
+                            xlsx({ table: 'tbl_stocks', data: data }); 
+                        } }><FontAwesomeIcon icon= { solid('download') } /></Typography> : '' }
                 { authimport ? <Typography sx= { upload }><FontAwesomeIcon icon= { solid('upload') } /></Typography> : '' }
                 { authcreate ? 
                     <Typography component= { Link } to= { `/assets/stocks/${category}/form/new` } sx= { btnicon }><FontAwesomeIcon icon= { solid('plus') } /></Typography> : '' }

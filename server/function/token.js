@@ -1,7 +1,7 @@
 // Libraries
 const { sign, verify } = require('jsonwebtoken');
 
-const generate = data => { return sign({ id: data.id, role: data.user_level }, process.env.ACCESS_TOKEN_SECRET); }
+const generate = data => { return sign({ id: data.id, role: data.user_level, branch: data.branch }, process.env.ACCESS_TOKEN_SECRET); }
 const validate = async (req, res, next) => {
     const _token = (req.header('authorization')).split(' ')[1];
     if(!_token) return res.status(400).json({ error: 'Authentication failed!' });

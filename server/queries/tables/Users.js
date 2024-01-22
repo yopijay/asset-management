@@ -54,7 +54,11 @@ class Users {
     }
 
     login = async data => {
-        let user = await new Builder(`tbl_users`).select().condition(`WHERE email= '${data.email}'`).build();
+        let user = await new Builder(`tbl_users AS usr`)
+                            .select()
+                            .join({ table: `tbl_users_info AS info`, condition: `info.user_id = usr.id`, type: `LEFT` })
+                            .condition(`WHERE email= '${data.email}'`)
+                            .build();
 
         if(user.rowCount > 0) {
             if(user.rows[0].status === 1) { 

@@ -80,6 +80,7 @@ const excel = (table, data) => {
     return new Promise(async resolve => {
         switch(table) {
             case 'tbl_stocks_issuance': resolve(await new Issuance().excel(data)); break;
+            case 'tbl_stocks': resolve(await new Stocks().excel(data)); break;
         }
     });
 }
