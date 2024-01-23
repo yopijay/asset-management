@@ -7,8 +7,8 @@ import { Link } from "react-router-dom";
 import { ListCntxt } from "core/context/List"; // Context
 import { FormCntxt } from "core/context/Form"; // Context
 import { AccountCntxt } from "core/context/Account"; // Context
-import { exporttoexcel, usePost } from "core/function/global"; // Function
-import { excel, records } from "core/api"; // API
+import { usePost } from "core/function/global"; // Function
+import { records } from "core/api"; // API
 import Loader from "core/components/loader/Screen"; // Loader
 
 import { content, history, loader } from "./style"; // Styles
@@ -20,12 +20,10 @@ import Items from "./components/Items";
 import Logs from "./components/Logs";
 
 const Index = () => {
-    const today = `${parseInt((new Date()).getMonth()) + 1}${(new Date()).getDate()}${(new Date()).getFullYear()}`;
     const { setlist } = useContext(ListCntxt);
     const { data } = useContext(AccountCntxt);
     const { register, getValues } = useContext(FormCntxt);
     const { mutate: record, isLoading: fetching } = usePost({ request: records, onSuccess: data => setlist(data) });
-    const { mutate: xlsx } = usePost({ request: excel, onSuccess: data => exporttoexcel(data, 'Brands', `Brands-${today}`) });
 
     let authlogs = data.user_level === 'superadmin' || (data.permission === null || JSON.parse(data.permission).maintenance.brands.logs);
 
@@ -48,7 +46,7 @@ const Index = () => {
             <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" sx= { content({ condition: authlogs }) } spacing= { 5 }>
                 <Title />
                 <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 } sx= {{ height: '100%', overflow: 'hidden' }}>
-                    <Search find= { record } xlsx= { xlsx } />
+                    <Search find= { record } />
                     <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 } sx= {{ height: '100%', overflow: 'hidden' }}>
                         <Sort records= { record } />
                         { !fetching ? <Items /> : <Box sx= { loader }><Loader /></Box> }
