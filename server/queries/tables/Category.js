@@ -18,6 +18,50 @@ class Category {
         }
     }
 
+    excel = async data => {
+        let columns = '';
+        let searchtxt = '';
+        let condition = '';
+
+        switch(data.type) {
+            case 'logs':
+                columns = `at.id AS "ID", at.series_no AS "Series no.", ctg.name AS "Category", at.field AS "Field affected", UPPER(at.previous) AS "Previous", 
+                                    UPPER(at.current) AS "Current", UPPER(at.action) AS "Action", CONCAT(ubi.lname, ', ', ubi.fname) AS "Accountable", at.date AS "Date"`;
+                searchtxt = `AND (at.field LIKE '%${(data.logssearchtxt).toLowerCase()}%' OR ctg.name LIKE '%${(data.logssearchtxt).toUpperCase()}%'
+                                        OR ctg.series_no LIKE '%${(data.logssearchtxt).toUpperCase()}%' OR at.series_no LIKE '%${(data.logssearchtxt).toUpperCase()}%')`;
+
+                switch(JSON.parse(atob(data.token)).role) {
+                    case 'user': condition = `AND at.user_id= ${JSON.parse(atob(data.token)).id}`; break;
+                    case 'admin': condition= `AND (at.user_id= ${JSON.parse(atob(data.token)).id} OR ubi.head_id= ${JSON.parse(atob(data.token)).id})`; break;
+                    default:
+                }
+
+                return (await new Builder(`tbl_audit_trail AS at`)
+                                .select(columns)
+                                .join({ table: `tbl_category AS ctg`, condition: `at.item_id = ctg.id`, type: `LEFT` })
+                                .join({ table: `tbl_users_info AS ubi`, condition: `at.user_id = ubi.user_id`, type: `LEFT` })
+                                .condition(`WHERE at.table_name= 'tbl_category' ${condition} ${data.logssearchtxt !== '' ? searchtxt : ''}
+                                                    ORDER BY at.${data.logsorderby} ${(data.logssort).toUpperCase()} ${data.limit !== '' ? `LIMIT ${data.limit}` : ''}`)
+                                .build()).rows;
+
+            default: 
+                columns = `ctg.id AS "ID", ctg.series_no AS "Series no.", UPPER(ctg.type) AS "Type", ctg.name AS "Category", 
+                                    CASE WHEN ctg.status > 0 THEN 'ACTIVE' ELSE 'INACTIVE' END AS "Status", 
+                                    CONCAT(cb.lname, ', ', cb.fname) AS "Created by", ctg.date_created AS "Date created",
+                                    CONCAT(ub.lname, ', ', ub.fname) AS "Updated by", ctg.date_updated AS "Date updated",
+                                    CONCAT(db.lname, ', ', db.fname) AS "Deleted by", ctg.date_deleted AS "Date deleted"`;
+
+                return (await new Builder(`tbl_category AS ctg`)
+                                .select(columns)
+                                .join({ table: `tbl_users_info AS cb`, condition: `ctg.created_by = cb.user_id`, type: `LEFT` })
+                                .join({ table: `tbl_users_info AS ub`, condition: `ctg.updated_by = ub.user_id`, type: `LEFT` })
+                                .join({ table: `tbl_users_info AS db`, condition: `ctg.deleted_by = db.user_id`, type: `LEFT` })
+                                .condition(`${data.searchtxt !== '' ? `WHERE ctg.series_no LIKE '%${(data.searchtxt).toUpperCase()}%' 
+                                                    OR ctg.name LIKE '%${(data.searchtxt).toUpperCase()}%'` : ''} ORDER BY ctg.${data.orderby} ${(data.sort).toUpperCase()}`)
+                                .build()).rows;
+        }
+    }
+
     logs = async data => {
         let condition = '';
         let search = `AND (at.field LIKE '%${(data.logssearchtxt).toLowerCase()}%' OR ctg.name LIKE '%${(data.logssearchtxt).toUpperCase()}%'
