@@ -7,8 +7,8 @@ import { useContext, useEffect, useState } from "react";
 
 // Core
 import { FormCntxt } from "core/context/Form"; // Context
-import { exporttoexcel, usePost } from "core/function/global"; // Function
-import { excel, history } from "core/api"; // API
+import { usePost } from "core/function/global"; // Function
+import { history } from "core/api"; // API
 
 // Components
 import Search from "./components/Search";
@@ -18,18 +18,10 @@ import Items from "./components/Items";
 import { title } from "./style"; // Styles
 
 const Index = () => {
-    const today = `${parseInt((new Date()).getMonth()) + 1}${(new Date()).getDate()}${(new Date()).getFullYear()}`;
     const { category } = useParams();
     const [ logs, setlogs ] = useState([]);
     const { register, getValues, setValue } = useContext(FormCntxt);
     const { mutate: record, isLoading: fetching } = usePost({ request: history, onSuccess: data => setlogs(data) });
-    const { mutate: xlsx } = 
-        usePost({ request: excel, 
-                            onSuccess: 
-                                data => 
-                                exporttoexcel(data, 
-                                    (category.charAt(0).toUpperCase() + category.slice(1)).replace('-', ' '), 
-                                    `${(category.charAt(0).toUpperCase() + category.slice(1)).replace('-', ' ')} Logs-${today}`) });
 
     useEffect(() => {
         register('category', { value: (category.replace('-', ' ')).toUpperCase() });
@@ -56,7 +48,7 @@ const Index = () => {
                 <Typography sx= { title }>Logs</Typography>
             </Stack>
             <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 } sx= {{ height: '100%', overflow: 'hidden' }}>
-                <Search find= { record } register= { register } getValues= { getValues } setValue= { setValue } xlsx= { xlsx } />
+                <Search find= { record } register= { register } getValues= { getValues } setValue= { setValue } />
                 <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 } sx= {{ height: '100%', overflow: 'hidden' }}>
                     <Sort records= { record } setValue= { setValue } getValues= { getValues } />
                     <Items records= { logs } fetching= { fetching } />

@@ -8,13 +8,23 @@ import { Link, useParams } from "react-router-dom";
 // Core
 import { FormCntxt } from "core/context/Form"; // Context
 import { AccountCntxt } from "core/context/Account"; // Context
+import { exporttoexcel, usePost } from "core/function/global"; // Function
+import { excel } from "core/api"; // API
 
 import { btnicon, btntxt, download, logs, search, upload } from "../style";
 
-const Search = ({ find, xlsx }) => {
+const Search = ({ find }) => {
+    const today = `${parseInt((new Date()).getMonth()) + 1}${(new Date()).getDate()}${(new Date()).getFullYear()}`;
     const { category } = useParams();
     const { register, setValue, getValues } = useContext(FormCntxt);
     const { data } = useContext(AccountCntxt);
+    const { mutate: xlsx } = 
+        usePost({ request: excel, 
+                        onSuccess: 
+                            data => 
+                                exporttoexcel(data, 
+                                    (category.charAt(0).toUpperCase() + category.slice(1)).replace('-', ' '), 
+                                    `${(category.charAt(0).toUpperCase() + category.slice(1)).replace('-', ' ')}-${today}`) });
 
     let authcreate = data.user_level === 'superadmin' || (data.permission === null || JSON.parse(data.permission).assets.stocks.create);
     let authlogs = data.user_level === 'superadmin' || (data.permission === null || JSON.parse(data.permission).assets.stocks.logs);

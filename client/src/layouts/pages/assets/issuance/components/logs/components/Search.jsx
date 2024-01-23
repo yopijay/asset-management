@@ -10,8 +10,8 @@ import { excel } from "core/api"; // API
 import { download, search } from "../style"; // Styles
 
 const Search = props => {
-    const { find, register, getValues, setValue } = props;
     const today = `${parseInt((new Date()).getMonth()) + 1}${(new Date()).getDate()}${(new Date()).getFullYear()}`;
+    const { find, register, getValues, setValue } = props;
 
     const { mutate: xlsx } = usePost({ request: excel, onSuccess: data => exporttoexcel(data, 'Issuance', `Issuance Logs-${today}`) });
 
