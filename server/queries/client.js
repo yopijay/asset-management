@@ -81,6 +81,7 @@ const excel = (table, data) => {
         switch(table) {
             case 'tbl_stocks_issuance': resolve(await new Issuance().excel(data)); break;
             case 'tbl_stocks': resolve(await new Stocks().excel(data)); break;
+            case 'tbl_brands': resolve(await new Brands().excel(data)); break;
         }
     });
 }

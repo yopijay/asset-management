@@ -32,7 +32,13 @@ const Search = ({ find, xlsx }) => {
             </form>
             <Stack direction= "row" justifyContent= "flex-end" alignItems= "center" spacing= { .5 }>
                 { authlogs ? <Typography sx= { logs } component= { Link } to= "/maintenance/brands/logs"><FontAwesomeIcon icon= { solid('clock-rotate-left') } /></Typography> : '' }
-                { authexport ? <Typography sx= { download } onClick= { () => xlsx({ table: 'tbl_stocks_issuance', data: getValues() }) }><FontAwesomeIcon icon= { solid('download') } /></Typography> : '' }
+                { authexport ? 
+                    <Typography sx= { download } 
+                        onClick= { () => {
+                            let data = getValues();
+                            data['type'] = 'list';
+                            xlsx({ table: 'tbl_brands', data: data });
+                        } }><FontAwesomeIcon icon= { solid('download') } /></Typography> : '' }
                 { authimport ? <Typography sx= { upload }><FontAwesomeIcon icon= { solid('upload') } /></Typography> : '' }
                 { authcreate ? <Typography component= { Link } to= "/maintenance/brands/form/new" sx= { btnicon }><FontAwesomeIcon icon= { solid('plus') } /></Typography> : '' }
                 { authcreate ? <Typography component= { Link } to= "/maintenance/brands/form/new" sx= { btntxt }>New Brand</Typography> : '' }

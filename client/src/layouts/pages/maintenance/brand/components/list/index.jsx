@@ -25,7 +25,7 @@ const Index = () => {
     const { data } = useContext(AccountCntxt);
     const { register, getValues } = useContext(FormCntxt);
     const { mutate: record, isLoading: fetching } = usePost({ request: records, onSuccess: data => setlist(data) });
-    const { mutate: xlsx } = usePost({ request: excel, onSuccess: data => exporttoexcel(data, 'Issuance', `Issuance-${today}`) });
+    const { mutate: xlsx } = usePost({ request: excel, onSuccess: data => exporttoexcel(data, 'Brands', `Brands-${today}`) });
 
     let authlogs = data.user_level === 'superadmin' || (data.permission === null || JSON.parse(data.permission).maintenance.brands.logs);
 
