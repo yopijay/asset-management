@@ -68,27 +68,28 @@ class Stocks {
                     case 'monitor': 
                         columns= `info.serial_no AS "Serial no.", info.model AS "Model", info.panel AS "Panel", info.resolution AS "Resolution",
                                             info.refresh_rate AS "Refresh rate", info.power_supply AS "Power supply", info.warranty AS "Warranty",
-                                            CASE WHEN info.hdmi > 0 THEN 'ON' ELSE 'OFF' END AS "HDMI", CASE WHEN info.vga > 0 THEN 'ON' ELSE 'OFF' END AS "VGA",
-                                            CASE WHEN info.dvi > 0 THEN 'ON' ELSE 'OFF' END AS "DVI"`; 
+                                            CASE WHEN info.hdmi > 0 THEN 'YES' ELSE 'NO' END AS "HDMI", CASE WHEN info.vga > 0 THEN 'YES' ELSE 'NO' END AS "VGA",
+                                            CASE WHEN info.dvi > 0 THEN 'YES' ELSE 'NO' END AS "DVI"`; 
                         break;
                     case 'system_unit': 
                         columns= `info.serial_no AS "Serial no.", info.model AS "Model", info.cpu AS "CPU", info.gpu AS "GPU", info.hdd AS "HDD", info.ssd AS "SSD",
                                             info.ram AS "RAM", info.os AS "Operating system", info.power_supply AS "Power supply", info.warranty AS "Warranty",
-                                            CASE WHEN info.hdmi > 0 THEN 'ON' ELSE 'OFF' END AS "HDMI", CASE WHEN info.vga > 0 THEN 'ON' ELSE 'OFF' END AS "VGA",
-                                            CASE WHEN info.dvi > 0 THEN 'ON' ELSE 'OFF' END AS "DVI", CASE WHEN info.bluetooth > 0 THEN 'ON' ELSE 'OFF' END AS "Bluetooth",
-                                            CASE WHEN info.wifi > 0 THEN 'ON' ELSE 'OFF' END AS "WIFI"`; 
+                                            CASE WHEN info.hdmi > 0 THEN 'YES' ELSE 'NO' END AS "HDMI", CASE WHEN info.vga > 0 THEN 'YES' ELSE 'NO' END AS "VGA",
+                                            CASE WHEN info.dvi > 0 THEN 'YES' ELSE 'NO' END AS "DVI", CASE WHEN info.bluetooth > 0 THEN 'YES' ELSE 'NO' END AS "Bluetooth",
+                                            CASE WHEN info.wifi > 0 THEN 'YES' ELSE 'NO' END AS "WIFI"`; 
                         break;
                     case 'laptop': 
                         columns= `info.serial_no AS "Serial no.", info.model AS "Model", info.cpu AS "CPU", info.gpu AS "GPU", info.hdd AS "HDD", info.ssd AS "SSD",
                                             info.ram AS "RAM", info.os AS "Operating system", info.power_supply AS "Power supply", info.warranty AS "Warranty",
-                                            CASE WHEN info.hdmi > 0 THEN 'ON' ELSE 'OFF' END AS "HDMI", CASE WHEN info.vga > 0 THEN 'ON' ELSE 'OFF' END AS "VGA",
-                                            CASE WHEN info.dvi > 0 THEN 'ON' ELSE 'OFF' END AS "DVI", CASE WHEN info.bluetooth > 0 THEN 'ON' ELSE 'OFF' END AS "Bluetooth",
-                                            CASE WHEN info.fingerprint > 0 THEN 'ON' ELSE 'OFF' END AS "Fingerprint", CASE WHEN info.camera > 0 THEN 'ON' ELSE 'OFF' END AS "Camera"`; 
+                                            CASE WHEN info.hdmi > 0 THEN 'YES' ELSE 'NO' END AS "HDMI", CASE WHEN info.vga > 0 THEN 'YES' ELSE 'NO' END AS "VGA",
+                                            CASE WHEN info.dvi > 0 THEN 'YES' ELSE 'NO' END AS "DVI", CASE WHEN info.bluetooth > 0 THEN 'YES' ELSE 'NO' END AS "Bluetooth",
+                                            CASE WHEN info.fingerprint > 0 THEN 'YES' ELSE 'NO' END AS "Fingerprint", CASE WHEN info.camera > 0 THEN 'YES' ELSE 'NO' END AS "Camera"`; 
                         break;
                 }
                 
                 return (await new Builder(`tbl_stocks AS stck`)
-                                .select(`stck.id AS "ID", stck.series_no AS "Series no.", brd.name AS "Brand", ${columns}, stck.quantity AS "Quantity", 
+                                .select(`stck.id AS "ID", stck.series_no AS "Series no.", brd.name AS "Brand", ${columns}, 
+                                            CASE WHEN stck.quantity > 0 THEN 'AVAILABLE' ELSE 'NOT AVAILABLE' END AS "Availability", 
                                             UPPER(stck.status) AS "Status", UPPER(REPLACE(stck.branch, '_', ' ')) AS "Branch",
                                             CONCAT(cb.lname, ', ', cb.fname) AS "Created by", stck.date_created AS "Date created", 
                                             CONCAT(ub.lname, ', ', ub.fname) AS "Updated by", stck.date_updated AS "Date updated",
