@@ -45,7 +45,7 @@ const Index = () => {
         useGet({ key: ['profile'], request: profile(JSON.parse(atob(_token[1])).id), options: { refetchOnWindowFocus: false }, onSuccess: data => setData(data[0]) });
 
     return (
-        <Container maxWidth= "xl" >
+        <Container maxWidth= "xl">
             { !isFetching ? 
                 <Box>
                     <Navbar />
