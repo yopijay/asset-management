@@ -22,9 +22,8 @@ const Search = ({ find }) => {
         usePost({ request: excel, 
                         onSuccess: 
                             data => 
-                                exporttoexcel(data, 
-                                    (category.charAt(0).toUpperCase() + category.slice(1)).replace('-', ' '), 
-                                    `${(category.charAt(0).toUpperCase() + category.slice(1)).replace('-', ' ')}-${today}`) });
+                                exporttoexcel({ sheets: [{ data: data, sheetname: (category.charAt(0).toUpperCase() + category.slice(1)).replace('-', ' ') }], 
+                                                            filename: `${(category.charAt(0).toUpperCase() + category.slice(1)).replace('-', ' ')}-${today}` }) });
 
     let authcreate = data.user_level === 'superadmin' || (data.permission === null || JSON.parse(data.permission).assets.stocks.create);
     let authlogs = data.user_level === 'superadmin' || (data.permission === null || JSON.parse(data.permission).assets.stocks.logs);

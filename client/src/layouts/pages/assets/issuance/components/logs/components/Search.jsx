@@ -13,7 +13,7 @@ const Search = props => {
     const today = `${parseInt((new Date()).getMonth()) + 1}${(new Date()).getDate()}${(new Date()).getFullYear()}`;
     const { find, register, getValues, setValue } = props;
 
-    const { mutate: xlsx } = usePost({ request: excel, onSuccess: data => exporttoexcel(data, 'Issuance', `Issuance Logs-${today}`) });
+    const { mutate: xlsx } = usePost({ request: excel, onSuccess: data => exporttoexcel({ sheets: data, filename: `Issuance Logs-${today}` }) });
 
     return (
         <Stack direction= "row" justifyContent= "space-between" alignItems= "center" spacing= { 1 }>

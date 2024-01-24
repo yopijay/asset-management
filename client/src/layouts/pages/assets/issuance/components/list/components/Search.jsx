@@ -17,7 +17,7 @@ const Search = ({ find }) => {
     const today = `${parseInt((new Date()).getMonth()) + 1}${(new Date()).getDate()}${(new Date()).getFullYear()}`;
     const { register, setValue, getValues } = useContext(FormCntxt);
     const { data } = useContext(AccountCntxt);
-    const { mutate: xlsx } = usePost({ request: excel, onSuccess: data => exporttoexcel(data, 'Issuance', `Issuance-${today}`) });
+    const { mutate: xlsx } = usePost({ request: excel, onSuccess: data => exporttoexcel({ sheets: data, filename: `Issuance-${today}`}) });
 
     let authlogs = data.user_level === 'superadmin' || (data.permission === null || JSON.parse(data.permission).assets.issuance.logs);
     let authcreate = data.user_level === 'superadmin' || (data.permission === null || JSON.parse(data.permission).assets.issuance.create);
