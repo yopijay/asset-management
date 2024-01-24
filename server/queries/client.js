@@ -83,6 +83,11 @@ const excel = (table, data) => {
             case 'tbl_stocks': resolve(await new Stocks().excel(data)); break;
             case 'tbl_brands': resolve(await new Brands().excel(data)); break;
             case 'tbl_category': resolve(await new Category().excel(data)); break;
+            case 'tbl_company': resolve(await new Company().excel(data)); break;
+            case 'tbl_department': resolve(await new Department().excel(data)); break;
+            case 'tbl_position': resolve(await new Position().excel(data)); break;
+            case 'tbl_routes': resolve(await new Routes().excel(data)); break;
+            case 'tbl_modules': resolve(await new Modules().excel(data)); break;
         }
     });
 }

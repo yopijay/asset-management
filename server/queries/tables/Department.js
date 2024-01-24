@@ -17,6 +17,52 @@ class Department {
         }
     }
 
+    excel = async data => {
+        let columns = '';
+        let searchtxt = '';
+        let condition = ''; 
+        
+        switch(data.type) {
+            case 'logs':
+                columns = `at.id AS "ID", at.series_no AS "Series no.", dpt.name AS "Department", at.field AS "Field affected", UPPER(at.previous) AS "Previous", 
+                                    UPPER(at.current) AS "Current", UPPER(at.action) AS "Action", CONCAT(ubi.lname, ', ', ubi.fname) AS "Accountable", at.date AS "Date"`;
+                searchtxt = `AND (at.field LIKE '%${(data.logssearchtxt).toLowerCase()}%' OR dpt.name LIKE '%${(data.logssearchtxt).toUpperCase()}%'
+                                    OR dpt.series_no LIKE '%${(data.logssearchtxt).toUpperCase()}%' OR at.series_no LIKE '%${(data.logssearchtxt).toUpperCase()}%')`;
+
+                switch(JSON.parse(atob(data.token)).role) {
+                    case 'user': condition = `AND at.user_id= ${JSON.parse(atob(data.token)).id}`; break;
+                    case 'admin': condition= `AND (at.user_id= ${JSON.parse(atob(data.token)).id} OR ubi.head_id= ${JSON.parse(atob(data.token)).id})`; break;
+                    default:
+                }
+                
+                return (await new Builder(`tbl_audit_trail AS at`)
+                        .select(columns)
+                        .join({ table: `tbl_department AS dpt`, condition: `at.item_id = dpt.id`, type: `LEFT` })
+                        .join({ table: `tbl_users_info AS ubi`, condition: `at.user_id = ubi.user_id`, type: `LEFT` })
+                        .condition(`WHERE at.table_name= 'tbl_department' ${condition} ${data.logssearchtxt !== '' ? searchtxt : ''}
+                                            ORDER BY at.${data.logsorderby} ${(data.logssort).toUpperCase()} ${data.limit !== '' ? `LIMIT ${data.limit}` : ''}`)
+                        .build()).rows;
+            
+            default: 
+                columns = `dpt.id AS "ID", dpt.series_no AS "Series no.", cmp.name AS "Company", dpt.name AS "Department", CONCAT(dh.lname, ', ', dh.fname) AS "Head",
+                                        dpt.description AS "Description", CASE WHEN dpt.status > 0 THEN 'ACTIVE' ELSE 'INACTIVE' END AS "Status",
+                                        CONCAT(cb.lname, ', ', cb.fname) AS "Created by", dpt.date_created AS "Date created",
+                                        CONCAT(ub.lname, ', ', ub.fname) AS "Updated by", dpt.date_updated AS "Date updated",
+                                        CONCAT(db.lname, ', ', db.fname) AS "Deleted by", dpt.date_deleted AS "Date deleted"`;
+
+                return (await new Builder(`tbl_department AS dpt`)
+                                .select(columns)
+                                .join({ table: `tbl_company AS cmp`, condition: `cmp.id = dpt.company_id`, type: `LEFT` })
+                                .join({ table: `tbl_users_info AS cb`, condition: `dpt.created_by = cb.user_id`, type: `LEFT` })
+                                .join({ table: `tbl_users_info AS ub`, condition: `dpt.updated_by = ub.user_id`, type: `LEFT` })
+                                .join({ table: `tbl_users_info AS db`, condition: `dpt.deleted_by = db.user_id`, type: `LEFT` })
+                                .join({ table: `tbl_users_info AS dh`, condition: `dpt.department_head_id = dh.user_id`, type: `LEFT` })
+                                .condition(`${data.searchtxt !== '' ? `WHERE dpt.series_no LIKE '%${(data.searchtxt).toUpperCase()}%' OR dpt.name LIKE '%${(data.searchtxt).toUpperCase()}%'
+                                                        OR cmp.name LIKE '%${(data.searchtxt).toUpperCase()}%'` : ''} ORDER BY dpt.${data.orderby} ${(data.sort).toUpperCase()}`)
+                                .build()).rows;
+        }
+    }
+
     logs = async data => {
         let condition = '';
         let search = `AND (at.field LIKE '%${(data.logssearchtxt).toLowerCase()}%' OR dpt.name LIKE '%${(data.logssearchtxt).toUpperCase()}%'

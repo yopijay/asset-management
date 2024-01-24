@@ -21,7 +21,7 @@ class Category {
     excel = async data => {
         let columns = '';
         let searchtxt = '';
-        let condition = '';
+        let condition = ''; 
 
         switch(data.type) {
             case 'logs':

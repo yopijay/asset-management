@@ -29,6 +29,11 @@ class Users {
         }
         return data;
     }
+
+    excel = async data => {
+        
+        return [];
+    }
     
     logs = async data => {
         let condition = '';

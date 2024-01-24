@@ -8,12 +8,16 @@ import { useContext } from "react";
 // Core
 import { AccountCntxt } from "core/context/Account"; // Context
 import { FormCntxt } from "core/context/Form"; // Context
+import { exporttoexcel, usePost } from "core/function/global"; // Function
+import { excel } from "core/api"; // API
 
 import { btnicon, btntxt, download, logs, search, upload } from "../style";
 
 const Search = ({ find }) => {
+    const today = `${parseInt((new Date()).getMonth()) + 1}${(new Date()).getDate()}${(new Date()).getFullYear()}`;
     const { register, setValue, getValues } = useContext(FormCntxt);
     const { data } = useContext(AccountCntxt);
+    const { mutate: xlsx } = usePost({ request: excel, onSuccess: data => exporttoexcel(data, 'Position', `Position-${today}`) });
 
     let authcreate = data.user_level === 'superadmin' || (data.permission === null || JSON.parse(data.permission).maintenance.position.create);
     let authlogs = data.user_level === 'superadmin' || (data.permission === null || JSON.parse(data.permission).maintenance.position.logs);
@@ -31,7 +35,13 @@ const Search = ({ find }) => {
             </form>
             <Stack direction= "row" justifyContent= "flex-end" alignItems= "center" spacing= { .5 }>
                 { authlogs ? <Typography sx= { logs } component= { Link } to= "/maintenance/position/logs"><FontAwesomeIcon icon= { solid('clock-rotate-left') } /></Typography> : '' }
-                { authexport ? <Typography sx= { download }><FontAwesomeIcon icon= { solid('download') } /></Typography> : '' }
+                { authexport ? 
+                    <Typography sx= { download }
+                        onClick= { () => {
+                            let data = getValues();
+                            data['type'] = 'list';
+                            xlsx({ table: 'tbl_position', data: data });
+                        } }><FontAwesomeIcon icon= { solid('download') } /></Typography> : '' }
                 { authimport ? <Typography sx= { upload }><FontAwesomeIcon icon= { solid('upload') } /></Typography> : '' }
                 { authcreate ? <Typography component= { Link } to= "/maintenance/position/form/new" sx= { btnicon }><FontAwesomeIcon icon= { solid('plus') } /></Typography> : '' }
                 { authcreate ? <Typography component= { Link } to= "/maintenance/position/form/new" sx= { btntxt }>New Position</Typography> : '' }

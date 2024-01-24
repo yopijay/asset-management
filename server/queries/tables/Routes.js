@@ -6,6 +6,50 @@ class Routes {
     series = async () => { return (await new Builder(`tbl_routes`).select().build()).rows; }
     specific = async id => { return (await new Builder(`tbl_routes`).select().condition(`WHERE id= ${id}`).build()).rows; }
 
+    excel = async data => {
+        let columns = '';
+        let searchtxt = '';
+        let condition = ''; 
+
+        switch(data.type) {
+            case 'logs':
+                columns = `at.id AS "ID", at.series_no AS "Series no.", rts.route AS "Route", at.field AS "Field affected", UPPER(at.previous) AS "Previous", 
+                                        UPPER(at.current) AS "Current", UPPER(at.action) AS "Action", CONCAT(ubi.lname, ', ', ubi.fname) AS "Accountable", at.date AS "Date"`;
+                searchtxt = `AND (at.field LIKE '%${(data.logssearchtxt).toLowerCase()}%' OR rts.route LIKE '%${(data.logssearchtxt).toUpperCase()}%'
+                                        OR rts.series_no LIKE '%${(data.logssearchtxt).toUpperCase()}%' OR at.series_no LIKE '%${(data.logssearchtxt).toUpperCase()}%')`;
+
+                switch(JSON.parse(atob(data.token)).role) {
+                    case 'user': condition = `AND at.user_id= ${JSON.parse(atob(data.token)).id}`; break;
+                    case 'admin': condition= `AND (at.user_id= ${JSON.parse(atob(data.token)).id} OR ubi.head_id= ${JSON.parse(atob(data.token)).id})`; break;
+                    default:
+                }
+
+                return (await new Builder(`tbl_audit_trail AS at`)
+                                .select(columns)
+                                .join({ table: `tbl_routes AS rts`, condition: `at.item_id = rts.id`, type: `LEFT` })
+                                .join({ table: `tbl_users_info AS ubi`, condition: `at.user_id = ubi.user_id`, type: `LEFT` })
+                                .condition(`WHERE at.table_name= 'tbl_routes' ${condition} ${data.logssearchtxt !== '' ? search : ''}
+                                                    ORDER BY at.${data.logsorderby} ${(data.logssort).toUpperCase()} ${data.limit !== '' ? `LIMIT ${data.limit}` : ''}`)
+                                .build()).rows;
+
+            default: 
+                columns = `rts.id AS "ID", rts.series_no AS "Series no.", rts.route AS "Route", CONCAT('/', rts.base_url) AS "URL", rts.description AS "Description",
+                                    CASE WHEN rts.status > 0 THEN 'ACTIVE' ELSE 'INACTIVE' END AS "Status", 
+                                    CONCAT(cb.lname, ', ', cb.fname) AS "Created by", rts.date_created AS "Date created",
+                                    CONCAT(ub.lname, ', ', ub.fname) AS "Updated by", rts.date_updated AS "Date updated",
+                                    CONCAT(db.lname, ', ', db.fname) AS "Deleted by", rts.date_deleted AS "Date deleted"`;
+
+                return (await new Builder(`tbl_routes AS rts`)
+                                .select(columns)
+                                .join({ table: `tbl_users_info AS cb`, condition: `rts.created_by = cb.user_id`, type: `LEFT` })
+                                .join({ table: `tbl_users_info AS ub`, condition: `rts.updated_by = ub.user_id`, type: `LEFT` })
+                                .join({ table: `tbl_users_info AS db`, condition: `rts.deleted_by = db.user_id`, type: `LEFT` })
+                                .condition(`${data.searchtxt !== '' ? `WHERE rts.series_no LIKE '%${(data.searchtxt).toUpperCase()}%' 
+                                                        OR rts.route LIKE '%${(data.searchtxt).toUpperCase()}%'` : ''} ORDER BY rts.${data.orderby} ${(data.sort).toUpperCase()}`)
+                                .build()).rows;
+        }
+    }
+
     logs = async data => {
         let condition = '';
         let search = `AND (at.field LIKE '%${(data.logssearchtxt).toLowerCase()}%' OR rts.route LIKE '%${(data.logssearchtxt).toUpperCase()}%'
