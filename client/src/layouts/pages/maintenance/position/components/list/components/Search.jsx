@@ -14,10 +14,9 @@ import { excel } from "core/api"; // API
 import { btnicon, btntxt, download, logs, search, upload } from "../style";
 
 const Search = ({ find }) => {
-    const today = `${parseInt((new Date()).getMonth()) + 1}${(new Date()).getDate()}${(new Date()).getFullYear()}`;
     const { register, setValue, getValues } = useContext(FormCntxt);
     const { data } = useContext(AccountCntxt);
-    const { mutate: xlsx } = usePost({ request: excel, onSuccess: data => exporttoexcel(data, 'Position', `Position-${today}`) });
+    const { mutate: xlsx } = usePost({ request: excel, onSuccess: data => exporttoexcel(data) });
 
     let authcreate = data.user_level === 'superadmin' || (data.permission === null || JSON.parse(data.permission).maintenance.position.create);
     let authlogs = data.user_level === 'superadmin' || (data.permission === null || JSON.parse(data.permission).maintenance.position.logs);

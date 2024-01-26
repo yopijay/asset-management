@@ -26,6 +26,7 @@ class Stocks {
     }
 
     excel = async data => {
+        const today = `${parseInt((new Date()).getMonth()) + 1}${(new Date()).getDate()}${(new Date()).getFullYear()}`;
         let columns = '';
         let searchtxt = '';
         let condition = '';
@@ -45,15 +46,21 @@ class Stocks {
                     default:  
                 }
                 
-                return (await new Builder(`tbl_audit_trail AS at`)
-                                .select(columns)
-                                .join({ table: `tbl_stocks AS stck`, condition: `at.item_id = stck.id`, type: `LEFT` })
-                                .join({ table: `tbl_stocks_info AS info`, condition: `info.stocks_id = at.item_id`, type: `LEFT` })
-                                .join({ table: `tbl_category AS ctg`, condition: `stck.category_id = ctg.id`, type: `LEFT` })
-                                .join({ table: `tbl_users_info AS ubi`, condition: `at.user_id = ubi.user_id`, type: `LEFT` })
-                                .condition(`WHERE at.table_name= 'tbl_stocks' AND ctg.name= '${data.category}' ${condition} ${data.logssearchtxt !== '' ? searchtxt : ''}
-                                                    ORDER BY at.${data.logsorderby} ${(data.logssort).toUpperCase()} ${data.limit !== '' ? `LIMIT ${data.limit}` : ''}`)
-                                .build()).rows;
+                return [{
+                    sheets: [{
+                        sheetname: 'Logs',
+                        data: (await new Builder(`tbl_audit_trail AS at`)
+                                    .select(columns)
+                                    .join({ table: `tbl_stocks AS stck`, condition: `at.item_id = stck.id`, type: `LEFT` })
+                                    .join({ table: `tbl_stocks_info AS info`, condition: `info.stocks_id = at.item_id`, type: `LEFT` })
+                                    .join({ table: `tbl_category AS ctg`, condition: `stck.category_id = ctg.id`, type: `LEFT` })
+                                    .join({ table: `tbl_users_info AS ubi`, condition: `at.user_id = ubi.user_id`, type: `LEFT` })
+                                    .condition(`WHERE at.table_name= 'tbl_stocks' AND ctg.name= '${data.category}' ${condition} ${data.logssearchtxt !== '' ? searchtxt : ''}
+                                                        ORDER BY at.${data.logsorderby} ${(data.logssort).toUpperCase()} ${data.limit !== '' ? `LIMIT ${data.limit}` : ''}`)
+                                    .build()).rows
+                    }],
+                    filename: `Stock Logs-${today}`
+                }];
 
             default: 
                 searchtxt= `(stck.series_no LIKE '%${(data.searchtxt).toUpperCase()}%' OR info.serial_no LIKE '%${(data.searchtxt).toUpperCase()}%'
@@ -87,25 +94,31 @@ class Stocks {
                         break;
                 }
                 
-                return (await new Builder(`tbl_stocks AS stck`)
-                                .select(`stck.id AS "ID", stck.series_no AS "Series no.", brd.name AS "Brand", ${columns}, 
-                                            CASE WHEN stck.quantity > 0 THEN 'AVAILABLE' ELSE 'NOT AVAILABLE' END AS "Availability", 
-                                            UPPER(stck.status) AS "Status", UPPER(REPLACE(stck.branch, '_', ' ')) AS "Branch",
-                                            CONCAT(cb.lname, ', ', cb.fname) AS "Created by", stck.date_created AS "Date created", 
-                                            CONCAT(ub.lname, ', ', ub.fname) AS "Updated by", stck.date_updated AS "Date updated",
-                                            CONCAT(db.lname, ', ', db.fname) AS "Deleted by", stck.date_deleted AS "Date deleted"`)
-                                .join({ table: `tbl_stocks_info AS info`, condition: `info.stocks_id = stck.id`, type: `LEFT` })
-                                .join({ table: `tbl_category AS ctg`, condition: `stck.category_id = ctg.id`, type: `LEFT` })
-                                .join({ table: `tbl_brands AS brd`, condition: `stck.brand_id = brd.id`, type: `LEFT` })
-                                .join({ table: `tbl_users_info AS cb`, condition: `stck.created_by = cb.user_id`, type: `LEFT` })
-                                .join({ table: `tbl_users_info AS ub`, condition: `stck.updated_by = ub.user_id`, type: `LEFT` })
-                                .join({ table: `tbl_users_info AS db`, condition: `stck.deleted_by = db.user_id`, type: `LEFT` })
-                                .condition(`WHERE ctg.name= '${data.category}' 
-                                                    ${JSON.parse(atob(data.token)).role === 'user' ? `AND stck.branch= '${JSON.parse(atob(data.token)).branch}'` : ''} 
-                                                    ${data.searchtxt !== '' ? `AND ${searchtxt}` : ''}
-                                                    ${data.brand !== 'all' ? `AND stck.brand_id= ${data.brand}` : ''}
-                                                    ORDER BY info.${data.orderby} ${(data.sort).toUpperCase()}`)
-                                .build()).rows
+                return [{
+                    sheets: [{
+                        sheetname: data.category,
+                        data: (await new Builder(`tbl_stocks AS stck`)
+                                    .select(`stck.id AS "ID", stck.series_no AS "Series no.", brd.name AS "Brand", ${columns}, 
+                                                CASE WHEN stck.quantity > 0 THEN 'AVAILABLE' ELSE 'NOT AVAILABLE' END AS "Availability", 
+                                                UPPER(stck.status) AS "Status", UPPER(REPLACE(stck.branch, '_', ' ')) AS "Branch",
+                                                CONCAT(cb.lname, ', ', cb.fname) AS "Created by", stck.date_created AS "Date created", 
+                                                CONCAT(ub.lname, ', ', ub.fname) AS "Updated by", stck.date_updated AS "Date updated",
+                                                CONCAT(db.lname, ', ', db.fname) AS "Deleted by", stck.date_deleted AS "Date deleted"`)
+                                    .join({ table: `tbl_stocks_info AS info`, condition: `info.stocks_id = stck.id`, type: `LEFT` })
+                                    .join({ table: `tbl_category AS ctg`, condition: `stck.category_id = ctg.id`, type: `LEFT` })
+                                    .join({ table: `tbl_brands AS brd`, condition: `stck.brand_id = brd.id`, type: `LEFT` })
+                                    .join({ table: `tbl_users_info AS cb`, condition: `stck.created_by = cb.user_id`, type: `LEFT` })
+                                    .join({ table: `tbl_users_info AS ub`, condition: `stck.updated_by = ub.user_id`, type: `LEFT` })
+                                    .join({ table: `tbl_users_info AS db`, condition: `stck.deleted_by = db.user_id`, type: `LEFT` })
+                                    .condition(`WHERE ctg.name= '${data.category}' 
+                                                        ${JSON.parse(atob(data.token)).role === 'user' ? `AND stck.branch= '${JSON.parse(atob(data.token)).branch}'` : ''} 
+                                                        ${data.searchtxt !== '' ? `AND ${searchtxt}` : ''}
+                                                        ${data.brand !== 'all' ? `AND stck.brand_id= ${data.brand}` : ''}
+                                                        ORDER BY info.${data.orderby} ${(data.sort).toUpperCase()}`)
+                                    .build()).rows
+                    }],
+                    filename: `Stocks-${today}`
+                }];
         }
     }
 

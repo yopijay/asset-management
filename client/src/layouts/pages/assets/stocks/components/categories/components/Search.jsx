@@ -14,16 +14,10 @@ import { excel } from "core/api"; // API
 import { btnicon, btntxt, download, logs, search, upload } from "../style";
 
 const Search = ({ find }) => {
-    const today = `${parseInt((new Date()).getMonth()) + 1}${(new Date()).getDate()}${(new Date()).getFullYear()}`;
     const { category } = useParams();
     const { register, setValue, getValues } = useContext(FormCntxt);
     const { data } = useContext(AccountCntxt);
-    const { mutate: xlsx } = 
-        usePost({ request: excel, 
-                        onSuccess: 
-                            data => 
-                                exporttoexcel({ sheets: [{ data: data, sheetname: (category.charAt(0).toUpperCase() + category.slice(1)).replace('-', ' ') }], 
-                                                            filename: `${(category.charAt(0).toUpperCase() + category.slice(1)).replace('-', ' ')}-${today}` }) });
+    const { mutate: xlsx } = usePost({ request: excel, onSuccess: data => exporttoexcel(data) });
 
     let authcreate = data.user_level === 'superadmin' || (data.permission === null || JSON.parse(data.permission).assets.stocks.create);
     let authlogs = data.user_level === 'superadmin' || (data.permission === null || JSON.parse(data.permission).assets.stocks.logs);

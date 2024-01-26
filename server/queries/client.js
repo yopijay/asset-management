@@ -88,6 +88,7 @@ const excel = (table, data) => {
             case 'tbl_position': resolve(await new Position().excel(data)); break;
             case 'tbl_routes': resolve(await new Routes().excel(data)); break;
             case 'tbl_modules': resolve(await new Modules().excel(data)); break;
+            case 'tbl_users': resolve(await new Users().excel(data)); break;
         }
     });
 }

@@ -15,6 +15,7 @@ class Company {
     }
 
     excel = async data => {
+        const today = `${parseInt((new Date()).getMonth()) + 1}${(new Date()).getDate()}${(new Date()).getFullYear()}`;
         let columns = '';
         let searchtxt = '';
         let condition = ''; 
@@ -32,13 +33,19 @@ class Company {
                     default:
                 }
 
-                return (await new Builder(`tbl_audit_trail AS at`)
-                                .select(columns)
-                                .join({ table: `tbl_company AS cmp`, condition: `at.item_id = cmp.id`, type: `LEFT` })
-                                .join({ table: `tbl_users_info AS ubi`, condition: `at.user_id = ubi.user_id`, type: `LEFT` })
-                                .condition(`WHERE at.table_name= 'tbl_company' ${condition} ${data.logssearchtxt !== '' ? searchtxt : ''}
-                                                    ORDER BY at.${data.logsorderby} ${(data.logssort).toUpperCase()} ${data.limit !== '' ? `LIMIT ${data.limit}` : ''}`)
-                                .build()).rows;
+                return [{
+                    sheets: [{
+                        sheetname: 'Logs',
+                        data: (await new Builder(`tbl_audit_trail AS at`)
+                                    .select(columns)
+                                    .join({ table: `tbl_company AS cmp`, condition: `at.item_id = cmp.id`, type: `LEFT` })
+                                    .join({ table: `tbl_users_info AS ubi`, condition: `at.user_id = ubi.user_id`, type: `LEFT` })
+                                    .condition(`WHERE at.table_name= 'tbl_company' ${condition} ${data.logssearchtxt !== '' ? searchtxt : ''}
+                                                        ORDER BY at.${data.logsorderby} ${(data.logssort).toUpperCase()} ${data.limit !== '' ? `LIMIT ${data.limit}` : ''}`)
+                                    .build()).rows
+                    }],
+                    filename: `Company Logs-${today}`
+                }];
             
             default: 
                 columns = `cmp.id AS "ID", cmp.series_no AS "Series no.", cmp.name AS "Company", cmp.telephone AS "Telephone", 
@@ -48,15 +55,21 @@ class Company {
                                     CONCAT(ub.lname, ', ', ub.fname) AS "Updated by", cmp.date_updated AS "Date updated",
                                     CONCAT(db.lname, ', ', db.fname) AS "Deleted by", cmp.date_deleted AS "Date deleted"`;
 
-                return (await new Builder(`tbl_company AS cmp`)
-                                .select(columns)
-                                .join({ table: `tbl_users_info AS cb`, condition: `cmp.created_by = cb.user_id`, type: `LEFT` })
-                                .join({ table: `tbl_users_info AS ub`, condition: `cmp.updated_by = ub.user_id`, type: `LEFT` })
-                                .join({ table: `tbl_users_info AS db`, condition: `cmp.deleted_by = db.user_id`, type: `LEFT` })
-                                .condition(`${data.searchtxt !== '' ?
-                                                        `WHERE cmp.series_no LIKE '%${(data.searchtxt).toUpperCase()}%' OR cmp.name LIKE '%${(data.searchtxt).toUpperCase()}%'` : ''} 
-                                                        ORDER BY cmp.${data.orderby} ${(data.sort).toUpperCase()}`)
-                                .build()).rows;
+                return [{
+                    sheets: [{
+                        sheetname: 'All',
+                        data: (await new Builder(`tbl_company AS cmp`)
+                                    .select(columns)
+                                    .join({ table: `tbl_users_info AS cb`, condition: `cmp.created_by = cb.user_id`, type: `LEFT` })
+                                    .join({ table: `tbl_users_info AS ub`, condition: `cmp.updated_by = ub.user_id`, type: `LEFT` })
+                                    .join({ table: `tbl_users_info AS db`, condition: `cmp.deleted_by = db.user_id`, type: `LEFT` })
+                                    .condition(`${data.searchtxt !== '' ?
+                                                            `WHERE cmp.series_no LIKE '%${(data.searchtxt).toUpperCase()}%' OR cmp.name LIKE '%${(data.searchtxt).toUpperCase()}%'` : ''} 
+                                                            ORDER BY cmp.${data.orderby} ${(data.sort).toUpperCase()}`)
+                                    .build()).rows
+                    }],
+                    filename: `Company-${today}`
+                }];
         }
     }
 

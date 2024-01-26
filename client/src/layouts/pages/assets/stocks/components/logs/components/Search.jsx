@@ -11,16 +11,9 @@ import { excel } from "core/api"; // API
 import { download, search } from "../style"; // Styles
 
 const Search = props => {
-    const today = `${parseInt((new Date()).getMonth()) + 1}${(new Date()).getDate()}${(new Date()).getFullYear()}`;
     const { category } = useParams();
     const { find, register, getValues, setValue } = props;
-    const { mutate: xlsx } = 
-        usePost({ request: excel, 
-                            onSuccess: 
-                                data => 
-                                exporttoexcel(data, 
-                                    (category.charAt(0).toUpperCase() + category.slice(1)).replace('-', ' '), 
-                                    `${(category.charAt(0).toUpperCase() + category.slice(1)).replace('-', ' ')} Logs-${today}`) });
+    const { mutate: xlsx } = usePost({ request: excel, onSuccess: data => exporttoexcel(data) });
 
     return (
         <Stack direction= "row" justifyContent= "space-between" alignItems= "center" spacing= { 1 }>

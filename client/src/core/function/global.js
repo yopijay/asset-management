@@ -71,12 +71,15 @@ export const pad = (num, size) => {
     return s.substr(s.length-size);
 }
 
-export const exporttoexcel = ({ sheets, filename }) => {
-    const wb = XLSX.utils.book_new();
-    
-    for(let count = 0; count < sheets.length; count++) {
-        XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet(sheets[count].data), sheets[count].sheetname)
-    }
+export const exporttoexcel = data => {
+    for(let wbcount = 0; wbcount < data.length; wbcount++) {
+        let { sheets, filename } = data[wbcount];
+        let wb = XLSX.utils.book_new();
+        
+        for(let wscount = 0; wscount < sheets.length; wscount++) {
+            XLSX.utils.book_append_sheet(wb, XLSX.utils.json_to_sheet((sheets[wscount]).data), (sheets[wscount]).sheetname);
+        }
 
-    XLSX.writeFile(wb, `${filename}.xlsx`);
+        XLSX.writeFile(wb, `${filename}.xlsx`);
+    }
 }

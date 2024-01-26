@@ -19,6 +19,7 @@ class Category {
     }
 
     excel = async data => {
+        const today = `${parseInt((new Date()).getMonth()) + 1}${(new Date()).getDate()}${(new Date()).getFullYear()}`;
         let columns = '';
         let searchtxt = '';
         let condition = ''; 
@@ -36,13 +37,19 @@ class Category {
                     default:
                 }
 
-                return (await new Builder(`tbl_audit_trail AS at`)
-                                .select(columns)
-                                .join({ table: `tbl_category AS ctg`, condition: `at.item_id = ctg.id`, type: `LEFT` })
-                                .join({ table: `tbl_users_info AS ubi`, condition: `at.user_id = ubi.user_id`, type: `LEFT` })
-                                .condition(`WHERE at.table_name= 'tbl_category' ${condition} ${data.logssearchtxt !== '' ? searchtxt : ''}
-                                                    ORDER BY at.${data.logsorderby} ${(data.logssort).toUpperCase()} ${data.limit !== '' ? `LIMIT ${data.limit}` : ''}`)
-                                .build()).rows;
+                return [{
+                    sheets: [{
+                        sheetname: 'Logs',
+                        data: (await new Builder(`tbl_audit_trail AS at`)
+                                    .select(columns)
+                                    .join({ table: `tbl_category AS ctg`, condition: `at.item_id = ctg.id`, type: `LEFT` })
+                                    .join({ table: `tbl_users_info AS ubi`, condition: `at.user_id = ubi.user_id`, type: `LEFT` })
+                                    .condition(`WHERE at.table_name= 'tbl_category' ${condition} ${data.logssearchtxt !== '' ? searchtxt : ''}
+                                                        ORDER BY at.${data.logsorderby} ${(data.logssort).toUpperCase()} ${data.limit !== '' ? `LIMIT ${data.limit}` : ''}`)
+                                    .build()).rows
+                    }],
+                    filename: `Category Logs-${today}`
+                }];
 
             default: 
                 columns = `ctg.id AS "ID", ctg.series_no AS "Series no.", UPPER(ctg.type) AS "Type", ctg.name AS "Category", 
@@ -51,14 +58,20 @@ class Category {
                                     CONCAT(ub.lname, ', ', ub.fname) AS "Updated by", ctg.date_updated AS "Date updated",
                                     CONCAT(db.lname, ', ', db.fname) AS "Deleted by", ctg.date_deleted AS "Date deleted"`;
 
-                return (await new Builder(`tbl_category AS ctg`)
-                                .select(columns)
-                                .join({ table: `tbl_users_info AS cb`, condition: `ctg.created_by = cb.user_id`, type: `LEFT` })
-                                .join({ table: `tbl_users_info AS ub`, condition: `ctg.updated_by = ub.user_id`, type: `LEFT` })
-                                .join({ table: `tbl_users_info AS db`, condition: `ctg.deleted_by = db.user_id`, type: `LEFT` })
-                                .condition(`${data.searchtxt !== '' ? `WHERE ctg.series_no LIKE '%${(data.searchtxt).toUpperCase()}%' 
-                                                    OR ctg.name LIKE '%${(data.searchtxt).toUpperCase()}%'` : ''} ORDER BY ctg.${data.orderby} ${(data.sort).toUpperCase()}`)
-                                .build()).rows;
+                return [{
+                    sheets: [{
+                        sheetname: 'All',
+                        data: (await new Builder(`tbl_category AS ctg`)
+                                    .select(columns)
+                                    .join({ table: `tbl_users_info AS cb`, condition: `ctg.created_by = cb.user_id`, type: `LEFT` })
+                                    .join({ table: `tbl_users_info AS ub`, condition: `ctg.updated_by = ub.user_id`, type: `LEFT` })
+                                    .join({ table: `tbl_users_info AS db`, condition: `ctg.deleted_by = db.user_id`, type: `LEFT` })
+                                    .condition(`${data.searchtxt !== '' ? `WHERE ctg.series_no LIKE '%${(data.searchtxt).toUpperCase()}%' 
+                                                        OR ctg.name LIKE '%${(data.searchtxt).toUpperCase()}%'` : ''} ORDER BY ctg.${data.orderby} ${(data.sort).toUpperCase()}`)
+                                    .build()).rows
+                    }],
+                    filename: `Category-${today}`
+                }];
         }
     }
 

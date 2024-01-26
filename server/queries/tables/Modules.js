@@ -31,13 +31,19 @@ class Modules {
                     default:
                 }
 
-                return (await new Builder(`tbl_audit_trail AS at`)
-                                .select(columns)
-                                .join({ table: `tbl_modules AS mdl`, condition: `at.item_id = mdl.id`, type: `LEFT` })
-                                .join({ table: `tbl_users_info AS ubi`, condition: `at.user_id = ubi.user_id`, type: `LEFT` })
-                                .condition(`WHERE at.table_name= 'tbl_modules' ${condition} ${data.logssearchtxt !== '' ? searchtxt : ''}
-                                                    ORDER BY at.${data.logsorderby} ${(data.logssort).toUpperCase()} ${data.limit !== '' ? `LIMIT ${data.limit}` : ''}`)
-                                .build()).rows;
+                return [{
+                    sheets: [{
+                        sheetname: 'Logs',
+                        data: (await new Builder(`tbl_audit_trail AS at`)
+                                    .select(columns)
+                                    .join({ table: `tbl_modules AS mdl`, condition: `at.item_id = mdl.id`, type: `LEFT` })
+                                    .join({ table: `tbl_users_info AS ubi`, condition: `at.user_id = ubi.user_id`, type: `LEFT` })
+                                    .condition(`WHERE at.table_name= 'tbl_modules' ${condition} ${data.logssearchtxt !== '' ? searchtxt : ''}
+                                                        ORDER BY at.${data.logsorderby} ${(data.logssort).toUpperCase()} ${data.limit !== '' ? `LIMIT ${data.limit}` : ''}`)
+                                    .build()).rows
+                    }],
+                    filename: `Module Logs-${today}`
+                }];
 
             default:
                 columns = `mdl.id AS "ID", mdl.series_no AS "Series no.", rts.route AS "Route", mdl.name AS "Module", CONCAT('/', rts.base_url, '/', mdl.path) AS "URL",
@@ -46,15 +52,21 @@ class Modules {
                                     CONCAT(ub.lname, ', ', ub.fname) AS "Updated by", mdl.date_updated AS "Date updated",
                                     CONCAT(db.lname, ', ', db.fname) AS "Deleted by", mdl.date_deleted AS "Date deleted"`;
 
-                return (await new Builder(`tbl_modules AS mdl`)
-                                .select(columns)
-                                .join({ table: `tbl_routes AS rts`, condition: `mdl.route_id = rts.id`, type: `LEFT` })
-                                .join({ table: `tbl_users_info AS cb`, condition: `mdl.created_by = cb.user_id`, type: `LEFT` })
-                                .join({ table: `tbl_users_info AS ub`, condition: `mdl.updated_by = ub.user_id`, type: `LEFT` })
-                                .join({ table: `tbl_users_info AS db`, condition: `mdl.deleted_by = db.user_id`, type: `LEFT` })
-                                .condition(`${data.searchtxt !== '' ? `WHERE mdl.series_no LIKE '%${(data.searchtxt).toUpperCase()}%' OR mdl.name LIKE '%${(data.searchtxt).toUpperCase()}%'
-                                                        OR mdl.name LIKE '%${(data.searchtxt).toUpperCase()}%'` : ''} ORDER BY mdl.${data.orderby} ${(data.sort).toUpperCase()}`)
-                                .build()).rows;
+                return [{
+                    sheets: [{
+                        sheetname: 'All',
+                        data: (await new Builder(`tbl_modules AS mdl`)
+                                    .select(columns)
+                                    .join({ table: `tbl_routes AS rts`, condition: `mdl.route_id = rts.id`, type: `LEFT` })
+                                    .join({ table: `tbl_users_info AS cb`, condition: `mdl.created_by = cb.user_id`, type: `LEFT` })
+                                    .join({ table: `tbl_users_info AS ub`, condition: `mdl.updated_by = ub.user_id`, type: `LEFT` })
+                                    .join({ table: `tbl_users_info AS db`, condition: `mdl.deleted_by = db.user_id`, type: `LEFT` })
+                                    .condition(`${data.searchtxt !== '' ? `WHERE mdl.series_no LIKE '%${(data.searchtxt).toUpperCase()}%' OR mdl.name LIKE '%${(data.searchtxt).toUpperCase()}%'
+                                                            OR mdl.name LIKE '%${(data.searchtxt).toUpperCase()}%'` : ''} ORDER BY mdl.${data.orderby} ${(data.sort).toUpperCase()}`)
+                                    .build()).rows
+                    }],
+                    filename: `Modules-${today}`
+                }];
         }
     }
 
