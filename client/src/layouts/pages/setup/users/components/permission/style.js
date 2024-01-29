@@ -8,7 +8,7 @@ export const content = {
 export const title = {
     fontFamily: 'Montserrat Black',
     fontSize: '1.17rem',
-    color: '#394867',
+    color: '#636e72',
 }
 
 export const card = {

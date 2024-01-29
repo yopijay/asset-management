@@ -68,16 +68,112 @@ class Users {
             default:
                 let xlsx = [];
                 let emp = {};
-                let perm = {};
 
                 let type = ['employee', 'permission'];
                 let company = (await new Builder(`tbl_company`).select(`id, name`).build()).rows;
-                let route = (await new Builder(`tbl_routes`).select(`id, route`).build()).rows;
+                let route = ((await new Builder(`tbl_routes`).select(`id, route`).condition(`WHERE status= 1`).build()).rows).concat({ id: 0, route: 'SETUP' });
+                let permission = (await new Builder(`tbl_users_permission AS prm`)
+                                                .select(`prm.*, CONCAT(info.lname, ', ', info.fname) AS name`)
+                                                .join({ table: `tbl_users_info AS info`, condition: `prm.user_id = info.user_id`, type: `LEFT` })
+                                                .build()).rows;
 
                 for(let tp = 0; tp < type.length; tp++) {
                     switch(type[tp]) {
                         case 'permission':
                             
+                            for(let rts = 0; rts < route.length; rts++) {
+                                let _sheets = [];
+                                let modules = (await new Builder(`tbl_modules`).select().condition(`WHERE route_id= ${route[rts].id}`).build()).rows;
+
+                                if(route[rts].id === 0) {
+                                    ['users', 'route', 'modules'].forEach(mdl => {
+                                        let _data = [];
+
+                                        permission.forEach(prm => {
+                                            if(prm.permission !== null) {
+                                                let prms = JSON.parse(prm.permission);
+
+                                                if(mdl === 'users') {
+                                                    _data.push({
+                                                        "ID": prm.user_id,
+                                                        "Employee name": prm.name,
+                                                        "List": prms['setup'][mdl].list &&
+                                                                    prms['setup'][mdl].list !== null ? '/' : 'X',
+                                                        "Create": prms['setup'][mdl].create &&
+                                                                    prms['setup'][mdl].create !== null ? '/' : 'X',
+                                                        "Update": prms['setup'][mdl].update &&
+                                                                    prms['setup'][mdl].update !== null ? '/' : 'X',
+                                                        "View": prms['setup'][mdl].view &&
+                                                                    prms['setup'][mdl].view !== null ? '/' : 'X',
+                                                        "Logs": prms['setup'][mdl].logs &&
+                                                                    prms['setup'][mdl].logs !== null ? '/' : 'X',
+                                                        "Export": prms['setup'][mdl].export &&
+                                                                    prms['setup'][mdl].export !== null ? '/' : 'X',
+                                                        "Permission": prms['setup'][mdl].permission &&
+                                                                    prms['setup'][mdl].permission !== null ? '/' : 'X'
+                                                    });
+                                                }
+                                                else {
+                                                    _data.push({
+                                                        "ID": prm.user_id,
+                                                        "Employee name": prm.name,
+                                                        "List": prms['setup'][mdl].list &&
+                                                                    prms['setup'][mdl].list !== null ? '/' : 'X',
+                                                        "Create": prms['setup'][mdl].create &&
+                                                                    prms['setup'][mdl].create !== null ? '/' : 'X',
+                                                        "Update": prms['setup'][mdl].update &&
+                                                                    prms['setup'][mdl].update !== null ? '/' : 'X',
+                                                        "View": prms['setup'][mdl].view &&
+                                                                    prms['setup'][mdl].view !== null ? '/' : 'X',
+                                                        "Logs": prms['setup'][mdl].logs &&
+                                                                    prms['setup'][mdl].logs !== null ? '/' : 'X',
+                                                        "Export": prms['setup'][mdl].export &&
+                                                                    prms['setup'][mdl].export !== null ? '/' : 'X'
+                                                    });
+                                                }
+                                            }
+                                        });
+
+                                        _sheets.push({ sheetname: (mdl).toUpperCase(), data: _data });
+                                    });
+                                }
+                                else {
+                                    for(let mdl = 0; mdl < modules.length; mdl++) {
+                                        let _data = [];
+    
+                                        permission.forEach(prm => {
+                                            if(prm.permission !== null) {
+                                                let prms = JSON.parse(prm.permission);
+    
+                                                _data.push({
+                                                    "ID": prm.user_id,
+                                                    "Employee name": prm.name,
+                                                    "List": prms[(route[rts].route).toLowerCase()][(modules[mdl].name).toLowerCase()].list &&
+                                                                prms[(route[rts].route).toLowerCase()][(modules[mdl].name).toLowerCase()].list !== null ? '/' : 'X',
+                                                    "Create": prms[(route[rts].route).toLowerCase()][(modules[mdl].name).toLowerCase()].create &&
+                                                                prms[(route[rts].route).toLowerCase()][(modules[mdl].name).toLowerCase()].create !== null ? '/' : 'X',
+                                                    "Update": prms[(route[rts].route).toLowerCase()][(modules[mdl].name).toLowerCase()].update &&
+                                                                prms[(route[rts].route).toLowerCase()][(modules[mdl].name).toLowerCase()].update !== null ? '/' : 'X',
+                                                    "View": prms[(route[rts].route).toLowerCase()][(modules[mdl].name).toLowerCase()].view &&
+                                                                prms[(route[rts].route).toLowerCase()][(modules[mdl].name).toLowerCase()].view !== null ? '/' : 'X',
+                                                    "Logs": prms[(route[rts].route).toLowerCase()][(modules[mdl].name).toLowerCase()].logs &&
+                                                                prms[(route[rts].route).toLowerCase()][(modules[mdl].name).toLowerCase()].logs !== null ? '/' : 'X',
+                                                    "Export": prms[(route[rts].route).toLowerCase()][(modules[mdl].name).toLowerCase()].export &&
+                                                                prms[(route[rts].route).toLowerCase()][(modules[mdl].name).toLowerCase()].export !== null ? '/' : 'X'
+                                                });
+                                            }
+                                        });
+    
+                                        _sheets.push({ sheetname: modules[mdl].name, data: _data });
+                                    }
+                                }
+
+                                xlsx.push({
+                                    filename: `Permission (${route[rts].route})-${today}`,
+                                    sheets: _sheets
+                                });
+                            }
+
                             break;
 
                         default:
