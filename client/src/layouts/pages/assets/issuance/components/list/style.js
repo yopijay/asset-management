@@ -154,7 +154,11 @@ export const status = bgcolor => ({
     borderRadius: '4px',
     padding: '4px 16px',
     color: '#ffffff',
-    fontSize: '85%'
+    fontSize: '85%',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    width: '100%'
 });
 
 export const menu = {
