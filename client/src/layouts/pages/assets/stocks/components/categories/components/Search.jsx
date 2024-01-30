@@ -11,7 +11,7 @@ import { AccountCntxt } from "core/context/Account"; // Context
 import { exporttoexcel, usePost } from "core/function/global"; // Function
 import { excel } from "core/api"; // API
 
-import { btnicon, btntxt, download, logs, search, upload } from "../style";
+import { btnicon, btntxt, download, logs, search } from "../style";
 
 const Search = ({ find }) => {
     const { category } = useParams();
@@ -22,7 +22,7 @@ const Search = ({ find }) => {
     let authcreate = data.user_level === 'superadmin' || (data.permission === null || JSON.parse(data.permission).assets.stocks.create);
     let authlogs = data.user_level === 'superadmin' || (data.permission === null || JSON.parse(data.permission).assets.stocks.logs);
     let authexport = data.user_level === 'superadmin' || (data.permission === null || JSON.parse(data.permission).assets.stocks.export);
-    let authimport = data.user_level === 'superadmin' || (data.permission === null || JSON.parse(data.permission).assets.stocks.import);
+    // let authimport = data.user_level === 'superadmin' || (data.permission === null || JSON.parse(data.permission).assets.stocks.import);
 
     return (
         <Stack direction= "row" justifyContent= "space-between" alignItems= "center" spacing= { 1 }>
@@ -47,7 +47,7 @@ const Search = ({ find }) => {
                             data['type'] = 'list';
                             xlsx({ table: 'tbl_stocks', data: data }); 
                         } }><FontAwesomeIcon icon= { solid('download') } /></Typography> : '' }
-                { authimport ? <Typography sx= { upload }><FontAwesomeIcon icon= { solid('upload') } /></Typography> : '' }
+                {/* { authimport ? <Typography sx= { upload }><FontAwesomeIcon icon= { solid('upload') } /></Typography> : '' } */}
                 { authcreate ? 
                     <Typography component= { Link } to= { `/assets/stocks/${category}/form/new` } sx= { btnicon }><FontAwesomeIcon icon= { solid('plus') } /></Typography> : '' }
                 { authcreate ? 

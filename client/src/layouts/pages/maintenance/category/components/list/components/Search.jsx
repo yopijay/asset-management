@@ -11,7 +11,7 @@ import { AccountCntxt } from "core/context/Account"; // Context
 import { exporttoexcel, usePost } from "core/function/global"; // Function
 import { excel } from "core/api"; // API
 
-import { btnicon, btntxt, download, logs, search, upload } from "../style";
+import { btnicon, btntxt, download, logs, search } from "../style";
 
 const Search = ({ find }) => {
     const { register, setValue, getValues } = useContext(FormCntxt);
@@ -20,8 +20,8 @@ const Search = ({ find }) => {
 
     let authcreate = data.user_level === 'superadmin' || (data.permission === null || JSON.parse(data.permission).maintenance.category.create);
     let authlogs = data.user_level === 'superadmin' || (data.permission === null || JSON.parse(data.permission).maintenance.category.logs);
-    let authimport = data.user_level === 'superadmin' || (data.permission === null || JSON.parse(data.permission).maintenance.category.import);
     let authexport = data.user_level === 'superadmin' || (data.permission === null || JSON.parse(data.permission).maintenance.category.export);
+    // let authimport = data.user_level === 'superadmin' || (data.permission === null || JSON.parse(data.permission).maintenance.category.import);
 
     return (
         <Stack direction= "row" justifyContent= "space-between" alignItems= "center" spacing= { 1 }>
@@ -41,7 +41,7 @@ const Search = ({ find }) => {
                             data['type'] = 'list';
                             xlsx({ table: 'tbl_category', data: data });
                         } }><FontAwesomeIcon icon= { solid('download') } /></Typography> : '' }
-                { authimport ? <Typography sx= { upload }><FontAwesomeIcon icon= { solid('upload') } /></Typography> : '' }
+                {/* { authimport ? <Typography sx= { upload }><FontAwesomeIcon icon= { solid('upload') } /></Typography> : '' } */}
                 { authcreate ? <Typography component= { Link } to= "/maintenance/category/form/new" sx= { btnicon }><FontAwesomeIcon icon= { solid('plus') } /></Typography> : '' }
                 { authcreate ? <Typography component= { Link } to= "/maintenance/category/form/new" sx= { btntxt }>New Category</Typography> : '' }
             </Stack>

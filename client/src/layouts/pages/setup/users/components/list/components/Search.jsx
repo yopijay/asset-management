@@ -12,7 +12,7 @@ import { exporttoexcel, usePost } from "core/function/global"; // Function
 import { excel } from "core/api"; // API
 
 // Styles
-import { btnicon, btntxt, download, logs, search, upload } from "../style";
+import { btnicon, btntxt, download, logs, search } from "../style";
 
 const Search = ({ find }) => {
     const { register, setValue, getValues } = useContext(FormCntxt);
@@ -21,8 +21,8 @@ const Search = ({ find }) => {
 
     let authcreate = data.user_level === 'superadmin' || (data.permission === null || JSON.parse(data.permission).setup.users.create);
     let authlogs = data.user_level === 'superadmin' || (data.permission === null || JSON.parse(data.permission).setup.users.logs);
-    let authimport = data.user_level === 'superadmin' || (data.permission === null || JSON.parse(data.permission).setup.users.import);
     let authexport = data.user_level === 'superadmin' || (data.permission === null || JSON.parse(data.permission).setup.users.export);
+    // let authimport = data.user_level === 'superadmin' || (data.permission === null || JSON.parse(data.permission).setup.users.import);
 
     return (
         <Stack direction= "row" justifyContent= "space-between" alignItems= "center" spacing= { 1 }>
@@ -42,7 +42,7 @@ const Search = ({ find }) => {
                         data['type'] = 'list';
                         xlsx({ table: 'tbl_users', data: data });
                     } }><FontAwesomeIcon icon= { solid('download') } /></Typography> : '' }
-                { authimport ? <Typography sx= { upload }><FontAwesomeIcon icon= { solid('upload') } /></Typography> : '' }
+                {/* { authimport ? <Typography sx= { upload }><FontAwesomeIcon icon= { solid('upload') } /></Typography> : '' } */}
                 { authcreate ? <Typography component= { Link } to= "/setup/users/form/new" sx= { btnicon }><FontAwesomeIcon icon= { solid('plus') } /></Typography> : '' }
                 { authcreate ? <Typography component= { Link } to= "/setup/users/form/new" sx= { btntxt }>New User</Typography> : '' }
             </Stack>
