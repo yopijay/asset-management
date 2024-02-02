@@ -28,15 +28,15 @@ const Index = () => {
     return (
         <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" sx= { container } spacing= { 3 }>
             <Welcome />
-            { data.user_level === 'superadmin' || (data.user_level !== 'superadmin' && data.permission !== null) ? 
+            {/* { data.user_level === 'superadmin' || (data.user_level !== 'superadmin' && data.permission !== null) ? 
                 <Stack direction= "column" justifyContent= "flex-start" alignItems ="stretch" spacing= { 5 } sx= {{ overflowY: 'scroll', '&::-webkit-scrollbar': { display: 'none' } }}>
                     { (data.user_level === 'superadmin' || ((JSON.parse(data.permission)).assets?.products?.list ?? false) || 
                         ((JSON.parse(data.permission)).assets?.stocks?.list ?? false) || 
                         ((JSON.parse(data.permission)).setup?.users?.list ?? false)) ?
                         <Summary /> : '' }
-                    {/* <Stocks /> */}
-                    {/* <Users /> */}
-                </Stack> : '' }
+                    <Stocks />
+                    <Users />
+                </Stack> : '' } */}
         </Stack>
     );
 }
