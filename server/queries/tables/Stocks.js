@@ -25,6 +25,59 @@ class Stocks {
                         .build()).rows;
     }
 
+    dashboard = async data => {
+        const { id, user_level, branch } = data;
+
+        let qry = ``;
+        let stocks = {};
+        let ctg = (await new Builder(`tbl_category`).select().condition(`WHERE status= 1 AND type= 'assets'`).build()).rows;
+
+        switch(user_level) {
+            case 'superadmin': 
+                qry = `ctg.name != 'TONER' AND stck.status = 'good'`;
+
+                stocks['total'] = (await new Builder(`tbl_stocks AS stck`)
+                                            .select(`SUM(stck.quantity) AS quantity`)
+                                            .join({ table: `tbl_category AS ctg`, condition: `stck.category_id = ctg.id`, type: `LEFT` })
+                                            .condition(`WHERE ${qry}`)
+                                            .build()).rows[0].quantity;
+
+                stocks['percategory'] = [];
+                for(let count = 0; count < ctg.length; count++) {
+                    let stck = (await new Builder(`tbl_stocks AS stck`)
+                                        .select(`SUM(stck.quantity) AS quantity`)
+                                        .join({ table: `tbl_category AS ctg`, condition: `stck.category_id = ctg.id`, type: `LEFT` })
+                                        .condition(`WHERE ctg.name= '${ctg[count].name}'`)
+                                        .build()).rows[0];
+
+                    (stocks['percategory']).push({ name: ctg[count].name, quantity: stck.quantity });
+                }
+
+                break;
+            default:
+                qry = `ctg.name != 'TONER' AND stck.status = 'good'`;
+                
+                stocks['total'] = (await new Builder(`tbl_stocks AS stck`)
+                                            .select(`SUM(stck.quantity) AS quantity`)
+                                            .join({ table: `tbl_category AS ctg`, condition: `stck.category_id = ctg.id`, type: `LEFT` })
+                                            .condition(`WHERE ${qry} AND stck.branch = '${branch}'`)
+                                            .build()).rows[0].quantity;
+
+                stocks['percategory'] = [];
+                for(let count = 0; count < ctg.length; count++) { 
+                    let stck = (await new Builder(`tbl_stocks AS stck`)
+                                        .select(`SUM(stck.quantity) AS quantity`)
+                                        .join({ table: `tbl_category AS ctg`, condition: `stck.category_id = ctg.id`, type: `LEFT` })
+                                        .condition(`WHERE ctg.name= '${ctg[count].name}' AND stck.branch= '${branch}'`)
+                                        .build()).rows[0];
+
+                    (stocks['percategory']).push({ name: ctg[count].name, quantity: stck.quantity });
+                }
+        }
+
+        return stocks;
+    }
+
     excel = async data => {
         const today = `${parseInt((new Date()).getMonth()) + 1}${(new Date()).getDate()}${(new Date()).getFullYear()}`;
         let columns = '';

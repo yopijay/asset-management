@@ -11,18 +11,29 @@ export const panel = {
 
 export const title = {
     color: '#636e72',
-    fontSize: '120%',
-    fontFamily: 'Montserrat ExtraBold'
+    fontSize: {
+        xs: '115%',
+        md: '120%',
+        lg: '130%'
+    },
+    fontFamily: 'Montserrat ExtraBold',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    width: '100%'
 }
 
 export const subtitle = {
     color: '#9BA4B5',
     fontFamily: 'Montserrat ExtraBold',
-    fontSize: '170%'
+    fontSize: {
+        xs: '130%',
+        md: '140%',
+        lg: '160%'
+    },
 }
 
 export const stockcontainer = {
-    paddingY: '12px',
     overflowX: 'scroll',
     '&::-webkit-scrollbar': { display: 'none' }
 }
@@ -38,9 +49,13 @@ export const category = {
 }
 
 export const ctgy = {
-    color: '#61677A',
+    color: '#636e72',
     fontSize: '110%',
-    fontFamily: 'Montserrat ExtraBold'
+    fontFamily: 'Montserrat ExtraBold',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    width: '100%'
 }
 
 export const qty = {

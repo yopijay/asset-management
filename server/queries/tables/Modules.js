@@ -4,6 +4,7 @@ const Global = require("../../function/global"); // Function
 const audit = { series_no: '', table_name: 'tbl_modules',  item_id: 0, field: '', previous: null, current: null, action: '', user_id: 0, date: '' }; // Used for audit trail
 class Modules {
     series = async () => { return (await new Builder(`tbl_modules`).select().build()).rows; }
+    dashboard = async data => { return { total: (await new Builder(`tbl_modules`).select().condition(`WHERE status= 1`).build()).rowCount } }
 
     specific = async id => { 
         return (await new Builder(`tbl_modules AS mdl`)
@@ -12,6 +13,7 @@ class Modules {
                         .condition(`WHERE mdl.id= ${id}`)
                         .build()).rows; 
     }
+
 
     excel = async data => {
         let columns = '';

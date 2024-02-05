@@ -30,6 +30,49 @@ class Users {
         return data;
     }
 
+    dashboard = async data => {
+        const { id, user_level, branch } = data;
+
+        let qry = ``;
+        let users = {};
+        const brnch = [ 'quezon_ave', 'sto_domingo', 'manila', 'cavite' ];
+        const cmp = (await new Builder(`tbl_company`).select().condition(`WHERE status = 1`).build()).rows;
+
+        switch(user_level) {
+            case 'superadmin': 
+                qry = `(usr.id != 1 OR usr.user_level != 'superadmin') AND (info.employment_status != 'resigned' OR usr.status != 0)`;
+
+                users['total'] = (await new Builder(`tbl_users AS usr`).select().join({ table: `tbl_users_info AS info`, condition: `info.user_id = usr.id`, type: `LEFT` }).condition(`WHERE ${qry}`).build()).rowCount;
+
+                users['perbranch'] = [];
+                for(let count = 0; count < brnch.length; count++) {
+                    (users['perbranch'])
+                        .push({ branch: brnch[count], 
+                                        total: (await new Builder(`tbl_users AS usr`).select()
+                                                    .join({ table: `tbl_users_info AS info`, condition: `info.user_id = usr.id`, type: `LEFT` })                
+                                                    .condition(`WHERE ${qry} AND info.branch= '${brnch[count]}'`).build()).rowCount });
+                }
+
+                users['percompany'] = [];
+                for(let count = 0; count < cmp.length; count++) {
+                    (users['percompany'])
+                        .push({ company: cmp[count].name, 
+                                        total: (await new Builder(`tbl_users AS usr`).select()
+                                                        .join({ table: `tbl_users_info AS info`, condition: `info.user_id = usr.id`, type: `LEFT` })
+                                                        .condition(`WHERE ${qry} AND info.company_id= ${cmp[count].id}`).build()).rowCount });
+                }
+                break;
+            default:
+                    qry = `info.branch= '${branch}' AND (usr.id != 1 OR usr.user_level != 'superadmin') AND (info.employment_status != 'resigned' OR usr.status = 0)`;
+
+                    users['total'] = (await new Builder(`tbl_users AS usr`).select().join({ table: `tbl_users_info AS info`, condition: `info.user_id = usr.id`, type: ` LEFT` }).condition(`WHERE ${qry}`).build()).rowCount;
+                    users['girls'] = (await new Builder(`tbl_users AS usr`).select().join({ table: `tbl_users_info AS info`, condition: `info.user_id = usr.id`, type: `LEFT` }).condition(`WHERE ${qry} AND info.gender= 'female'`).build()).rowCount;
+                    users['boys'] = (await new Builder(`tbl_users AS usr`).select().join({ table: `tbl_users_info AS info`, condition: `info.user_id = usr.id`, type: `LEFT` }).condition(`WHERE ${qry} AND info.gender= 'male'`).build()).rowCount;
+        }
+
+        return users;
+    }
+
     excel = async data => {
         const today = `${parseInt((new Date()).getMonth()) + 1}${(new Date()).getDate()}${(new Date()).getFullYear()}`;
         let columns = '';
@@ -222,99 +265,6 @@ class Users {
                             xlsx.push(emp);
                         }
                 }
-                // [ 'employee', 'permission' ].forEach(async name => {
-                //     switch(name) {
-                //         case 'permission': 
-                //             break
-                //         default:
-                            
-                //     }
-                // });
-            
-                // emp['filename'] = `Employee List-${today}`;
-                // emp['sheets'] = [];
-
-                // emp['sheets']
-                //     .push({ 
-                //         sheetname: 'All', 
-                        // data: (await new Builder(`tbl_users AS usr`)
-                        //             .select(`usr.id AS "ID", usr.series_no AS "Series no.", info.employee_no AS "Employee no.", info.rfid AS "RFID", usr.email AS "Email", 
-                        //                         cmp.name AS "Company", dpt.name AS "Department", pst.name AS "Position", CONCAT(head.lname, ', ', head.fname) AS "Immediate supervisor",
-                        //                         info.lname AS "Last name", info.fname AS "First name", info.mname AS "Middle name", info.address AS "Address", UPPER(info.gender) AS "Gender", 
-                        //                         UPPER(usr.user_level) AS "User level", UPPER(info.employment_status) AS "Employment status",
-                        //                         CASE WHEN usr.status > 0 THEN 'ACTIVE' ELSE 'INACTIVE' END AS "Status"`)
-                        //             .join({ table: `tbl_users_info AS info`, condition: `info.user_id = usr.id`, type: `LEFT` })
-                        //             .join({ table: `tbl_company AS cmp`, condition: `info.company_id = cmp.id`, type: `LEFT` })
-                        //             .join({ table: `tbl_department AS dpt`, condition: `info.department_id = dpt.id`, type: `LEFT` })
-                        //             .join({ table: `tbl_position AS pst`, condition: `info.position_id = pst.id`, type: `LEFT` })
-                        //             .join({ table: `tbl_users_info AS head`, condition: `info.head_id = head.user_id`, type: `LEFT` })
-                        //             .condition(`WHERE ${JSON.parse(atob(data.token)).role !== 'superadmin' ? `info.branch= '${JSON.parse(atob(data.token)).branch}' AND` : ''} 
-                        //                                 ${data.searchtxt !== '' ? `(info.fname LIKE '%${(data.searchtxt).toUpperCase()}%' OR info.lname LIKE '%${(data.searchtxt).toUpperCase()}%'
-                        //                                 OR info.employee_no LIKE '%${data.searchtxt}%') AND ` : ''}
-                        //                                 (usr.id != 1 AND usr.id != ${JSON.parse(atob(data.token)).id}) ORDER BY ${data.orderby} ${(data.sort).toUpperCase()}`)
-                        //             .build()).rows });
-                
-                // for(let cmp = 0; cmp < company.length; cmp++) {
-                //     console.log(company[cmp]);
-                // }
-
-                // console.log(emp);
-                // xlsx.push(emp);
-                // let permissions = [];
-                // let perm = (await new Builder(`tbl_users_permission AS perm`)
-                //                     .select(`usr.id, info.employee_no, info.lname, info.fname, perm.permission`)
-                //                     .join({ table: `tbl_users AS usr`, condition: `perm.user_id = usr.id`, type: `LEFT` })
-                //                     .join({ table: `tbl_users_info AS info`, condition: `perm.user_id = info.user_id`, type: `LEFT` })
-                //                     .condition(`WHERE ${JSON.parse(atob(data.token)).role !== 'superadmin' ? `info.branch= '${JSON.parse(atob(data.token)).branch}' AND` : ''} 
-                //                                         ${data.searchtxt !== '' ? `(info.fname LIKE '%${(data.searchtxt).toUpperCase()}%' OR info.lname LIKE '%${(data.searchtxt).toUpperCase()}%'
-                //                                         OR info.employee_no LIKE '%${data.searchtxt}%') AND ` : ''}
-                //                                         (usr.id != 1 AND usr.id != ${JSON.parse(atob(data.token)).id}) ORDER BY ${data.orderby} ${(data.sort).toUpperCase()}`)
-                //                     .build()).rows;
-
-                // for(let count = 0; count < perm.length; count++) {
-                //     let _data = {};
-
-                //     _data['id'] = perm[count].id;
-                //     // console.log(perm[count].id);
-                //     // permissions[count]['id'] = perm[count].id;
-
-
-                //     if(perm[count].permission !== null) {
-
-                //     }
-
-                //     permissions.push(_data);
-                // }
-
-                // console.log(permissions)
-                // return [{
-                //     sheets: [
-                //         {
-                //             sheetname: 'Employee List',
-                            // data: (await new Builder(`tbl_users AS usr`)
-                            //             .select(`usr.id AS "ID", usr.series_no AS "Series no.", info.employee_no AS "Employee no.", info.rfid AS "RFID", usr.email AS "Email", 
-                            //                         cmp.name AS "Company", dpt.name AS "Department", pst.name AS "Position", CONCAT(head.lname, ', ', head.fname) AS "Immediate supervisor",
-                            //                         info.lname AS "Last name", info.fname AS "First name", info.mname AS "Middle name", info.address AS "Address", UPPER(info.gender) AS "Gender", 
-                            //                         UPPER(usr.user_level) AS "User level", UPPER(info.employment_status) AS "Employment status",
-                            //                         CASE WHEN usr.status > 0 THEN 'ACTIVE' ELSE 'INACTIVE' END AS "Status"`)
-                            //             .join({ table: `tbl_users_info AS info`, condition: `info.user_id = usr.id`, type: `LEFT` })
-                            //             .join({ table: `tbl_company AS cmp`, condition: `info.company_id = cmp.id`, type: `LEFT` })
-                            //             .join({ table: `tbl_department AS dpt`, condition: `info.department_id = dpt.id`, type: `LEFT` })
-                            //             .join({ table: `tbl_position AS pst`, condition: `info.position_id = pst.id`, type: `LEFT` })
-                            //             .join({ table: `tbl_users_info AS head`, condition: `info.head_id = head.user_id`, type: `LEFT` })
-                            //             .condition(`WHERE ${JSON.parse(atob(data.token)).role !== 'superadmin' ? `info.branch= '${JSON.parse(atob(data.token)).branch}' AND` : ''} 
-                            //                                 ${data.searchtxt !== '' ? `(info.fname LIKE '%${(data.searchtxt).toUpperCase()}%' OR info.lname LIKE '%${(data.searchtxt).toUpperCase()}%'
-                            //                                 OR info.employee_no LIKE '%${data.searchtxt}%') AND ` : ''}
-                            //                                 (usr.id != 1 AND usr.id != ${JSON.parse(atob(data.token)).id}) ORDER BY ${data.orderby} ${(data.sort).toUpperCase()}`)
-                            //             .build()).rows
-                //         },
-                //         {
-                //             sheetname: 'Permissions',
-                //             data: []
-                //         }
-                //     ],
-                //     filename: `Employee-${today}`
-                // }];
             
             return xlsx;
         }

@@ -4,61 +4,46 @@ import { Box, Grid, Stack, Typography } from "@mui/material";
 
 // Core
 import { AccountCntxt } from "core/context/Account"; // Context
-import { useGet } from "core/function/global"; // Function
-import { dashboard } from "core/api"; // API
 
 // Styles
-import { bars, panel, subtitle, title } from "../style"; 
+import { panel, subtitle, title } from "../style"; 
 
-const Summary = () => {
+const Summary = props => {
+    const { usr, usrfetching, stck, stckfetching, mdl, mdlfetching } = props;
     const { data } = useContext(AccountCntxt);
-    const { data: summary, isFetching: summfetching } = useGet({ key: ['summary'], request: dashboard({ type: 'main', data: data }), options: { refetchOnWindowFocus: true } });
-    const { data: users, isFetching: usrfetching } = useGet({ key: ['per-branch'], request: dashboard({ type: 'userperbranch', data: data }), options: { refetchOnWindowFocus: true } });
 
     return (
         <Box>
-            { !summfetching && !usrfetching ?
-                <Grid container direction= "row" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 }>
-                    <Grid item xs= { 12 } sm= { 7 }>
-                        <Stack direction= "column" justifyContent= "space-between" alignItems= "stretch" spacing= { 2 } sx= { panel }>
-                            <Stack direction= "row" justifyContent= "space-between" alignItems= "center">
-                                <Typography sx= { title }>{ (summary[0].name).toUpperCase() }</Typography>
-                                <Typography sx= { subtitle }>{ summary[0].quantity }</Typography>
-                            </Stack>
-                            { data.user_level === 'superadmin' ? 
-                                <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 1 }>
-                                    { users.map((usr, index) => 
-                                        <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" key= { index }>
-                                            <Typography>{ usr.name }</Typography>
-                                            <Stack direction= "row" justifyContent= "space-between" alignItems= "center" spacing= { 1 }>
-                                                <Box sx= {{ backgroundColor: '#dfe6e9', overflow: 'hidden', borderRadius: '8px', flexGrow: 1 }}>
-                                                    <Box sx= { bars(`${((parseInt(usr.quantity)/parseInt(summary[0].quantity)) * 100).toFixed(2)}%`) } />
-                                                </Box>
-                                                <Typography variant= "caption">{ parseInt(usr.quantity) }</Typography>
-                                            </Stack>
-                                        </Stack> ) }
-                                </Stack> : '' }
-                        </Stack>
-                    </Grid>
-                    { summary.length > 1 ? <Grid item xs= { 12 } sm= { 5 }>
-                        <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 } height= "100%">
-                            <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" sx= { panel }>
-                                <Stack direction= "row" justifyContent= "space-between" alignItems= "center">
-                                    <Typography sx= { title }>{ (summary[1].name).toUpperCase() }</Typography>
-                                    <Typography sx= { subtitle }>{ summary[1].quantity }</Typography>
-                                </Stack>
-                            </Stack>
-                            { summary.length > 2 ? 
-                                <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" sx= { panel }>
-                                    <Stack direction= "row" justifyContent= "space-between" alignItems= "center">
-                                        <Typography sx= { title }>{ (summary[2].name).toUpperCase() }</Typography>
-                                        <Typography sx= { subtitle }>{ summary[2].quantity }</Typography>
-                                    </Stack>
-                                </Stack> : '' }
+            <Grid container direction= "row" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 }>
+                { data.user_level === 'superadmin' || ((JSON.parse(data.permission)).setup?.users?.list ?? false) ? 
+                    <Grid item xs= { 6 } md= { 3 }>
+                        <Stack direction= {{ xs: 'row', lg: 'column' }} justifyContent= "space-between" alignItems= {{ xs: 'center', lg: 'stretch' }} spacing= { 2 } sx= { panel }>
+                            <Typography sx= { title }>USERS</Typography>
+                            <Typography sx= { subtitle }>{ !usrfetching ? usr.total : 0 }</Typography>
                         </Stack>
                     </Grid> : '' }
-                </Grid> :
-                '' }
+                { data.user_level === 'superadmin' || ((JSON.parse(data.permission)).assets?.stocks?.list ?? false) ? 
+                    <Grid item xs= { 6 } md= { 3 }>
+                        <Stack direction= {{ xs: 'row', lg: 'column' }} justifyContent= "space-between" alignItems= {{ xs: 'center', lg: 'stretch' }} spacing= { 2 } sx= { panel }>
+                            <Typography sx= { title }>STOCKS</Typography>
+                            <Typography sx= { subtitle }>{ !stckfetching ? stck.total : 0 }</Typography>
+                        </Stack>
+                    </Grid> : '' }
+                { data.user_level === 'superadmin' || ((JSON.parse(data.permission)).assets?.products?.list ?? false) ?
+                    <Grid item xs= { 6 } md= { 3 }>
+                        <Stack direction= {{ xs: 'row', lg: 'column' }} justifyContent= "space-between" alignItems= {{ xs: 'center', lg: 'stretch' }} spacing= { 2 } sx= { panel }>
+                            <Typography sx= { title }>PRODUCTS</Typography>
+                            <Typography sx= { subtitle }>{ 0 }</Typography>
+                        </Stack>
+                    </Grid> : '' }
+                { data.user_level === 'superadmin' || ((JSON.parse(data.permission)).setup?.modules?.list ?? false) ?
+                    <Grid item xs= { 6 } md= { 3 }>
+                        <Stack direction= {{ xs: 'row', lg: 'column' }} justifyContent= "space-between" alignItems= {{ xs: 'center', lg: 'stretch' }} spacing= { 2 } sx= { panel }>
+                            <Typography sx= { title }>MODULES</Typography>
+                            <Typography sx= { subtitle }>{ !mdlfetching ? mdl.total : 0 }</Typography>
+                        </Stack>
+                    </Grid> : '' }
+            </Grid>
         </Box>
     );
 }

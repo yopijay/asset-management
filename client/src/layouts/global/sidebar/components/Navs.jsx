@@ -7,7 +7,7 @@ import { useContext } from "react";
 import { GlobalCntxt } from "core/context/Global"; // Context
 import { AccountCntxt } from "core/context/Account"; // Context
 import { useGet } from "core/function/global"; // Function
-import { dropdown } from "core/api"; // API
+import { route } from "core/api"; // API
 
 import Subnavs from "./Subnavs";
 
@@ -38,7 +38,7 @@ const linkactive = {
 const Navs = () => {
     const { active, setactive, setopen } = useContext(GlobalCntxt);
     const { data } = useContext(AccountCntxt);
-    const { data: routes, isFetching: fetching } = useGet({ key: ['rts_nav'], request: dropdown({ table: 'tbl_routes', data: { type: 'nav' } }), options: { refetchOnWindowFocus: false } });
+    const { data: routes, isFetching: fetching } = useGet({ key: ['navigation'], request: route(), options: { refetchOnWindowFocus: true } });
 
     const checkValue = (obj, val) => {
         for (let key in obj) { if(obj[key].list === val) return true; }
@@ -59,7 +59,7 @@ const Navs = () => {
                     data.user_level === 'superadmin' || checkValue(JSON.parse(data.permission)[(rts.route).toLowerCase()], true) ? 
                         <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 1 } key= { index }>
                             <Typography variant= "caption" color= "#b2bec3">{ (rts.route).charAt(0) + (rts.route).slice(1).toLowerCase() }</Typography>
-                            <Subnavs id= { rts.id } />
+                            <Subnavs modules= { rts.modules } />
                         </Stack> : '' ) : '' }
             { data.user_level === 'superadmin' || data.permission !== null ?
                 data.user_level === 'superadmin' || checkValue(JSON.parse(data.permission).setup, true) ? 

@@ -206,6 +206,25 @@ class Routes {
                             .concat((await new Builder(`tbl_routes`).select(`id, route as name, base_url`).condition(`WHERE status= 1 ORDER BY route ASC`).build()).rows);
         }
     }
+
+    navigation = async () => {
+        let navs = [];
+        let ctg = (await new Builder(`tbl_routes`).select().condition(`WHERE status = 1`).build()).rows;
+        
+        for(let rtscount = 0; rtscount < ctg.length; rtscount++) {
+            let rts = {};
+            let mdl = (await new Builder(`tbl_modules`).select().condition(`WHERE route_id= ${ctg[rtscount].id} AND status= 1`).build()).rows;
+
+            rts['route'] = ctg[rtscount].route;
+            rts['modules'] = [];
+            for(let mdlcount = 0; mdlcount < mdl.length; mdlcount++) {
+                (rts['modules']).push({ module: mdl[mdlcount].name, baseurl: ctg[rtscount].base_url, path: mdl[mdlcount].path });
+            }
+            navs.push(rts);
+        }
+
+        return navs;
+    }
 }
 
 module.exports = Routes;
