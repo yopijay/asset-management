@@ -68,6 +68,15 @@ class Users {
                     users['total'] = (await new Builder(`tbl_users AS usr`).select().join({ table: `tbl_users_info AS info`, condition: `info.user_id = usr.id`, type: ` LEFT` }).condition(`WHERE ${qry}`).build()).rowCount;
                     users['girls'] = (await new Builder(`tbl_users AS usr`).select().join({ table: `tbl_users_info AS info`, condition: `info.user_id = usr.id`, type: `LEFT` }).condition(`WHERE ${qry} AND info.gender= 'female'`).build()).rowCount;
                     users['boys'] = (await new Builder(`tbl_users AS usr`).select().join({ table: `tbl_users_info AS info`, condition: `info.user_id = usr.id`, type: `LEFT` }).condition(`WHERE ${qry} AND info.gender= 'male'`).build()).rowCount;
+
+                    users['percompany'] = [];
+                    for(let count = 0; count < cmp.length; count++) {
+                        (users['percompany'])
+                            .push({ company: cmp[count].name, 
+                                            total: (await new Builder(`tbl_users AS usr`).select()
+                                                            .join({ table: `tbl_users_info AS info`, condition: `info.user_id = usr.id`, type: `LEFT` })
+                                                            .condition(`WHERE ${qry} AND info.company_id= ${cmp[count].id}`).build()).rowCount });
+                    }
         }
 
         return users;
