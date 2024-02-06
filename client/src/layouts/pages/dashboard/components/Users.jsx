@@ -53,7 +53,7 @@ const Users = props => {
                                                 </Box>
                                                 <Typography variant= "caption">{ parseInt(cmp.total) }</Typography>
                                             </Stack>
-                                        </Stack>): '' }
+                                        </Stack>) : '' }
                             </Stack>
                         </Stack>
                     </Grid>
