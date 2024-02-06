@@ -4,7 +4,8 @@ import Env from "./Env.json";
 
 const env = 'live' // Environment
 
-export const dashboard = async ({ type, data }) => { return await api({ url : `${Env[env].url}/dashboard/${type}`, method: 'post', data: data }).then(res => res.data).catch(err => console.log(`Error: ${err}`)); }
+export const route = async () => { return await api({ url: `${Env[env].url}/route`, method: 'get'}).then(res => res.data).catch(err => console.log(`Error: ${err}`)); }
+export const dashboard = async ({ table, data }) => { return await api({ url : `${Env[env].url}/dashboard/${table}`, method: 'post', data: data }).then(res => res.data).catch(err => console.log(`Error: ${err}`)); }
 export const authentication = async data => { return await api({ url: `${Env[env].url}/login`, method: 'post', data: data }).then(res => res.data).catch(err => console.log(`Error: ${err}`)); }
 export const profile = async id => { return await api({ url: `${Env[env].url}/profile/${id}`, method: 'get'}).then(res => res.data).catch(err => console.log(`Error: ${err}`)); }
 export const records = async ({ table, data }) => { return await api({ url: `${Env[env].url}/list/${table}`, method: 'post', data: data }).then(res => res.data).catch(err => console.log(`Error: ${err}`)); }
