@@ -1,10 +1,13 @@
 import { Box, Container, Stack, Typography } from "@mui/material";
 import { useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 // Core
 import { FormCntxt } from "core/context/Form"; // Context
 import { GlobalCntxt } from "core/context/Global"; // Context
 import { AccountCntxt } from "core/context/Account"; // Context
+import { successToast, usePost } from "core/function/global"; // Function
+import { update } from "core/api"; // API
 
 import Picture from "./components/Picture";
 import Name from "./components/Name";
@@ -24,9 +27,18 @@ const container = {
 }
 
 const Index = () => {
+    const navigate = useNavigate();
     const { data } = useContext(AccountCntxt);
     const { setactive } = useContext(GlobalCntxt);
-    const { handleSubmit, setValue } = useContext(FormCntxt);
+    const { handleSubmit, setValue, setError } = useContext(FormCntxt);
+
+    const { mutate: updating } =
+        usePost({ request: update,
+            onSuccess: data => {
+                if(data.result === 'error') { (data.error).forEach((err, index) => setError(err.name, { type: index === 0 ? 'focus' : '', message: err.message }, { shouldFocus: index === 0 })); }
+                else { successToast(data.message, 3000, navigate('/profile', { replace: true })); }
+            }
+        });
 
     useEffect(() => {
         let _data = Object.keys(data);
@@ -58,15 +70,14 @@ const Index = () => {
                                 <Typography sx= { subtitle }>Account info</Typography>
                                 <Box><Account /></Box>
                             </Stack>
-                            <Stack direction= "row" justifyContent= "flex-end" alignItems= "center" spacing= { 1 }>
+                            { data.user_level !== 'superadmin' ? <Stack direction= "row" justifyContent= "flex-end" alignItems= "center" spacing= { 1 }>
                                 <Typography sx= { savebtn } onClick= { handleSubmit(data => {
                                     data['token'] = (sessionStorage.getItem('token')).split('.')[1];
-                                    
-                                    console.log(data);
-                                    // if(type === 'new') { saving({ table: 'tbl_company', data: data }); }
-                                    // else { updating({ table: 'tbl_company', data: data }); }
+                                    data['type'] = 'profile';
+
+                                    updating({ table: 'tbl_users', data: data });
                                 }) }>Save</Typography>
-                            </Stack>
+                            </Stack> : '' }
                         </Stack>
                     </form>
                 </Stack>

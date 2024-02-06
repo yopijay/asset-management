@@ -6,11 +6,13 @@ import { Controller } from "react-hook-form";
 
 // Core
 import { FormCntxt } from "core/context/Form"; // Context
+import { AccountCntxt } from "core/context/Account"; // Context
 
 import { dropdown, lbl, select, textarea } from "../style";
 
 const Others = () => {
-    const { control, getValues, register } = useContext(FormCntxt);
+    const { data } = useContext(AccountCntxt);
+    const { control, getValues, register, setValue } = useContext(FormCntxt);
     const _gender = [{ id: '', name: '-- SELECT AN ITEM BELOW --' }, { id: 'male', name: 'MALE' }, { id: 'female', name: 'FEMALE' }];
     const _employment_status = [{ id: '', name: '-- SELECT AN ITEM BELOW --' }, { id: 'intern', name: 'INTERN' }, { id: 'probation', name: 'PROBATIONARY' }, 
                                                     { id: 'regular', name: 'REGULAR' }, { id: 'retired', name: 'RETIRED' }, { id: 'resigned', name: 'RESIGNED' }];
@@ -27,8 +29,9 @@ const Others = () => {
                                     render= {({ field: { value } }) => (
                                         <Autocomplete options= { _gender?.sort((a, b) => a.id - b.id) } disableClearable
                                             getOptionLabel= { option => option.name || option.id } noOptionsText= "No results..." 
-                                            getOptionDisabled= { option => option.id === 0 || option.id === '' } disabled
+                                            getOptionDisabled= { option => option.id === 0 || option.id === '' } disabled= { data.user_level === 'superadmin' }
                                             isOptionEqualToValue= { (option, value) => option.name === value.name || option.id === value.id }
+                                            onChange= { (e, item) => { setValue('gender', item.id) } }
                                             renderInput= { params => <TextField { ...params } variant= "standard" size= "small" fullWidth /> }
                                             value= { _gender?.find(data => { return data.id === (getValues().gender !== undefined ? getValues().gender : value) }) !== undefined ?
                                                             _gender?.find(data => { return data.id === (getValues().gender !== undefined ? getValues().gender : value) }) : _gender?.length === 0 ?
@@ -64,7 +67,7 @@ const Others = () => {
             <Grid item xs= { 12 }>
                 <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch">
                     <Typography variant= "body2" gutterBottom color= "#636e72">Address</Typography>
-                    <TextareaAutosize name= "address" minRows= { 4 } maxRows= { 4 } style= { textarea } { ...register('address') } />
+                    <TextareaAutosize name= "address" minRows= { 4 } maxRows= { 4 } style= { textarea } { ...register('address') } disabled= { data.user_level === 'superadmin' } />
                 </Stack>
             </Grid>
         </Grid>

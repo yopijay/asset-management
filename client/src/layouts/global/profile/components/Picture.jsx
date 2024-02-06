@@ -22,7 +22,7 @@ const Picture = () => {
     return (
         <Stack direction= "column" justifyContent= "center" alignItems= "center" spacing= { 1 }>
             <Avatar src= { pic } sx= {{ width: '170px', height: '170px', border: 'solid 5px #dfe6e9' }} />
-            <FormLabel htmlFor= "profile" sx= { btn }>Upload your photo</FormLabel>
+            { data.user_level !== 'superadmin' ? <FormLabel htmlFor= "profile" sx= { btn }>Upload your photo</FormLabel> : '' }
             <input type= "file" name= "profile" id= "profile" style= {{ width: '0.1px', height: '0.1px', opacity: 0, overflow: 'hidden', position: 'absolute', zIndex: -1 }}
                 onChange= { async (e) => {
                     setError('profile', { message: '' });

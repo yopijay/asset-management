@@ -479,97 +479,98 @@ class Users {
                 current: data.address !== null && data.address !== '' ? (data.address).toUpperCase() : null, action: 'update', user_id: user.id, date: date });
         }
 
-        if(Global.compare(usr.employee_no, data.employee_no)) {
-            if(!(employeeno.rowCount > 0)) {
-                audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_users', item_id: usr.id, field: 'employee no', previous: usr.employee_no,
-                    current: data.employee_no, action: 'update', user_id: user.id, date: date });
+        if(data.type !== 'profile') {
+            if(Global.compare(usr.employee_no, data.employee_no)) {
+                if(!(employeeno.rowCount > 0)) {
+                    audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_users', item_id: usr.id, field: 'employee no', previous: usr.employee_no,
+                        current: data.employee_no, action: 'update', user_id: user.id, date: date });
+                }
+                else { errors.push({ name: 'employee_no', message: 'Employee no. already used!' }); }
             }
-            else { errors.push({ name: 'employee_no', message: 'Employee no. already used!' }); }
-        }
 
-        if(Global.compare(usr.rfid, data.rfid)) {
-            if(!(rfid.rowCount > 0)) {
-                audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_users', item_id: usr.id, field: 'rfid', previous: usr.rfid,
-                    current: data.rfid !== null && data.rfid !== '' ? data.rfid : null, action: 'update', user_id: user.id, date: date });
+            if(Global.compare(usr.rfid, data.rfid)) {
+                if(!(rfid.rowCount > 0)) {
+                    audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_users', item_id: usr.id, field: 'rfid', previous: usr.rfid,
+                        current: data.rfid !== null && data.rfid !== '' ? data.rfid : null, action: 'update', user_id: user.id, date: date });
+                }
+                else { errors.push({ name: 'rfid', message: 'RFID already used!' }); }
             }
-            else { errors.push({ name: 'rfid', message: 'RFID already used!' }); }
-        }
 
-        if(Global.compare(usr.branch, data.branch)) {
-            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_users', item_id: usr.id, field: 'branch', previous: usr.branch,
-                current: data.branch, action: 'update', user_id: user.id, date: date });
-        }
+            if(Global.compare(usr.branch, data.branch)) {
+                audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_users', item_id: usr.id, field: 'branch', previous: usr.branch,
+                    current: data.branch, action: 'update', user_id: user.id, date: date });
+            }
 
-        if(Global.compare(usr.user_level, data.user_level)) {
-            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_users', item_id: usr.id, field: 'user level', previous: usr.user_level,
-                current: data.user_level, action: 'update', user_id: user.id, date: date });
-        }
+            if(Global.compare(usr.user_level, data.user_level)) {
+                audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_users', item_id: usr.id, field: 'user level', previous: usr.user_level,
+                    current: data.user_level, action: 'update', user_id: user.id, date: date });
+            }
 
-        if(Global.compare(usr.employment_status, data.employment_status)) {
-            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_users', item_id: usr.id, field: 'employement status', previous: usr.employment_status,
-                current: data.employment_status, action: 'update', user_id: user.id, date: date });
-        }
+            if(Global.compare(usr.employment_status, data.employment_status)) {
+                audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_users', item_id: usr.id, field: 'employement status', previous: usr.employment_status,
+                    current: data.employment_status, action: 'update', user_id: user.id, date: date });
+            }
 
-        if(Global.compare(usr.gender, data.gender)) {
-            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_users', item_id: usr.id, field: 'gender', previous: usr.gender,
-                current: data.gender, action: 'update', user_id: user.id, date: date });
-        }
+            if(Global.compare(usr.gender, data.gender)) {
+                audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_users', item_id: usr.id, field: 'gender', previous: usr.gender,
+                    current: data.gender, action: 'update', user_id: user.id, date: date });
+            }
 
-        if(Global.compare(usr.profile, data.profile)) {
-            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_users', item_id: usr.id, field: 'profile', previous: usr.profile,
-                current: data.profile, action: 'update', user_id: user.id, date: date });
-        }
+            if(Global.compare(usr.profile, data.profile)) {
+                audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_users', item_id: usr.id, field: 'profile', previous: usr.profile,
+                    current: data.profile, action: 'update', user_id: user.id, date: date });
+            }
 
-        if(Global.compare(usr.company_id, data.company_id)) {
-            let prev = (await new Builder(`tbl_company`).select(`name`).condition(`WHERE id= ${usr.company_id}`).build()).rows[0];
-            let curr = (await new Builder(`tbl_company`).select(`name`).condition(`WHERE id= ${data.company_id}`).build()).rows[0];
+            if(Global.compare(usr.company_id, data.company_id)) {
+                let prev = (await new Builder(`tbl_company`).select(`name`).condition(`WHERE id= ${usr.company_id}`).build()).rows[0];
+                let curr = (await new Builder(`tbl_company`).select(`name`).condition(`WHERE id= ${data.company_id}`).build()).rows[0];
 
-            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_users', item_id: usr.id, field: 'company', previous: prev.name,
-                current: curr.name, action: 'update', user_id: user.id, date: date });
-        }
+                audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_users', item_id: usr.id, field: 'company', previous: prev.name,
+                    current: curr.name, action: 'update', user_id: user.id, date: date });
+            }
 
-        if(Global.compare(usr.department_id, data.department_id)) {
-            let prev = (await new Builder(`tbl_department`).select(`name`).condition(`WHERE id= ${usr.department_id}`).build()).rows[0];
-            let curr = (await new Builder(`tbl_department`).select(`name`).condition(`WHERE id= ${data.department_id}`).build()).rows[0];
+            if(Global.compare(usr.department_id, data.department_id)) {
+                let prev = (await new Builder(`tbl_department`).select(`name`).condition(`WHERE id= ${usr.department_id}`).build()).rows[0];
+                let curr = (await new Builder(`tbl_department`).select(`name`).condition(`WHERE id= ${data.department_id}`).build()).rows[0];
 
-            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_users', item_id: usr.id, field: 'department', previous: prev.name,
-                current: curr.name, action: 'update', user_id: user.id, date: date });
-        }
+                audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_users', item_id: usr.id, field: 'department', previous: prev.name,
+                    current: curr.name, action: 'update', user_id: user.id, date: date });
+            }
 
-        if(Global.compare(usr.position_id, data.position_id)) {
-            let prev = (await new Builder(`tbl_position`).select(`name`).condition(`WHERE id= ${usr.position_id}`).build()).rows[0];
-            let curr = (await new Builder(`tbl_position`).select(`name`).condition(`WHERE id= ${data.position_id}`).build()).rows[0];
+            if(Global.compare(usr.position_id, data.position_id)) {
+                let prev = (await new Builder(`tbl_position`).select(`name`).condition(`WHERE id= ${usr.position_id}`).build()).rows[0];
+                let curr = (await new Builder(`tbl_position`).select(`name`).condition(`WHERE id= ${data.position_id}`).build()).rows[0];
 
-            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_users', item_id: usr.id, field: 'position', previous: prev.name,
-                current: curr.name, action: 'update', user_id: user.id, date: date });
-        }
+                audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_users', item_id: usr.id, field: 'position', previous: prev.name,
+                    current: curr.name, action: 'update', user_id: user.id, date: date });
+            }
 
-        if(Global.compare(usr.head_id, data.head_id)) {
-            let prev = (await new Builder(`tbl_users_info`).select(`CONCAT(lname, ', ', fname) AS name`).condition(`WHERE user_id= ${usr.head_id}`).build()).rows[0];
-            let curr = (await new Builder(`tbl_users_info`).select(`CONCAT(lname, ', ', fname) AS name`).condition(`WHERE user_id= ${data.head_id}`).build()).rows[0];
-            
-            console.log(prev);
-            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_users', item_id: usr.id, field: 'head', previous: prev.name,
-                current: curr.name, action: 'update', user_id: user.id, date: date });
-        }
+            if(Global.compare(usr.head_id, data.head_id)) {
+                let prev = (await new Builder(`tbl_users_info`).select(`CONCAT(lname, ', ', fname) AS name`).condition(`WHERE user_id= ${usr.head_id}`).build()).rows[0];
+                let curr = (await new Builder(`tbl_users_info`).select(`CONCAT(lname, ', ', fname) AS name`).condition(`WHERE user_id= ${data.head_id}`).build()).rows[0];
+                
+                audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_users', item_id: usr.id, field: 'head', previous: prev.name,
+                    current: curr.name, action: 'update', user_id: user.id, date: date });
+            }
 
-        if(Global.compare(usr.status, data.status ? 1 : 0)) {
-            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_users', item_id: usr.id, field: 'status', previous: usr.status === 1 ? 'Active' : 'Inactive', 
-                                    current: data.status ? 'Active' : 'Inactive', action: 'update', user_id: user.id, date: date });
+            if(Global.compare(usr.status, data.status ? 1 : 0)) {
+                audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_users', item_id: usr.id, field: 'status', previous: usr.status === 1 ? 'Active' : 'Inactive', 
+                                        current: data.status ? 'Active' : 'Inactive', action: 'update', user_id: user.id, date: date });
+            }
         }
 
         if(!(errors.length > 0)) {
             await new Builder(`tbl_users`)
-                .update(`email= '${data.email}', user_level= '${data.user_level}', status= ${data.status ? 1 : 0}, updated_by= ${user.id}, date_updated= '${date}'`)
+                .update(`email= '${data.email}'${data.type !== 'profile' ? `, user_level= '${data.user_level}', status= ${data.status ? 1 : 0}` : ''}, updated_by= ${user.id}, date_updated= '${date}'`)
                 .condition(`WHERE id= ${data.id}`)
                 .build();
             
             await new Builder(`tbl_users_info`)
-                .update(`employee_no= '${data.employee_no}', rfid= ${data.rfid !== null && data.rfid !== '' ? `'${data.rfid}'` : null}, branch= '${data.branch}', 
-                                company_id= ${data.company_id}, department_id= ${data.department_id}, position_id= ${data.position_id}, 
-                                fname= '${(data.fname).toUpperCase()}', mname= ${data.mname !== null && data.mname !== '' ? `'${(data.mname).toUpperCase()}'` : null},
+                .update(`fname= '${(data.fname).toUpperCase()}', mname= ${data.mname !== null && data.mname !== '' ? `'${(data.mname).toUpperCase()}'` : null},
                                 lname= '${(data.lname).toUpperCase()}', address= ${data.address !== '' && data.address !== null ? `'${(data.address).toUpperCase()}'` : null},
-                                employment_status= '${data.employment_status}', profile= '${data.profile}', gender= '${data.gender}', head_id= ${data.head_id}`)
+                                profile= '${data.profile}', gender= '${data.gender}'${data.type !== 'profile' ? ` ,employee_no= '${data.employee_no}', 
+                                rfid= ${data.rfid !== null && data.rfid !== '' ? `'${data.rfid}'` : null}, branch= '${data.branch}', company_id= ${data.company_id}, 
+                                department_id= ${data.department_id}, position_id= ${data.position_id}, employment_status= '${data.employment_status}', head_id= ${data.head_id}` : ''}`)
                 .condition(`WHERE user_id= ${data.id}`)
                 .build();
 
