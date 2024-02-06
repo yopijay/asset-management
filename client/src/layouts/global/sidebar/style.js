@@ -31,6 +31,7 @@ export const accountfix = {
     overflow: 'hidden',
     padding: '8px',
     borderRadius: '4px',
+    textDecoration: 'none'
 }
 
 export const navfix = {
@@ -61,7 +62,8 @@ export const accountswipe = {
     overflow: 'hidden',
     padding: '8px',
     borderRadius: '4px',
-    border: 'solid 1px #dfe6e9'
+    border: 'solid 1px #dfe6e9',
+    textDecoration: 'none'
 }
 
 export const navswipe = {

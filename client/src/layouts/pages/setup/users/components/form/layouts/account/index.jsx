@@ -41,8 +41,8 @@ const Index = props => {
             <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 }  sx= {{ width: { xs: '100%', md: '65%', lg: '50%' } }}>
                 <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch">
                     <Typography gutterBottom variant= "body2" color= "#636e72">*Email</Typography>
-                        <TextField { ...register('email') } name= "email" variant= "standard" sx= { input } InputProps= {{ disableUnderline: true }} disabled= { type === 'view' } />
-                        <Typography variant= "caption" color= "error.dark" sx= {{ textAlign: 'right' }}>{ errors.email?.message }</Typography>
+                    <TextField { ...register('email') } name= "email" variant= "standard" sx= { input } InputProps= {{ disableUnderline: true }} disabled= { type === 'view' } />
+                    <Typography variant= "caption" color= "error.dark" sx= {{ textAlign: 'right' }}>{ errors.email?.message }</Typography>
                 </Stack>
                 { type === 'new' ? <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch">
                     <Typography gutterBottom variant= "body2" color= "#636e72">*Password</Typography>

@@ -12,6 +12,7 @@ import Logout from "./components/Logout";
 
 // Constants
 import { accountfix, accountswipe, fix, nav, navfix, navswipe, sidebar, swipable, swipe } from "./style"; // Styles
+import { Link } from "react-router-dom";
 
 const Index = () => {
     const { container, drawerToggle, open } = useContext(GlobalCntxt);
@@ -22,7 +23,7 @@ const Index = () => {
                 onOpen= { drawerToggle(true) } open= { open.left } onClose={ drawerToggle(false) } sx= { swipe }>
                 <Stack sx= { swipable } spacing= { 2 }>
                     <Stack sx= { nav } spacing= { 6 }>
-                        <Stack sx= { accountswipe }><Account /></Stack>
+                        <Stack sx= { accountswipe } component= { Link } to= "/profile"><Account /></Stack>
                         <Stack sx= { navswipe }><Navs /></Stack>
                     </Stack>
                     <Logout />
@@ -30,7 +31,7 @@ const Index = () => {
             </SwipeableDrawer>
             <Stack sx= { fix } spacing= { 2 }>
                 <Stack sx= { nav } spacing= { 3 }>
-                    <Stack sx= { accountfix }><Account /></Stack>
+                    <Stack sx= { accountfix } component= { Link } to= "/profile"><Account /></Stack>
                     <Stack sx= { navfix }><Navs /></Stack>
                 </Stack>
                 <Logout />

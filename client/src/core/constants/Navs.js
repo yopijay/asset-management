@@ -1,6 +1,8 @@
 // Libraries
 import React from "react";
 
+const Profile = React.lazy(() => import('layouts/global/profile'));
+
 // Dashboard
 const Dashboard = React.lazy(() => import('layouts/pages/dashboard'));
 
@@ -24,6 +26,7 @@ const Route = React.lazy(() => import('layouts/pages/setup/route'));
 const Modules = React.lazy(() => import('layouts/pages/setup/modules'));
 
 export const Components = ([
+    { path: '/profile', name: 'profile', title: 'Profile', component: <Profile /> },
     { path: '/', name: 'dashboard', title: 'Dashboard', component: <Dashboard /> },
     
     // Assets
