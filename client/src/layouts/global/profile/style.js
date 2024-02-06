@@ -75,3 +75,15 @@ export const textarea = {
     backgroundColor: 'transparent',
     transition: 'all 0.2s ease-in-out'
 }
+
+export const savebtn = {
+    textAlign: 'center',
+    width: '150px',
+    color: '#f5f6fa',
+    transition: 'all 0.2s ease-in-out',
+    cursor: 'pointer',
+    backgroundColor: '#40739e91',
+    padding: '8px 0',
+    borderRadius: '8px',
+    '&:hover': { backgroundColor: '#487eb091' }
+}

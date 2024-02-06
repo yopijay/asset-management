@@ -321,7 +321,8 @@ class Users {
  
     profile = async id => {
         return (await new Builder(`tbl_users AS usr`)
-                        .select(`usr.id, usr.email, usr.user_level, info.employee_no, info.rfid, info.fname, info.mname, info.lname, info.employment_status, info.profile, perm.permission, info.branch`)
+                        .select(`usr.id, usr.email, usr.user_level, info.employee_no, info.rfid, info.fname, info.mname, info.lname, info.employment_status, info.profile, perm.permission, info.branch,
+                                        info.address, info.gender`)
                         .join({ table: `tbl_users_info AS info`, condition: `info.user_id = usr.id`, type: `LEFT` })
                         .join({ table: `tbl_users_permission AS perm`, condition: `perm.user_id = usr.id`, type: `LEFT` })
                         .condition(`WHERE usr.id= ${id}`)

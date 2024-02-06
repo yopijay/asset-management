@@ -1,20 +1,23 @@
 // Libraries
-import { Avatar, FormLabel, Stack, Typography } from "@mui/material";
-import { useEffect, useState } from "react";
+import { Avatar, FormLabel, Stack } from "@mui/material";
+import { useContext, useEffect, useState } from "react";
 
 // Core
 import { IMAGE } from "core/constants/Global"; // Constants
 import { base64 } from "core/function/global"; // Functions
+import { FormCntxt } from "core/context/Form"; // Context
+import { AccountCntxt } from "core/context/Account"; // Context
 
 import { btn } from "../style";
 
-const Picture = props => {
-    // const { register, fetching, errors, setValue, setError, getValues } = props;
+const Picture = () => {
+    const { data } = useContext(AccountCntxt);
+    const { register, setValue, setError } = useContext(FormCntxt);
     const [ pic, setPic ] = useState(IMAGE);
     
-    // useEffect(() => { 
-    //     if(!fetching) { setPic(getValues()?.profile !== undefined ? JSON.parse(getValues()?.profile) : IMAGE); } 
-    // }, [ fetching, getValues, register ]);
+    useEffect(() => {
+        setPic(data?.profile !== undefined ? JSON.parse(data?.profile) : IMAGE);
+    }, [ data, register ]);
 
     return (
         <Stack direction= "column" justifyContent= "center" alignItems= "center" spacing= { 1 }>
@@ -22,14 +25,13 @@ const Picture = props => {
             <FormLabel htmlFor= "profile" sx= { btn }>Upload your photo</FormLabel>
             <input type= "file" name= "profile" id= "profile" style= {{ width: '0.1px', height: '0.1px', opacity: 0, overflow: 'hidden', position: 'absolute', zIndex: -1 }}
                 onChange= { async (e) => {
-                    // setError('profile', { message: '' });
-                    // let file = e.target.files[0];
-                    // let image = await base64(file);
+                    setError('profile', { message: '' });
+                    let file = e.target.files[0];
+                    let image = await base64(file);
                     
-                    // setPic(image);
-                    // setValue('profile', JSON.stringify(image));
+                    setPic(image);
+                    setValue('profile', JSON.stringify(image));
                 }} />
-            {/* <Typography variant= "caption" color= "error.dark">{ errors.profile?.message }</Typography> */}
         </Stack>
     );
 }

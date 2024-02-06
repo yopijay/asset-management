@@ -13,6 +13,8 @@ import { profile } from "core/api"; // API
 // Components
 import Navbar from "layouts/global/navbar";
 import Sidebar from "layouts/global/sidebar";
+import Profile from "layouts/global/profile";
+import { FormPrvdr } from "core/context/Form";
 
 // Custom styles
 const container = {
@@ -55,8 +57,8 @@ const Index = () => {
                             <Routes>
                                 { Components.map((page, index) => (
                                     <Route exact key= { index } path= { `${page.path}/*` } 
-                                        element= { <Suspense fallback= { <Box sx= { loader }><Loader /></Box> }>{ page.component }</Suspense> } />
-                                )) }
+                                        element= { <Suspense fallback= { <Box sx= { loader }><Loader /></Box> }>{ page.component }</Suspense> } /> )) }
+                                <Route exact path= "/profile" element= { <Suspense fallback= { <Box sx= { loader }><Loader /></Box> }><FormPrvdr><Profile /></FormPrvdr></Suspense> } />
                             </Routes>
                         </Box>
                     </Stack>
