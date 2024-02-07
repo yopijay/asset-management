@@ -34,7 +34,7 @@ const Subnavs = ({ modules }) => {
     return (
         <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch">
             { modules?.map((mdl, index) => 
-                data.user_level === 'superadmin' || JSON.parse(data.permission)[(mdl.baseurl).toLowerCase()][(mdl.module).toLowerCase()].list ?
+                data.user_level === 'superadmin' || JSON.parse(data.permission)[(mdl.baseurl).toLowerCase()][(mdl.module).toLowerCase()]?.list ?
                     <Typography key= { index } component= { Link } to= { `/${mdl.baseurl}/${mdl.path} `} sx= { active === (mdl.module).toLowerCase() ? linkactive : link } 
                         onClick= { () => navclick((mdl.module).toLowerCase()) }>{ (mdl.module).charAt(0) + (mdl.module).slice(1).toLowerCase() }</Typography> : '' ) }
         </Stack>

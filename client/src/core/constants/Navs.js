@@ -7,6 +7,7 @@ const Dashboard = React.lazy(() => import('layouts/pages/dashboard'));
 // Assets
 const Stocks = React.lazy(() => import('layouts/pages/assets/stocks'));
 const Request = React.lazy(() => import('layouts/pages/assets/request'));
+const Received = React.lazy(() => import('layouts/pages/assets/received'));
 const Issuance = React.lazy(() => import('layouts/pages/assets/issuance'));
 // const Assets = React.lazy(() => import('layouts/pages/assets-supplies/assets'));
 // const Issuance = React.lazy(() => import('layouts/pages/assets-supplies/issuance'));
@@ -29,6 +30,7 @@ export const Components = ([
     // Assets
     { path: '/assets/stocks', name: 'stocks', title: 'Stocks', component: <Stocks /> },
     { path: '/assets/request', name: 'request', title: 'Request', component: <Request /> },
+    { path: '/assets/received', name: 'received', title: 'Received', component: <Received /> },
     { path: '/assets/issuance', name: 'issuance', title: 'Issuance', component: <Issuance /> },
     // { path: '/assets-supplies/assets', name: 'assets', title: 'Assets', component: <Assets /> },
     // { path: '/assets-supplies/issuance', name: 'issuance', title: 'Issuance', component: <Issuance /> },

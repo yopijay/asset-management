@@ -9,6 +9,7 @@ const Brands = require('./tables/Brands');
 const Stocks = require('./tables/Stocks');
 const Issuance = require('./tables/Issuance');
 const Routes = require('./tables/Routes');
+const Received = require('./tables/Received');
 
 const login = data => { return new Users().login(data); }
 const profile = id => { return new Users().profile(id); }
@@ -55,6 +56,7 @@ const specific = (table, id) => {
             case 'tbl_brands': resolve(await new Brands().specific(id)); break;
             case 'tbl_stocks': resolve(await new Stocks().specific(id)); break;
             case 'tbl_stocks_issuance': resolve(await new Issuance().specific(id)); break;
+            case 'tbl_stocks_received': resolve(await new Received().specific(id)); break;
         }
     });
 }
@@ -72,6 +74,7 @@ const list = (table, data) => {
             case 'tbl_brands': resolve(await new Brands().list(data)); break;
             case 'tbl_stocks': resolve(await new Stocks().list(data)); break;
             case 'tbl_stocks_issuance': resolve(await new Issuance().list(data)); break;
+            case 'tbl_stocks_received': resolve(await new Received().list(data)); break;
         }
     });
 }
@@ -80,6 +83,7 @@ const excel = (table, data) => {
     return new Promise(async resolve => {
         switch(table) {
             case 'tbl_stocks_issuance': resolve(await new Issuance().excel(data)); break;
+            case 'tbl_stocks_received': resolve(await new Received().excel(data)); break;
             case 'tbl_stocks': resolve(await new Stocks().excel(data)); break;
             case 'tbl_brands': resolve(await new Brands().excel(data)); break;
             case 'tbl_category': resolve(await new Category().excel(data)); break;
@@ -106,6 +110,7 @@ const logs = (table, data) => {
             case 'tbl_brands': resolve(await new Brands().logs(data)); break;
             case 'tbl_stocks': resolve(await new Stocks().logs(data)); break;
             case 'tbl_stocks_issuance': resolve(await new Issuance().logs(data)); break;
+            case 'tbl_stocks_received': resolve(await new Received().logs(data)); break;
         }
     });
 }
@@ -140,6 +145,7 @@ const update = (table, data) => {
             case 'tbl_brands': resolve(await new Brands().update(data)); break;
             case 'tbl_stocks': resolve(await new Stocks().update(data)); break;
             case 'tbl_stocks_issuance': resolve(await new Issuance().update(data)); break;
+            case 'tbl_stocks_received': resolve(await new Received().update(data)); break;
         }
     });
 }
