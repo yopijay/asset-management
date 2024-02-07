@@ -157,8 +157,7 @@ export const status = bgcolor => ({
     fontSize: '85%',
     whiteSpace: 'nowrap',
     overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    width: '100%'
+    textOverflow: 'ellipsis'
 });
 
 export const menu = {

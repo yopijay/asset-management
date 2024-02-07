@@ -25,7 +25,7 @@ const Items = () => {
                 listing === 'list' ?
                     <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 1 }>
                         { list.map((iss, index) => 
-                            <Stack direction= "row" justifyContent= "space-between" alignItems= "flex-start" sx= { listview } key= { index } spacing= { 4 }>
+                            <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" sx= { listview } key= { index } spacing= { 4 }>
                                 <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" sx= {{ flexGrow: 1, overflow: 'hidden' }} spacing= { 2 }>
                                     <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch">
                                         <Typography variant= "caption" sx= { caption }>{ iss.series_no }</Typography>
@@ -38,7 +38,7 @@ const Items = () => {
                                         <Typography variant= "body2" sx= { subtitle }>Date issued: { iss.date_issued }</Typography>
                                     </Stack>
                                 </Stack>
-                                <Stack direction= "row" justifyContent= "flex-start" alignItems= "center" spacing= { 1 } paddingLeft= "10px">
+                                <Stack direction= "row" justifyContent= "flex-end" alignItems= "center" spacing= { 1 } paddingLeft= "10px">
                                     <Box sx= { status(stats[iss.status]) }>{ (iss.status).charAt(0).toUpperCase() + (iss.status).slice(1) }</Box>
                                     <Stack direction= "row" justifyContent= "flex-start" alignItems= "center" spacing= { .5 }>
                                         { authupdate && iss.status === 'pending' ? <Typography sx= { menu } component= { Link } to= { `/assets/issuance/form/update/${iss.id}` }>
@@ -54,7 +54,7 @@ const Items = () => {
                     <Grid container direction= "row" justifyContent= "flex-start" alignItems= "flex-start" spacing= { 1 }>
                         { list.map((iss, index) => 
                             <Grid item xs= { 12 } sm= { 6 } md= { 4 } key= { index }>
-                                <Stack direction= "row" justifyContent= "space-between" alignItems= "flex-start" sx= { listview } 
+                                <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" sx= { listview } 
                                     component= { authupdate ? Link : Stack } to= { `/assets/issuance/form/update/${iss.id}` } spacing= { 4 }>
                                     <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" sx= {{ flexGrow: 1, overflow: 'hidden' }} spacing= { 2 }>
                                         <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch">
@@ -68,7 +68,9 @@ const Items = () => {
                                             <Typography variant= "body2" sx= { subtitle }>Date issued: { iss.date_issued }</Typography>
                                         </Stack>
                                     </Stack>
-                                    <Box sx= { status(stats[iss.status]) }>{ (iss.status).charAt(0).toUpperCase() + (iss.status).slice(1) }</Box>
+                                    <Stack direction= "row" justifyContent= "flex-end" alignItems= "center">
+                                        <Box sx= { status(stats[iss.status]) }>{ (iss.status).charAt(0).toUpperCase() + (iss.status).slice(1) }</Box>
+                                    </Stack>
                                 </Stack>
                             </Grid>) }
                     </Grid>

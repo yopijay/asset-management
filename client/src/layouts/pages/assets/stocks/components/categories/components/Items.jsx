@@ -25,14 +25,14 @@ const Items = () => {
                 listing === 'list' ?
                     <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 1 }>
                         { list?.map((data, index) => 
-                            <Stack direction= "row" justifyContent= "flex-start" alignItems= "flex-start" sx= { listview } key= { index } spacing= { 4 }>
+                            <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" sx= { listview } key= { index } spacing= { 4 }>
                                 <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" sx= {{ flexGrow: 1, overflow: 'hidden' }}>
                                     <Typography variant= "caption" sx= { caption }>{ data.series_no }</Typography>
                                     <Typography sx= { listtitle }>{ data.model } { (category.replace('-', ' ')).toLowerCase() === 'toner' ? `(${(data.condition)?.toUpperCase()})` : '' }</Typography>
                                     <Typography sx= { subtitle } variant= "body2">{ data.serial_no }</Typography>
                                     { (category.replace('-', ' ')).toLowerCase() === 'toner' ? <Typography sx= { subtitle } variant= "body2">Quantity: { data.quantity }</Typography> : '' }
                                 </Stack>
-                                <Stack direction= "row" justifyContent= "flex-start" alignItems= "center" spacing= { 1 } paddingLeft= "10px">
+                                <Stack direction= "row" justifyContent= "flex-end" alignItems= "center" spacing= { 1 } paddingLeft= "10px">
                                     <Box sx= { status(data.quantity) }>{ data.quantity > 0 ? `Available` : `Not available` }</Box>
                                     <Stack direction= "row" justifyContent= "flex-start" alignItems= "center" spacing= { .5 }>
                                         { authupdate ? <Typography sx= { menu } component= { Link } to= { `/assets/stocks/${category}/form/update/${data.id}` }>
@@ -48,7 +48,7 @@ const Items = () => {
                     : <Grid container direction= "row" justifyContent= "flex-start" alignItems= "flex-start" spacing= { 1 }>
                         { list?.map((data, index) => 
                             <Grid item xs= { 12 } sm= { 6 } md= { 4 } key= { index }>
-                                <Stack direction= "row" justifyContent= "space-between" alignItems= "flex-start" sx= { listview }
+                                <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" sx= { listview }
                                     component= { authupdate ? Link : Stack } to= { `/assets/stocks/${category}/form/update/${data.id}` } spacing= { 4 }>
                                     <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" sx= {{ flexGrow: 1, overflow: 'hidden' }}>
                                         <Typography variant= "caption" sx= { caption }>{ data.series_no }</Typography>
@@ -56,7 +56,9 @@ const Items = () => {
                                         <Typography sx= { subtitle } variant= "body2">{ data.serial_no }</Typography>
                                         { (category.replace('-', ' ')).toLowerCase() === 'toner' ? <Typography sx= { subtitle } variant= "body2">Quantity: { data.quantity }</Typography> : '' }
                                     </Stack>
-                                    <Box sx= { status(data.quantity) }>{ data.quantity > 0 ? `Available` : `Not available` }</Box>
+                                    <Stack direction= "row" justifyContent= "flex-end" alignItems= "center">
+                                        <Box sx= { status(data.quantity) }>{ data.quantity > 0 ? `Available` : `Not available` }</Box>
+                                    </Stack>
                                 </Stack>
                             </Grid> ) }
                     </Grid> 

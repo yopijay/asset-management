@@ -182,8 +182,7 @@ export const status = stats => ({
     fontSize: '85%',
     whiteSpace: 'nowrap',
     overflow: 'hidden',
-    textOverflow: 'ellipsis',
-    width: '100%'
+    textOverflow: 'ellipsis'
 });
 
 export const menu = {
