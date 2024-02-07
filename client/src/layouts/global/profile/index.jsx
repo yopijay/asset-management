@@ -13,7 +13,7 @@ import Picture from "./components/Picture";
 import Name from "./components/Name";
 import Others from "./components/Others";
 import Account from "./components/Account";
-import { savebtn, subtitle, title } from "./style";
+import { card, content, savebtn, subtitle, title } from "./style";
 
 // Custom styles
 const container = {
@@ -51,34 +51,39 @@ const Index = () => {
     }, [ data, setValue, setactive ]);
 
     return (
-        <Stack direction= "column" justifyContent= "flex-start" alignItems= "flex-start" spacing= { 5 } sx= { container }>
-            <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" 
-                sx= {{ overflowY: 'scroll', '&::-webkit-scrollbar': { display: 'none' }, width: '100%', paddingBottom: '50px' }} spacing= { 5 }>
-                <Typography sx= { title }>Account Settings</Typography>
-                <form autoComplete= "off">
-                    <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 4 } width= "100%">
-                        <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 }>
-                            <Typography sx= { subtitle }>Basic info</Typography>
+        <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" sx= { container }>
+            <Stack sx= { content } spacing= { 4 }>
+                <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch">
+                    <Typography sx= { title }>Account Settings</Typography>
+                    <Typography variant= "caption" color= "#b2bec3">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc non neque molestie, 
+                        malesuada quam ut, vulputate massa.</Typography>
+                </Stack>
+                <Stack sx= { card }>
+                    <form autoComplete= "off">
+                        <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 4 }>
                             <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 }>
-                                <Picture />
-                                <Box><Name /></Box>
-                                <Box><Others /></Box>
+                                <Typography sx= { subtitle }>Basic info</Typography>
+                                <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 }>
+                                    <Picture />
+                                    <Box><Name /></Box>
+                                    <Box><Others /></Box>
+                                </Stack>
+                            </Stack>
+                            <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 }>
+                                <Typography sx= { subtitle }>Account info</Typography>
+                                <Box><Account /></Box>
                             </Stack>
                         </Stack>
-                        <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 }>
-                            <Typography sx= { subtitle }>Account info</Typography>
-                            <Box><Account /></Box>
-                        </Stack>
-                        { data.user_level !== 'superadmin' ? <Stack direction= "row" justifyContent= "flex-end" alignItems= "center" spacing= { 1 }>
-                            <Typography sx= { savebtn } onClick= { handleSubmit(data => {
-                                data['token'] = (sessionStorage.getItem('token')).split('.')[1];
-                                data['type'] = 'profile';
+                    </form>
+                </Stack>
+                { data.user_level !== 'superadmin' ? <Stack direction= "row" justifyContent= "flex-end" alignItems= "center" spacing= { 1 }>
+                    <Typography sx= { savebtn } onClick= { handleSubmit(data => {
+                        data['token'] = (sessionStorage.getItem('token')).split('.')[1];
+                        data['type'] = 'profile';
 
-                                updating({ table: 'tbl_users', data: data });
-                            }) }>Save</Typography>
-                        </Stack> : '' }
-                    </Stack>
-                </form>
+                        updating({ table: 'tbl_users', data: data });
+                    }) }>Save</Typography>
+                </Stack> : '' }
             </Stack>
         </Stack>
     );

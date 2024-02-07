@@ -9,12 +9,13 @@ import Loader from "core/components/loader/Screen"; // Loader
 import { AccountCntxt } from "core/context/Account"; // Context
 import { useGet } from "core/function/global"; // Function
 import { profile } from "core/api"; // API
+import { FormPrvdr } from "core/context/Form"; // Provider
 
 // Components
 import Navbar from "layouts/global/navbar";
 import Sidebar from "layouts/global/sidebar";
 import Profile from "layouts/global/profile";
-import { FormPrvdr } from "core/context/Form";
+import ChangePassword from "layouts/authentication/change-password";
 
 // Custom styles
 const container = {
@@ -58,7 +59,16 @@ const Index = () => {
                                 { Components.map((page, index) => (
                                     <Route exact key= { index } path= { `${page.path}/*` } 
                                         element= { <Suspense fallback= { <Box sx= { loader }><Loader /></Box> }>{ page.component }</Suspense> } /> )) }
-                                <Route exact path= "/profile" element= { <Suspense fallback= { <Box sx= { loader }><Loader /></Box> }><FormPrvdr><Profile /></FormPrvdr></Suspense> } />
+                                <Route exact path= "/profile" 
+                                    element= { 
+                                        <Suspense fallback= { <Box sx= { loader }><Loader /></Box> }>
+                                            <FormPrvdr><Profile /></FormPrvdr>
+                                        </Suspense> } />
+                                <Route exact path= "/change-password" 
+                                    element= { 
+                                        <Suspense fallback= { <Box sx= { loader }><Loader /></Box> }>
+                                            <FormPrvdr><ChangePassword /></FormPrvdr>
+                                        </Suspense> } />
                             </Routes>
                         </Box>
                     </Stack>

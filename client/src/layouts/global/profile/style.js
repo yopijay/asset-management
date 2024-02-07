@@ -1,7 +1,14 @@
+export const content = {
+    width: '100%',
+    height: '100%',
+    overflowY: 'scroll',
+    '&::-webkit-scrollbar': { display: 'none' }
+}
+
 export const title = {
-    fontSize: '140%',
-    fontFamily: 'Montserrat SemiBold',
-    color: '#636e72'
+    fontFamily: 'Montserrat Black',
+    fontSize: '1.17rem',
+    color: '#636e72',
 }
 
 export const subtitle = {
@@ -86,4 +93,17 @@ export const savebtn = {
     padding: '8px 0',
     borderRadius: '8px',
     '&:hover': { backgroundColor: '#487eb091' }
+}
+
+export const card = {
+    backgroundColor: '#FFFFFF',
+    borderRadius: '8px',
+    flexGrow: 1,
+    padding: {
+        xs: '20px',
+        sm: '30px',
+        lg: '40px'
+    },
+    overflowY: 'scroll',
+    '&::-webkit-scrollbar': { display: 'none' }
 }
