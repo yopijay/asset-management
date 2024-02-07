@@ -24,13 +24,13 @@ const Items = () => {
                 listing === 'list' ?
                     <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 1 }>
                         { list.map((data, index) => 
-                            <Stack direction= "row" justifyContent= "space-between" alignItems= "flex-start" sx= { listview } key= { index } spacing= { 4 }>
+                            <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" sx= { listview } key= { index } spacing= { 4 }>
                                 <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" sx= {{ flexGrow: 1, overflow: 'hidden' }}>
                                     <Typography variant= "caption" sx= { caption }>{ data.series_no }</Typography>
                                     <Typography sx= { title }>{ data.name }</Typography>
                                     <Typography variant= "body2" sx= { subtitle }>Telephone: { data.telephone }</Typography>
                                 </Stack>
-                                <Stack direction= "row" justifyContent= "flex-start" alignItems= "center" spacing= { 1 } paddingLeft= "10px">
+                                <Stack direction= "row" justifyContent= "flex-end" alignItems= "center" spacing= { 1 } paddingLeft= "10px">
                                     <Box sx= { status(data.status) }>{ data.status === 1 ? `Active` : `Inactive` }</Box>
                                     <Stack direction= "row" justifyContent= "flex-start" alignItems= "center" spacing= { .5 }>
                                         { authupdate ? <Typography sx= { menu } component= { Link } to= { `/maintenance/company/form/update/${data.id}` }>
@@ -46,14 +46,16 @@ const Items = () => {
                     <Grid container direction= "row" justifyContent= "flex-start" alignItems= "flex-start" spacing= { 1 }>
                         { list.map((data, index) => 
                             <Grid item xs= { 12 } sm= { 6 } md= { 4 } key= { index }>
-                                <Stack direction= "row" justifyContent= "space-between" alignItems= "flex-start" sx= { listview } 
+                                <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" sx= { listview } 
                                     component= { authupdate ? Link : Stack } to= { `/maintenance/company/form/update/${data.id}` } spacing= { 4 }>
                                     <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" sx= {{ flexGrow: 1, overflow: 'hidden' }}>
                                         <Typography variant= "caption" sx= { caption }>{ data.series_no }</Typography>
                                         <Typography sx= { title }>{ data.name }</Typography>
                                         <Typography variant= "body2" sx= { subtitle }>Telephone: { data.telephone }</Typography>
                                     </Stack>
-                                    <Box sx= { status(data.status) }>{ data.status === 1 ? `Active` : `Inactive` }</Box>
+                                    <Stack direction= "row" justifyContent= "flex-end" alignItems= "center">
+                                        <Box sx= { status(data.status) }>{ data.status === 1 ? `Active` : `Inactive` }</Box>
+                                    </Stack>
                                 </Stack>
                             </Grid>) }
                     </Grid>
