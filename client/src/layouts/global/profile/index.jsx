@@ -1,4 +1,4 @@
-import { Box, Container, Stack, Typography } from "@mui/material";
+import { Box, Stack, Typography } from "@mui/material";
 import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -52,36 +52,34 @@ const Index = () => {
 
     return (
         <Stack direction= "column" justifyContent= "flex-start" alignItems= "flex-start" spacing= { 5 } sx= { container }>
-            <Container maxWidth= "lg">
-                <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" 
-                    sx= {{ overflowY: 'scroll', '&::-webkit-scrollbar': { display: 'none' }, width: '100%', paddingBottom: '50px' }} spacing= { 5 }>
-                    <Typography sx= { title }>Account Settings</Typography>
-                    <form autoComplete= "off">
-                        <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 4 } width= "100%">
+            <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" 
+                sx= {{ overflowY: 'scroll', '&::-webkit-scrollbar': { display: 'none' }, width: '100%', paddingBottom: '50px' }} spacing= { 5 }>
+                <Typography sx= { title }>Account Settings</Typography>
+                <form autoComplete= "off">
+                    <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 4 } width= "100%">
+                        <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 }>
+                            <Typography sx= { subtitle }>Basic info</Typography>
                             <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 }>
-                                <Typography sx= { subtitle }>Basic info</Typography>
-                                <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 }>
-                                    <Picture />
-                                    <Box><Name /></Box>
-                                    <Box><Others /></Box>
-                                </Stack>
+                                <Picture />
+                                <Box><Name /></Box>
+                                <Box><Others /></Box>
                             </Stack>
-                            <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 }>
-                                <Typography sx= { subtitle }>Account info</Typography>
-                                <Box><Account /></Box>
-                            </Stack>
-                            { data.user_level !== 'superadmin' ? <Stack direction= "row" justifyContent= "flex-end" alignItems= "center" spacing= { 1 }>
-                                <Typography sx= { savebtn } onClick= { handleSubmit(data => {
-                                    data['token'] = (sessionStorage.getItem('token')).split('.')[1];
-                                    data['type'] = 'profile';
-
-                                    updating({ table: 'tbl_users', data: data });
-                                }) }>Save</Typography>
-                            </Stack> : '' }
                         </Stack>
-                    </form>
-                </Stack>
-            </Container>
+                        <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 2 }>
+                            <Typography sx= { subtitle }>Account info</Typography>
+                            <Box><Account /></Box>
+                        </Stack>
+                        { data.user_level !== 'superadmin' ? <Stack direction= "row" justifyContent= "flex-end" alignItems= "center" spacing= { 1 }>
+                            <Typography sx= { savebtn } onClick= { handleSubmit(data => {
+                                data['token'] = (sessionStorage.getItem('token')).split('.')[1];
+                                data['type'] = 'profile';
+
+                                updating({ table: 'tbl_users', data: data });
+                            }) }>Save</Typography>
+                        </Stack> : '' }
+                    </Stack>
+                </form>
+            </Stack>
         </Stack>
     );
 }

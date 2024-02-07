@@ -15,7 +15,7 @@ import { accountfix, accountswipe, fix, nav, navfix, navswipe, sidebar, swipable
 import { Link } from "react-router-dom";
 
 const Index = () => {
-    const { container, drawerToggle, open } = useContext(GlobalCntxt);
+    const { container, drawerToggle, open, setopen } = useContext(GlobalCntxt);
 
     return (
         <Stack sx= { sidebar }>
@@ -23,7 +23,7 @@ const Index = () => {
                 onOpen= { drawerToggle(true) } open= { open.left } onClose={ drawerToggle(false) } sx= { swipe }>
                 <Stack sx= { swipable } spacing= { 2 }>
                     <Stack sx= { nav } spacing= { 6 }>
-                        <Stack sx= { accountswipe } component= { Link } to= "/profile"><Account /></Stack>
+                        <Stack sx= { accountswipe } component= { Link } to= "/profile" onClick= { () => setopen({ left: false }) }><Account /></Stack>
                         <Stack sx= { navswipe }><Navs /></Stack>
                     </Stack>
                     <Logout />
