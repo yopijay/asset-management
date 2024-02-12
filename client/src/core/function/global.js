@@ -2,7 +2,8 @@
 import axios from "axios";
 import { useMutation, useQuery } from "react-query";
 import { toast } from "react-toastify";
-import * as XLSX from 'xlsx';
+import * as XLSX from "xlsx";
+import QRCode from "qrcode";
 
 export const api = ({ url, method, data= null }) => {
     const config = {
@@ -24,6 +25,7 @@ export const api = ({ url, method, data= null }) => {
 export const usePost = ({ request, onSuccess, onError }) => { return useMutation(request, { onSuccess, onError }); }
 export const useGet = ({ key, request, options, onSuccess, onError }) => { return useQuery(key, () => request, { onSuccess, onError, ...options }); }
 export const formatter = (num, size) => { return (`000000${num}`).substr((`000000${num}`).length - size); }
+export const generateQR = async data => { return await QRCode.toDataURL(data) }
 
 export const base64 = file => {
     return new Promise((resolve, reject) => {

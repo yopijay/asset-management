@@ -1,12 +1,12 @@
 // Libraries
-import { Box, Stack, Typography } from "@mui/material";
+import { Avatar, Box, Stack, Typography } from "@mui/material";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 
 // Core
 import { AccountCntxt } from "core/context/Account"; // Context
 import { FormCntxt } from "core/context/Form"; // Context
-import { successToast, useGet, usePost } from "core/function/global"; // Function
+import { generateQR, successToast, useGet, usePost } from "core/function/global"; // Function
 import { save, specific, update } from "core/api"; // API
 import FormBuilder from "core/components/form"; // Form Builder
 
@@ -18,11 +18,12 @@ import { validation } from "./validation";
 const Index = () => {
     const { type, category, id } = useParams();
     const navigate = useNavigate();
+    const [ qr, setqr ] = useState('#');
     const { data } = useContext(AccountCntxt);
     const { handleSubmit, setError, register, errors, control, setValue, getValues, reset } = useContext(FormCntxt);
     const { isFetching, refetch } = 
         useGet({ key: ['stck_specific'], request: specific({ table: 'tbl_stocks', id: id ?? null }), options: { enabled: type !== 'new', refetchOnWindowFocus: false },
-            onSuccess: data => {
+            onSuccess: async data => {
                 if(Array.isArray(data)) 
                     for(let count = 0; count < Object.keys(data[0]).length; count++) { 
                         let _name = Object.keys(data[0])[count];
@@ -30,6 +31,7 @@ const Index = () => {
                                         _name === 'fingerprint' || _name === 'camera' ? 
                                         data[0][_name] === 1 : _name === 'category' ? ((data[0][_name]).replace(' ', '_')).toLowerCase() : data[0][_name]);
                     }
+                    setqr(await generateQR(JSON.stringify(data[0].id)));
             } 
         });
 
@@ -77,6 +79,9 @@ const Index = () => {
                         <Category register= { register } fetching= { isFetching } errors= { errors } control= { control } setValue= { setValue } getValues= { getValues } setError= { setError } type= { type } />
                     </form>
                 </Box>
+                <Stack direction= "column" justifyContent= "center" alignItems= "center">
+                    <a href= { qr } download= { getValues()?.series_no }><Avatar src= { qr } alt= "QR Code" sx= {{ width: '200px', height: '200px' }} variant= "rounded" /></a>
+                </Stack>
             </Stack>
             <Stack direction= "row" justifyContent= {{ xs: type === 'view' ? 'flex-end' : 'space-between', sm: 'flex-end' }} alignItems= "center" spacing= { 1 }>
                 <Typography sx= { cancelbtn } component= { Link } to= { `/assets/stocks/${category}` }>Cancel</Typography>
