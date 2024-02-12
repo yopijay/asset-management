@@ -1,1 +1,1 @@
-module.exports = function (api) { api.cache(true); return { plugins: ['macros', '@babel/plugin-proposal-private-property-in-objec'], } }
+module.exports = function (api) { api.cache(true); return { plugins: ['macros'], } }
