@@ -80,10 +80,6 @@ export const upload = {
 }
 
 export const btnicon = { 
-    display: {
-        xs: 'block',
-        lg: 'none'
-    }, 
     textDecoration: 'none',
     cursor: 'pointer',
     backgroundColor: '#40739e91',

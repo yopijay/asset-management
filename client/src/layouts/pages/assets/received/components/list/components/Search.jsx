@@ -42,7 +42,7 @@ const Search = ({ find }) => {
                             xlsx({ table: 'tbl_stocks_received', data: data }); 
                         } }><FontAwesomeIcon icon= { solid('download') } /></Typography> : '' }
                 {/* { authimport ? <Typography sx= { upload }><FontAwesomeIcon icon= { solid('upload') } /></Typography> : '' } */}
-                { authupdate ? <Typography component= { Link } to= "/assets/received/form/new" sx= { btnicon }><FontAwesomeIcon icon= { solid('expand') } /></Typography> : '' }
+                { authupdate ? <Typography component= { Link } to= "/assets/received/form/scan" sx= { btnicon }><FontAwesomeIcon icon= { solid('expand') } /></Typography> : '' }
             </Stack>
         </Stack>
     );
