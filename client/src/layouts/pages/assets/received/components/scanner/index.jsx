@@ -20,7 +20,7 @@ const Index = () => {
                 <QrReader delay={ 3000 } onError= { err => console.log(err) } 
                     videoContainerStyle={{ padding: 0 }} 
                     videoStyle= {{ position: 'relative', width: '100%' }} 
-                    facingMode= { facing ? 'user' : 'environment' }
+                    facingMode= "environment"
                     onResult= { data => { 
                         console.log(data);
                             // if(data !== null) { 
