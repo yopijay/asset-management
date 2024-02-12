@@ -51,6 +51,20 @@ export const successToast = (message, duration = 3000, navigate) => {
     });
 }
 
+export const errorToast = (message, duration = 3000, navigate) => {
+    return toast.error(message, {
+        position: 'bottom-left',
+        autoClose: duration,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+        theme: 'colored',
+        onClose: () => navigate
+    });
+}
+
 export const getdate = date => {
     const year = date.getFullYear();
     const month = `${ (date.getMonth() + 1) >= 10 ? '' : '0' }${ date.getMonth() + 1 }`;

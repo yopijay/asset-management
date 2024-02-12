@@ -4,8 +4,21 @@ const Builder = require('../../function/builder');
 
 const audit = { series_no: '', table_name: 'tbl_stocks_issuance',  item_id: 0, field: '', previous: null, current: null, action: '', user_id: 0, date: '' }; // Used for audit trail
 class Received {
-    specific = async id => {
+    specific = async data => {
         return [];
+    }
+
+    scan = async data => {
+        let user = JSON.parse(atob(data.token));
+        let stock = await new Builder(`tbl_stocks_issuance`).select('id, status').condition(`WHERE item_id= ${data.id} AND issued_to= ${user.id} AND status= 'pending'`).build();
+
+        if(stock.rowCount > 0) {
+            switch(stock.rows[0].status) {
+                case 'pending': return { result: 'success', id: stock.rows[0].id };
+                default: return { result: 'received', message: 'Asset already received!' }
+            }
+        }
+        else { return { result: 'error', message: 'Item is not issued to you!' } }
     }
 
     list = async data => {

@@ -15,6 +15,7 @@ const login = data => { return new Users().login(data); }
 const profile = id => { return new Users().profile(id); }
 const permission = data => { return new Users().permission(data); }
 const route = () => { return new Routes().navigation(); }
+const scan = async data => { return new Received().scan(data); }
 
 const dashboard = (table, data) => {
     return new Promise(async resolve => {
@@ -179,6 +180,7 @@ module.exports = {
     update,
     dropdown,
     permission,
-    excel
+    excel,
+    scan
     // testing
 }

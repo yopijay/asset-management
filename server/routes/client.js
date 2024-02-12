@@ -22,5 +22,6 @@ router.post('/excel/:table', validate, (req, res) => { query.excel(req.params.ta
 router.post('/logs/:table', validate, (req, res) => { query.logs(req.params.table, req.body).then(response => res.status(200).send(response)).catch(error => res.status(200).send(error)); });
 router.post('/dropdown/:table', validate, (req, res) => { query.dropdown(req.params.table, req.body).then(response => res.status(200).send(response)).catch(error => res.status(200).send(error)); });
 router.post('/permission', validate, (req, res) => query.permission(req.body).then(response => res.status(200).send(response)).catch(error => res.status(200).send(error)));
+router.post('/scan', validate, (req, res) => query.scan(req.body).then(response => res.status(200).send(response)).catch(error => res.status(200).send(error)));
 
 module.exports = router;
