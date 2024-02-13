@@ -67,16 +67,37 @@ class Received {
         return [];
     }
 
-    logs = async () => {
-        return [];
-    }
-
     update = async data => {
         let user = JSON.parse(atob(data.token));
         let date = Global.date(new Date());
+        let audits = [];
+        let iss = (await new Builder(`tbl_stocks_issuance`).select().condition(`WHERE id= ${data.id}`).build()).rows[0];
 
-        await new Builder(`tbl_stocks_issuance`).update(`date_received= '${date}', received_by= ${user.id}, status= '${data.status}'`).condition(`WHERE id= ${data.id}`).build();
-        return { result: 'success', message: 'Item received!' }
+        if(Global.compare(iss.status, data.status)) {
+            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks_issuance', item_id: iss.id, field: 'status', previous: iss.status, 
+                                current: data.status, action: 'update', user_id: user.id, date: date });
+        }
+
+        if(Global.compare(iss[`${data.status}_by`], user.id)) {
+            let curr = (await new Builder(`tbl_users_info`).select(`CONCAT(lname, ', ', fname) AS name`).condition(`WHERE user_id= ${user.id}`).build()).rows[0];
+            let prev = iss[`${data.status}_by`] !== null ? (await new Builder(`tbl_users_info`).select(`CONCAT(lname, ', ', fname) AS name`).condition(`WHERE user_id= ${iss[`${data.status}_by`]}`).build()).rows[0] : null;
+            
+            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks_issuance', item_id: iss.id, field: `${data.status}_by`, previous: prev !== null ? prev.name : null, 
+                                current: curr.name, action: 'update', user_id: user.id, date: date });
+        }
+
+        if(Global.compare(iss[`date_${data.status}`], date)) {
+            audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_stocks_issuance', item_id: iss.id, field: `date_${data.status}`, 
+                                    previous: iss[`date_${data.status}`] !== null ? iss[`date_${data.status}`] : null, 
+                                    current: date, action: 'update', user_id: user.id, date: date });
+        }
+
+        if(data.status === 'returned') { await new Builder(`tbl_stocks`).update(`quantity= 1`).condition(`WHERE id= ${iss.item_id}`).build(); }
+
+        await new Builder(`tbl_stocks_issuance`).update(`date_${data.status}= '${date}', ${data.status}_by= ${user.id}, status= '${data.status}'`).condition(`WHERE id= ${data.id}`).build();
+        audits.forEach(data => Global.audit(data));
+
+        return { result: 'success', message: `Item ${data.status}!` }
     }
 }
 

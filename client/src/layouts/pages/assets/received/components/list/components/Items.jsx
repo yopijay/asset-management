@@ -10,7 +10,7 @@ import { ListCntxt } from "core/context/List"; // Context
 import { AccountCntxt } from "core/context/Account"; // Context
 
 import { caption, listview, menu, status, subtitle, title } from "../style";
-const stats = { received: '#A0C49D91', pending: '#e67e2291', failed: '#FF666691' }
+const stats = { received: '#A0C49D91', pending: '#e67e2291', returned: '#FF666691' }
 
 const Items = () => {
     const { list, listing } = useContext(ListCntxt);

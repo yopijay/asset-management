@@ -73,7 +73,7 @@ const Index = () => {
                 }) }>Received</Typography> : '' }
                 { type !== 'view' && getValues()?.status === 'received' ? 
                     <Typography sx= { savebtn } 
-                        onClick= { handleSubmit(data => { updating({ table: 'tbl_stocks_received', data: { token: (sessionStorage.getItem('token')).split('.')[1], id: id, status: 'return' } });
+                        onClick= { handleSubmit(data => { updating({ table: 'tbl_stocks_received', data: { token: (sessionStorage.getItem('token')).split('.')[1], id: id, status: 'returned' } });
                 }) }>Return</Typography> : '' }
             </Stack>
         </Stack>

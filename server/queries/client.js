@@ -45,7 +45,6 @@ const series = table => {
 }
 
 const specific = (table, id) => {
-    console.log(table, id);
     return new Promise(async resolve => {
         switch(table) {
             case 'tbl_users': resolve(await new Users().specific(id)); break;
