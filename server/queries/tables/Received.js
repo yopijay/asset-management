@@ -15,7 +15,7 @@ class Received {
 
     scan = async data => {
         let user = JSON.parse(atob(data.token));
-        let stock = await new Builder(`tbl_stocks_issuance`).select('id, status').condition(`WHERE item_id= ${data.id} AND issued_to= ${user.id}`).build();
+        let stock = await new Builder(`tbl_stocks_issuance`).select('id, status').condition(`WHERE item_id= ${data.id}${user.role === 'user' ? ` AND issued_to= ${user.id}` : ''}`).build();
 
         if(stock.rowCount > 0) {
             switch(stock.rows[0].status) {
