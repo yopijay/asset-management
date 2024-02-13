@@ -193,7 +193,7 @@ class Stocks {
                     .join({ table: `tbl_stocks_info AS info`, condition: `info.stocks_id = at.item_id`, type: `LEFT` })
                     .join({ table: `tbl_users_info AS ubi`, condition: `at.user_id = ubi.user_id`, type: `LEFT` })
                     .join({ table: `tbl_category AS ctg`, condition: `stck.category_id = ctg.id`, type: `LEFT` })
-                    .condition(`WHERE at.table_name= 'tbl_stocks' AND ctg.name= '${data.category}' ${condition}
+                    .condition(`WHERE at.table_name= 'tbl_stocks' AND ctg.name= '${((data.category).replace('-', ' ')).toUpperCase()}' ${condition}
                                         ${data.logssearchtxt !== '' ? search : ''}
                                         ORDER BY at.${data.logsorderby} ${(data.logssort).toUpperCase()} ${data.limit !== '' ? `LIMIT ${data.limit}` : ''}`)
                     .build()).rows;
@@ -225,7 +225,8 @@ class Stocks {
                                     .join({ table: `tbl_category AS ctg`, condition: `stck.category_id = ctg.id`, type: `LEFT` })
                                     .join({ table: `tbl_brands AS brd`, condition: `stck.brand_id = brd.id`, type: `LEFT` })
                                     .condition(`WHERE ctg.name= '${data.category}' ${data.searchtxt !== '' ? `AND ${searchtxt}` : ''}
-                                                        ${data.brand !== 'all' ? `AND stck.brand_id= ${data.brand}` : ''}
+                                                        ${data.brand !== 'all' ? `AND stck.brand_id= ${data.brand} ` : ''}
+                                                        ${data.branch !== 'all' ? `AND stck.branch= '${data.branch}' ` : ''}
                                                         ORDER BY info.${data.orderby} ${(data.sort).toUpperCase()}`)
                                     .build()).rows;
         }

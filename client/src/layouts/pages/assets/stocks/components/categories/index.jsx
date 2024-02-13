@@ -29,22 +29,25 @@ const Index = () => {
     let authlogs = data.user_level === 'superadmin' || (data.permission === null || JSON.parse(data.permission).assets.stocks.logs);
 
     useEffect(() => {
+
         register('category', { value: (category.replace('-', ' ')).toUpperCase() });
         register('brand', { value: 'all' });
+        register('branch', { value: data.user_level !== 'user' ? 'all' : data.branch });
         register('orderby', { value: 'serial_no' });
         register('sort', { value: 'desc' });
         register('token', { value: (sessionStorage.getItem('token')).split('.')[1] });
 
-        let data = getValues();
-        data['category'] = (category.replace('-', ' ')).toUpperCase();
-        data['brand'] = 'all';
-        data['orderby'] = 'serial_no';
-        data['sort'] = 'desc';
-        data['searchtxt'] = ''; 
-        data['token'] = (sessionStorage.getItem('token')).split('.')[1];
+        let _data = getValues();
+        _data['category'] = (category.replace('-', ' ')).toUpperCase();
+        _data['brand'] = 'all';
+        _data['orderby'] = 'serial_no';
+        _data['branch'] = data.user_level !== 'user' ? 'all' : data.branch;
+        _data['sort'] = 'desc';
+        _data['searchtxt'] = ''; 
+        _data['token'] = (sessionStorage.getItem('token')).split('.')[1];
 
-        record({ table: 'tbl_stocks', data: data });
-    }, [ register, category, getValues, record ]);
+        record({ table: 'tbl_stocks', data: _data });
+    }, [ data, register, category, getValues, record ]);
 
     return (
         <Stack direction= "row" justifyContent= "flex-start" alignItems= "flex-start" spacing= { 3 } sx= {{ width: '100%', height: '100%' , overflow: 'hidden' }}>

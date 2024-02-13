@@ -88,11 +88,6 @@ export const caption = {
 }
 
 export const select = {
-    width: {
-        xs: '40%',
-        md: '30%',
-        lg: '20%'
-    },
     backgroundColor: '#ffffff',
     border: 'solid 1px #dfe4ea',
     padding: {
