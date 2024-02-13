@@ -18,3 +18,4 @@ export const look = async ({ table, data }) => { return await api({ url: `${Env[
 export const history = async ({ table, data }) => { return await api({ url: `${Env[env].url}/logs/${table}`, method: 'post', data: data }).then(res => res.data).catch(err => console.log(`Error: ${err}`)); }
 export const dropdown = async ({ table, data }) => { return await api({ url: `${Env[env].url}/dropdown/${table}`, method: 'post', data: data }).then(res => res.data); }
 export const permission = async data => { return await api({ url: `${Env[env].url}/permission`, method: 'post', data: data }).then(res => res.data); }
+export const scan = async data => { return await api({ url: `${Env[env].url}/scan`, method: 'post', data: data }).then(res => res.data); }

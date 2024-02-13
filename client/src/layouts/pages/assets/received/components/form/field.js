@@ -13,7 +13,6 @@ const Fields = props => {
     const { register, fetching, errors, control, setValue, getValues, setError } = props;
 
     const { data: category, isFetching: ctgfetching } = useGet({ key: ['ctg_dd'], request: dropdown({ table: 'tbl_category', data: { type: 'assets' } }), options: { refetchOnWindowFocus: false } });
-    const { data: issuedto, isFetching: itfetching } = useGet({ key: ['it_dd'], request: dropdown({ table: 'tbl_users', data: {} }), options: { refetchOnWindowFocus: false } });
     const { data: issuedby, isFetching: ibfetching } = useGet({ key: ['ib_dd'], request: dropdown({ table: 'tbl_users', data: {} }), options: { refetchOnWindowFocus: false } });
     const { data: brand, mutate: brdmenu, isLoading: brdloading } = usePost({ request: dropdown });
     const { data: items, mutate: itmmenu, isLoading: itmloading } = usePost({ request: dropdown });
@@ -47,30 +46,12 @@ const Fields = props => {
 
     return ([
         {
-            grid: { xs: 12, md: 4 },
-            props: {
-                control: control,
-                name: 'issued_to',
-                label: '*Issued to',
-                disabled: type === 'view' || getValues().status === 'received',
-                fetching: fetching,
-                options: !itfetching ? issuedto : [],
-                onChange: (e, item) => { 
-                    setError('issued_to', { message: '' });
-                    setValue('issued_to', item.id);
-                },
-                errors: errors,
-                getValues: getValues
-            },
-            type: 'dropdown'
-        },
-        {
-            grid: { xs: 12, md: 4 },
+            grid: { xs: 12, md: 6 },
             props: {
                 control: control,
                 name: 'issued_by',
                 label: '*Issued by',
-                disabled: data.user_level === 'user',
+                disabled: true,
                 fetching: fetching,
                 options: !ibfetching ? issuedby : [],
                 onChange: (e, item) => { 
@@ -83,12 +64,12 @@ const Fields = props => {
             type: 'dropdown'
         },
         {
-            grid: { xs: 12, md: 4 },
+            grid: { xs: 12, md: 6 },
             props: {
                 register: register,
                 label: '*Issued date',
                 fetching: fetching,
-                disabled: type === 'view' || getValues().status === 'received',
+                disabled: true,
                 name: 'date_issued',
                 errors: errors,
                 type: 'date',
@@ -102,7 +83,7 @@ const Fields = props => {
                 control: control,
                 name: 'category_id',
                 label: '*Category',
-                disabled: type !== 'new',
+                disabled: true,
                 fetching: fetching,
                 options: !ctgfetching ? category : [],
                 onChange: (e, item) => { 
@@ -124,7 +105,7 @@ const Fields = props => {
                 control: control,
                 name: 'brand_id',
                 label: '*Brand',
-                disabled: type !== 'new',
+                disabled: true,
                 fetching: fetching,
                 options: !brdloading && brand ? brand : [],
                 onChange: (e, item) => { 
@@ -144,7 +125,7 @@ const Fields = props => {
                 control: control,
                 name: 'branch',
                 label: '*Branch',
-                disabled: type !== 'new',
+                disabled: true,
                 fetching: fetching,
                 options: !brdloading && brand ? [{ id: '', name: '-- SELECT AN ITEM BELOW --' }, { id: 'quezon_ave', name: 'QUEZON AVE.' }, 
                                 { id: 'sto_domingo', name: 'STO. DOMINGO' }, { id: 'manila', name: 'MANILA' }, { id: 'cavite', name: 'CAVITE' }] : [],
@@ -164,7 +145,7 @@ const Fields = props => {
                 control: control,
                 name: 'item_id',
                 label: '*Item',
-                disabled: type !== 'new',
+                disabled: true,
                 fetching: fetching,
                 options: !itmloading && items ? items : [],
                 onChange: (e, item) => { 
@@ -182,7 +163,7 @@ const Fields = props => {
             props: {
                 label: 'Note',
                 fetching: fetching,
-                disabled: type === 'view',
+                disabled: true,
                 name: 'note',
                 register: register,
                 errors: errors

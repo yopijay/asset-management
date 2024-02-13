@@ -7,7 +7,7 @@ import { useContext, useEffect } from "react";
 import { AccountCntxt } from "core/context/Account"; // Context
 import { FormCntxt } from "core/context/Form"; // Provider
 import { successToast, useGet, usePost } from "core/function/global"; // Function
-import { save, specific, update } from "core/api"; // API
+import { specific, update } from "core/api"; // API
 import FormBuilder from "core/components/form"; // Form Builder
 
 // Constants
@@ -15,7 +15,6 @@ import { cancelbtn, card, content, savebtn, title } from "./style"; // Styles
 import Fields from "./field";
 import Category from "./layout/Category";
 import Series from "./layout/Series";
-import { cvalidation } from "./validation";
 
 const Index = () => {
     const { type, id } = useParams();
@@ -23,7 +22,7 @@ const Index = () => {
     const { data } = useContext(AccountCntxt);
     const { handleSubmit, control, setValue, setError, reset, register, errors, getValues } = useContext(FormCntxt);
     const { isFetching, refetch } = 
-        useGet({ key: ['iss_specific'], request: specific({ table: 'tbl_stocks_issuance', id: id ?? null }), options: { enabled: type !== 'new', refetchOnWindowFocus: false },
+        useGet({ key: ['rec_specific'], request: specific({ table: 'tbl_stocks_received', id: id ?? null }), options: { enabled: type !== 'new', refetchOnWindowFocus: false },
             onSuccess: data => {
                 if(Array.isArray(data)) 
                     for(let count = 0; count < Object.keys(data[0]).length; count++) { 
@@ -33,28 +32,20 @@ const Index = () => {
             } 
         });
 
-    const { mutate: saving } = 
-        usePost({ request: save,
-            onSuccess: data => {
-                if(data.result === 'error') { (data.error).forEach((err, index) => setError(err.name, { type: index === 0 ? 'focus' : '', message: err.message }, { shouldFocus: index === 0 })); }
-                else { successToast(data.message, 3000, navigate('/assets/issuance', { replace: true })); }
-            } 
-        });
-
     const { mutate: updating } =
         usePost({ request: update,
             onSuccess: data => {
                 if(data.result === 'error') { (data.error).forEach((err, index) => setError(err.name, { type: index === 0 ? 'focus' : '', message: err.message }, { shouldFocus: index === 0 })); }
-                else { successToast(data.message, 3000, navigate('/assets/issuance', { replace: true })); }
+                else { successToast(data.message, 3000, navigate('/assets/received', { replace: true })); }
             }
         });
 
     useEffect(() => {
         if(data.user_level !== 'superadmin' && 
             (data.permission === null || 
-                !(JSON.parse(data.permission).assets.issuance.create || 
-                    JSON.parse(data.permission).assets.issuance.update || 
-                    JSON.parse(data.permission).assets.issuance.view))) { navigate('/'); }
+                !(JSON.parse(data.permission).assets.received.create || 
+                    JSON.parse(data.permission).assets.received.update || 
+                    JSON.parse(data.permission).assets.received.view))) { navigate('/'); }
         else { reset();  if(id !== undefined) refetch(); }
     }, [ data, navigate, reset, id, refetch ]);
 
@@ -75,18 +66,15 @@ const Index = () => {
                 </form>
             </Stack>
             <Stack direction= "row" justifyContent= {{ xs: type === 'view' ? 'flex-end' : 'space-between', sm: 'flex-end' }} alignItems= "center" spacing= { 1 }>
-                <Typography sx= { cancelbtn } component= { Link } to= "/assets/issuance">Cancel</Typography>
-                { type !== 'view' ? <Typography sx= { savebtn } onClick= { handleSubmit(data => {
-                    let errors = [];
-                    data['token'] = (sessionStorage.getItem('token')).split('.')[1];
-                    
-                    cvalidation(data, errors, type);
-                    if(!(errors.length > 0)) {
-                        if(type === 'new') { saving({ table: 'tbl_stocks_issuance', data: data }); }
-                        else { data['id'] = id; updating({ table: 'tbl_stocks_issuance', data: data }); }
-                    }
-                    else { errors.forEach(data => setError(data.name, { message: data.message })); }
-                }) }>Save</Typography> : '' }
+                <Typography sx= { cancelbtn } component= { Link } to= "/assets/received">Cancel</Typography>
+                { type !== 'view' && getValues()?.status === 'pending' ? 
+                    <Typography sx= { savebtn } 
+                        onClick= { handleSubmit(data => { updating({ table: 'tbl_stocks_received', data: { token: (sessionStorage.getItem('token')).split('.')[1], id: id, status: 'received' } });
+                }) }>Received</Typography> : '' }
+                { type !== 'view' && getValues()?.status === 'received' ? 
+                    <Typography sx= { savebtn } 
+                        onClick= { handleSubmit(data => { updating({ table: 'tbl_stocks_received', data: { token: (sessionStorage.getItem('token')).split('.')[1], id: id, status: 'return' } });
+                }) }>Return</Typography> : '' }
             </Stack>
         </Stack>
     );

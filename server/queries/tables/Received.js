@@ -4,13 +4,18 @@ const Builder = require('../../function/builder');
 
 const audit = { series_no: '', table_name: 'tbl_stocks_issuance',  item_id: 0, field: '', previous: null, current: null, action: '', user_id: 0, date: '' }; // Used for audit trail
 class Received {
-    specific = async data => {
-        return [];
+    specific = async id => {
+        return (await new Builder(`tbl_stocks_issuance AS rec`)
+                        .select(`rec.*, stck.category_id, stck.brand_id, ctg.name AS category`)
+                        .join({ table: `tbl_stocks AS stck`, condition: `rec.item_id = stck.id`, type: `LEFT` })
+                        .join({ table: `tbl_category AS ctg`, condition: `stck.category_id = ctg.id`, type: `LEFT` })
+                        .condition(`WHERE rec.id= ${id}`)
+                        .build()).rows;
     }
 
     scan = async data => {
         let user = JSON.parse(atob(data.token));
-        let stock = await new Builder(`tbl_stocks_issuance`).select('id, status').condition(`WHERE item_id= ${data.id} AND issued_to= ${user.id} AND status= 'pending'`).build();
+        let stock = await new Builder(`tbl_stocks_issuance`).select('id, status').condition(`WHERE item_id= ${data.id} AND issued_to= ${user.id}`).build();
 
         if(stock.rowCount > 0) {
             switch(stock.rows[0].status) {
@@ -66,8 +71,12 @@ class Received {
         return [];
     }
 
-    update = async () => {
-        return [];
+    update = async data => {
+        let user = JSON.parse(atob(data.token));
+        let date = Global.date(new Date());
+
+        await new Builder(`tbl_stocks_issuance`).update(`date_received= '${date}', received_by= ${user.id}, status= '${data.status}'`).condition(`WHERE id= ${data.id}`).build();
+        return { result: 'success', message: 'Item received!' }
     }
 }
 
