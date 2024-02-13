@@ -445,8 +445,8 @@ class Users {
             if(await encrypt.compare(data.currpassword, usr.password)) {
                 let pass = await encrypt.hash(data.newpassword, 10);
 
-                audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_users', item_id: usr.id, field: 'password', previous: usr.password,
-                        current: pass, action: 'update', user_id: user.id, date: date });
+                audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_users', item_id: usr.id, field: 'password', previous: '*****',
+                        current: '*****', action: 'update', user_id: user.id, date: date });
 
                 await new Builder(`tbl_users`).update(`password= '${pass}'`).condition(`WHERE id= ${usr.id}`).build();
                 audits.forEach(data => Global.audit(data));
@@ -535,8 +535,8 @@ class Users {
                 }
 
                 if(Global.compare(usr.profile, data.profile)) {
-                    audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_users', item_id: usr.id, field: 'profile', previous: usr.profile,
-                        current: data.profile, action: 'update', user_id: user.id, date: date });
+                    audits.push({ series_no: Global.randomizer(7), table_name: 'tbl_users', item_id: usr.id, field: 'profile', previous: '*****',
+                        current: '*****', action: 'update', user_id: user.id, date: date });
                 }
 
                 if(Global.compare(usr.company_id, data.company_id)) {
