@@ -79,9 +79,9 @@ const Index = () => {
                         <Category register= { register } fetching= { isFetching } errors= { errors } control= { control } setValue= { setValue } getValues= { getValues } setError= { setError } type= { type } />
                     </form>
                 </Box>
-                <Stack direction= "column" justifyContent= "center" alignItems= "center">
+                { type !== 'new' ? <Stack direction= "column" justifyContent= "center" alignItems= "center">
                     <a href= { qr } download= { getValues()?.series_no }><Avatar src= { qr } alt= "QR Code" sx= {{ width: '200px', height: '200px' }} variant= "rounded" /></a>
-                </Stack>
+                </Stack> : '' }
             </Stack>
             <Stack direction= "row" justifyContent= {{ xs: type === 'view' ? 'flex-end' : 'space-between', sm: 'flex-end' }} alignItems= "center" spacing= { 1 }>
                 <Typography sx= { cancelbtn } component= { Link } to= { `/assets/stocks/${category}` }>Cancel</Typography>
