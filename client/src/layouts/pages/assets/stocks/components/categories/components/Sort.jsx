@@ -36,10 +36,10 @@ const Sort = ({ records }) => {
     useEffect(() => { setValue('brand', 'all'); setValue('branch', 'all'); }, [ setValue ]);
 
     return (
-        <Stack direction= {{ xs: 'column', sm: 'row' }} justifyContent= {{ xs: 'flex-start', sm: 'space-between' }} alignItems= {{ xs: 'stretch', sm: 'center' }} spacing= { 1 }>
-            <Box sx= {{ width: { xs: '100%', sm: '60%', md: '40%' } }}>
+        <Stack direction= {{ xs: data.user_level !== 'user' ? 'column' : 'row', sm: 'row' }} justifyContent= {{ xs: 'flex-start', sm: 'space-between' }} alignItems= {{ xs: 'stretch', sm: 'center' }} spacing= { 1 }>
+            <Box sx= {{ width: { xs: data.user_level !== 'user' ? '100%' : '53%', sm: '60%', md: '40%' } }}>
                 <Grid container direction= "row" justifyContent= "flex-start" alignItems= "center" spacing= { 1 }>
-                    <Grid item xs= { 6 }>
+                    <Grid item xs= { data.user_level !== 'user' ? 6 : 10 }>
                         <Box sx= { select }>
                             { brdfetching ? <Skeleton variant= "rounded" height= "35px" /> :
                                 brands?.length > 0 ? 

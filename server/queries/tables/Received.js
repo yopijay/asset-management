@@ -42,14 +42,20 @@ class Received {
 
         switch(user.role) {
             case 'user':
-                condition = `WHERE iss.issued_to= ${user.id} ${data.searchtxt !== '' ? `AND ${searchtxt}` : '' } 
+                condition = `WHERE iss.issued_to= ${user.id}
+                                        ${data.category_id !== 'all' ? ` AND stck.category_id= ${data.category_id}` : ''}
+                                        ${data.searchtxt !== '' ? ` AND ${searchtxt}` : '' } 
                                         ORDER BY iss.${data.orderby} ${(data.sort).toUpperCase()}`;
                 break;
             case 'admin':
                 condition = `WHERE (ib.head_id= ${user.id} OR iss.issued_to= ${user.id})
-                                        ${data.searchtxt !== '' ? `AND ${searchtxt}` : '' } ORDER BY iss.${data.orderby} ${(data.sort).toUpperCase()}`;
+                                        ${data.category_id !== 'all' ? ` AND stck.category_id= ${data.category_id}` : ''}
+                                        ${data.searchtxt !== '' ? ` AND ${searchtxt}` : '' } ORDER BY iss.${data.orderby} ${(data.sort).toUpperCase()}`;
                 break;
-            default: condition = `${data.searchtxt !== '' ? `WHERE ${searchtxt}` : '' } ORDER BY iss.${data.orderby} ${(data.sort).toUpperCase()}`;
+            default: 
+                condition = `${data.category_id !== 'all' || data.searchtxt !== '' ? 'WHERE' : ''} ${data.category_id !== 'all' ? `stck.category_id= ${data.category_id}` : ''}
+                                        ${data.category_id !== 'all' && data.searchtxt !== '' ? 'AND' : ''}
+                                        ${data.searchtxt !== '' ? ` ${searchtxt}` : '' } ORDER BY iss.${data.orderby} ${(data.sort).toUpperCase()}`;
         }
 
         return (await new Builder(`tbl_stocks_issuance AS iss`)

@@ -17,6 +17,15 @@ export const history = {
     }
 }
 
+export const lbl = {
+    whiteSpace: 'nowrap', 
+    overflow: 'hidden', 
+    textOverflow: 'ellipsis', 
+    width: '100%',
+    padding: '2px 0',
+    transition: 'all 0.2s ease-in-out'
+}
+
 export const items = {
     flexDirection: 'column',
     justifyContent: 'flex-start',
@@ -30,6 +39,18 @@ export const loader = {
     justifyContent: 'center', 
     alignItems: 'center', 
     width: '100%',
+}
+
+export const select = {
+    backgroundColor: '#ffffff',
+    border: 'solid 1px #dfe4ea',
+    padding: {
+        xs: '12px 8px 9px 8px',
+        md: '9px 10px 6px 10px'
+    },
+    marginBottom: '5px',
+    borderRadius: '5px',
+    transition: 'all 0.2s ease-in-out'
 }
 
 export const search = {

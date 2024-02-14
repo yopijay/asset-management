@@ -48,6 +48,27 @@ export const search = {
     }
 }
 
+export const select = {
+    backgroundColor: '#ffffff',
+    border: 'solid 1px #dfe4ea',
+    padding: {
+        xs: '12px 8px 9px 8px',
+        md: '9px 10px 6px 10px'
+    },
+    marginBottom: '5px',
+    borderRadius: '5px',
+    transition: 'all 0.2s ease-in-out'
+}
+
+export const lbl = {
+    whiteSpace: 'nowrap', 
+    overflow: 'hidden', 
+    textOverflow: 'ellipsis', 
+    width: '100%',
+    padding: '2px 0',
+    transition: 'all 0.2s ease-in-out'
+}
+
 export const logs = {
     backgroundColor: '#40739e91',
     color: '#f5f6fa',

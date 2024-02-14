@@ -31,11 +31,13 @@ const Index = () => {
     useEffect(() => {
         register('orderby', { value: 'date_created' });
         register('sort', { value: 'desc' });
+        register('category_id', { value: 'all' });
         register('token', { value: (sessionStorage.getItem('token')).split('.')[1] });
 
         let data = getValues();
         data['orderby'] = 'date_created';
         data['sort'] = 'desc';
+        data['category_id'] = 'all';
         data['searchtxt'] = '';
         data['token'] = (sessionStorage.getItem('token')).split('.')[1];
 

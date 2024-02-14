@@ -9,8 +9,14 @@ class Category {
 
     dropdown = async data => {
         if(data.type) {
-            return [{ id: 0, name: '-- SELECT AN ITEM BELOW --' }]
+            switch(data.purpose) {
+                case 'filter':
+                    return [{ id: 'all', name: 'ALL' }]
                             .concat((await new Builder(`tbl_category`).select(`id, name`).condition(`WHERE type= '${data.type}' AND status= 1 ORDER BY name ASC`).build()).rows);
+                default:
+                    return [{ id: 0, name: '-- SELECT AN ITEM BELOW --' }]
+                            .concat((await new Builder(`tbl_category`).select(`id, name`).condition(`WHERE type= '${data.type}' AND status= 1 ORDER BY name ASC`).build()).rows);
+            }
         }
         else {
             return [{ id: 0, name: '-- SELECT AN ITEM BELOW --' }]

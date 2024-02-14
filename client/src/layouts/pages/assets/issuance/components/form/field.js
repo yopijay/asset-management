@@ -129,9 +129,12 @@ const Fields = props => {
                 options: !brdloading && brand ? brand : [],
                 onChange: (e, item) => { 
                     setError('brand_id', { message: '' }); 
-                    setValue('branch', '');
+                    setValue('branch', data.user_level !== 'superadmin' ? data.branch : '');
                     setValue('item_id', '');
                     setValue('brand_id', item.id);
+                    if(data.user_level === 'user') { 
+                        itmmenu({ table: 'tbl_stocks', data: { type: 'per-branch', category_id: getValues().category_id, brand_id: getValues().brand_id, branch: data.branch, form: type } }); 
+                    }
                 },
                 errors: errors,
                 getValues: getValues
@@ -144,14 +147,14 @@ const Fields = props => {
                 control: control,
                 name: 'branch',
                 label: '*Branch',
-                disabled: type !== 'new',
+                disabled: data.user_level !== 'superadmin',
                 fetching: fetching,
                 options: !brdloading && brand ? [{ id: '', name: '-- SELECT AN ITEM BELOW --' }, { id: 'quezon_ave', name: 'QUEZON AVE.' }, 
                                 { id: 'sto_domingo', name: 'STO. DOMINGO' }, { id: 'manila', name: 'MANILA' }, { id: 'cavite', name: 'CAVITE' }] : [],
                 onChange: (e, item) => { 
                     setError('branch', { message: '' }); 
                     setValue('branch', item.id); 
-                    itmmenu({ table: 'tbl_stocks', data: { type: 'per-branch', category_id: getValues().category_id, brand_id: getValues().brand_id, branch: item.id, form: type } });
+                    itmmenu({ table: 'tbl_stocks', data: { type: 'per-branch', category_id: getValues().category_id, brand_id: getValues().brand_id, branch: item.id, form: type } });   
                 },
                 errors: errors,
                 getValues: getValues
