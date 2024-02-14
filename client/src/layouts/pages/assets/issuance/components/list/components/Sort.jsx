@@ -1,5 +1,5 @@
 // Libraries
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Autocomplete, Box, Grid, Skeleton, Stack, TextField, Typography } from "@mui/material";
@@ -23,6 +23,8 @@ const Sort = ({ records }) => {
 
     const onclick = name => { setValue('orderby', name); setorder(name); records({ table: 'tbl_stocks_issuance', data: getValues() }); }
     const onsort = sort => { setsort(sort); setValue('sort', sort); records({ table: 'tbl_stocks_issuance', data: getValues() }); }
+
+    useEffect(() => setValue('category_id', 'all'), [ setValue ]);
 
     return (
         <Stack direction= "row" justifyContent= "space-between" alignItems= "center" spacing= { 1 }>
