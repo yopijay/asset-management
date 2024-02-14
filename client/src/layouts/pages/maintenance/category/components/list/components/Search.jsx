@@ -3,7 +3,7 @@ import { Box, InputAdornment, Stack, TextField, Typography } from "@mui/material
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { Link } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 // Core
 import { FormCntxt } from "core/context/Form"; // Context
@@ -22,6 +22,8 @@ const Search = ({ find }) => {
     let authlogs = data.user_level === 'superadmin' || (data.permission === null || JSON.parse(data.permission).maintenance.category.logs);
     let authexport = data.user_level === 'superadmin' || (data.permission === null || JSON.parse(data.permission).maintenance.category.export);
     // let authimport = data.user_level === 'superadmin' || (data.permission === null || JSON.parse(data.permission).maintenance.category.import);
+
+    useEffect(() => setValue('searchtxt', ''), [ setValue ]);
 
     return (
         <Stack direction= "row" justifyContent= "space-between" alignItems= "center" spacing= { 1 }>

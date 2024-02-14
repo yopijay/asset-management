@@ -12,6 +12,7 @@ import { ListPrvdr } from "core/context/List"; // Provider
 import List from "./components/list";
 import Scanner from "./components/scanner";
 import Form from "./components/form";
+import Logs from "./components/logs";
 
 // Custom styles
 const container = {
@@ -37,6 +38,7 @@ const Index = () => {
         <Stack direction= "row" justifyContent= "flex-start" alignItems= "flex-start" sx= { container }>
             <Routes>
                 <Route exact path= "/" element= { <FormPrvdr><ListPrvdr><List /></ListPrvdr></FormPrvdr> } />
+                <Route exact path= "/logs" element= { <FormPrvdr><ListPrvdr><Logs /></ListPrvdr></FormPrvdr> } />
                 <Route exact path= "/form/scan" element= { <FormPrvdr><Scanner /></FormPrvdr> } />
                 <Route exact path= "/form/:type/:id" element= { <FormPrvdr><Form /></FormPrvdr> } />
             </Routes>

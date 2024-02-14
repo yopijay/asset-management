@@ -37,7 +37,7 @@ const Index = () => {
                     onResult= { data => { if(data !== null && data !== undefined) { scanned({ id: data.text, token: (sessionStorage.getItem('token')).split('.')[1], type: 'assets' }); } } } />
             </Stack>
             <Stack direction= "row" justifyContent= {{ xs: 'space-between', sm: 'flex-end' }} alignItems= "center" spacing= { 1 }>
-                <Typography sx= { cancelbtn } component= { Link } to= { `/assets/received` }>Cancel</Typography>
+                <Typography sx= { cancelbtn } component= { Link } to= { `/assets/received` }>Close</Typography>
             </Stack>
         </Stack>
     );

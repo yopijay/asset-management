@@ -1,6 +1,6 @@
 // Libraries
 import { Box, InputAdornment, Stack, TextField, Typography } from "@mui/material";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { Link } from "react-router-dom";
@@ -23,6 +23,8 @@ const Search = ({ find }) => {
     let authlogs = data.user_level === 'superadmin' || (data.permission === null || JSON.parse(data.permission).setup.modules.logs);
     let authexport = data.user_level === 'superadmin' || (data.permission === null || JSON.parse(data.permission).setup.modules.export);
     // let authimport = data.user_level === 'superadmin' || (data.permission === null || JSON.parse(data.permission).setup.modules.import);
+
+    useEffect(() => setValue('searchtxt', ''), [ setValue ]);
 
     return (
         <Stack direction= "row" justifyContent= "space-between" alignItems= "center" spacing= { 1 }>

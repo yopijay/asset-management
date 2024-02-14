@@ -69,8 +69,59 @@ class Received {
                         .build()).rows;
     }
 
-    excel = async () => {
-        return [];
+    excel = async data => {
+        let user = JSON.parse(atob(data.token));
+        const today = `${parseInt((new Date()).getMonth()) + 1}${(new Date()).getDate()}${(new Date()).getFullYear()}`;
+        let columns = '';
+        let searchtxt = '';
+        let condition = '';
+
+        switch(data.type) {
+            case 'logs':
+                return [];
+
+            default:
+                columns = `iss.id AS "ID" , iss.series_no AS "Series no.", ctg.name AS "Category", info.serial_no AS "Serial no.", info.model AS "Model",
+                                    CONCAT(ib.lname, ', ', ib.fname) AS "Issued by", ib.employee_no AS "Employee no.", iss.date_issued AS "Date issued", UPPER(iss.status) AS "Status"`;
+                searchtxt = `(iss.series_no LIKE '%${(data.searchtxt).toUpperCase()}%' OR ctg.name LIKE '%${(data.searchtxt).toUpperCase()}%'
+                                    OR info.serial_no LIKE '%${(data.searchtxt).toUpperCase()}%' OR info.model LIKE '%${(data.searchtxt).toUpperCase()}%'
+                                    OR ib.lname LIKE '%${(data.searchtxt).toUpperCase()}%' OR ib.fname LIKE '%${(data.searchtxt).toUpperCase()}%'
+                                    OR it.employee_no LIKE '%${(data.searchtxt).toUpperCase()}%')`;
+                condition = '';
+
+                switch(user.role) {
+                    case 'user':
+                        condition = `WHERE iss.issued_to= ${user.id}
+                                                ${data.category_id !== 'all' ? ` AND stck.category_id= ${data.category_id}` : ''}
+                                                ${data.searchtxt !== '' ? ` AND ${searchtxt}` : '' } 
+                                                ORDER BY iss.${data.orderby} ${(data.sort).toUpperCase()}`;
+                        break;
+                    case 'admin':
+                        condition = `WHERE (ib.head_id= ${user.id} OR iss.issued_to= ${user.id})
+                                                ${data.category_id !== 'all' ? ` AND stck.category_id= ${data.category_id}` : ''}
+                                                ${data.searchtxt !== '' ? ` AND ${searchtxt}` : '' } ORDER BY iss.${data.orderby} ${(data.sort).toUpperCase()}`;
+                        break;
+                    default: 
+                        condition = `${data.category_id !== 'all' || data.searchtxt !== '' ? 'WHERE' : ''} ${data.category_id !== 'all' ? `stck.category_id= ${data.category_id}` : ''}
+                                                ${data.category_id !== 'all' && data.searchtxt !== '' ? 'AND' : ''}
+                                                ${data.searchtxt !== '' ? ` ${searchtxt}` : '' } ORDER BY iss.${data.orderby} ${(data.sort).toUpperCase()}`;
+                }
+
+                return [{
+                    sheets: [{
+                        sheetname: 'All',
+                        data: (await new Builder(`tbl_stocks_issuance AS iss`)
+                                    .select(columns)
+                                    .join({ table: `tbl_stocks AS stck`, condition: `iss.item_id = stck.id`, type: `LEFT` })
+                                    .join({ table: `tbl_stocks_info AS info`, condition: `iss.item_id = info.stocks_id`, type: `LEFT` })
+                                    .join({ table: `tbl_category AS ctg`, condition: `stck.category_id = ctg.id`, type: `LEFT` })
+                                    .join({ table: `tbl_users_info AS ib`, condition: `iss.issued_by = ib.user_id`, type: `LEFT` })
+                                    .condition(condition)
+                                    .build()).rows
+                    }],
+                    filename: `Received-${today}`
+                }];
+        }
     }
 
     update = async data => {

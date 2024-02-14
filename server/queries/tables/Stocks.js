@@ -167,6 +167,7 @@ class Stocks {
                                                         ${JSON.parse(atob(data.token)).role === 'user' ? `AND stck.branch= '${JSON.parse(atob(data.token)).branch}'` : ''} 
                                                         ${data.searchtxt !== '' ? `AND ${searchtxt}` : ''}
                                                         ${data.brand !== 'all' ? `AND stck.brand_id= ${data.brand}` : ''}
+                                                        ${data.branch !== 'all' ? `AND stck.branch= '${data.branch}' ` : ''}
                                                         ORDER BY info.${data.orderby} ${(data.sort).toUpperCase()}`)
                                     .build()).rows
                     }],

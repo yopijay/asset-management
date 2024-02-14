@@ -40,7 +40,7 @@ const Index = () => {
 
     return (
         <Stack direction= "column" justifyContent= "flex-start" alignItems= "stretch" spacing= { 5 } sx= {{ width: '100%', height: '100%', overflow: 'hidden' }}>
-            <Stack direction= "row" justifyContent= "flex-start" alignItems= "center" spacing= { 3 } component= { Link } to= { `/assets/issuance` } sx= {{ textDecoration: 'none' }}>
+            <Stack direction= "row" justifyContent= "flex-start" alignItems= "center" spacing= { 3 } component= { Link } to= { `/assets/received` } sx= {{ textDecoration: 'none' }}>
                 <FontAwesomeIcon icon= { solid('angle-left') } size= "lg" color= "#636e72" />
                 <Typography sx= { title }>Logs</Typography>
             </Stack>
