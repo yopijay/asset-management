@@ -78,7 +78,34 @@ class Received {
 
         switch(data.type) {
             case 'logs':
-                return [];
+                columns= `at.id AS "ID", at.series_no AS "Series no.", CONCAT(CASE WHEN info.serial_no IS NOT NULL AND info.serial_no <> '' THEN info.serial_no ELSE info.model END, 
+                                    CASE WHEN ctg.name = 'TONER' THEN CONCAT(' - ', UPPER(info.condition)) ELSE '' END) AS "Item", at.field AS "Field affected", 
+                                    UPPER(at.previous) AS "Previous", UPPER(at.current) AS "Current", UPPER(at.action) AS "Action", CONCAT(ubi.lname, ', ', ubi.fname) AS "Accountable",
+                                    at.date AS "Date"`;
+                searchtxt = `AND iss.series_no LIKE '%${(data.logssearchtxt).toUpperCase()}%'`;
+        
+                switch(JSON.parse(atob(data.token)).role) {
+                    case 'user': condition = `AND at.user_id= ${JSON.parse(atob(data.token)).id}`; break;
+                    case 'admin': condition = `AND (at.user_id= ${JSON.parse(atob(data.token)).id} OR ubi.head_id= ${JSON.parse(atob(data.token)).id})`; break;
+                    default: 
+                }
+                
+                return [{
+                    sheets: [{
+                        sheetname: 'Logs',
+                        data: (await new Builder(`tbl_audit_trail AS at`)
+                                    .select(columns)
+                                    .join({ table: `tbl_stocks_issuance AS iss`, condition: `at.item_id = iss.id`, type: `LEFT` })
+                                    .join({ table: `tbl_stocks AS stck`, condition: `iss.item_id = stck.id`, type: `LEFT` })
+                                    .join({ table: `tbl_stocks_info AS info`, condition: `iss.item_id = info.stocks_id`, type: `LEFT` })
+                                    .join({ table: `tbl_category AS ctg`, condition: `stck.category_id = ctg.id`, type: `LEFT` })
+                                    .join({ table: `tbl_users_info AS ubi`, condition: `at.user_id = ubi.user_id`, type: `LEFT` })
+                                    .condition(`WHERE at.table_name= 'tbl_stocks_issuance' ${condition} ${data.logssearchtxt !== '' ? searchtxt : ''}
+                                                        ORDER BY at.${data.logsorderby} ${(data.logssort).toUpperCase()} ${data.limit !== '' ? `LIMIT ${data.limit}` : ''}`)
+                                    .build()).rows
+                    }],
+                    filename: `Received Logs-${today}`
+                }];
 
             default:
                 columns = `iss.id AS "ID" , iss.series_no AS "Series no.", ctg.name AS "Category", info.serial_no AS "Serial no.", info.model AS "Model",

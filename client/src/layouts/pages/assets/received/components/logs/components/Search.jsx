@@ -36,7 +36,7 @@ const Search = props => {
                         let data = getValues();
                         data['token'] = (sessionStorage.getItem('token')).split('.')[1];
                         data['type'] = 'logs';
-                        xlsx({ table: 'tbl_stocks_issuance', data: data });
+                        xlsx({ table: 'tbl_stocks_received', data: data });
                     } }><FontAwesomeIcon icon= { solid('download') } /></Typography>
             </Stack>
         </Stack>
