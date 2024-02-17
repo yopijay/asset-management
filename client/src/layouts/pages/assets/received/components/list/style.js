@@ -111,21 +111,6 @@ export const btnicon = {
     '&:hover': { backgroundColor: '#487eb091' }
 }
 
-export const btntxt = { 
-    display: {
-        xs: 'none',
-        lg: 'block'
-    }, 
-    textDecoration: 'none',
-    cursor: 'pointer',
-    backgroundColor: '#40739e91',
-    color: '#f5f6fa',
-    borderRadius: '8px',
-    padding: '8px 16px',
-    transition: 'all 0.2s ease-in-out',
-    '&:hover': { backgroundColor: '#487eb091' }
-}
-
 export const orderby = {
     padding: '4px 16px',
     backgroundColor: '#dfe6e991',
