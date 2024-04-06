@@ -76,8 +76,7 @@ export const logs = {
     borderRadius: '8px',
     transition: 'all 0.2s ease-in-out',
     cursor: 'pointer',
-    display: { xs: 'block', lg: 'none' },
-    '&:hover': { backgroundColor: '#487eb091' }
+    display: { xs: 'block', lg: 'none' },      
 }
 
 export const download = {
